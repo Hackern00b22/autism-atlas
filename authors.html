@@ -1,0 +1,1001 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Author Tracker · ASD EurekaAlert Database</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;700&family=Space+Grotesk:wght@300;400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg-0: #05060a;
+    --bg-1: #0a0d14;
+    --bg-2: #11151f;
+    --ink-0: #e6ecff;
+    --ink-1: #98a4c2;
+    --ink-2: #5d6783;
+    --grid: rgba(120, 140, 200, 0.06);
+    --line: rgba(120, 140, 200, 0.12);
+    --neon-immuno:   #00f0ff;
+    --neon-cyto:     #ff2bd6;
+    --neon-behav:    #b6ff3c;
+    --neon-neuro:    #ffb020;
+    --neon-gen:      #7a5cff;
+    --neon-interv:   #ff5757;
+    /* Authorship role — fixed order, never cycled. Validated for CVD
+       separation against this surface; every segment is also text-labelled so
+       identity never rests on colour alone. */
+    --role-senior: #00f0ff;
+    --role-first:  #b6ff3c;
+    --role-middle: #ff2bd6;
+    /* Topic momentum is diverging: two poles, neutral grey midpoint. */
+    --rising: #00f0ff;
+    --fading: #ff5757;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body {
+    min-height: 100%;
+    background: var(--bg-0); color: var(--ink-0);
+    font-family: 'Space Grotesk', system-ui, sans-serif;
+    -webkit-font-smoothing: antialiased;
+  }
+  body::before {
+    content: ''; position: fixed; inset: 0;
+    background-image:
+      linear-gradient(var(--grid) 1px, transparent 1px),
+      linear-gradient(90deg, var(--grid) 1px, transparent 1px);
+    background-size: 48px 48px;
+    pointer-events: none; z-index: 0;
+  }
+  .corner {
+    position: fixed; width: 14px; height: 14px;
+    border: 1px solid var(--ink-2); z-index: 30; pointer-events: none;
+  }
+  .corner.tl { top: 16px; left: 16px; border-right: none; border-bottom: none; }
+  .corner.tr { top: 16px; right: 16px; border-left: none; border-bottom: none; }
+  .corner.bl { bottom: 16px; left: 16px; border-right: none; border-top: none; }
+  .corner.br { bottom: 16px; right: 16px; border-left: none; border-top: none; }
+
+  .wrap { position: relative; z-index: 2; max-width: 1500px; margin: 0 auto; padding: 22px 32px 80px; }
+
+  /* ---------- HUD ---------- */
+  .hud { display: flex; justify-content: space-between; align-items: flex-start; gap: 20px; flex-wrap: wrap; }
+  .brand {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px; letter-spacing: 0.28em; color: var(--ink-1); text-transform: uppercase;
+  }
+  .brand .title {
+    display: block; font-family: 'Space Grotesk', sans-serif;
+    font-size: 22px; letter-spacing: -0.01em; color: var(--ink-0);
+    text-transform: none; margin-top: 4px; font-weight: 500;
+  }
+  .brand .title em { font-style: normal; color: var(--neon-cyto); text-shadow: 0 0 12px rgba(255,43,214,0.45); }
+  .meta {
+    text-align: right; font-family: 'JetBrains Mono', monospace;
+    font-size: 10px; letter-spacing: 0.2em; color: var(--ink-2);
+    text-transform: uppercase; line-height: 1.8;
+  }
+  .meta .dot {
+    display: inline-block; width: 6px; height: 6px; border-radius: 50%;
+    background: var(--neon-behav); margin-right: 6px;
+    box-shadow: 0 0 8px var(--neon-behav); animation: pulse 2s ease-in-out infinite;
+  }
+  @keyframes pulse { 0%,100% { opacity: 1; } 50% { opacity: 0.3; } }
+
+  .toolbar { display: flex; gap: 10px; margin: 22px 0 24px; flex-wrap: wrap; align-items: center; }
+  .btn {
+    background: rgba(10,13,20,0.85); border: 1px solid var(--line); color: var(--ink-1);
+    font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.2em;
+    text-transform: uppercase; padding: 9px 15px; border-radius: 4px; cursor: pointer;
+    transition: all 0.18s; text-decoration: none; display: inline-flex; align-items: center; gap: 8px;
+  }
+  .btn:hover { color: var(--ink-0); border-color: var(--ink-2); }
+  .btn.primary { border-color: var(--neon-cyto); color: var(--neon-cyto); box-shadow: 0 0 12px rgba(255,43,214,0.2); }
+  .btn.primary:hover { background: var(--neon-cyto); color: #05060a; box-shadow: 0 0 20px rgba(255,43,214,0.45); }
+  .btn.accent { border-color: var(--neon-immuno); color: var(--neon-immuno); }
+  .btn.accent:hover { background: var(--neon-immuno); color: #05060a; }
+  .btn.danger { border-color: rgba(255,87,87,0.4); color: var(--neon-interv); }
+  .btn.danger:hover { background: var(--neon-interv); color: #05060a; }
+  .btn:disabled { opacity: 0.45; cursor: not-allowed; }
+  .btn.sm { font-size: 10px; padding: 6px 11px; letter-spacing: 0.15em; }
+
+  /* ---------- LAYOUT ---------- */
+  .cols { display: grid; grid-template-columns: 288px 1fr; gap: 24px; align-items: start; }
+  @media (max-width: 1000px) { .cols { grid-template-columns: 1fr; } }
+
+  .panel {
+    background: rgba(10,13,20,0.72); backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid var(--line); border-radius: 6px; padding: 18px 20px;
+  }
+  .panel + .panel { margin-top: 20px; }
+  .panel h3, .sec-title {
+    font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.28em;
+    color: var(--ink-2); text-transform: uppercase; margin-bottom: 14px; font-weight: 400;
+  }
+
+  /* ---------- ROSTER ---------- */
+  .roster { position: sticky; top: 22px; }
+  .roster-item {
+    display: block; width: 100%; text-align: left; background: transparent;
+    border: 1px solid transparent; border-left: 2px solid transparent;
+    color: var(--ink-1); padding: 10px 12px; border-radius: 3px; cursor: pointer;
+    font-family: inherit; font-size: 14px; transition: all 0.15s; margin-bottom: 4px;
+  }
+  .roster-item:hover { background: rgba(120,140,200,0.06); color: var(--ink-0); }
+  .roster-item.active { background: rgba(255,43,214,0.08); border-left-color: var(--neon-cyto); color: var(--ink-0); }
+  .roster-item .rname { display: block; font-weight: 500; }
+  .roster-item .rmeta {
+    display: block; font-family: 'JetBrains Mono', monospace; font-size: 10px;
+    color: var(--ink-2); letter-spacing: 0.08em; margin-top: 3px;
+  }
+  .roster-item .rflag { color: var(--neon-neuro); }
+  .empty-note { color: var(--ink-2); font-size: 13px; line-height: 1.7; }
+
+  /* ---------- PROFILE HEADER ---------- */
+  .prof-head { display: flex; justify-content: space-between; gap: 20px; flex-wrap: wrap; align-items: flex-start; }
+  .prof-name { font-size: 30px; font-weight: 500; letter-spacing: -0.015em; line-height: 1.15; }
+  .prof-sub { color: var(--ink-1); font-size: 14px; margin-top: 8px; line-height: 1.6; max-width: 640px; }
+  .chip {
+    display: inline-flex; align-items: center; gap: 6px;
+    font-family: 'JetBrains Mono', monospace; font-size: 9px; letter-spacing: 0.18em;
+    text-transform: uppercase; padding: 3px 8px; border-radius: 2px;
+    border: 1px solid var(--line); color: var(--ink-1); background: rgba(120,140,200,0.06);
+  }
+  .chip-row { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 12px; }
+  .chip a { color: inherit; text-decoration: none; }
+  .chip a:hover { color: var(--neon-immuno); }
+
+  /* ---------- STAT TILES ---------- */
+  .tiles { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 12px; margin-top: 18px; }
+  .tile { background: rgba(17,21,31,0.6); border: 1px solid var(--line); border-radius: 4px; padding: 14px 16px; }
+  .tile .tlabel {
+    font-family: 'JetBrains Mono', monospace; font-size: 9px; letter-spacing: 0.22em;
+    color: var(--ink-2); text-transform: uppercase;
+  }
+  .tile .tval { font-size: 26px; font-weight: 500; margin-top: 6px; letter-spacing: -0.02em; }
+  .tile .tnote { font-size: 11px; color: var(--ink-2); margin-top: 3px; }
+
+  /* ---------- CHARTS ---------- */
+  .chart-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+  @media (max-width: 860px) { .chart-grid { grid-template-columns: 1fr; } }
+  .chart-caption { font-size: 12px; color: var(--ink-2); margin-bottom: 16px; line-height: 1.6; }
+
+  /* Year histogram — single series, so no legend; the title names it. */
+  .years { display: flex; align-items: flex-end; gap: 2px; height: 150px; }
+  .ybar { flex: 1; display: flex; flex-direction: column; justify-content: flex-end; align-items: center;
+          height: 100%; cursor: default; min-width: 0; }
+  .ybar .bar {
+    width: 100%; background: var(--neon-immuno); border-radius: 4px 4px 0 0;
+    min-height: 2px; transition: opacity 0.15s; opacity: 0.85;
+  }
+  .ybar:hover .bar { opacity: 1; }
+  .ybar .bar.zero { background: rgba(120,140,200,0.14); }
+  .ybar .yv {
+    font-family: 'JetBrains Mono', monospace; font-size: 9px; color: var(--ink-1);
+    margin-bottom: 3px; height: 12px;
+  }
+  .ylabels { display: flex; gap: 2px; margin-top: 8px; }
+  .ylabels span {
+    flex: 1; text-align: center; font-family: 'JetBrains Mono', monospace;
+    font-size: 8px; color: var(--ink-2); letter-spacing: 0.04em; min-width: 0; overflow: hidden;
+  }
+
+  /* Role split — stacked bar with a 2px surface gap between segments. */
+  .rolebar { display: flex; gap: 2px; height: 26px; margin-bottom: 14px; }
+  .roleseg { border-radius: 3px; min-width: 3px; transition: opacity 0.15s; }
+  .roleseg:hover { opacity: 0.8; }
+  .rolekey { display: flex; flex-direction: column; gap: 8px; }
+  .rolekey-item { display: flex; align-items: center; gap: 9px; font-size: 13px; color: var(--ink-1); }
+  .rolekey-sw { width: 10px; height: 10px; border-radius: 2px; flex-shrink: 0; }
+  .rolekey-n { margin-left: auto; font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--ink-0); }
+  .rolekey-item .rk-desc { color: var(--ink-2); font-size: 11px; }
+
+  /* Topic momentum — diverging about a neutral midpoint. */
+  .mom-row { display: grid; grid-template-columns: 1fr 14px 1fr; align-items: center; gap: 0; margin-bottom: 5px; }
+  .mom-left, .mom-right { display: flex; align-items: center; height: 20px; }
+  .mom-left { justify-content: flex-end; }
+  .mom-bar { height: 12px; border-radius: 3px; }
+  .mom-bar.r { background: var(--rising); }
+  .mom-bar.f { background: var(--fading); }
+  .mom-mid { width: 1px; height: 20px; background: var(--ink-2); margin: 0 6px; justify-self: center; }
+  .mom-label { font-size: 12px; color: var(--ink-1); padding: 0 8px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .mom-head { display: flex; justify-content: space-between; font-family: 'JetBrains Mono', monospace;
+              font-size: 9px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--ink-2); margin-bottom: 10px; }
+  .mom-head .r { color: var(--rising); }
+  .mom-head .f { color: var(--fading); }
+
+  /* ---------- UPDATES / ALERTS ---------- */
+  .alert {
+    display: flex; gap: 12px; align-items: flex-start; padding: 12px 14px;
+    border: 1px solid var(--line); border-left-width: 2px; border-radius: 4px;
+    margin-bottom: 8px; background: rgba(17,21,31,0.5);
+  }
+  .alert.critical { border-left-color: var(--neon-interv); background: rgba(255,87,87,0.06); }
+  .alert.warning  { border-left-color: var(--neon-neuro); background: rgba(255,176,32,0.05); }
+  .alert.info     { border-left-color: var(--neon-immuno); }
+  .alert-icon { font-size: 14px; line-height: 1.4; flex-shrink: 0; }
+  .alert.critical .alert-icon { color: var(--neon-interv); }
+  .alert.warning .alert-icon { color: var(--neon-neuro); }
+  .alert.info .alert-icon { color: var(--neon-immuno); }
+  .alert-label {
+    font-family: 'JetBrains Mono', monospace; font-size: 9px; letter-spacing: 0.2em;
+    text-transform: uppercase; color: var(--ink-1);
+  }
+  .alert-title { font-size: 13px; margin-top: 4px; line-height: 1.5; }
+  .alert-title a { color: var(--ink-0); text-decoration: none; border-bottom: 1px solid var(--line); }
+  .alert-title a:hover { color: var(--neon-immuno); border-color: var(--neon-immuno); }
+  .alert-on { font-size: 11px; color: var(--ink-2); margin-top: 5px; line-height: 1.5; }
+
+  /* ---------- PAPERS ---------- */
+  .filters { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 14px; align-items: center; }
+  .fbtn {
+    background: transparent; border: 1px solid var(--line); color: var(--ink-2);
+    font-family: 'JetBrains Mono', monospace; font-size: 9px; letter-spacing: 0.18em;
+    text-transform: uppercase; padding: 5px 10px; border-radius: 2px; cursor: pointer; transition: all 0.15s;
+  }
+  .fbtn:hover { color: var(--ink-0); }
+  .fbtn.active { border-color: var(--neon-cyto); color: var(--neon-cyto); background: rgba(255,43,214,0.08); }
+
+  .paper { padding: 14px 0; border-bottom: 1px solid rgba(120,140,200,0.08); display: flex; gap: 14px; }
+  .paper:last-child { border-bottom: none; }
+  .paper-tier { width: 3px; border-radius: 2px; flex-shrink: 0; align-self: stretch; }
+  .paper-main { flex: 1; min-width: 0; }
+  .paper-title { font-size: 14px; line-height: 1.5; }
+  .paper-title a { color: var(--ink-0); text-decoration: none; }
+  .paper-title a:hover { color: var(--neon-immuno); }
+  .paper-meta {
+    font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--ink-2);
+    letter-spacing: 0.06em; margin-top: 6px; display: flex; flex-wrap: wrap; gap: 10px; align-items: center;
+  }
+  .role-badge {
+    font-family: 'JetBrains Mono', monospace; font-size: 9px; letter-spacing: 0.16em;
+    text-transform: uppercase; padding: 2px 7px; border-radius: 2px; border: 1px solid;
+  }
+  .role-badge.senior { color: var(--role-senior); border-color: rgba(0,240,255,0.35); background: rgba(0,240,255,0.08); }
+  .role-badge.first  { color: var(--role-first);  border-color: rgba(182,255,60,0.35); background: rgba(182,255,60,0.08); }
+  .role-badge.middle { color: var(--role-middle); border-color: rgba(255,43,214,0.3); background: rgba(255,43,214,0.07); }
+  .role-badge.solo   { color: var(--ink-1); border-color: var(--line); }
+  .upd-badge {
+    font-family: 'JetBrains Mono', monospace; font-size: 9px; letter-spacing: 0.14em;
+    text-transform: uppercase; padding: 2px 7px; border-radius: 2px;
+    border: 1px solid rgba(255,176,32,0.35); color: var(--neon-neuro); background: rgba(255,176,32,0.07);
+  }
+  .upd-badge.critical { border-color: rgba(255,87,87,0.45); color: var(--neon-interv); background: rgba(255,87,87,0.08); }
+  .new-badge {
+    font-family: 'JetBrains Mono', monospace; font-size: 9px; letter-spacing: 0.16em;
+    text-transform: uppercase; padding: 2px 7px; border-radius: 2px;
+    border: 1px solid rgba(182,255,60,0.4); color: var(--neon-behav); background: rgba(182,255,60,0.08);
+  }
+  .paper-act { opacity: 0; transition: opacity 0.15s; }
+  .paper:hover .paper-act { opacity: 1; }
+
+  /* ---------- RECOMMENDATIONS ---------- */
+  .rec {
+    border: 1px solid var(--line); border-radius: 5px; padding: 16px 18px; margin-bottom: 10px;
+    background: rgba(17,21,31,0.5); transition: border-color 0.15s;
+  }
+  .rec:hover { border-color: rgba(120,140,200,0.28); }
+  .rec-top { display: flex; justify-content: space-between; gap: 14px; align-items: flex-start; flex-wrap: wrap; }
+  .rec-name { font-size: 17px; font-weight: 500; }
+  .rec-aff { font-size: 12px; color: var(--ink-2); margin-top: 3px; }
+  .rec-why { font-size: 13px; color: var(--ink-1); line-height: 1.6; margin-top: 10px; }
+  .rec-src { display: flex; gap: 6px; margin-top: 10px; flex-wrap: wrap; }
+  .src-chip {
+    font-family: 'JetBrains Mono', monospace; font-size: 9px; letter-spacing: 0.16em;
+    text-transform: uppercase; padding: 2px 8px; border-radius: 2px; border: 1px solid;
+  }
+  .src-chip.collab { color: var(--neon-behav); border-color: rgba(182,255,60,0.3); background: rgba(182,255,60,0.06); }
+  .src-chip.related { color: var(--neon-immuno); border-color: rgba(0,240,255,0.3); background: rgba(0,240,255,0.06); }
+  .rec-ev { margin-top: 12px; padding-top: 12px; border-top: 1px solid rgba(120,140,200,0.08); }
+  .rec-ev-item { font-size: 12px; color: var(--ink-2); line-height: 1.6; margin-bottom: 4px; }
+  .rec-ev-item a { color: var(--ink-1); text-decoration: none; }
+  .rec-ev-item a:hover { color: var(--neon-immuno); }
+  .rec-acts { display: flex; gap: 8px; flex-shrink: 0; }
+
+  /* ---------- MODAL ---------- */
+  .modal-backdrop {
+    position: fixed; inset: 0; background: rgba(5,6,10,0.88);
+    backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px);
+    display: flex; align-items: center; justify-content: center; padding: 40px 20px;
+    opacity: 0; pointer-events: none; transition: opacity 0.25s; z-index: 100;
+  }
+  .modal-backdrop.open { opacity: 1; pointer-events: auto; }
+  .modal {
+    width: 100%; max-width: 780px; max-height: 86vh; background: var(--bg-1);
+    border: 1px solid rgba(120,140,200,0.18); border-radius: 6px;
+    display: flex; flex-direction: column; overflow: hidden;
+    transform: translateY(20px); transition: transform 0.28s;
+    box-shadow: 0 0 60px rgba(255,43,214,0.12);
+  }
+  .modal-backdrop.open .modal { transform: translateY(0); }
+  .modal-header {
+    display: flex; justify-content: space-between; align-items: flex-start;
+    padding: 22px 26px 16px; border-bottom: 1px solid var(--line); flex-shrink: 0;
+  }
+  .modal-eyebrow {
+    font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.28em;
+    color: var(--neon-cyto); text-transform: uppercase;
+  }
+  .modal-title { font-size: 22px; font-weight: 500; margin-top: 6px; }
+  .modal-sub { font-size: 13px; color: var(--ink-2); margin-top: 6px; line-height: 1.6; max-width: 560px; }
+  .modal-close {
+    background: transparent; border: 1px solid var(--line); color: var(--ink-2);
+    width: 30px; height: 30px; border-radius: 3px; cursor: pointer; font-size: 17px;
+    line-height: 1; transition: all 0.15s; flex-shrink: 0;
+  }
+  .modal-close:hover { border-color: var(--neon-cyto); color: var(--neon-cyto); }
+  .modal-body { flex: 1; overflow-y: auto; padding: 18px 26px 26px; }
+  .modal-body::-webkit-scrollbar { width: 8px; }
+  .modal-body::-webkit-scrollbar-thumb { background: rgba(120,140,200,0.2); border-radius: 4px; }
+
+  .search-row { display: flex; gap: 10px; margin-bottom: 8px; }
+  .search-row input {
+    flex: 1; background: var(--bg-2); color: var(--ink-0); border: 1px solid rgba(120,140,200,0.18);
+    border-radius: 3px; padding: 10px 13px; font-family: 'Space Grotesk', sans-serif;
+    font-size: 14px; outline: none; transition: border-color 0.15s;
+  }
+  .search-row input:focus { border-color: var(--neon-cyto); }
+
+  .ident {
+    border: 1px solid var(--line); border-radius: 5px; padding: 15px 17px; margin-top: 10px;
+    background: rgba(17,21,31,0.5); cursor: pointer; transition: all 0.15s;
+  }
+  .ident:hover { border-color: var(--neon-cyto); background: rgba(255,43,214,0.05); }
+  .ident.tracked { opacity: 0.5; cursor: not-allowed; }
+  .ident.tracked:hover { border-color: var(--line); background: rgba(17,21,31,0.5); }
+  .ident-name { font-size: 16px; font-weight: 500; }
+  .ident-meta { font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--ink-2);
+                letter-spacing: 0.08em; margin-top: 5px; line-height: 1.7; }
+  .ident-samp { font-size: 12px; color: var(--ink-1); margin-top: 9px; line-height: 1.55; }
+
+  .status {
+    font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--ink-2);
+    letter-spacing: 0.08em; line-height: 1.7; padding: 10px 0;
+  }
+  .status.err { color: var(--neon-interv); }
+  .status.ok { color: var(--neon-behav); }
+  .spin {
+    display: inline-block; width: 11px; height: 11px; border: 2px solid rgba(120,140,200,0.25);
+    border-top-color: var(--neon-cyto); border-radius: 50%; animation: spin 0.8s linear infinite;
+    margin-right: 8px; vertical-align: -1px;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  .tip {
+    position: fixed; z-index: 200; pointer-events: none; opacity: 0;
+    background: var(--bg-2); border: 1px solid rgba(120,140,200,0.25); border-radius: 4px;
+    padding: 7px 11px; font-family: 'JetBrains Mono', monospace; font-size: 10px;
+    color: var(--ink-0); letter-spacing: 0.06em; transition: opacity 0.12s; white-space: nowrap;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.6);
+  }
+  .tip.on { opacity: 1; }
+/* Public static build (no serve.py API): hide every control that would
+   mutate the tracked-author store — visitors browse read-only. */
+body.public #add-btn, body.public #refresh-all-btn,
+body.public #refresh-one, body.public #untrack, body.public #get-recs,
+body.public [data-track-rec], body.public [data-dismiss-rec],
+body.public [data-exclude] { display: none !important; }
+</style>
+</head>
+<body>
+
+<div class="corner tl"></div><div class="corner tr"></div>
+<div class="corner bl"></div><div class="corner br"></div>
+<div class="tip" id="tip"></div>
+
+<div class="wrap">
+  <div class="hud">
+    <div class="brand">
+      TMF MALONE / ASD EUREKA ALERT v5.0
+      <span class="title">Author <em>Tracker</em></span>
+    </div>
+    <div class="meta">
+      <span class="dot"></span>TRACKED: <span id="m-tracked">—</span><br>
+      PAPERS: <span id="m-papers">—</span><br>
+      UPDATES: <span id="m-updates">—</span><br>
+      SYNCED: <span id="m-synced">—</span>
+    </div>
+  </div>
+
+  <div class="toolbar">
+    <a class="btn" href="autism_research_network.html">← Research Network</a>
+    <button class="btn primary" id="add-btn">+ Track an Author</button>
+    <button class="btn" id="refresh-all-btn">↻ Refresh All</button>
+    <span class="status" id="global-status"></span>
+  </div>
+
+  <div class="cols">
+    <aside>
+      <div class="panel roster">
+        <h3>// Tracked researchers</h3>
+        <div id="roster"></div>
+      </div>
+    </aside>
+    <main id="main"></main>
+  </div>
+</div>
+
+<!-- ADD AUTHOR MODAL -->
+<div class="modal-backdrop" id="add-backdrop">
+  <div class="modal">
+    <div class="modal-header">
+      <div>
+        <div class="modal-eyebrow">// NEW PROFILE</div>
+        <div class="modal-title">Track an Author</div>
+        <div class="modal-sub">PubMed indexes authors by surname and initials, so one name can cover several people. Search, then pick the right researcher.</div>
+      </div>
+      <button class="modal-close" id="add-close" aria-label="Close">×</button>
+    </div>
+    <div class="modal-body">
+      <div class="search-row">
+        <input type="search" id="name-input" placeholder="e.g. Gloria Choi" autocomplete="off">
+        <button class="btn primary" id="name-search">Search</button>
+      </div>
+      <div class="status" id="add-status">Enter a researcher's name to see which PubMed identities match it.</div>
+      <div id="identities"></div>
+    </div>
+  </div>
+</div>
+
+<script>
+const TIER_COLORS = {
+  'clinical-trial': '#ff5757', 'clinical-observation': '#ffb020',
+  'translational': '#b6ff3c', 'mechanistic': '#98a4c2',
+  'review': '#7a5cff', 'other': '#5d6783',
+};
+// Authorship roles in fixed order — colour follows the role, never its rank in
+// a sorted list, and every use is paired with the visible role name.
+const ROLES = [
+  { key: 'senior', label: 'Senior author', color: 'var(--role-senior)', desc: 'their own lab led it' },
+  { key: 'first',  label: 'First author',  color: 'var(--role-first)',  desc: 'they ran the study' },
+  { key: 'middle', label: 'Middle author', color: 'var(--role-middle)', desc: 'contributing collaborator' },
+  { key: 'solo',   label: 'Sole author',   color: 'var(--ink-1)',       desc: 'single-author work' },
+];
+const UPDATE_ICONS = { retraction: '⊘', concern: '⚠', erratum: '✎', republished: '⟳', update: '↑', comment: '❝' };
+
+let DATA = { authors: {}, branches: {}, dismissed: [] };
+let SELECTED = null;
+let ROLE_FILTER = 'all';
+
+const $ = id => document.getElementById(id);
+const esc = s => String(s == null ? '' : s).replace(/[&<>"']/g,
+  c => ({ '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;' }[c]));
+
+let PUBLIC = false;   // set when we fall back to the static data snapshot
+
+async function api(path, body) {
+  if (PUBLIC) throw new Error('read-only public site');
+  const res = await fetch(path, {
+    method: 'POST', headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(body || {}),
+  });
+  if (!res.ok) throw new Error(`${res.status} ${res.statusText}`);
+  return res.json();
+}
+
+// ---------- tooltip ----------
+const tip = $('tip');
+function showTip(e, text) {
+  tip.textContent = text;
+  tip.classList.add('on');
+  const r = tip.getBoundingClientRect();
+  let x = e.clientX + 14, y = e.clientY - r.height - 10;
+  if (x + r.width > innerWidth - 10) x = e.clientX - r.width - 14;
+  if (y < 10) y = e.clientY + 18;
+  tip.style.left = x + 'px'; tip.style.top = y + 'px';
+}
+function hideTip() { tip.classList.remove('on'); }
+function bindTip(el, text) {
+  el.addEventListener('mousemove', e => showTip(e, text));
+  el.addEventListener('mouseleave', hideTip);
+}
+
+// ---------- load ----------
+async function load() {
+  // Live server first; on static hosting (GitHub Pages) /api/authors 404s and
+  // we fall back to the snapshot publish.py bakes alongside this page.
+  let res;
+  try {
+    res = await fetch('/api/authors');
+    if (!res.ok) throw new Error('no api');
+  } catch (e) {
+    res = await fetch('authors-data.json', { cache: 'no-store' });
+    PUBLIC = true;
+    document.body.classList.add('public');
+  }
+  DATA = await res.json();
+  renderRoster();
+  renderMeta();
+  const keys = Object.keys(DATA.authors);
+  if (SELECTED && !DATA.authors[SELECTED]) SELECTED = null;
+  if (!SELECTED && keys.length) SELECTED = keys[0];
+  renderProfile();
+}
+
+function allUpdateCount() {
+  return Object.values(DATA.authors).reduce((n, p) =>
+    n + (p.papers || []).reduce((m, a) => m + (a.updates || []).length, 0), 0);
+}
+
+function renderMeta() {
+  const profs = Object.values(DATA.authors);
+  $('m-tracked').textContent = profs.length;
+  $('m-papers').textContent = profs.reduce((n, p) => n + (p.papers || []).length, 0);
+  $('m-updates').textContent = allUpdateCount();
+  $('m-synced').textContent = (DATA._meta && DATA._meta.last_updated) || '—';
+}
+
+function renderRoster() {
+  const keys = Object.keys(DATA.authors).sort((a, b) =>
+    DATA.authors[a].displayName.localeCompare(DATA.authors[b].displayName));
+  if (!keys.length) {
+    $('roster').innerHTML = `<div class="empty-note">No authors tracked yet.<br><br>
+      Start with <strong style="color:var(--ink-0)">Gloria Choi</strong> — her lab's maternal
+      immune activation and IL-17a work sits at the centre of this database's neuroimmunology branch.</div>`;
+    return;
+  }
+  $('roster').innerHTML = keys.map(k => {
+    const p = DATA.authors[k];
+    const n = (p.papers || []).length;
+    const ups = (p.papers || []).reduce((m, a) => m + (a.updates || []).length, 0);
+    return `<button class="roster-item ${k === SELECTED ? 'active' : ''}" data-key="${esc(k)}">
+      <span class="rname">${esc(p.displayName)}</span>
+      <span class="rmeta">${n} PAPER${n === 1 ? '' : 'S'}${ups ? ` · <span class="rflag">${ups} UPDATE${ups === 1 ? '' : 'S'}</span>` : ''}</span>
+    </button>`;
+  }).join('');
+  document.querySelectorAll('.roster-item').forEach(el =>
+    el.onclick = () => {
+      SELECTED = el.dataset.key; ROLE_FILTER = 'all'; UPDATES_EXPANDED = false;
+      renderRoster(); renderProfile();
+    });
+}
+
+// ---------- profile ----------
+function renderProfile() {
+  const main = $('main');
+  if (!SELECTED || !DATA.authors[SELECTED]) {
+    main.innerHTML = `<div class="panel"><h3>// Getting started</h3>
+      <div class="empty-note">
+        This page follows individual researchers rather than journals: every paper they publish,
+        their role on it, and any <strong style="color:var(--ink-0)">updates to work already tracked</strong> —
+        corrections, retractions, commentary, and preprints reaching their journal version.<br><br>
+        It then suggests who to track next, drawn both from recurring collaborators and from the
+        authors of closely related research.<br><br>
+        Click <strong style="color:var(--neon-cyto)">+ Track an Author</strong> to begin.
+      </div></div>`;
+    return;
+  }
+  const p = DATA.authors[SELECTED];
+  const s = p.stats || {};
+  const papers = p.papers || [];
+  main.innerHTML =
+    headerHTML(p) + tilesHTML(p, s, papers) + updatesHTML(p, papers) +
+    chartsHTML(s, papers) + papersHTML(p, papers) + reviewHTML(p) + recsHTML(p);
+  wireProfile(p);
+}
+
+function headerHTML(p) {
+  const br = DATA.branches[p.branch];
+  const chips = [];
+  if (br) chips.push(`<span class="chip" style="border-color:${esc(br.color)}55;color:${esc(br.color)}">${esc(br.label)}</span>`);
+  (p.orcids || []).forEach(o => chips.push(
+    `<span class="chip"><a href="https://orcid.org/${esc(o)}" target="_blank" rel="noopener">ORCID ${esc(o)}</a></span>`));
+  if (p.lastFetched) chips.push(`<span class="chip">Synced ${esc(p.lastFetched)}</span>`);
+  const aff = (p.affiliations || [])[0] || '';
+  return `<div class="panel">
+    <div class="prof-head">
+      <div>
+        <div class="prof-name">${esc(p.displayName)}</div>
+        <div class="prof-sub">${esc(aff)}${p.note ? ` — ${esc(p.note)}` : ''}</div>
+        <div class="chip-row">${chips.join('')}</div>
+      </div>
+      <div class="rec-acts">
+        <button class="btn accent sm" id="refresh-one">↻ Refresh</button>
+        <button class="btn danger sm" id="untrack">Untrack</button>
+      </div>
+    </div>
+    ${tilesPlaceholder()}
+  </div>`;
+}
+function tilesPlaceholder() { return ''; }
+
+function tilesHTML(p, s, papers) {
+  const span = s.firstPaper && s.latestPaper
+    ? `${s.firstPaper.slice(0, 4)}–${s.latestPaper.slice(0, 4)}` : '—';
+  const senior = (s.roles || {}).senior || 0;
+  const pct = papers.length ? Math.round(100 * senior / papers.length) : 0;
+  const latest = papers[0];
+  const upd = papers.reduce((m, a) => m + (a.updates || []).length, 0);
+  return `<div class="tiles">
+    <div class="tile"><div class="tlabel">Papers tracked</div><div class="tval">${papers.length}</div>
+      <div class="tnote">verified as this person</div></div>
+    <div class="tile"><div class="tlabel">Led their own lab</div><div class="tval">${senior}</div>
+      <div class="tnote">${pct}% as senior author</div></div>
+    <div class="tile"><div class="tlabel">Active span</div><div class="tval">${esc(span)}</div>
+      <div class="tnote">first to latest publication</div></div>
+    <div class="tile"><div class="tlabel">Research updates</div><div class="tval">${upd}</div>
+      <div class="tnote">corrections &amp; responses</div></div>
+    ${latest ? `<div class="tile"><div class="tlabel">Most recent</div>
+      <div class="tval" style="font-size:15px;line-height:1.4;margin-top:8px">${esc(latest.journal || '—')}</div>
+      <div class="tnote">${esc(latest.date)}</div></div>` : ''}
+  </div>`;
+}
+
+// --- research updates: what changed about work we already track ---
+let UPDATES_EXPANDED = false;
+const UPDATE_PREVIEW = 5;
+
+function updatesHTML(p, papers) {
+  const rank = { critical: 0, warning: 1, info: 2 };
+  // One commentary often addresses several papers at once (companion papers in
+  // the same issue). Group by the update itself and list what it applies to,
+  // rather than repeating the same card under each paper.
+  const byUpdate = new Map();
+  papers.forEach(a => (a.updates || []).forEach(u => {
+    const g = byUpdate.get(u.pmid) || { ...u, on: [] };
+    g.on.push(a);
+    byUpdate.set(u.pmid, g);
+  }));
+  const all = [...byUpdate.values()];
+  if (!all.length) return '';
+  all.sort((x, y) => (rank[x.severity] - rank[y.severity]) ||
+    (y.on[0].date || '').localeCompare(x.on[0].date || ''));
+  const serious = all.filter(u => u.severity !== 'info').length;
+  const shown = UPDATES_EXPANDED ? all : all.slice(0, UPDATE_PREVIEW);
+  return `<div class="panel"><h3>// Research updates</h3>
+    <div class="chart-caption">Changes PubMed has recorded against papers already tracked here —
+      corrections and retractions first, then commentary the field published in response,
+      and preprints that have reached their journal version.${
+        serious ? ` <strong style="color:var(--neon-neuro)">${serious} need${serious === 1 ? 's' : ''} attention.</strong>`
+                : ' Nothing here has been corrected or retracted.'}</div>
+    ${shown.map(u => `<div class="alert ${esc(u.severity)}">
+      <div class="alert-icon">${UPDATE_ICONS[u.kind] || '•'}</div>
+      <div>
+        <div class="alert-label">${esc(u.label)}</div>
+        <div class="alert-title"><a href="${esc(u.url)}" target="_blank" rel="noopener">${esc(u.title || ('PMID ' + u.pmid))}</a></div>
+        <div class="alert-on">on: ${u.on.map(a => esc(a.title)).join('<br>on: ')}
+          <span style="color:var(--ink-2)">· ${esc(u.on[0].journal)} ${esc(u.on[0].date)}</span></div>
+      </div></div>`).join('')}
+    ${all.length > UPDATE_PREVIEW
+      ? `<button class="fbtn" id="upd-toggle" style="margin-top:6px">${
+          UPDATES_EXPANDED ? '− Show fewer' : `+ ${all.length - UPDATE_PREVIEW} more update${all.length - UPDATE_PREVIEW === 1 ? '' : 's'}`}</button>`
+      : ''}
+  </div>`;
+}
+
+// --- charts ---
+function chartsHTML(s, papers) {
+  return `<div class="panel"><h3>// Publication record</h3>
+    <div class="chart-grid">
+      <div>
+        <div class="sec-title" style="margin-bottom:6px">Papers per year</div>
+        <div class="chart-caption">Every year in range is shown, including empty ones.</div>
+        ${yearChart(s.byYear || {})}
+      </div>
+      <div>
+        <div class="sec-title" style="margin-bottom:6px">Authorship role</div>
+        <div class="chart-caption">Senior-author papers are the ones their own lab drove.</div>
+        ${roleChart(papers)}
+      </div>
+    </div>
+    ${momentumChart(s)}
+  </div>`;
+}
+
+function yearChart(byYear) {
+  const years = Object.keys(byYear).sort();
+  if (!years.length) return `<div class="status">No dated papers.</div>`;
+  // Fill gap years: a time axis that skips empty years misrepresents the record.
+  const lo = +years[0], hi = +years[years.length - 1];
+  const full = [];
+  for (let y = lo; y <= hi; y++) full.push([String(y), byYear[String(y)] || 0]);
+  const max = Math.max(...full.map(f => f[1]), 1);
+  // Label only the ends and every 5th year, so ticks never collide.
+  const bars = full.map(([y, n]) => {
+    const h = n ? Math.max(4, Math.round(100 * n / max)) : 1.5;
+    return `<div class="ybar" data-tip="${y}: ${n} paper${n === 1 ? '' : 's'}">
+      <div class="yv">${n || ''}</div>
+      <div class="bar ${n ? '' : 'zero'}" style="height:${h}%"></div></div>`;
+  }).join('');
+  const labels = full.map(([y]) =>
+    `<span>${(+y === lo || +y === hi || +y % 5 === 0) ? y.slice(2) : ''}</span>`).join('');
+  return `<div class="years">${bars}</div><div class="ylabels">${labels}</div>`;
+}
+
+function roleChart(papers) {
+  const counts = {};
+  papers.forEach(p => counts[p.role] = (counts[p.role] || 0) + 1);
+  const total = papers.length || 1;
+  const present = ROLES.filter(r => counts[r.key]);
+  if (!present.length) return `<div class="status">No papers yet.</div>`;
+  const segs = present.map(r =>
+    `<div class="roleseg" style="flex:${counts[r.key]};background:${r.color}"
+      data-tip="${r.label}: ${counts[r.key]} of ${papers.length}"></div>`).join('');
+  const key = present.map(r => `<div class="rolekey-item">
+      <span class="rolekey-sw" style="background:${r.color}"></span>
+      <span>${r.label} <span class="rk-desc">— ${r.desc}</span></span>
+      <span class="rolekey-n">${counts[r.key]} · ${Math.round(100 * counts[r.key] / total)}%</span>
+    </div>`).join('');
+  return `<div class="rolebar">${segs}</div><div class="rolekey">${key}</div>`;
+}
+
+function momentumChart(s) {
+  const rising = (s.rising || []).slice(0, 6);
+  const fading = (s.fading || []).slice(0, 6);
+  if (!rising.length && !fading.length) return '';
+  const rows = Math.max(rising.length, fading.length);
+  let html = '';
+  for (let i = 0; i < rows; i++) {
+    const r = rising[i], f = fading[i];
+    const w = 100 - i * 12;
+    html += `<div class="mom-row">
+      <div class="mom-left">${f ? `<span class="mom-label">${esc(f)}</span>
+        <div class="mom-bar f" style="width:${w * 0.5}px"></div>` : ''}</div>
+      <div class="mom-mid"></div>
+      <div class="mom-right">${r ? `<div class="mom-bar r" style="width:${w * 0.5}px"></div>
+        <span class="mom-label">${esc(r)}</span>` : ''}</div>
+    </div>`;
+  }
+  return `<div style="margin-top:26px;padding-top:22px;border-top:1px solid rgba(120,140,200,0.08)">
+    <div class="sec-title" style="margin-bottom:6px">Topic momentum</div>
+    <div class="chart-caption">MeSH subject headings that make up more of their output in the last five
+      years than before it — what this lab is moving toward, and what it is moving on from.</div>
+    <div class="mom-head"><span class="f">← Less prominent now</span><span class="r">More prominent now →</span></div>
+    ${html}</div>`;
+}
+
+// --- papers ---
+function papersHTML(p, papers) {
+  const counts = { all: papers.length };
+  ROLES.forEach(r => counts[r.key] = papers.filter(a => a.role === r.key).length);
+  const filters = [{ key: 'all', label: 'All' }]
+    .concat(ROLES.filter(r => counts[r.key]).map(r => ({ key: r.key, label: r.label })))
+    .map(f => `<button class="fbtn ${ROLE_FILTER === f.key ? 'active' : ''}" data-role="${f.key}">${f.label} (${counts[f.key]})</button>`).join('');
+  const shown = ROLE_FILTER === 'all' ? papers : papers.filter(a => a.role === ROLE_FILTER);
+  return `<div class="panel"><h3>// Publications</h3>
+    <div class="filters">${filters}</div>
+    <div id="paper-list">${shown.map(a => paperHTML(a)).join('') || '<div class="status">Nothing in this view.</div>'}</div>
+  </div>`;
+}
+
+function paperHTML(a) {
+  const role = ROLES.find(r => r.key === a.role) || ROLES[3];
+  const crit = (a.updates || []).some(u => u.severity === 'critical');
+  const warn = (a.updates || []).some(u => u.severity === 'warning');
+  const badges = [];
+  if (a.isPreprint) badges.push(`<span class="upd-badge">Preprint</span>`);
+  if (crit) badges.push(`<span class="upd-badge critical">⊘ Retracted / concern</span>`);
+  else if (warn) badges.push(`<span class="upd-badge">✎ Corrected</span>`);
+  else if ((a.updates || []).length) badges.push(`<span class="upd-badge" style="border-color:rgba(0,240,255,0.3);color:var(--neon-immuno);background:rgba(0,240,255,0.06)">❝ ${a.updates.length} response${a.updates.length === 1 ? '' : 's'}</span>`);
+  return `<div class="paper">
+    <div class="paper-tier" style="background:${TIER_COLORS[a.priority] || TIER_COLORS.other}"></div>
+    <div class="paper-main">
+      <div class="paper-title"><a href="${esc(a.url)}" target="_blank" rel="noopener">${esc(a.title)}</a></div>
+      <div class="paper-meta">
+        <span class="role-badge ${esc(a.role)}">${role.label}</span>
+        <span>${esc(a.journal)}</span>
+        <span>${esc(a.date)}</span>
+        <span>position ${a.position}/${a.authorCount}</span>
+        ${badges.join('')}
+        <span class="paper-act">
+          <button class="fbtn" data-exclude="${esc(a.pmid)}" title="Not this researcher — remove and remember">Not them</button>
+        </span>
+      </div>
+    </div></div>`;
+}
+
+function reviewHTML(p) {
+  const rev = p.review || [];
+  if (!rev.length) return '';
+  return `<div class="panel"><h3>// Needs review</h3>
+    <div class="chart-caption">These records list only an initial, with no ORCID or affiliation to
+      confirm identity, so they are held out of the counts above rather than guessed at.</div>
+    ${rev.map(a => paperHTML(a)).join('')}
+  </div>`;
+}
+
+// --- recommendations ---
+function recsHTML(p) {
+  const recs = p.recommendations || [];
+  const head = `<div class="prof-head" style="margin-bottom:14px">
+      <div>
+        <h3 style="margin:0">// Researchers to track next</h3>
+        <div class="chart-caption" style="margin:8px 0 0">Suggested from two independent signals: people who
+          repeatedly appear as senior author alongside ${esc(p.displayName)}, and the authors leading
+          research PubMed considers closest to theirs.</div>
+      </div>
+      <button class="btn accent sm" id="get-recs">${recs.length ? '↻ Recompute' : '⌕ Find researchers'}</button>
+    </div>`;
+  if (!recs.length) {
+    return `<div class="panel">${head}
+      <div class="status" id="rec-status">No suggestions computed yet. This makes a few dozen PubMed
+        calls and takes about a minute.</div></div>`;
+  }
+  return `<div class="panel">${head}
+    <div class="status" id="rec-status">${p.recommendationsAt ? 'Computed ' + esc(p.recommendationsAt) : ''}</div>
+    ${recs.map(r => `<div class="rec">
+      <div class="rec-top">
+        <div>
+          <div class="rec-name">${esc(r.displayName)}</div>
+          <div class="rec-aff">${esc((r.affiliations || [])[0] || 'Affiliation not listed')}</div>
+        </div>
+        <div class="rec-acts">
+          <button class="btn primary sm" data-track-rec="${esc(r.suggestedKey)}">+ Track</button>
+          <button class="btn sm" data-dismiss-rec="${esc(r.suggestedKey)}">Dismiss</button>
+        </div>
+      </div>
+      <div class="rec-why">${esc(r.why)}</div>
+      <div class="rec-src">${(r.sources || []).map(s =>
+        `<span class="src-chip ${s === 'collaborator' ? 'collab' : 'related'}">${esc(s)}</span>`).join('')}
+        ${r.lastYear ? `<span class="src-chip" style="color:var(--ink-2);border-color:var(--line)">active to ${esc(r.lastYear)}</span>` : ''}</div>
+      ${(r.evidence || []).length ? `<div class="rec-ev">${r.evidence.map(e =>
+        `<div class="rec-ev-item">${esc(e.via)}: <a href="${esc(e.url)}" target="_blank" rel="noopener">${esc(e.title)}</a> <span style="color:var(--ink-2)">${esc(e.date)}</span></div>`).join('')}</div>` : ''}
+    </div>`).join('')}
+  </div>`;
+}
+
+// ---------- wiring ----------
+function wireProfile(p) {
+  document.querySelectorAll('[data-tip]').forEach(el => bindTip(el, el.dataset.tip));
+  document.querySelectorAll('.roleseg[data-tip]').forEach(el => bindTip(el, el.dataset.tip));
+
+  const ro = $('refresh-one');
+  if (ro) ro.onclick = async () => {
+    ro.disabled = true;
+    setStatus('global-status', 'Re-scanning PubMed…', 'spin');
+    try {
+      const r = await api('/api/author-refresh', { key: p.key });
+      const s = (r.summaries || [])[0] || {};
+      const np = (s.newPapers || []).length, nu = (s.newUpdates || []).length;
+      await load();
+      setStatus('global-status',
+        np || nu ? `${np} new paper${np === 1 ? '' : 's'}, ${nu} new update${nu === 1 ? '' : 's'}.`
+                 : 'Up to date — nothing new.', np || nu ? 'ok' : '');
+    } catch (e) { setStatus('global-status', 'Refresh failed: ' + e.message, 'err'); }
+    ro.disabled = false;
+  };
+
+  const un = $('untrack');
+  if (un) un.onclick = async () => {
+    if (!confirm(`Stop tracking ${p.displayName}? Their profile and fetched history will be removed.`)) return;
+    await api('/api/author-untrack', { key: p.key });
+    SELECTED = null;
+    await load();
+  };
+
+  document.querySelectorAll('[data-role]').forEach(el =>
+    el.onclick = () => { ROLE_FILTER = el.dataset.role; renderProfile(); });
+
+  const ut = $('upd-toggle');
+  if (ut) ut.onclick = () => { UPDATES_EXPANDED = !UPDATES_EXPANDED; renderProfile(); };
+
+  document.querySelectorAll('[data-exclude]').forEach(el => el.onclick = async () => {
+    await api('/api/author-exclude', { key: p.key, pmid: el.dataset.exclude });
+    await load();
+  });
+
+  const gr = $('get-recs');
+  if (gr) gr.onclick = async () => {
+    gr.disabled = true;
+    setStatus('rec-status', 'Scanning co-authors and related research — about a minute…', 'spin');
+    try {
+      const r = await api('/api/author-recommend', { key: p.key });
+      await load();
+      if (!(r.recommendations || []).length)
+        setStatus('rec-status', 'No suggestions cleared the relevance threshold.', '');
+    } catch (e) { setStatus('rec-status', 'Failed: ' + e.message, 'err'); }
+    gr.disabled = false;
+  };
+
+  document.querySelectorAll('[data-dismiss-rec]').forEach(el => el.onclick = async () => {
+    await api('/api/author-dismiss', { key: el.dataset.dismissRec });
+    await load();
+  });
+
+  document.querySelectorAll('[data-track-rec]').forEach(el => el.onclick = async () => {
+    const rec = (p.recommendations || []).find(r => r.suggestedKey === el.dataset.trackRec);
+    if (!rec) return;
+    el.disabled = true;
+    setStatus('rec-status', `Building a profile for ${rec.displayName}…`, 'spin');
+    try {
+      const r = await api('/api/author-track', {
+        identity: {
+          lastName: rec.lastName, foreNames: rec.foreNames, orcids: rec.orcids,
+          affiliations: rec.affiliations, displayName: rec.displayName,
+          suggestedKey: rec.suggestedKey,
+        },
+        branch: p.branch,
+        note: `Suggested from ${p.displayName}'s network`,
+      });
+      if (!r.ok) { setStatus('rec-status', r.error || 'Could not track.', 'err'); el.disabled = false; return; }
+      SELECTED = r.key;
+      await load();
+    } catch (e) { setStatus('rec-status', 'Failed: ' + e.message, 'err'); el.disabled = false; }
+  });
+}
+
+function setStatus(id, msg, cls) {
+  const el = $(id);
+  if (!el) return;
+  el.className = 'status' + (cls === 'err' ? ' err' : cls === 'ok' ? ' ok' : '');
+  el.innerHTML = (cls === 'spin' ? '<span class="spin"></span>' : '') + esc(msg);
+}
+
+// ---------- add-author flow ----------
+$('add-btn').onclick = () => { $('add-backdrop').classList.add('open'); $('name-input').focus(); };
+$('add-close').onclick = () => $('add-backdrop').classList.remove('open');
+$('add-backdrop').onclick = e => { if (e.target === $('add-backdrop')) $('add-backdrop').classList.remove('open'); };
+document.addEventListener('keydown', e => { if (e.key === 'Escape') $('add-backdrop').classList.remove('open'); });
+$('name-input').addEventListener('keydown', e => { if (e.key === 'Enter') doSearch(); });
+$('name-search').onclick = doSearch;
+
+async function doSearch() {
+  const name = $('name-input').value.trim();
+  if (!name) return;
+  $('identities').innerHTML = '';
+  setStatus('add-status', `Searching PubMed for "${name}" and grouping the results by person…`, 'spin');
+  try {
+    const r = await api('/api/author-resolve', { name });
+    if (!r.ok) { setStatus('add-status', r.error, 'err'); return; }
+    const ids = r.identities || [];
+    if (!ids.length) { setStatus('add-status', 'No PubMed authors matched that name.', 'err'); return; }
+    setStatus('add-status', `${ids.length} distinct ${ids.length === 1 ? 'person' : 'people'} match that name — pick the researcher you mean.`, '');
+    $('identities').innerHTML = ids.map((c, i) => `
+      <div class="ident ${c.alreadyTracked ? 'tracked' : ''}" data-i="${i}">
+        <div class="ident-name">${esc(c.displayName)}${c.alreadyTracked ? ' — already tracked' : ''}</div>
+        <div class="ident-meta">
+          ${c.papers} PAPER${c.papers === 1 ? '' : 'S'} · ${esc(c.firstYear)}–${esc(c.lastYear)}
+          ${c.orcids.length ? ` · ORCID ${esc(c.orcids[0])}` : ''}<br>
+          ${esc((c.affiliations || [])[0] || 'No affiliation listed')}<br>
+          ${esc((c.topJournals || []).join(' · '))}
+        </div>
+        ${(c.samples || [])[0] ? `<div class="ident-samp">e.g. “${esc(c.samples[0].title)}”</div>` : ''}
+      </div>`).join('');
+    document.querySelectorAll('.ident').forEach(el => el.onclick = () => {
+      const c = ids[+el.dataset.i];
+      if (!c.alreadyTracked) trackIdentity(c);
+    });
+  } catch (e) { setStatus('add-status', 'Search failed: ' + e.message, 'err'); }
+}
+
+async function trackIdentity(cluster) {
+  const branches = Object.entries(DATA.branches);
+  let branch = '';
+  if (branches.length) {
+    const list = branches.map(([k, v], i) => `${i + 1}. ${v.label}`).join('\n');
+    const pick = prompt(`File ${cluster.displayName} under which research branch?\n\n${list}\n\nEnter a number, or leave blank for none.`);
+    const idx = parseInt(pick, 10);
+    if (idx >= 1 && idx <= branches.length) branch = branches[idx - 1][0];
+  }
+  $('identities').innerHTML = '';
+  setStatus('add-status', `Fetching ${cluster.displayName}'s publication record…`, 'spin');
+  try {
+    const r = await api('/api/author-track', { identity: cluster, branch });
+    if (!r.ok) { setStatus('add-status', r.error || 'Could not create profile.', 'err'); return; }
+    SELECTED = r.key;
+    $('add-backdrop').classList.remove('open');
+    setStatus('add-status', '', '');
+    await load();
+  } catch (e) { setStatus('add-status', 'Failed: ' + e.message, 'err'); }
+}
+
+$('refresh-all-btn').onclick = async () => {
+  const btn = $('refresh-all-btn');
+  btn.disabled = true;
+  setStatus('global-status', 'Re-scanning every tracked author…', 'spin');
+  try {
+    const r = await api('/api/author-refresh', {});
+    const np = (r.summaries || []).reduce((n, s) => n + (s.newPapers || []).length, 0);
+    const nu = (r.summaries || []).reduce((n, s) => n + (s.newUpdates || []).length, 0);
+    await load();
+    setStatus('global-status', `${np} new paper${np === 1 ? '' : 's'}, ${nu} new update${nu === 1 ? '' : 's'} across ${(r.summaries || []).length} author(s).`, np || nu ? 'ok' : '');
+  } catch (e) { setStatus('global-status', 'Refresh failed: ' + e.message, 'err'); }
+  btn.disabled = false;
+};
+
+load().catch(e => setStatus('global-status', 'Could not load: ' + e.message + ' — is serve.py running?', 'err'));
+</script>
+</body>
+</html>

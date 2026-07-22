@@ -1,0 +1,2986 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TMF Malone ASD EurekaAlert Database</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;700&family=Space+Grotesk:wght@300;400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg-0: #05060a;
+    --bg-1: #0a0d14;
+    --bg-2: #11151f;
+    --ink-0: #e6ecff;
+    --ink-1: #98a4c2;
+    --ink-2: #5d6783;
+    --grid: rgba(120, 140, 200, 0.06);
+    --neon-immuno:   #00f0ff;
+    --neon-cyto:     #ff2bd6;
+    --neon-behav:    #b6ff3c;
+    --neon-neuro:    #ffb020;
+    --neon-gen:      #7a5cff;
+    --neon-interv:   #ff5757;
+    --tier-trial:  #ff5757;
+    --tier-clin:   #ffb020;
+    --tier-trans:  #b6ff3c;
+    --tier-mech:   #98a4c2;
+    --tier-review: #7a5cff;
+    --tier-other:  #5d6783;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body {
+    height: 100%; width: 100%;
+    background: var(--bg-0); color: var(--ink-0);
+    font-family: 'Space Grotesk', system-ui, sans-serif;
+    overflow: hidden;
+    -webkit-font-smoothing: antialiased;
+  }
+  body::before {
+    content: ''; position: fixed; inset: 0;
+    background-image:
+      linear-gradient(var(--grid) 1px, transparent 1px),
+      linear-gradient(90deg, var(--grid) 1px, transparent 1px);
+    background-size: 48px 48px;
+    pointer-events: none; z-index: 0;
+  }
+  body::after {
+    content: ''; position: fixed; inset: 0;
+    background: radial-gradient(ellipse at center, transparent 0%, rgba(5,6,10,0.7) 70%, var(--bg-0) 100%);
+    pointer-events: none; z-index: 1;
+  }
+  .hud {
+    position: fixed; top: 0; left: 0; right: 0;
+    padding: 22px 32px;
+    display: flex; justify-content: space-between; align-items: flex-start;
+    z-index: 10; pointer-events: none;
+  }
+  .hud > * { pointer-events: auto; }
+  .brand {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px; letter-spacing: 0.28em;
+    color: var(--ink-1); text-transform: uppercase;
+  }
+  .brand .title {
+    display: block; font-family: 'Space Grotesk', sans-serif;
+    font-size: 22px; letter-spacing: -0.01em;
+    color: var(--ink-0); text-transform: none;
+    margin-top: 4px; font-weight: 500;
+  }
+  .brand .title em {
+    font-style: normal; color: var(--neon-immuno);
+    text-shadow: 0 0 12px rgba(0,240,255,0.5);
+  }
+  .meta {
+    text-align: right;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px; letter-spacing: 0.2em;
+    color: var(--ink-2); text-transform: uppercase;
+    line-height: 1.8;
+  }
+  .meta .dot {
+    display: inline-block; width: 6px; height: 6px;
+    border-radius: 50%; background: var(--neon-behav);
+    margin-right: 6px; box-shadow: 0 0 8px var(--neon-behav);
+    animation: pulse 2s ease-in-out infinite;
+  }
+  @keyframes pulse { 0%,100% { opacity: 1; } 50% { opacity: 0.3; } }
+
+  .legend {
+    position: fixed; left: 32px; bottom: 32px; z-index: 10;
+    background: rgba(10, 13, 20, 0.7);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(120, 140, 200, 0.12);
+    border-radius: 4px; padding: 18px 20px; min-width: 240px;
+  }
+  .legend h3 {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px; letter-spacing: 0.28em;
+    color: var(--ink-2); text-transform: uppercase;
+    margin-bottom: 14px; font-weight: 400;
+  }
+  .legend-item {
+    display: flex; align-items: center; gap: 10px;
+    padding: 5px 0; font-size: 12px; color: var(--ink-1);
+    cursor: pointer; transition: color 0.2s; user-select: none;
+  }
+  .legend-item:hover { color: var(--ink-0); }
+  .legend-swatch {
+    width: 10px; height: 10px; border-radius: 50%;
+    box-shadow: 0 0 8px currentColor;
+  }
+  .legend-count {
+    margin-left: auto; font-family: 'JetBrains Mono', monospace;
+    font-size: 10px; color: var(--ink-2);
+  }
+  #network {
+    position: fixed; inset: 0; z-index: 5; cursor: grab;
+  }
+  #network:active { cursor: grabbing; }
+  #network.hover-clickable { cursor: pointer; }
+  .corner {
+    position: fixed; width: 14px; height: 14px;
+    border: 1px solid var(--ink-2); z-index: 10;
+    pointer-events: none;
+  }
+  .corner.tl { top: 16px; left: 16px; border-right: none; border-bottom: none; }
+  .corner.tr { top: 16px; right: 16px; border-left: none; border-bottom: none; }
+  .corner.bl { bottom: 16px; left: 16px; border-right: none; border-top: none; }
+  .corner.br { bottom: 16px; right: 16px; border-left: none; border-top: none; }
+  .hint {
+    position: fixed; bottom: 12px; left: 50%; transform: translateX(-50%);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px; letter-spacing: 0.2em;
+    color: var(--ink-2); text-transform: uppercase;
+    z-index: 10; pointer-events: none;
+  }
+
+  /* DEFINITIONS BUTTON */
+  .def-button {
+    position: fixed;
+    top: 24px;
+    right: 240px;  /* sits to the LEFT of the meta panel */
+    z-index: 20;
+    background: rgba(10, 13, 20, 0.85);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid var(--neon-immuno);
+    color: var(--neon-immuno);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px; letter-spacing: 0.25em;
+    text-transform: uppercase;
+    padding: 10px 16px;
+    border-radius: 4px;
+    cursor: pointer;
+    display: flex; align-items: center; gap: 8px;
+    transition: all 0.18s;
+    box-shadow: 0 0 12px rgba(0, 240, 255, 0.25);
+  }
+  .def-button:hover {
+    background: var(--neon-immuno);
+    color: #05060a;
+    box-shadow: 0 0 20px rgba(0, 240, 255, 0.5);
+  }
+  .def-button::before {
+    content: '◇';
+    font-size: 13px;
+  }
+
+  /* WHAT'S NEW BUTTON — sits to the left of Definitions */
+  .new-button {
+    position: fixed;
+    top: 24px;
+    right: 380px;
+    z-index: 20;
+    background: rgba(10, 13, 20, 0.85);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid var(--neon-behav);
+    color: var(--neon-behav);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px; letter-spacing: 0.25em;
+    text-transform: uppercase;
+    padding: 10px 16px;
+    border-radius: 4px;
+    cursor: pointer;
+    display: flex; align-items: center; gap: 8px;
+    transition: all 0.18s;
+    box-shadow: 0 0 12px rgba(182, 255, 60, 0.2);
+  }
+  .new-button:hover {
+    background: var(--neon-behav);
+    color: #05060a;
+    box-shadow: 0 0 20px rgba(182, 255, 60, 0.45);
+  }
+  .new-button::before {
+    content: '◆';
+    font-size: 12px;
+  }
+  .new-button .pulse-dot {
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: var(--neon-behav);
+    box-shadow: 0 0 8px var(--neon-behav);
+    animation: pulse 2s ease-in-out infinite;
+    margin-left: 4px;
+  }
+  .new-button:hover .pulse-dot {
+    background: #05060a;
+    box-shadow: none;
+  }
+
+  @media (max-width: 1100px) {
+    .new-button { right: 32px; top: auto; bottom: 260px; }
+    .def-button { right: 32px; top: auto; bottom: 200px; }
+  }
+
+  /* AGENT LAB BUTTON */
+  .lab-button {
+    position: fixed;
+    top: 24px;
+    right: 540px;
+    z-index: 20;
+    background: rgba(10, 13, 20, 0.85);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid var(--neon-cyto);
+    color: var(--neon-cyto);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px; letter-spacing: 0.25em;
+    text-transform: uppercase;
+    padding: 10px 16px;
+    border-radius: 4px;
+    cursor: pointer;
+    display: flex; align-items: center; gap: 8px;
+    transition: all 0.18s;
+    box-shadow: 0 0 12px rgba(255, 43, 214, 0.2);
+  }
+  .lab-button:hover {
+    background: var(--neon-cyto);
+    color: #05060a;
+    box-shadow: 0 0 20px rgba(255, 43, 214, 0.5);
+  }
+  .lab-button::before {
+    content: '⬢';
+    font-size: 12px;
+  }
+  @media (max-width: 1100px) {
+    .lab-button { right: 32px; top: auto; bottom: 320px; }
+  }
+
+  /* BOOKMARKS BUTTON — sits to the left of Agent Lab */
+  .bm-button {
+    position: fixed;
+    top: 24px;
+    right: 700px;
+    z-index: 20;
+    background: rgba(10, 13, 20, 0.85);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid #ffd97a;
+    color: #ffd97a;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px; letter-spacing: 0.25em;
+    text-transform: uppercase;
+    padding: 10px 16px;
+    border-radius: 4px;
+    cursor: pointer;
+    display: flex; align-items: center; gap: 8px;
+    transition: all 0.18s;
+    box-shadow: 0 0 12px rgba(255, 217, 122, 0.2);
+  }
+  .bm-button:hover {
+    background: #ffd97a; color: #05060a;
+    box-shadow: 0 0 20px rgba(255, 217, 122, 0.5);
+  }
+  .bm-button::before { content: '★'; font-size: 12px; }
+  .bm-button .bm-count {
+    background: #ffd97a; color: #05060a; border-radius: 8px;
+    padding: 0 6px; font-size: 10px; min-width: 14px; text-align: center; letter-spacing: 0;
+  }
+  .bm-button:hover .bm-count { background: #05060a; color: #ffd97a; }
+  .bm-button .bm-count:empty { display: none; }
+  @media (max-width: 1100px) {
+    .bm-button { right: 32px; top: auto; bottom: 380px; }
+  }
+
+  /* AUTHOR TRACKER — leftmost; leaves the network view for authors.html */
+  .auth-button {
+    position: fixed;
+    top: 24px;
+    right: 860px;
+    z-index: 20;
+    background: rgba(10, 13, 20, 0.85);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid var(--neon-cyto);
+    color: var(--neon-cyto);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px; letter-spacing: 0.25em;
+    text-transform: uppercase;
+    padding: 10px 16px;
+    border-radius: 4px;
+    cursor: pointer;
+    display: flex; align-items: center; gap: 8px;
+    transition: all 0.18s;
+    text-decoration: none;
+    box-shadow: 0 0 12px rgba(255, 43, 214, 0.2);
+  }
+  .auth-button:hover {
+    background: var(--neon-cyto); color: #05060a;
+    box-shadow: 0 0 20px rgba(255, 43, 214, 0.5);
+  }
+  .auth-button::before { content: '◈'; font-size: 12px; }
+  @media (max-width: 1100px) {
+    .auth-button { right: 32px; top: auto; bottom: 440px; }
+  }
+
+  /* bookmark toggle on article cards */
+  .bm-toggle {
+    cursor: pointer; user-select: none; color: #ffd97a;
+    border: 1px solid rgba(255, 217, 122, 0.4); border-radius: 4px;
+    padding: 1px 7px; font-size: 10px; letter-spacing: 0.08em;
+    transition: all 0.15s; white-space: nowrap;
+  }
+  .bm-toggle:hover { background: rgba(255, 217, 122, 0.15); }
+  .bm-toggle.on { background: #ffd97a; color: #05060a; border-color: #ffd97a; }
+
+  /* per-article node feedback 👍/👎 */
+  .fb-ctl { display: inline-flex; gap: 2px; align-items: center; }
+  .fb-up, .fb-down {
+    cursor: pointer; user-select: none; opacity: 0.4;
+    font-size: 12px; line-height: 1; padding: 1px 4px; border-radius: 3px;
+    transition: all 0.15s;
+  }
+  .fb-up:hover, .fb-down:hover { opacity: 1; }
+  .fb-up.on { opacity: 1; background: rgba(45, 212, 191, 0.28); }
+  .fb-down.on { opacity: 1; background: rgba(224, 86, 107, 0.28); }
+
+  /* learned-terms line in the branch modal header */
+  .learned-line {
+    display: inline-block; margin-top: 6px;
+    color: var(--ink-2); font-family: 'JetBrains Mono', monospace;
+    font-size: 10px; letter-spacing: 0.06em; line-height: 1.6;
+  }
+  .learned-line .lt-inc { color: #2dd4bf; }
+  .learned-line .lt-exc { color: #e0566b; }
+  .bm-empty { color: #7d8aa3; padding: 44px 20px; text-align: center; font-size: 13px; line-height: 1.6; }
+
+  /* AGENT LAB MODAL */
+  .lab-modal {
+    width: 100%; max-width: 920px; max-height: 90vh;
+    background: var(--bg-1);
+    border: 1px solid rgba(120, 140, 200, 0.18);
+    border-radius: 6px;
+    display: flex; flex-direction: column; overflow: hidden;
+    transform: translateY(20px); transition: transform 0.3s;
+    box-shadow: 0 0 60px rgba(255, 43, 214, 0.12);
+  }
+  .modal-backdrop.open .lab-modal { transform: translateY(0); }
+  .lab-modal .modal-eyebrow { color: var(--neon-cyto); }
+  .lab-modal .modal-close:hover {
+    border-color: var(--neon-cyto);
+    color: var(--neon-cyto);
+  }
+
+  .lab-tabs {
+    display: flex; gap: 0;
+    padding: 0 26px;
+    border-bottom: 1px solid rgba(120, 140, 200, 0.12);
+    background: rgba(5, 6, 10, 0.4);
+  }
+  .lab-tab {
+    background: transparent;
+    border: none;
+    color: var(--ink-2);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    padding: 14px 18px;
+    cursor: pointer;
+    border-bottom: 2px solid transparent;
+    transition: all 0.15s;
+    margin-bottom: -1px;
+  }
+  .lab-tab:hover { color: var(--ink-0); }
+  .lab-tab.active {
+    color: var(--neon-cyto);
+    border-bottom-color: var(--neon-cyto);
+  }
+
+  .lab-body {
+    flex: 1; overflow-y: auto;
+    padding: 20px 26px 24px;
+  }
+
+  /* SSL STATUS BAR */
+  .lab-ssl-bar {
+    margin: 0 26px;
+    padding: 10px 14px;
+    background: rgba(182, 255, 60, 0.04);
+    border: 1px solid rgba(182, 255, 60, 0.25);
+    border-radius: 3px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--ink-1);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-shrink: 0;
+  }
+  .lab-ssl-bar.warn {
+    background: rgba(255, 87, 87, 0.06);
+    border-color: rgba(255, 87, 87, 0.35);
+  }
+  .lab-ssl-bar.insecure {
+    background: rgba(255, 176, 32, 0.06);
+    border-color: rgba(255, 176, 32, 0.35);
+  }
+  .lab-ssl-icon {
+    font-size: 13px;
+    color: var(--neon-behav);
+  }
+  .lab-ssl-bar.warn .lab-ssl-icon { color: var(--neon-interv); }
+  .lab-ssl-bar.insecure .lab-ssl-icon { color: var(--neon-neuro); }
+  .lab-ssl-text {
+    flex: 1;
+    letter-spacing: 0.05em;
+  }
+  .lab-ssl-text code {
+    background: rgba(120,140,200,0.1);
+    padding: 1px 5px;
+    border-radius: 2px;
+    color: var(--neon-cyto);
+    font-size: 10px;
+  }
+  .lab-ssl-toggle {
+    background: transparent;
+    border: 1px solid rgba(255, 176, 32, 0.5);
+    color: var(--neon-neuro);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    padding: 5px 10px;
+    border-radius: 3px;
+    cursor: pointer;
+    transition: all 0.15s;
+    white-space: nowrap;
+  }
+  .lab-ssl-toggle:hover {
+    background: var(--neon-neuro);
+    color: #05060a;
+  }
+  .lab-ssl-toggle.enable {
+    border-color: rgba(182, 255, 60, 0.5);
+    color: var(--neon-behav);
+  }
+  .lab-ssl-toggle.enable:hover {
+    background: var(--neon-behav);
+    color: #05060a;
+  }
+
+  .lab-body::-webkit-scrollbar { width: 8px; }
+  .lab-body::-webkit-scrollbar-track { background: transparent; }
+  .lab-body::-webkit-scrollbar-thumb {
+    background: rgba(120, 140, 200, 0.2);
+    border-radius: 4px;
+  }
+
+  .lab-controls {
+    display: flex; gap: 10px; flex-wrap: wrap;
+    align-items: center;
+    padding: 14px 0 18px;
+    border-bottom: 1px solid rgba(120, 140, 200, 0.08);
+    margin-bottom: 18px;
+  }
+  .lab-controls input[type="search"],
+  .lab-controls input[type="number"] {
+    background: var(--bg-2);
+    color: var(--ink-0);
+    border: 1px solid rgba(120, 140, 200, 0.18);
+    border-radius: 3px;
+    padding: 8px 12px;
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 13px;
+    outline: none;
+    transition: border-color 0.15s;
+  }
+  .lab-controls input[type="search"] { flex: 1; min-width: 220px; }
+  .lab-controls input[type="number"] { width: 70px; }
+  .lab-controls input:focus { border-color: var(--neon-cyto); }
+  .lab-controls label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px; letter-spacing: 0.15em;
+    color: var(--ink-2); text-transform: uppercase;
+    display: flex; align-items: center; gap: 6px;
+  }
+  .lab-controls input[type="checkbox"] {
+    accent-color: var(--neon-cyto);
+  }
+  .lab-btn {
+    background: var(--neon-cyto);
+    color: #05060a;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 3px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px; letter-spacing: 0.2em;
+    text-transform: uppercase;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+  .lab-btn:hover { box-shadow: 0 0 16px rgba(255, 43, 214, 0.5); }
+  .lab-btn:disabled {
+    opacity: 0.4; cursor: not-allowed;
+    box-shadow: none;
+  }
+  .lab-btn-secondary {
+    background: transparent;
+    color: var(--ink-1);
+    border: 1px solid rgba(120, 140, 200, 0.25);
+  }
+  .lab-btn-secondary:hover {
+    color: var(--ink-0);
+    border-color: rgba(120, 140, 200, 0.45);
+    box-shadow: none;
+  }
+
+  .lab-status {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--ink-2);
+    letter-spacing: 0.1em;
+    padding: 8px 0;
+  }
+  .lab-status.is-error { color: var(--neon-interv); }
+  .lab-status.is-success { color: var(--neon-behav); }
+
+  .lab-result-group {
+    margin-bottom: 18px;
+  }
+  .lab-result-header {
+    display: flex; align-items: baseline; gap: 12px;
+    padding: 10px 12px;
+    background: rgba(120, 140, 200, 0.04);
+    border: 1px solid rgba(120, 140, 200, 0.1);
+    border-left: 3px solid var(--group-color, var(--neon-cyto));
+    border-radius: 3px;
+    margin-bottom: 8px;
+  }
+  .lab-result-header .lab-journal {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 14px;
+    color: var(--ink-0);
+    font-weight: 500;
+  }
+  .lab-result-header .lab-branch {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--group-color, var(--neon-cyto));
+  }
+  .lab-result-header .lab-count {
+    margin-left: auto;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    color: var(--ink-2);
+    letter-spacing: 0.1em;
+  }
+
+  .lab-card {
+    padding: 12px 14px;
+    margin: 6px 0;
+    background: rgba(120, 140, 200, 0.03);
+    border: 1px solid rgba(120, 140, 200, 0.08);
+    border-left: 3px solid var(--priority-color, var(--ink-2));
+    border-radius: 3px;
+    position: relative;
+  }
+  .lab-card .lab-card-title {
+    font-size: 13px;
+    color: var(--ink-0);
+    line-height: 1.4;
+    margin-bottom: 6px;
+    padding-right: 12px;
+  }
+  .lab-card .lab-card-meta {
+    display: flex; gap: 10px; flex-wrap: wrap;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9px;
+    color: var(--ink-2);
+    letter-spacing: 0.05em;
+    margin-bottom: 8px;
+  }
+  .lab-card .lab-card-meta .lab-tier {
+    background: var(--priority-color);
+    color: #05060a;
+    padding: 1px 6px;
+    border-radius: 2px;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+  }
+  .lab-card .lab-card-abstract {
+    font-size: 12px;
+    color: var(--ink-1);
+    line-height: 1.5;
+    margin: 6px 0 10px;
+    font-style: italic;
+  }
+  .lab-card .lab-card-actions {
+    display: flex; gap: 8px; align-items: center;
+    flex-wrap: wrap;
+  }
+  .lab-card .lab-card-actions select {
+    background: var(--bg-2);
+    color: var(--ink-0);
+    border: 1px solid rgba(120, 140, 200, 0.18);
+    border-radius: 3px;
+    padding: 6px 8px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.05em;
+    outline: none;
+    min-width: 160px;
+  }
+  .lab-card .lab-locked-journal {
+    display: inline-flex; align-items: center; gap: 4px;
+    background: rgba(255, 217, 122, 0.1);
+    border: 1px solid rgba(255, 217, 122, 0.35);
+    color: #ffd97a;
+    border-radius: 3px;
+    padding: 5px 9px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9.5px; letter-spacing: 0.04em;
+  }
+  .lab-card .lab-add-btn {
+    background: var(--neon-behav);
+    color: #05060a;
+    border: none;
+    padding: 6px 12px;
+    border-radius: 3px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+  .lab-card .lab-add-btn:hover { box-shadow: 0 0 12px rgba(182, 255, 60, 0.45); }
+  .lab-card .lab-add-btn:disabled {
+    background: rgba(120, 140, 200, 0.15);
+    color: var(--ink-2);
+    cursor: not-allowed;
+    box-shadow: none;
+  }
+  .lab-card .lab-open-link {
+    color: var(--ink-2);
+    text-decoration: none;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+  }
+  .lab-card .lab-open-link:hover { color: var(--neon-cyto); }
+  .lab-card.in-store::after {
+    content: 'IN STORE';
+    position: absolute;
+    top: 10px; right: 12px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.15em;
+    color: var(--neon-behav);
+    background: rgba(182, 255, 60, 0.08);
+    border: 1px solid rgba(182, 255, 60, 0.25);
+    padding: 2px 6px;
+    border-radius: 2px;
+  }
+
+  .lab-empty {
+    text-align: center;
+    padding: 40px 20px;
+    color: var(--ink-2);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+  }
+  .lab-loader {
+    display: inline-block;
+    width: 14px; height: 14px;
+    border: 2px solid rgba(255, 43, 214, 0.2);
+    border-top-color: var(--neon-cyto);
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+    margin-right: 8px;
+    vertical-align: middle;
+  }
+  .lab-tabpanel { display: none; }
+  .lab-tabpanel.active { display: block; }
+
+  /* DEFINITIONS MODAL */
+  .def-modal {
+    width: 100%; max-width: 720px; max-height: 85vh;
+    background: var(--bg-1);
+    border: 1px solid rgba(120, 140, 200, 0.18);
+    border-radius: 6px;
+    display: flex; flex-direction: column; overflow: hidden;
+    transform: translateY(20px); transition: transform 0.3s;
+    box-shadow: 0 0 60px rgba(0, 240, 255, 0.12);
+  }
+  .modal-backdrop.open .def-modal { transform: translateY(0); }
+
+  .def-modal .modal-header { border-bottom-color: rgba(120, 140, 200, 0.12); }
+  .def-modal .modal-eyebrow { color: var(--neon-immuno); }
+  .def-modal .modal-close:hover {
+    border-color: var(--neon-immuno);
+    color: var(--neon-immuno);
+  }
+
+  .def-body {
+    flex: 1; overflow-y: auto;
+    padding: 20px 26px 28px;
+  }
+  .def-body::-webkit-scrollbar { width: 8px; }
+  .def-body::-webkit-scrollbar-track { background: transparent; }
+  .def-body::-webkit-scrollbar-thumb {
+    background: rgba(120, 140, 200, 0.2);
+    border-radius: 4px;
+  }
+
+  .def-entry {
+    padding: 18px 0;
+    border-bottom: 1px solid rgba(120, 140, 200, 0.08);
+  }
+  .def-entry:last-child { border-bottom: none; }
+  .def-entry:first-child { padding-top: 4px; }
+
+  .def-term {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 18px;
+    font-weight: 500;
+    color: var(--ink-0);
+    margin-bottom: 4px;
+    display: flex; align-items: baseline; gap: 10px;
+    flex-wrap: wrap;
+  }
+  .def-term .def-marker {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.25em;
+    color: var(--neon-immuno);
+    background: rgba(0, 240, 255, 0.1);
+    border: 1px solid rgba(0, 240, 255, 0.25);
+    padding: 2px 7px;
+    border-radius: 2px;
+    text-transform: uppercase;
+    font-weight: 400;
+  }
+  .def-body-text {
+    font-size: 14px;
+    color: var(--ink-1);
+    line-height: 1.65;
+    margin-top: 6px;
+  }
+  .def-tags {
+    display: flex; flex-wrap: wrap; gap: 6px;
+    margin-top: 12px;
+  }
+  .def-tag {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.06em;
+    color: var(--ink-1);
+    background: rgba(120, 140, 200, 0.06);
+    border: 1px solid rgba(120, 140, 200, 0.12);
+    padding: 3px 8px;
+    border-radius: 2px;
+  }
+
+  /* WHAT'S NEW MODAL */
+  .new-modal {
+    width: 100%; max-width: 820px; max-height: 88vh;
+    background: var(--bg-1);
+    border: 1px solid rgba(120, 140, 200, 0.18);
+    border-radius: 6px;
+    display: flex; flex-direction: column; overflow: hidden;
+    transform: translateY(20px); transition: transform 0.3s;
+    box-shadow: 0 0 60px rgba(182, 255, 60, 0.12);
+  }
+  .modal-backdrop.open .new-modal { transform: translateY(0); }
+  .new-modal .modal-eyebrow { color: var(--neon-behav); }
+  .new-modal .modal-close:hover {
+    border-color: var(--neon-behav);
+    color: var(--neon-behav);
+  }
+
+  .new-body {
+    flex: 1; overflow-y: auto;
+    padding: 16px 26px 28px;
+  }
+  .new-body::-webkit-scrollbar { width: 8px; }
+  .new-body::-webkit-scrollbar-track { background: transparent; }
+  .new-body::-webkit-scrollbar-thumb {
+    background: rgba(120, 140, 200, 0.2);
+    border-radius: 4px;
+  }
+
+  .run-section {
+    margin: 18px 0 8px;
+  }
+  .run-section:first-child { margin-top: 6px; }
+  .run-header {
+    display: flex; align-items: baseline; gap: 14px;
+    padding: 10px 12px;
+    background: rgba(120, 140, 200, 0.04);
+    border: 1px solid rgba(120, 140, 200, 0.1);
+    border-left: 3px solid var(--run-color, var(--neon-behav));
+    border-radius: 3px;
+    margin-bottom: 10px;
+  }
+  .run-header.is-seed { --run-color: var(--ink-2); }
+  .run-date {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    color: var(--ink-0);
+    font-weight: 500;
+    letter-spacing: 0.05em;
+  }
+  .run-tag {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--run-color, var(--neon-behav));
+    background: rgba(120, 140, 200, 0.05);
+    border: 1px solid currentColor;
+    padding: 2px 7px;
+    border-radius: 2px;
+  }
+  .run-count {
+    margin-left: auto;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    color: var(--ink-2);
+    letter-spacing: 0.1em;
+  }
+
+  .new-item {
+    display: block;
+    padding: 10px 14px;
+    margin: 4px 0;
+    background: rgba(120, 140, 200, 0.02);
+    border: 1px solid rgba(120, 140, 200, 0.06);
+    border-left: 2px solid var(--priority-color, var(--ink-2));
+    border-radius: 3px;
+    text-decoration: none; color: inherit;
+    transition: all 0.15s;
+  }
+  .new-item:hover {
+    background: rgba(120, 140, 200, 0.05);
+    border-color: rgba(120, 140, 200, 0.18);
+    transform: translateX(2px);
+  }
+  .new-item .ni-title {
+    font-size: 13px;
+    color: var(--ink-0);
+    line-height: 1.4;
+    margin-bottom: 6px;
+  }
+  .new-item .ni-meta {
+    display: flex; gap: 10px; flex-wrap: wrap;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9px;
+    color: var(--ink-2);
+    letter-spacing: 0.05em;
+    align-items: center;
+  }
+  .new-item .ni-meta .ni-branch {
+    color: var(--branch-color, var(--ink-1));
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+  }
+  .new-item .ni-meta .ni-tier {
+    background: var(--priority-color);
+    color: #05060a;
+    padding: 1px 6px;
+    border-radius: 2px;
+    letter-spacing: 0.1em;
+    font-weight: 600;
+  }
+  .new-item .ni-meta .ni-journal {
+    color: var(--ink-1);
+  }
+  .new-item.is-boosted {
+    background: rgba(120, 140, 200, 0.04);
+    border-left-width: 3px;
+  }
+
+  .new-empty {
+    text-align: center;
+    padding: 50px 20px;
+    color: var(--ink-2);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+  }
+
+  /* DISMISS CONTROLS — What's New */
+  .ni-row {
+    display: flex; align-items: stretch; gap: 6px;
+    margin: 4px 0;
+  }
+  .ni-row .new-item { flex: 1; margin: 0; }
+  .ni-dismiss, .run-dismiss {
+    background: rgba(120, 140, 200, 0.04);
+    border: 1px solid rgba(120, 140, 200, 0.15);
+    color: var(--ink-2);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px; letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 0 10px;
+    border-radius: 3px;
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+  .ni-dismiss:hover, .run-dismiss:hover {
+    border-color: var(--neon-interv);
+    color: var(--neon-interv);
+    background: rgba(255, 87, 87, 0.08);
+  }
+  .run-dismiss { margin-left: 8px; padding: 3px 9px; }
+  .run-header { gap: 12px; }
+  .undo-bar {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 8px 14px;
+    margin: 0 0 14px;
+    background: rgba(120, 140, 200, 0.05);
+    border: 1px dashed rgba(120, 140, 200, 0.2);
+    border-radius: 3px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    color: var(--ink-2);
+    text-transform: uppercase;
+  }
+  .undo-bar button {
+    background: transparent;
+    border: 1px solid rgba(120, 140, 200, 0.2);
+    color: var(--ink-1);
+    font-family: inherit; font-size: 10px;
+    letter-spacing: 0.1em; text-transform: uppercase;
+    padding: 4px 10px;
+    border-radius: 2px;
+    cursor: pointer;
+  }
+  .undo-bar button:hover {
+    border-color: var(--neon-behav);
+    color: var(--neon-behav);
+  }
+
+  /* BOOT */
+  #boot {
+    position: fixed; inset: 0;
+    background: var(--bg-0);
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    z-index: 200;
+    font-family: 'JetBrains Mono', monospace;
+    transition: opacity 0.3s;
+  }
+  #boot.hidden { opacity: 0; pointer-events: none; }
+  #boot .spinner {
+    width: 32px; height: 32px;
+    border: 2px solid rgba(120,140,200,0.15);
+    border-top-color: var(--neon-immuno);
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+    margin-bottom: 18px;
+    box-shadow: 0 0 20px rgba(0,240,255,0.3);
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+  #boot .msg {
+    font-size: 11px; letter-spacing: 0.3em;
+    text-transform: uppercase; color: var(--ink-1);
+  }
+  #boot .err {
+    margin-top: 20px; max-width: 540px;
+    padding: 16px 20px;
+    border: 1px solid rgba(255, 87, 87, 0.3);
+    background: rgba(255, 87, 87, 0.05);
+    color: var(--ink-0);
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 13px; letter-spacing: 0; line-height: 1.5;
+    border-radius: 4px; text-transform: none;
+    display: none;
+  }
+  #boot .err code {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    background: rgba(120,140,200,0.1);
+    padding: 1px 5px; border-radius: 2px;
+    color: var(--neon-immuno);
+  }
+  #boot .err strong { color: var(--neon-interv); font-weight: 500; }
+
+  /* MODAL */
+  .modal-backdrop {
+    position: fixed; inset: 0;
+    background: rgba(5, 6, 10, 0.85);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    z-index: 100; display: none;
+    align-items: center; justify-content: center;
+    padding: 24px; opacity: 0; transition: opacity 0.25s;
+  }
+  .modal-backdrop.open { display: flex; opacity: 1; }
+  .modal {
+    width: 100%; max-width: 940px; max-height: 90vh;
+    background: var(--bg-1);
+    border: 1px solid rgba(120, 140, 200, 0.18);
+    border-radius: 6px;
+    display: flex; flex-direction: column; overflow: hidden;
+    transform: translateY(20px); transition: transform 0.3s;
+    box-shadow: 0 0 60px var(--accent, rgba(0,240,255,0.15));
+  }
+  .modal-backdrop.open .modal { transform: translateY(0); }
+  .modal-header {
+    padding: 20px 26px;
+    border-bottom: 1px solid rgba(120, 140, 200, 0.12);
+    display: flex; justify-content: space-between; align-items: flex-start;
+    flex-shrink: 0;
+  }
+  .modal-title-block { flex: 1; }
+  .modal-eyebrow {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px; letter-spacing: 0.28em;
+    text-transform: uppercase; margin-bottom: 6px;
+    color: var(--accent, var(--neon-immuno));
+  }
+  .modal-title {
+    font-size: 22px; font-weight: 500;
+    color: var(--ink-0); margin-bottom: 4px;
+  }
+  .modal-sub { font-size: 12px; color: var(--ink-1); line-height: 1.5; }
+  .modal-close {
+    background: transparent;
+    border: 1px solid rgba(120, 140, 200, 0.25);
+    color: var(--ink-1);
+    width: 32px; height: 32px;
+    border-radius: 4px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 16px; cursor: pointer;
+    transition: all 0.15s;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0; margin-left: 16px;
+  }
+  .modal-close:hover {
+    border-color: var(--accent, var(--neon-immuno));
+    color: var(--accent, var(--neon-immuno));
+  }
+  .agent-banner {
+    margin: 12px 26px 0;
+    padding: 10px 14px;
+    background: rgba(0, 240, 255, 0.04);
+    border: 1px dashed rgba(120, 140, 200, 0.2);
+    border-radius: 3px;
+    font-size: 11px; color: var(--ink-1);
+    display: flex; align-items: center; gap: 10px;
+  }
+  .agent-banner .dot {
+    width: 6px; height: 6px; border-radius: 50%;
+    background: var(--accent, var(--neon-immuno));
+    box-shadow: 0 0 6px var(--accent, var(--neon-immuno));
+    animation: pulse 2s ease-in-out infinite;
+    flex-shrink: 0;
+  }
+  .agent-banner code {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    background: rgba(120,140,200,0.08);
+    padding: 1px 5px; border-radius: 2px;
+    color: var(--accent, var(--neon-immuno));
+  }
+
+  .priority-filters {
+    padding: 12px 26px;
+    border-bottom: 1px solid rgba(120, 140, 200, 0.12);
+    display: flex; gap: 6px; flex-wrap: wrap; align-items: center;
+    background: rgba(5, 6, 10, 0.4);
+    flex-shrink: 0;
+  }
+  .pf-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9px; letter-spacing: 0.2em;
+    color: var(--ink-2); text-transform: uppercase;
+    margin-right: 6px;
+  }
+  .pf-chip {
+    background: transparent;
+    border: 1px solid rgba(120, 140, 200, 0.18);
+    color: var(--ink-1);
+    padding: 5px 11px; border-radius: 12px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px; letter-spacing: 0.1em;
+    text-transform: uppercase; cursor: pointer;
+    transition: all 0.15s;
+    display: flex; align-items: center; gap: 6px;
+  }
+  .pf-chip:hover { color: var(--ink-0); border-color: rgba(120,140,200,0.4); }
+  .pf-chip.active {
+    background: var(--chip-color, var(--ink-1));
+    border-color: var(--chip-color, var(--ink-1));
+    color: #05060a;
+    font-weight: 500;
+  }
+  .pf-chip .count {
+    font-size: 9px;
+    opacity: 0.7;
+  }
+  .pf-chip.boosted::before {
+    content: '★';
+    font-size: 10px;
+    line-height: 1;
+  }
+
+  .modal-filters {
+    padding: 14px 26px;
+    border-bottom: 1px solid rgba(120, 140, 200, 0.12);
+    display: flex; gap: 10px; flex-wrap: wrap; align-items: center;
+    flex-shrink: 0;
+    background: rgba(5, 6, 10, 0.4);
+  }
+  .filter-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9px; letter-spacing: 0.2em;
+    color: var(--ink-2); text-transform: uppercase;
+    margin-right: 4px;
+  }
+  .modal-filters input {
+    background: var(--bg-2); color: var(--ink-0);
+    border: 1px solid rgba(120, 140, 200, 0.18);
+    border-radius: 3px; padding: 7px 10px;
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 12px; outline: none;
+    transition: border-color 0.15s;
+  }
+  .modal-filters input:focus {
+    border-color: var(--accent, var(--neon-immuno));
+  }
+  .modal-filters input[type="search"] { flex: 1; min-width: 180px; }
+  .modal-filters input[type="date"] { color-scheme: dark; }
+  .filter-clear {
+    background: transparent;
+    border: 1px solid rgba(120, 140, 200, 0.18);
+    color: var(--ink-2);
+    padding: 7px 12px; border-radius: 3px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px; letter-spacing: 0.1em;
+    text-transform: uppercase; cursor: pointer;
+    transition: all 0.15s;
+  }
+  .filter-clear:hover {
+    color: var(--ink-0);
+    border-color: rgba(120, 140, 200, 0.35);
+  }
+  .modal-body {
+    flex: 1; overflow-y: auto;
+    padding: 8px 26px 24px;
+  }
+  .modal-body::-webkit-scrollbar { width: 8px; }
+  .modal-body::-webkit-scrollbar-track { background: transparent; }
+  .modal-body::-webkit-scrollbar-thumb {
+    background: rgba(120, 140, 200, 0.2);
+    border-radius: 4px;
+  }
+  .result-count {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px; letter-spacing: 0.2em;
+    color: var(--ink-2); text-transform: uppercase;
+    padding: 14px 0 10px;
+    border-bottom: 1px solid rgba(120, 140, 200, 0.08);
+    margin-bottom: 8px;
+    display: flex; justify-content: space-between; align-items: center;
+  }
+  .sort-toggle { display: flex; gap: 4px; }
+  .sort-btn {
+    background: transparent;
+    border: 1px solid rgba(120, 140, 200, 0.15);
+    color: var(--ink-2);
+    padding: 4px 9px; border-radius: 3px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9px; letter-spacing: 0.15em;
+    text-transform: uppercase; cursor: pointer;
+    transition: all 0.15s;
+  }
+  .sort-btn:hover { color: var(--ink-0); }
+  .sort-btn.active {
+    color: var(--accent, var(--neon-immuno));
+    border-color: var(--accent, var(--neon-immuno));
+  }
+
+  /* ARTICLE CARDS */
+  .article {
+    display: block;
+    padding: 14px 16px; margin: 8px 0;
+    background: rgba(120, 140, 200, 0.03);
+    border: 1px solid rgba(120, 140, 200, 0.08);
+    border-left: 3px solid var(--priority-color, var(--accent, var(--neon-immuno)));
+    border-radius: 3px;
+    text-decoration: none; color: inherit;
+    transition: all 0.15s; cursor: pointer;
+    position: relative;
+  }
+  .article:hover {
+    background: rgba(120, 140, 200, 0.06);
+    border-color: rgba(120, 140, 200, 0.18);
+    transform: translateX(2px);
+  }
+  /* BOOSTED treatment for top 3 tiers */
+  .article.boosted {
+    background: rgba(120, 140, 200, 0.05);
+    border-left-width: 4px;
+    box-shadow:
+      inset 0 0 0 1px rgba(120, 140, 200, 0.05),
+      -2px 0 12px -4px var(--priority-color);
+  }
+  .article.boosted::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; bottom: 0;
+    width: 4px;
+    background: var(--priority-color);
+    box-shadow: 0 0 14px var(--priority-color);
+    border-top-left-radius: 3px;
+    border-bottom-left-radius: 3px;
+    pointer-events: none;
+  }
+  .article.boosted:hover {
+    box-shadow:
+      inset 0 0 0 1px var(--priority-color),
+      0 0 24px -6px var(--priority-color);
+  }
+  .article-title {
+    font-size: 14px; font-weight: 500;
+    color: var(--ink-0); line-height: 1.4;
+    margin-bottom: 8px;
+    padding-right: 90px;
+  }
+  .priority-badge {
+    position: absolute;
+    top: 12px; right: 14px;
+    background: var(--priority-color);
+    color: #05060a;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9px; letter-spacing: 0.1em;
+    font-weight: 600;
+    padding: 2px 8px; border-radius: 2px;
+    text-transform: uppercase;
+    display: flex; align-items: center; gap: 4px;
+  }
+  .priority-badge.boosted::before {
+    content: '★';
+    font-size: 10px;
+    line-height: 1;
+  }
+  .article-meta {
+    display: flex; gap: 14px; flex-wrap: wrap;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px; letter-spacing: 0.05em;
+    color: var(--ink-1);
+    align-items: center;
+  }
+  .article-meta .journal {
+    color: var(--accent, var(--neon-immuno));
+    font-weight: 500;
+  }
+  .article-meta .if-badge {
+    background: rgba(120, 140, 200, 0.1);
+    padding: 2px 7px; border-radius: 2px;
+    color: var(--ink-0);
+  }
+  .article-meta .date { color: var(--ink-2); }
+  .article-meta .authors {
+    color: var(--ink-2);
+    font-style: italic;
+    flex-basis: 100%;
+    margin-top: 2px;
+  }
+  .article-meta .ext {
+    margin-left: auto;
+    color: var(--ink-2);
+    font-size: 9px; letter-spacing: 0.15em;
+    text-transform: uppercase;
+  }
+  .article-meta .new-badge {
+    background: rgba(0, 240, 255, 0.15);
+    color: var(--neon-immuno);
+    padding: 2px 6px;
+    border-radius: 2px;
+    font-size: 9px;
+    letter-spacing: 0.15em;
+  }
+  .article:hover .ext { color: var(--accent, var(--neon-immuno)); }
+  .empty-state {
+    text-align: center;
+    padding: 60px 20px;
+    color: var(--ink-2);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px; letter-spacing: 0.15em;
+    text-transform: uppercase;
+  }
+  .boosted-separator {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9px; letter-spacing: 0.25em;
+    color: var(--ink-2); text-transform: uppercase;
+    padding: 18px 0 8px;
+    display: flex; align-items: center; gap: 10px;
+  }
+  .boosted-separator::before, .boosted-separator::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: rgba(120, 140, 200, 0.1);
+  }
+
+  .tier-clinical-trial       { --priority-color: var(--tier-trial); }
+  .tier-clinical-observation { --priority-color: var(--tier-clin); }
+  .tier-translational        { --priority-color: var(--tier-trans); }
+  .tier-mechanistic          { --priority-color: var(--tier-mech); }
+  .tier-review               { --priority-color: var(--tier-review); }
+  .tier-other                { --priority-color: var(--tier-other); }
+</style>
+</head>
+<body>
+
+<div id="boot">
+  <div class="spinner"></div>
+  <div class="msg" id="boot-msg">LOADING DATABASE...</div>
+  <div class="err" id="boot-err">
+    <strong>Couldn't load articles.json.</strong><br><br>
+    This file needs to be served from a web server (not opened directly as <code>file://</code>) because browsers block local <code>fetch()</code> for security.<br><br>
+    Easiest fix: <code>cd</code> to the folder containing these files and run<br>
+    <code>python3 serve.py</code><br>
+    then open the URL it prints.
+  </div>
+</div>
+
+<canvas id="network"></canvas>
+
+<div class="corner tl"></div>
+<div class="corner tr"></div>
+<div class="corner bl"></div>
+<div class="corner br"></div>
+
+<div class="hud">
+  <div class="brand">
+    TMF MALONE / ASD EUREKA ALERT v5.0
+    <span class="title">ASD <em>EurekaAlert</em> Database</span>
+  </div>
+  <div class="meta">
+    <span class="dot"></span>BRANCHES: <span id="branch-count">—</span><br>
+    JOURNALS: <span id="journal-count">—</span><br>
+    ARTICLES: <span id="article-count">—</span><br>
+    UPDATED: <span id="last-updated">—</span>
+  </div>
+</div>
+
+<div class="legend" id="legend">
+  <h3>// Click a branch to explore</h3>
+</div>
+
+<a class="auth-button" href="authors.html" aria-label="Open author tracker">Authors</a>
+<button class="bm-button" id="bm-button" aria-label="Open bookmarks">Bookmarks <span class="bm-count" id="bm-count"></span></button>
+<button class="lab-button" id="lab-button" aria-label="Open Agent Lab">Agent Lab</button>
+<button class="new-button" id="new-button" aria-label="See what's new">What's New <span class="pulse-dot"></span></button>
+<button class="def-button" id="def-button" aria-label="Open definitions">Definitions</button>
+
+<div class="hint">CLICK A BRANCH NODE · ◈ AUTHORS · ⬢ AGENT LAB · ◆ WHAT'S NEW · ◇ DEFINITIONS · ESC TO CLOSE</div>
+
+<!-- AGENT LAB MODAL -->
+<div class="modal-backdrop" id="lab-backdrop">
+  <div class="lab-modal">
+    <div class="modal-header">
+      <div class="modal-title-block">
+        <div class="modal-eyebrow">// AGENT LAB</div>
+        <div class="modal-title">Run Agent · Search · Add</div>
+        <div class="modal-sub" id="lab-sub">Preview new articles the weekly agent would add, or search PubMed manually and assign results to any branch.</div>
+      </div>
+      <button class="modal-close" id="lab-close" aria-label="Close">×</button>
+    </div>
+    <div class="lab-ssl-bar" id="lab-ssl-bar" style="display:none;">
+      <span class="lab-ssl-icon" id="lab-ssl-icon">✓</span>
+      <span class="lab-ssl-text" id="lab-ssl-text">SSL · checking…</span>
+      <button class="lab-ssl-toggle" id="lab-ssl-toggle" style="display:none;">Disable SSL Verify</button>
+    </div>
+    <div class="lab-tabs">
+      <button class="lab-tab active" data-tab="agent">Agent Run</button>
+      <button class="lab-tab" data-tab="search">Manual Search</button>
+    </div>
+    <div class="lab-body">
+      <!-- AGENT RUN TAB -->
+      <div class="lab-tabpanel active" id="lab-panel-agent">
+        <div class="lab-controls">
+          <label>LOOKBACK <input type="number" id="lab-lookback" value="14" min="1" max="365"> DAYS</label>
+          <label>MAX/JOURNAL <input type="number" id="lab-max-per-journal" value="5" min="1" max="20"></label>
+          <button class="lab-btn" id="lab-run-agent">▶ Run Agent</button>
+        </div>
+        <div class="lab-status" id="lab-agent-status">Click "Run Agent" to query PubMed for the most recent autism papers in each indexed journal. Results are previewed — nothing is saved until you click "Add to store" on a specific article.</div>
+        <div id="lab-agent-results"></div>
+      </div>
+      <!-- MANUAL SEARCH TAB -->
+      <div class="lab-tabpanel" id="lab-panel-search">
+        <div class="lab-controls">
+          <input type="search" id="lab-query" placeholder="e.g. oxytocin autism trial · gut microbiome · maternal antibody" autocomplete="off">
+          <label><input type="checkbox" id="lab-autism-filter" checked> AUTISM-ONLY</label>
+          <label>MAX <input type="number" id="lab-max-results" value="20" min="1" max="50"></label>
+          <button class="lab-btn" id="lab-do-search">▶ Search PubMed</button>
+        </div>
+        <div class="lab-status" id="lab-search-status">Search PubMed across any journal. Results outside the top-10 set can still be added — just pick a branch (and one of the indexed journals) when you save.</div>
+        <div id="lab-search-results"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- WHAT'S NEW MODAL -->
+<div class="modal-backdrop" id="new-backdrop">
+  <div class="new-modal">
+    <div class="modal-header">
+      <div class="modal-title-block">
+        <div class="modal-eyebrow">// CHANGELOG</div>
+        <div class="modal-title">What's New</div>
+        <div class="modal-sub" id="new-sub">Articles grouped by when they were added — most recent runs first.</div>
+      </div>
+      <button class="modal-close" id="new-close" aria-label="Close">×</button>
+    </div>
+    <div class="new-body" id="new-body">
+      <!-- runs injected by JS -->
+    </div>
+  </div>
+</div>
+
+<!-- DEFINITIONS MODAL -->
+<div class="modal-backdrop" id="def-backdrop">
+  <div class="def-modal">
+    <div class="modal-header">
+      <div class="modal-title-block">
+        <div class="modal-eyebrow">// GLOSSARY</div>
+        <div class="modal-title">Definitions</div>
+        <div class="modal-sub">Key terms and frameworks used throughout the ASD research database.</div>
+      </div>
+      <button class="modal-close" id="def-close" aria-label="Close">×</button>
+    </div>
+    <div class="def-body" id="def-body">
+      <!-- definitions injected by JS -->
+    </div>
+  </div>
+</div>
+
+<!-- BOOKMARKS MODAL -->
+<div class="modal-backdrop" id="bm-backdrop">
+  <div class="def-modal">
+    <div class="modal-header">
+      <div class="modal-title-block">
+        <div class="modal-eyebrow">// SAVED</div>
+        <div class="modal-title">Bookmarks</div>
+        <div class="modal-sub">Articles you've starred. Saved in this browser.</div>
+      </div>
+      <button class="modal-close" id="bm-close" aria-label="Close">×</button>
+    </div>
+    <div class="def-body" id="bm-body"></div>
+  </div>
+</div>
+
+<div class="modal-backdrop" id="modal-backdrop">
+  <div class="modal" id="modal">
+    <div class="modal-header">
+      <div class="modal-title-block">
+        <div class="modal-eyebrow" id="modal-eyebrow">// BRANCH</div>
+        <div class="modal-title" id="modal-title">—</div>
+        <div class="modal-sub" id="modal-sub">—</div>
+      </div>
+      <button class="modal-close" id="modal-close" aria-label="Close">×</button>
+    </div>
+
+    <div class="agent-banner">
+      <span class="dot"></span>
+      <span>Data: <code id="agent-status">articles.json</code> — auto-updated weekly by <code>agent_fetcher.py</code>. ★ = boosted tier (clinical trials, clinical observations, translational research).</span>
+    </div>
+
+    <div class="priority-filters" id="priority-filters">
+      <span class="pf-label">PRIORITY</span>
+    </div>
+
+    <div class="modal-filters">
+      <span class="filter-label">SEARCH</span>
+      <input type="search" id="filter-search" placeholder="Title, author, or journal..." autocomplete="off">
+      <span class="filter-label">FROM</span>
+      <input type="date" id="filter-from">
+      <span class="filter-label">TO</span>
+      <input type="date" id="filter-to">
+      <button class="filter-clear" id="filter-clear">Reset</button>
+    </div>
+
+    <div class="modal-body">
+      <div class="result-count">
+        <span><span id="result-count-n">0</span> ARTICLES</span>
+        <div class="sort-toggle">
+          <button class="sort-btn active" data-sort="priority">Priority</button>
+          <button class="sort-btn" data-sort="date-desc">Newest</button>
+          <button class="sort-btn" data-sort="date-asc">Oldest</button>
+          <button class="sort-btn" data-sort="title-asc">A–Z</button>
+          <button class="sort-btn" data-sort="if-desc">High IF</button>
+        </div>
+      </div>
+      <div id="article-list"></div>
+    </div>
+  </div>
+</div>
+
+<script>
+// Flipped to true by publish.py when building the public static site. In
+// public mode there is no serve.py API: owner-only tools (Agent Lab) are
+// hidden, and bookmarks / dismissals / thumbs are per-visitor in localStorage.
+const PUBLIC_MODE = true;
+
+let JOURNALS, BRANCHES, ARTICLES, META, TIERS;
+const TIER_COLORS = {
+  'clinical-trial':       '#ff5757',
+  'clinical-observation': '#ffb020',
+  'translational':        '#b6ff3c',
+  'mechanistic':          '#98a4c2',
+  'review':               '#7a5cff',
+  'other':                '#5d6783',
+};
+
+async function boot() {
+  const bootEl = document.getElementById('boot');
+  const msgEl = document.getElementById('boot-msg');
+  const errEl = document.getElementById('boot-err');
+  try {
+    msgEl.textContent = 'FETCHING ARTICLES.JSON...';
+    const resp = await fetch('articles.json', { cache: 'no-store' });
+    if (!resp.ok) throw new Error('HTTP ' + resp.status);
+    const data = await resp.json();
+    JOURNALS = data.journals;
+    BRANCHES = data.branches;
+    ARTICLES = data.articles;
+    META = data._meta || {};
+    TIERS = (META.priorityTiers) || {
+      'clinical-trial':       { rank: 1, label: 'Clinical trial',       shortLabel: 'TRIAL',  boosted: true },
+      'clinical-observation': { rank: 2, label: 'Clinical observation', shortLabel: 'CLIN',   boosted: true },
+      'translational':        { rank: 3, label: 'Bench-to-bedside',     shortLabel: 'TRANS',  boosted: true },
+      'mechanistic':          { rank: 4, label: 'Mechanistic',          shortLabel: 'MECH',   boosted: false },
+      'review':               { rank: 5, label: 'Review',               shortLabel: 'REVIEW', boosted: false },
+      'other':                { rank: 6, label: 'Other',                shortLabel: 'OTHER',  boosted: false },
+    };
+    ARTICLES.forEach(a => {
+      // Branch-only articles carry branchKey + journalDisplay (the PubMed-reported
+      // journal name). Indexed-journal articles carry journalKey that lookups into JOURNALS.
+      if (a.branchKey && BRANCHES[a.branchKey]) {
+        a.branch = a.branchKey;
+        a.journalName = a.journalDisplay || '(other journal)';
+        a.if = a.if_override || 0;
+      } else {
+        const j = JOURNALS[a.journalKey];
+        if (!j) {
+          a.branch = 'unknown'; a.journalName = '(unknown)'; a.if = 0;
+        } else {
+          a.branch = j.branch; a.journalName = j.name; a.if = j.if;
+        }
+      }
+      if (!a.priority || !TIERS[a.priority]) a.priority = 'other';
+      a.priorityRank = TIERS[a.priority].rank;
+      a.isBoosted = !!TIERS[a.priority].boosted;
+    });
+    msgEl.textContent = 'INITIALIZING NETWORK...';
+    initApp();
+    syncUIState();   // pull cross-device UI state (bookmarks/dismissals/feedback)
+    setTimeout(() => bootEl.classList.add('hidden'), 250);
+    setTimeout(() => bootEl.remove(), 600);
+  } catch (e) {
+    msgEl.textContent = 'LOAD FAILED · ' + e.message;
+    errEl.style.display = 'block';
+    console.error('Failed to load articles.json:', e);
+  }
+}
+
+function initApp() {
+  document.getElementById('branch-count').textContent = Object.keys(BRANCHES).length;
+  document.getElementById('journal-count').textContent = Object.keys(JOURNALS).length;
+  document.getElementById('article-count').textContent = String(ARTICLES.length).padStart(3, '0');
+  document.getElementById('last-updated').textContent = (META.last_updated || '—').replace(/-/g, '.');
+
+  const legendEl = document.getElementById('legend');
+  Object.keys(BRANCHES).forEach(key => {
+    const b = BRANCHES[key];
+    const n = ARTICLES.filter(a => a.branch === key).length;
+    const boostedN = ARTICLES.filter(a => a.branch === key && a.isBoosted).length;
+    const div = document.createElement('div');
+    div.className = 'legend-item';
+    div.dataset.branch = key;
+    div.innerHTML = `
+      <span class="legend-swatch" style="background:${b.color};color:${b.color};"></span>
+      ${b.label}
+      <span class="legend-count">${String(n).padStart(2, '0')}${boostedN ? ' · ★'+boostedN : ''}</span>
+    `;
+    div.addEventListener('click', () => openBranchModal(key));
+    legendEl.appendChild(div);
+  });
+
+  resize();
+  buildNetwork();
+  tick();
+  updateNewIndicator();
+}
+
+const canvas = document.getElementById('network');
+const ctx = canvas.getContext('2d');
+let W, H, DPR;
+function resize() {
+  DPR = window.devicePixelRatio || 1;
+  W = window.innerWidth; H = window.innerHeight;
+  canvas.width = W * DPR; canvas.height = H * DPR;
+  canvas.style.width = W + 'px'; canvas.style.height = H + 'px';
+  ctx.setTransform(DPR, 0, 0, DPR, 0, 0);
+}
+window.addEventListener('resize', resize);
+
+const nodes = [];
+const links = [];
+const activeBranches = new Set();
+const branchNodes = {};
+let core = null;
+
+function buildNetwork() {
+  core = {
+    id: 'core', type: 'core', label: 'Autism\nResearch',
+    x: W / 2, y: H / 2, vx: 0, vy: 0, r: 64,
+    color: '#f5f7ff', branch: null, fixed: true,
+  };
+  nodes.push(core);
+
+  const branchKeys = Object.keys(BRANCHES);
+  branchKeys.forEach(k => activeBranches.add(k));
+  branchKeys.forEach((key, i) => {
+    const angle = (i / branchKeys.length) * Math.PI * 2 - Math.PI / 2;
+    const dist = 260;
+    const journalCount = Object.values(JOURNALS).filter(j => j.branch === key).length;
+    const articleCount = ARTICLES.filter(a => a.branch === key).length;
+    const boostedCount = ARTICLES.filter(a => a.branch === key && a.isBoosted).length;
+    const r = 42 + journalCount * 4 + Math.sqrt(articleCount) * 2;
+    const node = {
+      id: 'b_' + key, type: 'branch', label: BRANCHES[key].label,
+      x: W / 2 + Math.cos(angle) * dist,
+      y: H / 2 + Math.sin(angle) * dist,
+      vx: 0, vy: 0, r,
+      color: BRANCHES[key].color, branch: key, angle,
+      journalCount, articleCount, boostedCount,
+    };
+    nodes.push(node);
+    branchNodes[key] = node;
+    links.push({ source: core, target: node });
+  });
+}
+
+function isActive(node) {
+  if (node.type === 'core') return true;
+  return activeBranches.has(node.branch);
+}
+
+let hoverNode = null;
+let dragNode = null;
+let dragOffset = { x: 0, y: 0 };
+let dragMoved = false;
+
+function simulate() {
+  const cx = W / 2, cy = H / 2;
+  for (let i = 0; i < nodes.length; i++) {
+    const a = nodes[i];
+    if (!isActive(a)) continue;
+    for (let j = i + 1; j < nodes.length; j++) {
+      const b = nodes[j];
+      if (!isActive(b)) continue;
+      const dx = b.x - a.x, dy = b.y - a.y;
+      let d2 = dx * dx + dy * dy;
+      if (d2 < 1) d2 = 1;
+      const d = Math.sqrt(d2);
+      const minD = a.r + b.r + 20;
+      const longF = 6000 / d2;
+      const collide = d < minD ? (minD - d) * 0.5 : 0;
+      const fx = (dx / d) * (longF + collide);
+      const fy = (dy / d) * (longF + collide);
+      if (!a.fixed) { a.vx -= fx; a.vy -= fy; }
+      if (!b.fixed) { b.vx += fx; b.vy += fy; }
+    }
+  }
+  for (const link of links) {
+    const a = link.source, b = link.target;
+    if (!isActive(a) || !isActive(b)) continue;
+    const dx = b.x - a.x, dy = b.y - a.y;
+    const d = Math.sqrt(dx * dx + dy * dy) || 1;
+    const f = (d - 270) * 0.014;
+    const fx = (dx / d) * f, fy = (dy / d) * f;
+    if (!a.fixed) { a.vx += fx; a.vy += fy; }
+    if (!b.fixed) { b.vx -= fx; b.vy -= fy; }
+  }
+  for (const n of nodes) {
+    if (n.fixed) continue;
+    if (!isActive(n)) continue;
+    n.vx += (cx - n.x) * 0.0008;
+    n.vy += (cy - n.y) * 0.0008;
+  }
+  for (const n of nodes) {
+    if (n === dragNode) continue;
+    if (n.fixed) { n.x = cx; n.y = cy; n.vx = 0; n.vy = 0; continue; }
+    if (!isActive(n)) continue;
+    n.vx *= 0.82; n.vy *= 0.82;
+    n.x += n.vx; n.y += n.vy;
+    const pad = 80;
+    if (n.x < pad) n.vx += (pad - n.x) * 0.05;
+    if (n.x > W - pad) n.vx -= (n.x - (W - pad)) * 0.05;
+    if (n.y < pad) n.vy += (pad - n.y) * 0.05;
+    if (n.y > H - pad) n.vy -= (n.y - (H - pad)) * 0.05;
+  }
+}
+
+let t = 0;
+function draw() {
+  t += 1;
+  ctx.clearRect(0, 0, W, H);
+
+  for (const link of links) {
+    const a = link.source, b = link.target;
+    if (!isActive(a) || !isActive(b)) continue;
+    const dx = b.x - a.x, dy = b.y - a.y;
+    const d = Math.sqrt(dx * dx + dy * dy) || 1;
+    const ux = dx / d, uy = dy / d;
+    const ax = a.x + ux * a.r, ay = a.y + uy * a.r;
+    const bx = b.x - ux * b.r, by = b.y - uy * b.r;
+
+    const grad = ctx.createLinearGradient(ax, ay, bx, by);
+    grad.addColorStop(0, 'rgba(245, 247, 255, 0.5)');
+    grad.addColorStop(1, b.color + 'cc');
+
+    const hot = hoverNode && (hoverNode === a || hoverNode === b);
+    ctx.strokeStyle = grad;
+    ctx.lineWidth = hot ? 2 : 1.4;
+    ctx.beginPath();
+    ctx.moveTo(ax, ay);
+    ctx.lineTo(bx, by);
+    ctx.stroke();
+
+    const phase = ((t * 0.6) % 120) / 120;
+    const px = ax + (bx - ax) * phase;
+    const py = ay + (by - ay) * phase;
+    ctx.fillStyle = b.color;
+    ctx.shadowColor = b.color;
+    ctx.shadowBlur = 10;
+    ctx.beginPath();
+    ctx.arc(px, py, 2.2, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.shadowBlur = 0;
+  }
+
+  const order = nodes.slice().sort((a, b) => (a.type === 'core' ? 1 : 0) - (b.type === 'core' ? 1 : 0));
+  for (const n of order) {
+    if (!isActive(n)) continue;
+    const isHover = hoverNode === n;
+    ctx.shadowColor = n.color;
+    ctx.shadowBlur = isHover ? 36 : (n.type === 'core' ? 32 : 22);
+    ctx.beginPath();
+    ctx.arc(n.x, n.y, n.r, 0, Math.PI * 2);
+
+    if (n.type === 'core') {
+      const g = ctx.createRadialGradient(n.x, n.y, 2, n.x, n.y, n.r);
+      g.addColorStop(0, 'rgba(255,255,255,0.95)');
+      g.addColorStop(0.6, 'rgba(180,200,255,0.25)');
+      g.addColorStop(1, 'rgba(120,140,200,0.05)');
+      ctx.fillStyle = g;
+      ctx.fill();
+      ctx.lineWidth = 1.4;
+      ctx.strokeStyle = 'rgba(255,255,255,0.9)';
+      ctx.stroke();
+    } else {
+      const aura = isHover ? (1 + 0.06 * Math.sin(t * 0.15)) : 1;
+      const r = n.r * aura;
+      const g = ctx.createRadialGradient(n.x, n.y, 2, n.x, n.y, r);
+      g.addColorStop(0, n.color + 'ff');
+      g.addColorStop(0.5, n.color + '66');
+      g.addColorStop(1, n.color + '0a');
+      ctx.fillStyle = g;
+      ctx.fill();
+      ctx.lineWidth = isHover ? 2 : 1.4;
+      ctx.strokeStyle = n.color;
+      ctx.stroke();
+
+      ctx.beginPath();
+      ctx.arc(n.x, n.y, n.r - 8, 0, Math.PI * 2);
+      ctx.strokeStyle = n.color + '44';
+      ctx.lineWidth = 0.5;
+      ctx.stroke();
+
+      // article count badge (top-right) — total
+      ctx.fillStyle = '#05060a';
+      ctx.beginPath();
+      ctx.arc(n.x + n.r * 0.65, n.y - n.r * 0.65, 14, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.strokeStyle = n.color;
+      ctx.lineWidth = 1;
+      ctx.stroke();
+      ctx.fillStyle = n.color;
+      ctx.font = '600 11px "JetBrains Mono", monospace';
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'middle';
+      ctx.fillText(String(n.articleCount), n.x + n.r * 0.65, n.y - n.r * 0.65);
+
+      // boosted-count badge (top-left) with star
+      if (n.boostedCount > 0) {
+        ctx.fillStyle = '#05060a';
+        ctx.beginPath();
+        ctx.arc(n.x - n.r * 0.65, n.y - n.r * 0.65, 14, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.strokeStyle = '#ffd97a';
+        ctx.shadowColor = '#ffd97a';
+        ctx.shadowBlur = 8;
+        ctx.lineWidth = 1;
+        ctx.stroke();
+        ctx.shadowBlur = 0;
+        ctx.fillStyle = '#ffd97a';
+        ctx.font = '600 9px "JetBrains Mono", monospace';
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
+        ctx.fillText('★' + n.boostedCount, n.x - n.r * 0.65, n.y - n.r * 0.65);
+      }
+    }
+    ctx.shadowBlur = 0;
+
+    if (n.type === 'core') {
+      ctx.fillStyle = '#0a0d14';
+      ctx.font = '600 14px "Space Grotesk", sans-serif';
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'middle';
+      const lines = n.label.split('\n');
+      lines.forEach((line, i) => {
+        ctx.fillText(line, n.x, n.y + (i - (lines.length - 1) / 2) * 16);
+      });
+    } else {
+      ctx.font = '500 12px "JetBrains Mono", monospace';
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'top';
+      const words = n.label.toUpperCase().split(' ');
+      let line1 = '', line2 = '';
+      if (words.length > 1) {
+        const mid = Math.ceil(words.length / 2);
+        line1 = words.slice(0, mid).join(' ');
+        line2 = words.slice(mid).join(' ');
+      } else { line1 = words[0]; }
+
+      const pad = 8;
+      const m1 = ctx.measureText(line1).width;
+      const m2 = ctx.measureText(line2).width;
+      const mw = Math.max(m1, m2);
+      const ph = line2 ? 32 : 18;
+      ctx.fillStyle = 'rgba(5,6,10,0.85)';
+      ctx.fillRect(n.x - mw / 2 - pad, n.y + n.r + 10, mw + pad * 2, ph);
+      ctx.strokeStyle = n.color + '66';
+      ctx.lineWidth = 1;
+      ctx.strokeRect(n.x - mw / 2 - pad, n.y + n.r + 10, mw + pad * 2, ph);
+
+      ctx.fillStyle = n.color;
+      ctx.fillText(line1, n.x, n.y + n.r + 13);
+      if (line2) ctx.fillText(line2, n.x, n.y + n.r + 27);
+
+      if (isHover) {
+        ctx.font = '400 9px "JetBrains Mono", monospace';
+        ctx.fillStyle = n.color;
+        ctx.fillText('▸ CLICK TO OPEN', n.x, n.y + n.r + (line2 ? 46 : 32));
+      }
+    }
+  }
+}
+
+function tick() { simulate(); draw(); requestAnimationFrame(tick); }
+
+function nodeAt(x, y) {
+  for (let i = nodes.length - 1; i >= 0; i--) {
+    const n = nodes[i];
+    if (!isActive(n)) continue;
+    const dx = x - n.x, dy = y - n.y;
+    if (dx * dx + dy * dy <= n.r * n.r) return n;
+  }
+  return null;
+}
+
+canvas.addEventListener('mousemove', (e) => {
+  if (!core) return;
+  const x = e.clientX, y = e.clientY;
+  if (dragNode) {
+    dragNode.x = x - dragOffset.x;
+    dragNode.y = y - dragOffset.y;
+    dragNode.vx = 0; dragNode.vy = 0;
+    dragMoved = true;
+    return;
+  }
+  const n = nodeAt(x, y);
+  if (n !== hoverNode) {
+    hoverNode = n;
+    canvas.classList.toggle('hover-clickable', !!n && n.type === 'branch');
+  }
+});
+
+canvas.addEventListener('mousedown', (e) => {
+  if (!core) return;
+  const n = nodeAt(e.clientX, e.clientY);
+  if (n && n.type !== 'core') {
+    dragNode = n;
+    dragMoved = false;
+    dragOffset.x = e.clientX - n.x;
+    dragOffset.y = e.clientY - n.y;
+  }
+});
+
+canvas.addEventListener('mouseup', () => {
+  if (dragNode && !dragMoved && dragNode.type === 'branch') {
+    openBranchModal(dragNode.branch);
+  }
+  dragNode = null;
+});
+
+canvas.addEventListener('touchstart', (e) => {
+  if (!core || !e.touches[0]) return;
+  const tt = e.touches[0];
+  const n = nodeAt(tt.clientX, tt.clientY);
+  if (n) {
+    hoverNode = n;
+    if (n.type !== 'core') {
+      dragNode = n;
+      dragMoved = false;
+      dragOffset.x = tt.clientX - n.x;
+      dragOffset.y = tt.clientY - n.y;
+    }
+  }
+}, { passive: true });
+
+canvas.addEventListener('touchmove', (e) => {
+  if (!e.touches[0] || !dragNode) return;
+  const tt = e.touches[0];
+  dragNode.x = tt.clientX - dragOffset.x;
+  dragNode.y = tt.clientY - dragOffset.y;
+  dragNode.vx = 0; dragNode.vy = 0;
+  dragMoved = true;
+  e.preventDefault();
+}, { passive: false });
+
+canvas.addEventListener('touchend', () => {
+  if (dragNode && !dragMoved && dragNode.type === 'branch') {
+    openBranchModal(dragNode.branch);
+  }
+  dragNode = null;
+});
+
+const backdrop = document.getElementById('modal-backdrop');
+const modal = document.getElementById('modal');
+const listEl = document.getElementById('article-list');
+const eyebrowEl = document.getElementById('modal-eyebrow');
+const titleEl = document.getElementById('modal-title');
+const subEl = document.getElementById('modal-sub');
+const countEl = document.getElementById('result-count-n');
+const searchEl = document.getElementById('filter-search');
+const fromEl = document.getElementById('filter-from');
+const toEl = document.getElementById('filter-to');
+const clearEl = document.getElementById('filter-clear');
+const pfEl = document.getElementById('priority-filters');
+
+let currentBranch = null;
+let currentSort = 'priority';
+let activeTiers = new Set();
+
+function learnedTermsHtml(branchKey) {
+  const L = (BRANCHES[branchKey] && BRANCHES[branchKey].learned) || {};
+  const inc = Object.keys(L.include || {});
+  const exc = Object.keys(L.exclude || {});
+  const pos = L.pos_events || 0, neg = L.neg_events || 0;
+  if (!inc.length && !exc.length) {
+    const n = pos + neg;
+    return '<br><span class="learned-line">⟳ LEARNED: still learning — 👍/👎 articles to expand this node (a term needs ≥2 votes). ' + n + ' signal' + (n === 1 ? '' : 's') + ' so far.</span>';
+  }
+  let h = '<br><span class="learned-line">⟳ LEARNED from your votes (' + pos + '👍 / ' + neg + '👎): ';
+  h += inc.map(t => '<span class="lt-inc">+' + escapeHtml(t) + '</span>').join(' ');
+  if (exc.length) h += ' ' + exc.map(t => '<span class="lt-exc">−' + escapeHtml(t) + '</span>').join(' ');
+  return h + '</span>';
+}
+function renderBranchSub(branchKey) {
+  const b = BRANCHES[branchKey];
+  const journalsInBranch = Object.values(JOURNALS).filter(j => j.branch === branchKey);
+  subEl.innerHTML = escapeHtml(b.blurb) +
+    '<br><span style="color: var(--ink-2); font-family: \'JetBrains Mono\', monospace; font-size: 10px; letter-spacing: 0.1em;">JOURNALS: ' +
+    journalsInBranch.map(j => escapeHtml(j.name) + ' (IF ' + j.if + ')').join(' · ') +
+    '</span>' + learnedTermsHtml(branchKey);
+}
+function openBranchModal(branchKey) {
+  currentBranch = branchKey;
+  const b = BRANCHES[branchKey];
+  eyebrowEl.textContent = '// BRANCH · ' + branchKey.toUpperCase();
+  eyebrowEl.style.color = b.color;
+  titleEl.textContent = b.label;
+  renderBranchSub(branchKey);
+  modal.style.setProperty('--accent', b.color);
+  searchEl.value = ''; fromEl.value = ''; toEl.value = '';
+  activeTiers.clear();
+  buildPriorityChips();
+  renderArticles();
+  backdrop.classList.add('open');
+}
+
+function buildPriorityChips() {
+  const branchArticles = ARTICLES.filter(a => a.branch === currentBranch);
+  const tierCounts = {};
+  Object.keys(TIERS).forEach(k => tierCounts[k] = 0);
+  branchArticles.forEach(a => { tierCounts[a.priority] = (tierCounts[a.priority] || 0) + 1; });
+
+  while (pfEl.children.length > 1) pfEl.removeChild(pfEl.lastChild);
+
+  const allBtn = document.createElement('button');
+  allBtn.className = 'pf-chip' + (activeTiers.size === 0 ? ' active' : '');
+  allBtn.style.setProperty('--chip-color', '#e6ecff');
+  allBtn.innerHTML = `All <span class="count">${branchArticles.length}</span>`;
+  allBtn.addEventListener('click', () => {
+    activeTiers.clear();
+    buildPriorityChips();
+    renderArticles();
+  });
+  pfEl.appendChild(allBtn);
+
+  // "Boosted" quick filter — all 3 top tiers
+  const boostedTotal = branchArticles.filter(a => a.isBoosted).length;
+  if (boostedTotal > 0) {
+    const boostedSet = new Set(['clinical-trial','clinical-observation','translational']);
+    const allBoosted = [...boostedSet].every(t => activeTiers.has(t)) && activeTiers.size === 3;
+    const boostBtn = document.createElement('button');
+    boostBtn.className = 'pf-chip boosted' + (allBoosted ? ' active' : '');
+    boostBtn.style.setProperty('--chip-color', '#ffd97a');
+    boostBtn.innerHTML = `Boosted <span class="count">${boostedTotal}</span>`;
+    boostBtn.title = 'Show only clinical trials, observations, and translational research';
+    boostBtn.addEventListener('click', () => {
+      if (allBoosted) {
+        activeTiers.clear();
+      } else {
+        activeTiers = new Set(boostedSet);
+      }
+      buildPriorityChips();
+      renderArticles();
+    });
+    pfEl.appendChild(boostBtn);
+  }
+
+  const sortedTiers = Object.entries(TIERS).sort((a, b) => a[1].rank - b[1].rank);
+  for (const [key, tier] of sortedTiers) {
+    const count = tierCounts[key] || 0;
+    if (count === 0) continue;
+    const btn = document.createElement('button');
+    btn.className = 'pf-chip' + (activeTiers.has(key) ? ' active' : '') + (tier.boosted ? ' boosted' : '');
+    btn.style.setProperty('--chip-color', TIER_COLORS[key]);
+    btn.innerHTML = `${escapeHtml(tier.shortLabel)} <span class="count">${count}</span>`;
+    btn.title = tier.label + (tier.boosted ? ' (boosted)' : '');
+    btn.addEventListener('click', () => {
+      if (activeTiers.has(key)) activeTiers.delete(key);
+      else activeTiers.add(key);
+      buildPriorityChips();
+      renderArticles();
+    });
+    pfEl.appendChild(btn);
+  }
+}
+
+function closeModal() {
+  backdrop.classList.remove('open');
+  currentBranch = null;
+}
+
+document.getElementById('modal-close').addEventListener('click', closeModal);
+backdrop.addEventListener('click', (e) => { if (e.target === backdrop) closeModal(); });
+document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeModal(); });
+
+function renderArticles() {
+  if (!currentBranch) return;
+  const q = searchEl.value.trim().toLowerCase();
+  const fromD = fromEl.value ? new Date(fromEl.value) : null;
+  const toD = toEl.value ? new Date(toEl.value) : null;
+
+  let list = ARTICLES.filter(a => a.branch === currentBranch);
+  if (activeTiers.size > 0) list = list.filter(a => activeTiers.has(a.priority));
+  if (q) {
+    list = list.filter(a =>
+      a.title.toLowerCase().includes(q) ||
+      a.authors.toLowerCase().includes(q) ||
+      a.journalName.toLowerCase().includes(q)
+    );
+  }
+  if (fromD) list = list.filter(a => new Date(a.date) >= fromD);
+  if (toD)   list = list.filter(a => new Date(a.date) <= toD);
+
+  switch (currentSort) {
+    case 'priority': list.sort((a, b) => a.priorityRank - b.priorityRank || b.date.localeCompare(a.date)); break;
+    case 'date-desc': list.sort((a, b) => b.date.localeCompare(a.date)); break;
+    case 'date-asc':  list.sort((a, b) => a.date.localeCompare(b.date)); break;
+    case 'title-asc': list.sort((a, b) => a.title.localeCompare(b.title)); break;
+    case 'if-desc':   list.sort((a, b) => b.if - a.if || b.date.localeCompare(a.date)); break;
+  }
+
+  countEl.textContent = list.length;
+
+  if (list.length === 0) {
+    listEl.innerHTML = '<div class="empty-state">// NO ARTICLES MATCH YOUR FILTERS</div>';
+    return;
+  }
+
+  // When sorting by priority, insert a divider between boosted and non-boosted
+  let html = '';
+  let dividerInserted = false;
+  const showDivider = currentSort === 'priority' && activeTiers.size === 0;
+
+  for (const a of list) {
+    if (showDivider && !dividerInserted && !a.isBoosted && html.length > 0) {
+      html += '<div class="boosted-separator">— STANDARD PRIORITY —</div>';
+      dividerInserted = true;
+    }
+    if (showDivider && !dividerInserted && a.isBoosted && html.length === 0) {
+      html += '<div class="boosted-separator" style="padding-top:6px;">★ BOOSTED ·  CLINICAL & TRANSLATIONAL</div>';
+    }
+    html += renderArticleCard(a);
+  }
+  listEl.innerHTML = html;
+}
+
+function renderArticleCard(a) {
+  const isNew = a.addedBy && a.addedBy.startsWith('agent-');
+  const tier = TIERS[a.priority] || TIERS.other;
+  const tierLabel = tier.shortLabel || tier.label;
+  return `
+    <a class="article tier-${a.priority}${a.isBoosted ? ' boosted' : ''}" href="${a.url}" target="_blank" rel="noopener">
+      <div class="priority-badge${a.isBoosted ? ' boosted' : ''}">${escapeHtml(tierLabel)}</div>
+      <div class="article-title">${escapeHtml(a.title)}</div>
+      <div class="article-meta">
+        <span class="bm-toggle${isBookmarked(a.id) ? ' on' : ''}" role="button" title="Bookmark this article"
+              onclick="event.preventDefault();event.stopPropagation();toggleBookmark('${a.id}',this);">${isBookmarked(a.id) ? '★ Saved' : '☆ Save'}</span>
+        <span class="fb-ctl">
+          <span class="fb-up${fbState(a.id) === 1 ? ' on' : ''}" title="Relevant — teach this node to find more like it"
+                onclick="event.preventDefault();event.stopPropagation();nodeFeedback('${a.id}',1,this);">👍</span>
+          <span class="fb-down${fbState(a.id) === -1 ? ' on' : ''}" title="Not relevant — teach this node to avoid these"
+                onclick="event.preventDefault();event.stopPropagation();nodeFeedback('${a.id}',-1,this);">👎</span>
+        </span>
+        <span class="journal">${escapeHtml(a.journalName)}</span>
+        <span class="if-badge">IF ${a.if.toFixed(1)}</span>
+        <span class="date">${formatDate(a.date)}</span>
+        ${isNew ? '<span class="new-badge">NEW</span>' : ''}
+        <span class="ext">↗ PUBMED</span>
+        <span class="authors">${escapeHtml(a.authors)}</span>
+      </div>
+    </a>`;
+}
+
+function escapeHtml(s) {
+  return String(s).replace(/[&<>"']/g, c => ({ '&':'&amp;', '<':'&lt;', '>':'&gt;', '"':'&quot;', "'":'&#39;' }[c]));
+}
+function formatDate(iso) {
+  const d = new Date(iso);
+  const m = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  return m[d.getMonth()] + ' ' + d.getFullYear();
+}
+
+[searchEl, fromEl, toEl].forEach(el => el.addEventListener('input', renderArticles));
+clearEl.addEventListener('click', () => {
+  searchEl.value = ''; fromEl.value = ''; toEl.value = '';
+  activeTiers.clear();
+  buildPriorityChips();
+  renderArticles();
+});
+
+document.querySelectorAll('.sort-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.sort-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    currentSort = btn.dataset.sort;
+    renderArticles();
+  });
+});
+
+// ============ AGENT LAB ============
+const labBackdrop = document.getElementById('lab-backdrop');
+if (PUBLIC_MODE) document.getElementById('lab-button').style.display = 'none';
+
+document.getElementById('lab-button').addEventListener('click', () => {
+  labBackdrop.classList.add('open');
+  refreshSslStatus();  // fetch + display SSL state every time lab opens
+});
+
+// ---------- SSL status indicator ----------
+async function refreshSslStatus() {
+  const bar = document.getElementById('lab-ssl-bar');
+  const icon = document.getElementById('lab-ssl-icon');
+  const text = document.getElementById('lab-ssl-text');
+  const toggle = document.getElementById('lab-ssl-toggle');
+  try {
+    const r = await fetch('/api/ssl-status');
+    if (!r.ok) throw new Error('not running');
+    const data = await r.json();
+    bar.style.display = 'flex';
+    bar.classList.remove('warn', 'insecure');
+    if (data.verified) {
+      icon.textContent = '✓';
+      text.innerHTML = 'SSL · verifying via <code>' + escapeHtml(data.source) + '</code>';
+      toggle.textContent = 'Disable SSL Verify';
+      toggle.classList.remove('enable');
+      toggle.style.display = 'inline-block';
+      toggle.dataset.action = 'disable';
+    } else {
+      bar.classList.add('insecure');
+      icon.textContent = '⚠';
+      text.innerHTML = 'SSL verification <strong>disabled</strong> — only use this on trusted networks.';
+      toggle.textContent = 'Re-enable SSL Verify';
+      toggle.classList.add('enable');
+      toggle.style.display = 'inline-block';
+      toggle.dataset.action = 'enable';
+    }
+  } catch (e) {
+    // serve.py not running — hide the bar (it's not relevant offline)
+    bar.style.display = 'none';
+  }
+}
+
+document.getElementById('lab-ssl-toggle').addEventListener('click', async () => {
+  const toggle = document.getElementById('lab-ssl-toggle');
+  const action = toggle.dataset.action;
+  const endpoint = action === 'disable' ? '/api/ssl-disable' : '/api/ssl-enable';
+  const confirmMsg = action === 'disable'
+    ? "Disable SSL verification?\n\nThis lets the server connect to PubMed when your network's TLS proxy uses a corporate root CA that Python doesn't trust.\n\nOnly do this on a trusted network. You'll need to restart serve.py for it to take effect."
+    : "Re-enable SSL verification on next server start?";
+  if (!confirm(confirmMsg)) return;
+  try {
+    const r = await fetch(endpoint, { method: 'POST', headers: {'Content-Type':'application/json'}, body: '{}' });
+    const data = await r.json();
+    if (data.ok) {
+      alert(data.message);
+    } else {
+      alert('Failed: ' + (data.error || 'unknown'));
+    }
+  } catch (e) {
+    alert('Could not reach server: ' + e.message);
+  }
+});
+document.getElementById('lab-close').addEventListener('click', () => {
+  labBackdrop.classList.remove('open');
+});
+labBackdrop.addEventListener('click', (e) => {
+  if (e.target === labBackdrop) labBackdrop.classList.remove('open');
+});
+
+// Tab switching
+document.querySelectorAll('.lab-tab').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.lab-tab').forEach(b => b.classList.remove('active'));
+    document.querySelectorAll('.lab-tabpanel').forEach(p => p.classList.remove('active'));
+    btn.classList.add('active');
+    document.getElementById('lab-panel-' + btn.dataset.tab).classList.add('active');
+  });
+});
+
+function labStatus(el, msg, kind = '') {
+  el.className = 'lab-status' + (kind ? ' is-' + kind : '');
+  el.innerHTML = msg;
+}
+
+function labCardHtml(article, opts = {}) {
+  const tier = TIERS[article.priority] || TIERS.other;
+  const tierLabel = tier.shortLabel || tier.label;
+  const inStore = !!opts.alreadyInStore;
+
+  // The article KEEPS its verified journal — you don't pick it. Agent-run
+  // results carry the swept journal (opts.defaultJournalKey); search results
+  // carry the PubMed-matched journal (article.matched_journal_key).
+  const lockedJK = opts.defaultJournalKey || article.matched_journal_key || '';
+  const lockedJournal = JOURNALS[lockedJK] || null;
+
+  // Off-catalog papers have no indexed journal to lock to, so you only choose
+  // the topic node — the real journal name is still preserved for display.
+  const branchOnlyOptions = Object.entries(BRANCHES).map(([bk, b]) =>
+    `<option value="${bk}">${escapeHtml(b.label)}</option>`
+  ).join('');
+  const srcName = article.journal_full || article.journal_abbrev || 'journal not indexed';
+
+  let addControls = '';
+  if (!inStore && lockedJournal) {
+    const bLabel = (BRANCHES[lockedJournal.branch] || {}).label || lockedJournal.branch;
+    addControls = `
+      <span class="lab-locked-journal" title="Filed under this article's verified journal">🔒 ${escapeHtml(lockedJournal.name)} → ${escapeHtml(bLabel)}</span>
+      <button class="lab-add-btn" data-journal-key="${escapeHtml(lockedJK)}">+ Add to store</button>`;
+  } else if (!inStore) {
+    addControls = `
+      <span class="lab-locked-journal" title="This journal isn't in your catalog — pick a topic node; the journal name is kept">🔒 ${escapeHtml(srcName)} · file under</span>
+      <select class="lab-branch-select" title="Topic node to file this paper under">${branchOnlyOptions}</select>
+      <button class="lab-add-btn">+ Add to store</button>`;
+  }
+
+  const abstract = article.abstract ? `<div class="lab-card-abstract">${escapeHtml(article.abstract)}</div>` : '';
+  return `
+    <div class="lab-card tier-${article.priority} ${inStore ? 'in-store' : ''}" data-pmid="${escapeHtml(article.id || '')}">
+      <div class="lab-card-title">${escapeHtml(article.title)}</div>
+      <div class="lab-card-meta">
+        <span class="lab-tier">${tier.boosted ? '★ ' : ''}${escapeHtml(tierLabel)}</span>
+        <span>${formatDate(article.date)}</span>
+        <span>${escapeHtml(article.authors || '')}</span>
+        ${article.journal_full ? `<span>${escapeHtml(article.journal_full)}</span>` : ''}
+      </div>
+      ${abstract}
+      <div class="lab-card-actions">
+        ${addControls}
+        <a class="lab-open-link" href="${article.url}" target="_blank" rel="noopener">↗ PubMed</a>
+      </div>
+    </div>`;
+}
+
+function wireUpAddButtons(container) {
+  container.querySelectorAll('.lab-card').forEach(card => {
+    const addBtn = card.querySelector('.lab-add-btn');
+    if (!addBtn) return;
+    addBtn.addEventListener('click', async () => {
+      const article = card._articleData;
+      if (!article) {
+        addBtn.textContent = '✗ NO DATA';
+        return;
+      }
+      const payload = {
+        article: {
+          id: article.id,
+          title: article.title,
+          date: article.date,
+          authors: article.authors,
+          url: article.url,
+          priority: article.priority,
+          mesh: article.mesh || [],   // carry MeSH so the saved paper feeds learning
+          // Keep the PubMed-reported journal name for display on off-catalog saves.
+          journal_full: article.journal_full || '',
+          journal_abbrev: article.journal_abbrev || '',
+        },
+      };
+      // The journal is LOCKED to the article's verified journal. Indexed-journal
+      // papers file under that journalKey; off-catalog papers keep their journal
+      // name and file under the topic node you picked.
+      const lockedJK = addBtn.dataset.journalKey;
+      if (lockedJK) {
+        payload.journalKey = lockedJK;
+      } else {
+        const sel = card.querySelector('.lab-branch-select');
+        payload.branchKey = sel ? sel.value : null;
+      }
+      addBtn.disabled = true;
+      addBtn.innerHTML = '<span class="lab-loader"></span> Saving…';
+      try {
+        const r = await fetch('/api/save-article', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload),
+        });
+        const data = await r.json();
+        if (data.ok) {
+          addBtn.textContent = '✓ Added';
+          card.classList.add('in-store');
+          // Refresh the in-memory store + rebuild network counts
+          await reloadStoreSoft();
+        } else if (data.duplicate) {
+          addBtn.textContent = '↺ Already in store';
+          card.classList.add('in-store');
+        } else {
+          addBtn.textContent = '✗ ' + (data.error || 'Failed');
+          addBtn.disabled = false;
+        }
+      } catch (e) {
+        addBtn.textContent = '✗ ' + e.message;
+        addBtn.disabled = false;
+      }
+    });
+  });
+}
+
+// Reload articles from server so the canvas + tabs update without a full refresh
+async function reloadStoreSoft() {
+  try {
+    const r = await fetch('articles.json', { cache: 'no-store' });
+    const data = await r.json();
+    ARTICLES.length = 0;
+    data.articles.forEach(a => {
+      if (a.branchKey && BRANCHES[a.branchKey]) {
+        a.branch = a.branchKey;
+        a.journalName = a.journalDisplay || '(other journal)';
+        a.if = a.if_override || 0;
+      } else {
+        const j = JOURNALS[a.journalKey];
+        if (j) { a.branch = j.branch; a.journalName = j.name; a.if = j.if; }
+      }
+      if (!a.priority || !TIERS[a.priority]) a.priority = 'other';
+      a.priorityRank = TIERS[a.priority].rank;
+      a.isBoosted = !!TIERS[a.priority].boosted;
+      ARTICLES.push(a);
+    });
+    // Update branch node counts
+    Object.keys(branchNodes).forEach(key => {
+      const node = branchNodes[key];
+      node.articleCount = ARTICLES.filter(a => a.branch === key).length;
+      node.boostedCount = ARTICLES.filter(a => a.branch === key && a.isBoosted).length;
+    });
+    // Update HUD + legend counts
+    document.getElementById('article-count').textContent = String(ARTICLES.length).padStart(3, '0');
+    document.querySelectorAll('.legend-item').forEach(el => {
+      const key = el.dataset.branch;
+      const n = ARTICLES.filter(a => a.branch === key).length;
+      const boostedN = ARTICLES.filter(a => a.branch === key && a.isBoosted).length;
+      const countEl = el.querySelector('.legend-count');
+      if (countEl) countEl.textContent = String(n).padStart(2, '0') + (boostedN ? ' · ★'+boostedN : '');
+    });
+  } catch (e) {
+    console.warn('reload failed', e);
+  }
+}
+
+// --- Run Agent ---
+document.getElementById('lab-run-agent').addEventListener('click', async () => {
+  const lookback = +document.getElementById('lab-lookback').value || 14;
+  const maxPerJournal = +document.getElementById('lab-max-per-journal').value || 5;
+  const status = document.getElementById('lab-agent-status');
+  const resultsEl = document.getElementById('lab-agent-results');
+  labStatus(status, '<span class="lab-loader"></span> Querying PubMed for each journal · this may take 10–30 seconds…');
+  resultsEl.innerHTML = '';
+  try {
+    const r = await fetch('/api/run-agent', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ lookback_days: lookback, max_per_journal: maxPerJournal }),
+    });
+    if (!r.ok) throw new Error('HTTP ' + r.status + ' — is serve.py running?');
+    const data = await r.json();
+    if (data.error) throw new Error(data.error);
+    const results = data.results || {};
+    const totalNew = Object.values(results).reduce((s, g) => s + (g.articles||[]).length, 0);
+    labStatus(status, totalNew === 0
+      ? 'No new articles found across all journals for the last ' + lookback + ' days.'
+      : '<strong style="color:var(--ink-0)">' + totalNew + '</strong> new article' + (totalNew === 1 ? '' : 's') + ' found across ' + Object.keys(results).length + ' journals. Pick which to add.',
+      totalNew === 0 ? '' : 'success');
+    // Render each group
+    let html = '';
+    for (const [journalKey, group] of Object.entries(results)) {
+      if (group.error) {
+        html += `<div class="lab-result-group">
+          <div class="lab-result-header" style="--group-color:#5d6783;">
+            <span class="lab-journal">${escapeHtml(group.journalName)}</span>
+            <span class="lab-branch">${escapeHtml(group.branch || '')}</span>
+            <span class="lab-count">ERROR · ${escapeHtml(group.error)}</span>
+          </div>
+        </div>`;
+        continue;
+      }
+      if (!group.articles || group.articles.length === 0) continue;
+      const branch = BRANCHES[group.branch];
+      const color = branch ? branch.color : '#98a4c2';
+      html += `<div class="lab-result-group">
+        <div class="lab-result-header" style="--group-color:${color};">
+          <span class="lab-journal">${escapeHtml(group.journalName)}</span>
+          <span class="lab-branch">${escapeHtml((branch && branch.label) || group.branch || '')}</span>
+          <span class="lab-count">${group.articles.length} NEW</span>
+        </div>
+        ${group.articles.map(a => labCardHtml(a, { defaultJournalKey: journalKey })).join('')}
+      </div>`;
+    }
+    resultsEl.innerHTML = html || '<div class="lab-empty">// NO NEW RESULTS</div>';
+    // Attach article data to each card + wire add buttons
+    let idx = 0;
+    for (const group of Object.values(results)) {
+      for (const a of (group.articles || [])) {
+        const card = resultsEl.querySelectorAll('.lab-card')[idx];
+        if (card) card._articleData = a;
+        idx++;
+      }
+    }
+    wireUpAddButtons(resultsEl);
+  } catch (e) {
+    labStatus(status, 'Error: ' + escapeHtml(e.message) + '<br><span style="font-size:10px;">Make sure you launched the site with <code style="color:var(--neon-cyto);">python3 serve.py</code> rather than opening the HTML directly.</span>', 'error');
+  }
+});
+
+// --- Manual Search ---
+async function doSearch() {
+  const q = document.getElementById('lab-query').value.trim();
+  const autismFilter = document.getElementById('lab-autism-filter').checked;
+  const maxResults = +document.getElementById('lab-max-results').value || 20;
+  const status = document.getElementById('lab-search-status');
+  const resultsEl = document.getElementById('lab-search-results');
+  if (!q) {
+    labStatus(status, 'Enter a query first.', 'error');
+    return;
+  }
+  labStatus(status, '<span class="lab-loader"></span> Searching PubMed for "' + escapeHtml(q) + '"…');
+  resultsEl.innerHTML = '';
+  try {
+    const r = await fetch('/api/search-pubmed', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ query: q, autism_filter: autismFilter, max_results: maxResults }),
+    });
+    if (!r.ok) throw new Error('HTTP ' + r.status + ' — is serve.py running?');
+    const data = await r.json();
+    if (data.error) throw new Error(data.error);
+    const results = data.results || [];
+    labStatus(status, results.length === 0
+      ? 'No results for that query.'
+      : '<strong style="color:var(--ink-0)">' + results.length + '</strong> result' + (results.length === 1 ? '' : 's') + ' · each keeps its own journal — just add the ones you want (off-catalog papers ask for a topic node).',
+      results.length === 0 ? '' : 'success');
+    resultsEl.innerHTML = results.map(a => labCardHtml(a, { alreadyInStore: a.already_in_store })).join('') || '<div class="lab-empty">// NO RESULTS</div>';
+    // Attach article data + wire buttons
+    results.forEach((a, i) => {
+      const card = resultsEl.querySelectorAll('.lab-card')[i];
+      if (card) card._articleData = a;
+    });
+    wireUpAddButtons(resultsEl);
+  } catch (e) {
+    labStatus(status, 'Error: ' + escapeHtml(e.message) + '<br><span style="font-size:10px;">Make sure you launched the site with <code style="color:var(--neon-cyto);">python3 serve.py</code> rather than opening the HTML directly.</span>', 'error');
+  }
+}
+document.getElementById('lab-do-search').addEventListener('click', doSearch);
+document.getElementById('lab-query').addEventListener('keydown', (e) => {
+  if (e.key === 'Enter') doSearch();
+});
+
+// ============ WHAT'S NEW ============
+// Dismissed items are persisted server-side (uistate.json, via /api/ui-state)
+// so they stay hidden on every device; localStorage is kept as a warm-start
+// cache. The user can dismiss individual articles or an entire run.
+// An "Undo last" link reverses the most recent dismissal during the session.
+const DISMISS_KEY = 'arn-dismissed-v1';
+let DISMISSED = (() => {
+  try {
+    const raw = localStorage.getItem(DISMISS_KEY);
+    if (!raw) return { articles: [], runs: [] };
+    const parsed = JSON.parse(raw);
+    return {
+      articles: Array.isArray(parsed.articles) ? parsed.articles : [],
+      runs: Array.isArray(parsed.runs) ? parsed.runs : [],
+    };
+  } catch (e) {
+    return { articles: [], runs: [] };
+  }
+})();
+let LAST_DISMISS = null;  // {kind: 'article'|'run', value: string} for Undo
+
+function saveDismissed() {
+  try { localStorage.setItem(DISMISS_KEY, JSON.stringify(DISMISSED)); } catch (e) {}
+  pushUIState();
+}
+function isDismissedArticle(id) { return DISMISSED.articles.includes(id); }
+function isDismissedRun(key) { return DISMISSED.runs.includes(key); }
+
+// Bookmarks — starred articles, persisted server-side so they sync across
+// devices (localStorage is only the warm-start cache).
+const BOOKMARK_KEY = 'arn-bookmarks-v1';
+let BOOKMARKS = (() => {
+  try { const p = JSON.parse(localStorage.getItem(BOOKMARK_KEY)); return Array.isArray(p) ? p : []; }
+  catch (e) { return []; }
+})();
+function saveBookmarks() {
+  try { localStorage.setItem(BOOKMARK_KEY, JSON.stringify(BOOKMARKS)); } catch (e) {}
+  pushUIState();
+}
+function isBookmarked(id) { return BOOKMARKS.includes(id); }
+
+// Per-article node feedback (👍 +1 / 👎 −1) — trains that node's learned query.
+// We remember your current verdict per article locally so the buttons stay lit;
+// the server keeps one current verdict per article (re-voting replaces it).
+const FB_KEY = 'arn-feedback-v1';
+let FB = (() => {
+  try { const p = JSON.parse(localStorage.getItem(FB_KEY)); return (p && typeof p === 'object') ? p : {}; }
+  catch (e) { return {}; }
+})();
+function fbState(id) { return FB[id] || 0; }
+function saveFB() { try { localStorage.setItem(FB_KEY, JSON.stringify(FB)); } catch (e) {} }
+
+// ============ CROSS-DEVICE SYNC ============
+// Bookmarks, dismissals and feedback highlights live server-side (uistate.json
+// + the feedback list in articles.json), so opening the site from any device
+// shows the same state. The server copy is authoritative; on first ever sync
+// (no uistate.json yet) it is seeded from this browser's localStorage so
+// nothing already saved here is lost. Every local change pushes the full state
+// back, and returning to the tab re-pulls to pick up edits made elsewhere.
+let UISTATE_READY = false;   // gate pushes until the first pull, so a slow load can't clobber the server
+
+function pushUIState() {
+  if (PUBLIC_MODE || !UISTATE_READY) return;
+  fetch('/api/ui-state', {
+    method: 'POST', headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ dismissed: DISMISSED, bookmarks: BOOKMARKS }),
+  }).catch(() => {});   // sync is best-effort; localStorage still has the state
+}
+
+async function syncUIState() {
+  if (PUBLIC_MODE) return;   // static hosting: each visitor's state stays in their browser
+  let s;
+  try {
+    const r = await fetch('/api/ui-state', { cache: 'no-store' });
+    if (!r.ok) return;
+    s = await r.json();
+  } catch (e) { return; }
+
+  if (s.exists) {
+    const dis = s.dismissed || {};
+    DISMISSED = {
+      articles: Array.isArray(dis.articles) ? dis.articles : [],
+      runs: Array.isArray(dis.runs) ? dis.runs : [],
+    };
+    BOOKMARKS = Array.isArray(s.bookmarks) ? s.bookmarks : [];
+    try { localStorage.setItem(DISMISS_KEY, JSON.stringify(DISMISSED)); } catch (e) {}
+    try { localStorage.setItem(BOOKMARK_KEY, JSON.stringify(BOOKMARKS)); } catch (e) {}
+  }
+  if (s.feedback && typeof s.feedback === 'object') {
+    FB = {};
+    for (const [id, v] of Object.entries(s.feedback)) { if (v) FB[id] = v; }
+    saveFB();
+  }
+  UISTATE_READY = true;
+  if (!s.exists) pushUIState();   // first sync ever: seed the server from this browser
+
+  // Refresh whatever is on screen with the synced state.
+  updateBookmarkCount();
+  updateNewIndicator();
+  const bm = document.getElementById('bm-backdrop');
+  if (bm && bm.classList.contains('open')) renderBookmarks();
+  const nb = document.getElementById('new-backdrop');
+  if (nb && nb.classList.contains('open')) renderWhatsNew();
+}
+
+// Coming back to the tab (e.g. after using the site on the phone) re-pulls.
+document.addEventListener('visibilitychange', () => {
+  if (document.visibilityState === 'visible' && UISTATE_READY) syncUIState();
+});
+
+async function nodeFeedback(id, verdict, el) {
+  const next = (FB[id] === verdict) ? 0 : verdict;   // click the lit one again to clear
+  if (next) FB[id] = next; else delete FB[id];
+  saveFB();
+  const ctl = el.closest('.fb-ctl');
+  if (ctl) {
+    ctl.querySelector('.fb-up').classList.toggle('on', next === 1);
+    ctl.querySelector('.fb-down').classList.toggle('on', next === -1);
+  }
+  if (PUBLIC_MODE) return;   // visitor verdicts stay local; only the owner trains branches
+  try {
+    const r = await fetch('/api/feedback', {
+      method: 'POST', headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ id, verdict: next }),
+    });
+    const data = await r.json();
+    if (data && data.ok && data.branch && data.learned && BRANCHES[data.branch]) {
+      BRANCHES[data.branch].learned = data.learned;   // keep the live overlay fresh
+      if (currentBranch === data.branch && backdrop.classList.contains('open')) {
+        renderBranchSub(data.branch);                 // refresh the LEARNED line
+      }
+    }
+  } catch (e) { /* learning is best-effort */ }
+}
+function updateBookmarkCount() {
+  const el = document.getElementById('bm-count');
+  if (el) el.textContent = BOOKMARKS.length ? String(BOOKMARKS.length) : '';
+}
+function toggleBookmark(id, el) {
+  const i = BOOKMARKS.indexOf(id);
+  if (i >= 0) BOOKMARKS.splice(i, 1); else BOOKMARKS.unshift(id);
+  saveBookmarks();
+  const on = isBookmarked(id);
+  if (el) { el.classList.toggle('on', on); el.textContent = on ? '★ Saved' : '☆ Save'; }
+  updateBookmarkCount();
+  const bm = document.getElementById('bm-backdrop');
+  if (bm && bm.classList.contains('open')) renderBookmarks();
+}
+
+// Best-effort reinforcement signal to the learning agent (-1 dismiss / +1 keep).
+// Silently no-ops if the API isn't reachable (e.g. page opened without serve.py).
+async function sendFeedback(id, verdict) {
+  if (PUBLIC_MODE) return;
+  try {
+    await fetch('/api/feedback', {
+      method: 'POST', headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ id, verdict }),
+    });
+  } catch (e) { /* learning is best-effort */ }
+}
+
+function dismissArticle(id) {
+  if (!DISMISSED.articles.includes(id)) DISMISSED.articles.push(id);
+  LAST_DISMISS = { kind: 'article', value: id };
+  saveDismissed();
+  sendFeedback(id, -1);   // teach the branch to pull away from these terms
+  renderWhatsNew();
+  updateNewIndicator();
+}
+function dismissRun(key) {
+  if (!DISMISSED.runs.includes(key)) DISMISSED.runs.push(key);
+  LAST_DISMISS = { kind: 'run', value: key };
+  saveDismissed();
+  renderWhatsNew();
+  updateNewIndicator();
+}
+function undoLastDismiss() {
+  if (!LAST_DISMISS) return;
+  if (LAST_DISMISS.kind === 'article') {
+    DISMISSED.articles = DISMISSED.articles.filter(x => x !== LAST_DISMISS.value);
+  } else {
+    DISMISSED.runs = DISMISSED.runs.filter(x => x !== LAST_DISMISS.value);
+  }
+  LAST_DISMISS = null;
+  saveDismissed();
+  renderWhatsNew();
+  updateNewIndicator();
+}
+function resetAllDismissals() {
+  DISMISSED = { articles: [], runs: [] };
+  LAST_DISMISS = null;
+  saveDismissed();
+  renderWhatsNew();
+  updateNewIndicator();
+}
+
+function buildRunGroups() {
+  // Group articles by addedBy. "seed" goes last; agent runs sorted newest first.
+  // Dismissed individual articles and dismissed runs are filtered out.
+  const groups = {};
+  for (const a of ARTICLES) {
+    const key = a.addedBy || 'seed';
+    if (isDismissedRun(key)) continue;
+    if (isDismissedArticle(a.id)) continue;
+    if (!groups[key]) groups[key] = [];
+    groups[key].push(a);
+  }
+  const keys = Object.keys(groups);
+  const agentKeys = keys.filter(k => k.startsWith('agent-')).sort().reverse();
+  const otherKeys = keys.filter(k => !k.startsWith('agent-') && k !== 'seed' && !k.startsWith('manual-'));
+  const manualKeys = keys.filter(k => k.startsWith('manual-')).sort().reverse();
+  const seedKey = keys.includes('seed') ? ['seed'] : [];
+  return [...agentKeys, ...manualKeys, ...otherKeys, ...seedKey].map(k => ({ key: k, articles: groups[k] }));
+}
+
+function countUndismissedAgentArticles() {
+  // Pulse-dot only matters when there's something new (agent-run articles
+  // the user hasn't dismissed yet).
+  let n = 0;
+  for (const a of ARTICLES) {
+    const key = a.addedBy || 'seed';
+    if (!key.startsWith('agent-')) continue;
+    if (isDismissedRun(key)) continue;
+    if (isDismissedArticle(a.id)) continue;
+    n++;
+  }
+  return n;
+}
+
+function updateNewIndicator() {
+  const dot = document.querySelector('#new-button .pulse-dot');
+  if (!dot) return;
+  dot.style.display = countUndismissedAgentArticles() > 0 ? '' : 'none';
+}
+
+function renderWhatsNew() {
+  const body = document.getElementById('new-body');
+  const sub = document.getElementById('new-sub');
+  const groups = buildRunGroups();
+  const totalDismissed = DISMISSED.articles.length + DISMISSED.runs.length;
+  const undoBar = (LAST_DISMISS || totalDismissed > 0) ? `
+    <div class="undo-bar">
+      <span>// ${totalDismissed} dismissed item${totalDismissed === 1 ? '' : 's'} hidden</span>
+      <span>
+        ${LAST_DISMISS ? '<button onclick="undoLastDismiss()">Undo last</button>' : ''}
+        ${totalDismissed > 0 ? '<button onclick="resetAllDismissals()" style="margin-left:6px;">Restore all</button>' : ''}
+      </span>
+    </div>
+  ` : '';
+
+  if (groups.length === 0) {
+    body.innerHTML = undoBar + '<div class="new-empty">// NO NEW ARTICLES · ALL DISMISSED</div>';
+    return;
+  }
+  const agentRuns = groups.filter(g => g.key.startsWith('agent-')).length;
+  const totalAgentAdded = groups
+    .filter(g => g.key.startsWith('agent-'))
+    .reduce((sum, g) => sum + g.articles.length, 0);
+  sub.textContent = agentRuns > 0
+    ? `${totalAgentAdded} undismissed article${totalAgentAdded === 1 ? '' : 's'} across ${agentRuns} weekly run${agentRuns === 1 ? '' : 's'}. Dismiss to clear.`
+    : 'No agent runs yet — initial seed library shown. Weekly fetches populate this view.';
+
+  body.innerHTML = undoBar + groups.map(g => {
+    const isSeed = g.key === 'seed';
+    const isManual = g.key.startsWith('manual-');
+    const isFoundational = g.key === 'foundational';
+    const dateLabel = isSeed
+      ? 'Initial Library'
+      : (isFoundational ? 'Foundational References' : formatRunDate(g.key));
+    const tagLabel = isSeed ? 'SEED'
+      : (isFoundational ? 'FOUNDATIONAL'
+      : (isManual ? 'MANUAL' : 'WEEKLY RUN'));
+    const sorted = g.articles.slice().sort((a, b) => {
+      if (a.isBoosted !== b.isBoosted) return a.isBoosted ? -1 : 1;
+      return b.date.localeCompare(a.date);
+    });
+    const dismissBtn = isSeed
+      ? ''
+      : `<button class="run-dismiss" data-run="${escapeHtml(g.key)}">Dismiss all</button>`;
+    return `
+      <div class="run-section">
+        <div class="run-header ${isSeed ? 'is-seed' : ''}">
+          <span class="run-date">${escapeHtml(dateLabel)}</span>
+          <span class="run-tag">${tagLabel}</span>
+          <span class="run-count">${g.articles.length} ARTICLE${g.articles.length === 1 ? '' : 'S'}</span>
+          ${dismissBtn}
+        </div>
+        ${sorted.map(a => renderNewItem(a, !isSeed)).join('')}
+      </div>
+    `;
+  }).join('');
+
+  // Wire dismiss buttons
+  body.querySelectorAll('.run-dismiss').forEach(btn => {
+    btn.addEventListener('click', () => dismissRun(btn.dataset.run));
+  });
+  body.querySelectorAll('.ni-dismiss').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      dismissArticle(btn.dataset.article);
+    });
+  });
+}
+
+function renderNewItem(a, dismissable) {
+  const branch = BRANCHES[a.branch];
+  const branchColor = branch ? branch.color : '#98a4c2';
+  const tier = TIERS[a.priority] || TIERS.other;
+  const item = `
+    <a class="new-item tier-${a.priority} ${a.isBoosted ? 'is-boosted' : ''}"
+       href="${a.url}" target="_blank" rel="noopener"
+       style="--branch-color:${branchColor};">
+      <div class="ni-title">${escapeHtml(a.title)}</div>
+      <div class="ni-meta">
+        <span class="ni-branch">${escapeHtml(branch ? branch.label : 'Unknown')}</span>
+        <span class="ni-tier">${a.isBoosted ? '★ ' : ''}${escapeHtml(tier.shortLabel || tier.label)}</span>
+        <span class="ni-journal">${escapeHtml(a.journalName)}</span>
+        <span>${formatDate(a.date)}</span>
+      </div>
+    </a>
+  `;
+  if (!dismissable) return item;
+  return `
+    <div class="ni-row">
+      ${item}
+      <button class="ni-dismiss" data-article="${escapeHtml(a.id)}" title="Dismiss this article">×</button>
+    </div>
+  `;
+}
+
+function formatRunDate(addedByKey) {
+  // addedByKey is like "agent-2026-05-20"
+  const iso = addedByKey.replace(/^agent-/, '');
+  const d = new Date(iso);
+  if (isNaN(d.getTime())) return addedByKey;
+  return d.toLocaleDateString(undefined, {
+    weekday: 'short', year: 'numeric', month: 'short', day: 'numeric'
+  });
+}
+
+const newBackdrop = document.getElementById('new-backdrop');
+document.getElementById('new-button').addEventListener('click', () => {
+  renderWhatsNew();
+  newBackdrop.classList.add('open');
+});
+document.getElementById('new-close').addEventListener('click', () => {
+  newBackdrop.classList.remove('open');
+});
+newBackdrop.addEventListener('click', (e) => {
+  if (e.target === newBackdrop) newBackdrop.classList.remove('open');
+});
+// (Esc handler below already covers all modals via document keydown)
+
+// ============ DEFINITIONS ============
+const DEFINITIONS = [
+  {
+    term: 'Precision Dx',
+    marker: 'TMF',
+    body: 'Technology used to track, diagnose, and study the behavioral patterns of ASD.',
+    tags: [
+      'Genomics',
+      'Eye tracking',
+      'Perinatal care',
+      'Prenatal care',
+      'Brain imaging',
+      'Brain cell organoids',
+      'Hair biomarkers',
+      'Metabolic pathways',
+      'Algorithmic analyses',
+    ],
+  },
+  {
+    term: 'Precision Rx',
+    marker: 'TMF',
+    body: 'Targeted mechanism-based application of a system of treatments, activities, etc. intended for the alleviation or cure of a condition — bringing out the full potential of a human being with ASD.',
+    tags: [
+      'Metabolic pathways',
+      'Circuit modulation',
+    ],
+  },
+];
+
+function renderDefinitions() {
+  const body = document.getElementById('def-body');
+  body.innerHTML = DEFINITIONS.map(d => `
+    <div class="def-entry">
+      <div class="def-term">
+        ${escapeHtml(d.term)}
+        ${d.marker ? `<span class="def-marker">${escapeHtml(d.marker)}</span>` : ''}
+      </div>
+      <div class="def-body-text">${escapeHtml(d.body)}</div>
+      ${d.tags && d.tags.length ? `
+        <div class="def-tags">
+          ${d.tags.map(t => `<span class="def-tag">${escapeHtml(t)}</span>`).join('')}
+        </div>
+      ` : ''}
+    </div>
+  `).join('');
+}
+
+const defBackdrop = document.getElementById('def-backdrop');
+document.getElementById('def-button').addEventListener('click', () => {
+  renderDefinitions();
+  defBackdrop.classList.add('open');
+});
+document.getElementById('def-close').addEventListener('click', () => {
+  defBackdrop.classList.remove('open');
+});
+defBackdrop.addEventListener('click', (e) => {
+  if (e.target === defBackdrop) defBackdrop.classList.remove('open');
+});
+// ============ BOOKMARKS ============
+const bmBackdrop = document.getElementById('bm-backdrop');
+function renderBookmarks() {
+  const body = document.getElementById('bm-body');
+  const items = BOOKMARKS.map(id => ARTICLES.find(a => a.id === id)).filter(Boolean);
+  if (!items.length) {
+    body.innerHTML = '<div class="bm-empty">No bookmarks yet.<br>Open a branch node and click <b>☆ Save</b> on any article to star it here.</div>';
+    return;
+  }
+  body.innerHTML = items.map(renderArticleCard).join('');
+}
+document.getElementById('bm-button').addEventListener('click', () => {
+  renderBookmarks();
+  bmBackdrop.classList.add('open');
+});
+document.getElementById('bm-close').addEventListener('click', () => bmBackdrop.classList.remove('open'));
+bmBackdrop.addEventListener('click', (e) => { if (e.target === bmBackdrop) bmBackdrop.classList.remove('open'); });
+updateBookmarkCount();
+
+// extend the existing Esc handler — close def + new + lab + bookmarks modals too
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape') {
+    defBackdrop.classList.remove('open');
+    newBackdrop.classList.remove('open');
+    labBackdrop.classList.remove('open');
+    bmBackdrop.classList.remove('open');
+  }
+});
+
+boot();
+</script>
+</body>
+</html>
