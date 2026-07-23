@@ -390,6 +390,52 @@
     box-shadow: 0 4px 20px rgba(0,0,0,0.6);
   }
   .tip.on { opacity: 1; }
+
+  /* ---------- GUIDED DEMO ---------- */
+  .demo-fab {
+    position: fixed; right: 26px; bottom: 26px; z-index: 90;
+    width: 52px; height: 52px; border-radius: 50%; cursor: pointer;
+    background: rgba(10,13,20,0.92); border: 1px solid var(--neon-cyto);
+    color: var(--neon-cyto); font-size: 17px; line-height: 1;
+    display: flex; align-items: center; justify-content: center;
+    transition: background 0.18s, color 0.18s;
+    animation: fabglow 3s ease-in-out infinite;
+  }
+  .demo-fab:hover { background: var(--neon-cyto); color: #05060a; animation: none; box-shadow: 0 0 28px rgba(255,43,214,0.55); }
+  .demo-fab span { margin-left: 3px; }  /* optically centre the ▶ glyph */
+  @keyframes fabglow { 0%,100% { box-shadow: 0 0 10px rgba(255,43,214,0.18); } 50% { box-shadow: 0 0 24px rgba(255,43,214,0.45); } }
+  body.demo-on .demo-fab { display: none; }
+
+  .demo-spot {
+    position: fixed; z-index: 300; pointer-events: none; display: none;
+    border: 1px solid rgba(255,43,214,0.6); border-radius: 8px;
+    box-shadow: 0 0 0 9999px rgba(5,6,10,0.78), 0 0 34px rgba(255,43,214,0.25);
+    transition: all 0.45s cubic-bezier(0.25, 0.8, 0.3, 1);
+  }
+  body.demo-on .demo-spot { display: block; }
+  .demo-spot.bare { border-color: transparent; }
+  .demo-shield { position: fixed; inset: 0; z-index: 305; display: none; }
+  body.demo-on .demo-shield { display: block; }
+
+  .demo-card {
+    position: fixed; z-index: 310; display: none; width: 340px; max-width: calc(100vw - 32px);
+    background: var(--bg-1); border: 1px solid rgba(255,43,214,0.35); border-radius: 6px;
+    padding: 16px 18px; box-shadow: 0 10px 50px rgba(0,0,0,0.7), 0 0 30px rgba(255,43,214,0.1);
+    transition: left 0.45s cubic-bezier(0.25,0.8,0.3,1), top 0.45s cubic-bezier(0.25,0.8,0.3,1);
+  }
+  body.demo-on .demo-card { display: block; }
+  .demo-eyebrow {
+    font-family: 'JetBrains Mono', monospace; font-size: 9px; letter-spacing: 0.24em;
+    text-transform: uppercase; color: var(--neon-cyto);
+  }
+  .demo-title { font-size: 17px; font-weight: 500; margin-top: 7px; }
+  .demo-text { font-size: 13px; color: var(--ink-1); line-height: 1.65; margin-top: 8px; }
+  .demo-nav { display: flex; align-items: center; gap: 6px; margin-top: 14px; }
+  .demo-nav .demo-exit { margin-left: auto; }
+  .demo-bar { height: 2px; background: rgba(120,140,200,0.15); border-radius: 1px; margin-top: 14px; overflow: hidden; }
+  .demo-bar i { display: block; height: 100%; width: 0; background: var(--neon-cyto); transition: width 0.4s; }
+  .upd-wrap.demo-hover .upd-tip { display: block; }
+
 /* Public static build (no serve.py API): hide every control that would
    mutate the tracked-author store — visitors browse read-only. */
 body.public #add-btn, body.public #refresh-all-btn,
@@ -403,6 +449,22 @@ body.public [data-exclude] { display: none !important; }
 <div class="corner tl"></div><div class="corner tr"></div>
 <div class="corner bl"></div><div class="corner br"></div>
 <div class="tip" id="tip"></div>
+
+<button class="demo-fab" id="demo-fab" aria-label="Play a guided demo of this page"><span>▶</span></button>
+<div class="demo-spot" id="demo-spot"></div>
+<div class="demo-shield" id="demo-shield"></div>
+<div class="demo-card" id="demo-card" role="dialog" aria-label="Guided demo">
+  <div class="demo-eyebrow" id="demo-eyebrow"></div>
+  <div class="demo-title" id="demo-title"></div>
+  <div class="demo-text" id="demo-text"></div>
+  <div class="demo-nav">
+    <button class="fbtn" id="demo-back">‹ Back</button>
+    <button class="fbtn" id="demo-pause">⏸ Pause</button>
+    <button class="fbtn" id="demo-next">Next ›</button>
+    <button class="fbtn demo-exit" id="demo-exit">✕ End</button>
+  </div>
+  <div class="demo-bar"><i id="demo-bar"></i></div>
+</div>
 
 <div class="wrap">
   <div class="hud">
@@ -1024,6 +1086,239 @@ $('refresh-all-btn').onclick = async () => {
   } catch (e) { setStatus('global-status', 'Refresh failed: ' + e.message, 'err'); }
   btn.disabled = false;
 };
+
+// ---------- guided demo ----------
+// The ▶ button (bottom right) walks a visitor through the page: it dims
+// everything but one region at a time, explains it, and performs the real
+// interactions — switching researchers, holding a badge hover, filtering
+// publications — so the page demonstrates itself. State touched by the demo
+// is restored when it ends.
+const demoPanel = title => {
+  const h = [...document.querySelectorAll('#main .panel h3')]
+    .find(el => el.textContent.includes(title));
+  return h ? h.closest('.panel') : null;
+};
+
+// Centred steps omit `target`; element steps are skipped when their target
+// is absent (e.g. no update badges for the selected researcher).
+const DEMO_STEPS = [
+  {
+    title: 'Author Tracker',
+    text: 'This page follows individual autism researchers — every paper they publish, and everything the field publishes back at that work. The demo drives the page for you: click anywhere to skip ahead, Esc to leave.',
+  },
+  {
+    title: 'Live totals',
+    text: 'How much the tracker is watching right now: researchers followed, papers verified as theirs, updates recorded against those papers, and when PubMed was last synced.',
+    target: () => document.querySelector('.hud .meta'),
+  },
+  {
+    title: 'Tracked researchers',
+    text: 'The roster. Each entry counts verified papers and flags research updates. Watch — clicking a name swaps the whole dossier on the right.',
+    target: () => document.querySelector('.roster'),
+    run(state) {
+      const other = [...document.querySelectorAll('.roster-item')]
+        .find(el => !el.classList.contains('active'));
+      if (other) state.timers.push(setTimeout(() => other.click(), 2200));
+    },
+  },
+  {
+    title: 'The dossier',
+    text: 'Who this is: name, affiliation, the research branch they are filed under, and their ORCID so identity can be confirmed at the source.',
+    target: () => document.querySelector('#main .panel'),
+  },
+  {
+    title: 'At a glance',
+    text: 'A career in five tiles — papers tracked, how often their own lab led the work, active years, and whether anything here has since been corrected or responded to.',
+    target: () => document.querySelector('.tiles'),
+  },
+  {
+    title: 'Research updates',
+    text: 'What changed about work already tracked: corrections and retractions first, then commentary the field published in response, and preprints that reached their journal version.',
+    target: () => demoPanel('Research updates'),
+  },
+  {
+    title: 'Update badges',
+    text: 'Flagged papers carry a badge, and hovering it summarises every recorded update without leaving the list. The demo is holding the hover for you.',
+    target: () => document.querySelector('#main .upd-wrap'),
+    also: '.upd-wrap.demo-hover .upd-tip',
+    run(state) {
+      const w = document.querySelector('#main .upd-wrap');
+      if (!w) return;
+      w.classList.add('demo-hover');
+      state.undo.push(() => w.classList.remove('demo-hover'));
+    },
+  },
+  {
+    title: 'Publication record',
+    text: 'Papers per year with empty years kept in, authorship roles — senior-author papers are the ones their lab drove — and which topics their output is moving toward or away from.',
+    target: () => demoPanel('Publication record'),
+  },
+  {
+    title: 'Publications',
+    text: 'Every verified paper, colour-coded by evidence tier. The filters slice the list by authorship role — the demo just clicked one.',
+    target: () => demoPanel('Publications'),
+    run(state) {
+      state.timers.push(setTimeout(() => {
+        const f = document.querySelector('.fbtn[data-role]:not([data-role="all"])');
+        if (f) f.click();
+      }, 2000));
+    },
+  },
+  {
+    title: 'Who to track next',
+    text: 'Suggestions from two independent signals: people who repeatedly publish alongside this researcher, and the authors leading research PubMed ranks closest to theirs.',
+    target: () => demoPanel('Researchers to track next'),
+  },
+  {
+    title: 'Track an author',
+    text: 'Adding someone starts here. PubMed indexes authors by surname and initials, so the search first splits a name into distinct people and you pick the researcher you mean.',
+    when: () => !PUBLIC,
+    target: () => document.querySelector('#add-backdrop .modal'),
+    run(state) {
+      $('add-backdrop').classList.add('open');
+      state.undo.push(() => $('add-backdrop').classList.remove('open'));
+    },
+  },
+  {
+    title: 'The other half',
+    text: 'The tracker is one wing of the atlas — this link crosses to the research network, where the same literature is mapped by topic instead of by author.',
+    target: () => document.querySelector('.toolbar .btn'),
+  },
+  {
+    title: 'That’s the tour',
+    text: 'Everything the demo touched has been put back. Explore for real — every element the spotlight visited is live.',
+  },
+];
+
+let DEMO = null;
+
+function demoStart() {
+  if (DEMO) return;
+  DEMO = {
+    i: -1,
+    steps: DEMO_STEPS.filter(s => !s.when || s.when()),
+    timers: [], undo: [], advance: null, paused: false,
+    saved: { sel: SELECTED, filter: ROLE_FILTER, expanded: UPDATES_EXPANDED },
+  };
+  document.body.classList.add('demo-on');
+  $('demo-pause').textContent = '⏸ Pause';
+  demoStep(1);
+}
+
+function demoClearStep() {
+  DEMO.timers.forEach(clearTimeout);
+  DEMO.timers = [];
+  while (DEMO.undo.length) DEMO.undo.pop()();
+}
+
+function demoEnd() {
+  if (!DEMO) return;
+  demoClearStep();
+  document.body.classList.remove('demo-on');
+  SELECTED = DEMO.saved.sel;
+  ROLE_FILTER = DEMO.saved.filter;
+  UPDATES_EXPANDED = DEMO.saved.expanded;
+  DEMO = null;
+  renderRoster();
+  renderProfile();
+}
+
+function demoStep(dir) {
+  if (!DEMO) return;
+  demoClearStep();
+  let i = DEMO.i + dir;
+  while (i >= 0 && i < DEMO.steps.length && DEMO.steps[i].target && !DEMO.steps[i].target()) i += dir;
+  if (i < 0) i = 0;
+  if (i >= DEMO.steps.length) { demoEnd(); return; }
+  DEMO.i = i;
+  const s = DEMO.steps[i];
+  const el = s.target ? s.target() : null;
+  if (s.run) s.run(DEMO);
+  if (el) el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  // Let the scroll (and any modal opening) settle before placing the spotlight.
+  DEMO.timers.push(setTimeout(() => demoPlace(s), el || s.run ? 520 : 60));
+}
+
+function demoPlace(s) {
+  if (!DEMO) return;
+  const spot = $('demo-spot');
+  const el = s.target ? s.target() : null;
+  let r = null;
+  if (el) {
+    const b = el.getBoundingClientRect();
+    r = { left: b.left, top: b.top, right: b.right, bottom: b.bottom };
+    const extra = s.also && document.querySelector(s.also);
+    if (extra) {
+      const b2 = extra.getBoundingClientRect();
+      r.left = Math.min(r.left, b2.left); r.top = Math.min(r.top, b2.top);
+      r.right = Math.max(r.right, b2.right); r.bottom = Math.max(r.bottom, b2.bottom);
+    }
+  }
+  if (r) {
+    const pad = 8;
+    spot.classList.remove('bare');
+    spot.style.left = (r.left - pad) + 'px';
+    spot.style.top = (r.top - pad) + 'px';
+    spot.style.width = (r.right - r.left + pad * 2) + 'px';
+    spot.style.height = (r.bottom - r.top + pad * 2) + 'px';
+  } else {
+    spot.classList.add('bare');
+    spot.style.left = innerWidth / 2 + 'px';
+    spot.style.top = innerHeight / 2 + 'px';
+    spot.style.width = '0px';
+    spot.style.height = '0px';
+  }
+  $('demo-eyebrow').textContent = `// DEMO ${DEMO.i + 1} / ${DEMO.steps.length}`;
+  $('demo-title').textContent = s.title;
+  $('demo-text').textContent = s.text;
+  $('demo-bar').style.width = Math.round(100 * (DEMO.i + 1) / DEMO.steps.length) + '%';
+  demoCardPlace(r);
+  demoArm(s);
+}
+
+function demoCardPlace(r) {
+  const card = $('demo-card');
+  const cw = card.offsetWidth, ch = card.offsetHeight;
+  let x, y;
+  if (!r) {
+    x = (innerWidth - cw) / 2;
+    y = (innerHeight - ch) / 2;
+  } else {
+    x = Math.min(Math.max(r.left, 16), innerWidth - cw - 16);
+    if (r.bottom + ch + 26 < innerHeight) y = r.bottom + 18;
+    else if (r.top - ch - 26 > 0) y = r.top - ch - 18;
+    else {
+      y = Math.max(16, Math.min(r.top, innerHeight - ch - 16));
+      x = r.right + cw + 34 < innerWidth ? r.right + 18 : Math.max(16, r.left - cw - 18);
+    }
+  }
+  card.style.left = x + 'px';
+  card.style.top = y + 'px';
+}
+
+// Auto-advance, paced by how much there is to read on the card.
+function demoArm(s) {
+  if (DEMO.paused) return;
+  const ms = Math.min(11000, Math.max(5200, 2600 + s.text.length * 34));
+  DEMO.advance = setTimeout(() => demoStep(1), ms);
+  DEMO.timers.push(DEMO.advance);
+}
+
+$('demo-fab').onclick = demoStart;
+$('demo-shield').onclick = () => demoStep(1);
+$('demo-next').onclick = () => demoStep(1);
+$('demo-back').onclick = () => demoStep(-1);
+$('demo-exit').onclick = demoEnd;
+$('demo-pause').onclick = () => {
+  if (!DEMO) return;
+  DEMO.paused = !DEMO.paused;
+  $('demo-pause').textContent = DEMO.paused ? '▶ Resume' : '⏸ Pause';
+  if (DEMO.paused) clearTimeout(DEMO.advance);
+  else demoArm(DEMO.steps[DEMO.i]);
+};
+document.addEventListener('keydown', e => { if (e.key === 'Escape') demoEnd(); });
+addEventListener('resize', () => { if (DEMO) demoPlace(DEMO.steps[DEMO.i]); });
+bindTip($('demo-fab'), 'PLAY GUIDED DEMO');
 
 load().catch(e => setStatus('global-status', 'Could not load: ' + e.message + ' — is serve.py running?', 'err'));
 </script>
