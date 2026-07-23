@@ -263,6 +263,25 @@
     border: 1px solid rgba(255,176,32,0.35); color: var(--neon-neuro); background: rgba(255,176,32,0.07);
   }
   .upd-badge.critical { border-color: rgba(255,87,87,0.45); color: var(--neon-interv); background: rgba(255,87,87,0.08); }
+  .upd-wrap { position: relative; display: inline-block; }
+  .upd-tip {
+    display: none; position: absolute; left: 0; bottom: calc(100% + 7px); z-index: 40;
+    width: 300px; padding: 10px 12px; border: 1px solid var(--line); border-radius: 4px;
+    background: #11151f; box-shadow: 0 6px 22px rgba(0,0,0,0.55);
+    font-family: 'Space Grotesk', system-ui, sans-serif; font-size: 11px; line-height: 1.5; color: var(--ink-1);
+    letter-spacing: normal; text-transform: none; white-space: normal;
+  }
+  .upd-wrap:hover .upd-tip { display: block; }
+  .upd-tip-row { display: block; }
+  .upd-tip-row + .upd-tip-row { margin-top: 8px; padding-top: 8px; border-top: 1px solid rgba(120,140,200,0.12); }
+  .upd-tip-label {
+    display: block; font-family: 'JetBrains Mono', monospace; font-size: 9px; letter-spacing: 0.18em;
+    text-transform: uppercase; color: var(--ink-2); margin-bottom: 2px;
+  }
+  .upd-tip-row.critical .upd-tip-label { color: var(--neon-interv); }
+  .upd-tip-row.warning .upd-tip-label { color: var(--neon-neuro); }
+  .upd-tip-title { display: block; color: var(--ink-0); }
+  .upd-tip-meta { display: block; font-family: 'JetBrains Mono', monospace; font-size: 9px; color: var(--ink-2); margin-top: 2px; }
   .new-badge {
     font-family: 'JetBrains Mono', monospace; font-size: 9px; letter-spacing: 0.16em;
     text-transform: uppercase; padding: 2px 7px; border-radius: 2px;
@@ -760,15 +779,26 @@ function papersHTML(p, papers) {
   </div>`;
 }
 
+// Hover summary for a paper's update badge: what each update is, its title,
+// and where/when it appeared.
+function updTipHTML(ups) {
+  return `<span class="upd-tip">${ups.map(u => `<span class="upd-tip-row ${esc(u.severity)}">
+    <span class="upd-tip-label">${UPDATE_ICONS[u.kind] || '•'} ${esc(u.label)}</span>
+    <span class="upd-tip-title">${esc(u.title || ('PMID ' + u.pmid))}</span>
+    ${u.journal || u.date ? `<span class="upd-tip-meta">${esc([u.journal, u.date].filter(Boolean).join(' · '))}</span>` : ''}
+  </span>`).join('')}</span>`;
+}
+
 function paperHTML(a) {
   const role = ROLES.find(r => r.key === a.role) || ROLES[3];
   const crit = (a.updates || []).some(u => u.severity === 'critical');
   const warn = (a.updates || []).some(u => u.severity === 'warning');
   const badges = [];
+  const withTip = badge => `<span class="upd-wrap">${badge}${updTipHTML(a.updates)}</span>`;
   if (a.isPreprint) badges.push(`<span class="upd-badge">Preprint</span>`);
-  if (crit) badges.push(`<span class="upd-badge critical">⊘ Retracted / concern</span>`);
-  else if (warn) badges.push(`<span class="upd-badge">✎ Corrected</span>`);
-  else if ((a.updates || []).length) badges.push(`<span class="upd-badge" style="border-color:rgba(0,240,255,0.3);color:var(--neon-immuno);background:rgba(0,240,255,0.06)">❝ ${a.updates.length} response${a.updates.length === 1 ? '' : 's'}</span>`);
+  if (crit) badges.push(withTip(`<span class="upd-badge critical">⊘ Retracted / concern</span>`));
+  else if (warn) badges.push(withTip(`<span class="upd-badge">✎ Corrected</span>`));
+  else if ((a.updates || []).length) badges.push(withTip(`<span class="upd-badge" style="border-color:rgba(0,240,255,0.3);color:var(--neon-immuno);background:rgba(0,240,255,0.06)">❝ ${a.updates.length} response${a.updates.length === 1 ? '' : 's'}</span>`));
   return `<div class="paper">
     <div class="paper-tier" style="background:${TIER_COLORS[a.priority] || TIER_COLORS.other}"></div>
     <div class="paper-main">
