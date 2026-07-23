@@ -1331,6 +1331,56 @@
     background: rgba(120, 140, 200, 0.1);
   }
 
+  /* GUIDED DEMO — ▶ button bottom right; spotlight + caption card */
+  .demo-fab {
+    position: fixed; right: 26px; bottom: 26px; z-index: 90;
+    width: 52px; height: 52px; border-radius: 50%; cursor: pointer;
+    background: rgba(10,13,20,0.92); border: 1px solid var(--neon-cyto);
+    color: var(--neon-cyto); font-size: 17px; line-height: 1;
+    display: flex; align-items: center; justify-content: center;
+    transition: background 0.18s, color 0.18s;
+    animation: fabglow 3s ease-in-out infinite;
+  }
+  .demo-fab:hover { background: var(--neon-cyto); color: #05060a; animation: none; box-shadow: 0 0 28px rgba(255,43,214,0.55); }
+  .demo-fab span { margin-left: 3px; }  /* optically centre the ▶ glyph */
+  @keyframes fabglow { 0%,100% { box-shadow: 0 0 10px rgba(255,43,214,0.18); } 50% { box-shadow: 0 0 24px rgba(255,43,214,0.45); } }
+  body.demo-on .demo-fab { display: none; }
+
+  .demo-spot {
+    position: fixed; z-index: 300; pointer-events: none; display: none;
+    border: 1px solid rgba(255,43,214,0.6); border-radius: 8px;
+    box-shadow: 0 0 0 9999px rgba(5,6,10,0.78), 0 0 34px rgba(255,43,214,0.25);
+    transition: all 0.45s cubic-bezier(0.25, 0.8, 0.3, 1);
+  }
+  body.demo-on .demo-spot { display: block; }
+  .demo-spot.bare { border-color: transparent; }
+  .demo-shield { position: fixed; inset: 0; z-index: 305; display: none; }
+  body.demo-on .demo-shield { display: block; }
+
+  .demo-card {
+    position: fixed; z-index: 310; display: none; width: 340px; max-width: calc(100vw - 32px);
+    background: var(--bg-1); border: 1px solid rgba(255,43,214,0.35); border-radius: 6px;
+    padding: 16px 18px; box-shadow: 0 10px 50px rgba(0,0,0,0.7), 0 0 30px rgba(255,43,214,0.1);
+    transition: left 0.45s cubic-bezier(0.25,0.8,0.3,1), top 0.45s cubic-bezier(0.25,0.8,0.3,1);
+  }
+  body.demo-on .demo-card { display: block; }
+  .demo-eyebrow {
+    font-family: 'JetBrains Mono', monospace; font-size: 9px; letter-spacing: 0.24em;
+    text-transform: uppercase; color: var(--neon-cyto);
+  }
+  .demo-title { font-size: 17px; font-weight: 500; margin-top: 7px; color: var(--ink-0); }
+  .demo-text { font-size: 13px; color: var(--ink-1); line-height: 1.65; margin-top: 8px; }
+  .demo-nav { display: flex; align-items: center; gap: 6px; margin-top: 14px; }
+  .demo-nav button {
+    background: transparent; border: 1px solid rgba(120,140,200,0.2); color: var(--ink-2);
+    font-family: 'JetBrains Mono', monospace; font-size: 9px; letter-spacing: 0.18em;
+    text-transform: uppercase; padding: 6px 11px; border-radius: 2px; cursor: pointer; transition: all 0.15s;
+  }
+  .demo-nav button:hover { color: var(--ink-0); border-color: rgba(120,140,200,0.45); }
+  .demo-nav .demo-exit { margin-left: auto; }
+  .demo-bar { height: 2px; background: rgba(120,140,200,0.15); border-radius: 1px; margin-top: 14px; overflow: hidden; }
+  .demo-bar i { display: block; height: 100%; width: 0; background: var(--neon-cyto); transition: width 0.4s; }
+
   .tier-clinical-trial       { --priority-color: var(--tier-trial); }
   .tier-clinical-observation { --priority-color: var(--tier-clin); }
   .tier-translational        { --priority-color: var(--tier-trans); }
@@ -1384,6 +1434,22 @@
 <button class="def-button" id="def-button" aria-label="Open definitions">Definitions</button>
 
 <div class="hint">CLICK A BRANCH NODE · ◈ AUTHORS · ⬢ AGENT LAB · ◆ WHAT'S NEW · ◇ DEFINITIONS · ESC TO CLOSE</div>
+
+<button class="demo-fab" id="demo-fab" aria-label="Play a guided demo of this page"><span>▶</span></button>
+<div class="demo-spot" id="demo-spot"></div>
+<div class="demo-shield" id="demo-shield"></div>
+<div class="demo-card" id="demo-card" role="dialog" aria-label="Guided demo">
+  <div class="demo-eyebrow" id="demo-eyebrow"></div>
+  <div class="demo-title" id="demo-title"></div>
+  <div class="demo-text" id="demo-text"></div>
+  <div class="demo-nav">
+    <button id="demo-back">‹ Back</button>
+    <button id="demo-pause">⏸ Pause</button>
+    <button id="demo-next">Next ›</button>
+    <button class="demo-exit" id="demo-exit">✕ End</button>
+  </div>
+  <div class="demo-bar"><i id="demo-bar"></i></div>
+</div>
 
 <!-- AGENT LAB MODAL -->
 <div class="modal-backdrop" id="lab-backdrop">
@@ -2979,6 +3045,264 @@ document.addEventListener('keydown', (e) => {
     bmBackdrop.classList.remove('open');
   }
 });
+
+// ============ GUIDED DEMO ============
+// The ▶ button (bottom right) walks a visitor through the page: it dims
+// everything but one region at a time, explains it, and performs the real
+// interactions — hovering a branch node, opening it, re-sorting its articles.
+// Canvas nodes drift on the physics sim, so canvas steps re-track their
+// spotlight while they are on screen. Demo state is restored on exit.
+const demoNodeRect = n => ({
+  left: n.x - n.r - 16, top: n.y - n.r - 18,
+  right: n.x + n.r + 16, bottom: n.y + n.r + 62,   // room for badges + label
+});
+function demoGraphRect() {
+  const act = nodes.filter(isActive);
+  if (!act.length) return null;
+  let l = 1e9, t = 1e9, r = -1e9, b = -1e9;
+  act.forEach(n => {
+    l = Math.min(l, n.x - n.r); t = Math.min(t, n.y - n.r);
+    r = Math.max(r, n.x + n.r); b = Math.max(b, n.y + n.r + 44);
+  });
+  return { left: l - 12, top: t - 16, right: r + 12, bottom: b };
+}
+const demoBigBranch = () => nodes.filter(n => n.type === 'branch' && isActive(n))
+  .sort((a, b) => b.articleCount - a.articleCount)[0] || null;
+
+// Centred steps have neither `target` nor `rect`; steps are skipped when
+// their target/rect resolves to nothing (e.g. before boot finishes).
+const DEMO_STEPS = [
+  {
+    title: 'ASD Research Atlas',
+    text: 'A live map of autism research: branches of the field orbiting one core, fed weekly from PubMed. The demo drives the page for you — click anywhere to skip ahead, Esc to leave.',
+  },
+  {
+    title: 'Live totals',
+    text: 'What the database holds right now: research branches, the journals indexed for each, every article filed, and when the weekly fetch last ran.',
+    target: () => document.querySelector('.hud .meta'),
+  },
+  {
+    title: 'The map',
+    text: 'Each glowing node is a research branch, sized by how much literature sits inside it. The layout is a live physics simulation — nodes can be dragged, and signals pulse along the links.',
+    rect: demoGraphRect,
+  },
+  {
+    title: 'A branch up close',
+    text: 'The top badge counts articles; ★ counts the boosted evidence tiers — clinical trials, clinical observations, and translational work. Clicking a node opens the branch.',
+    rect: () => { const n = demoBigBranch(); return n && demoNodeRect(n); },
+    run(state) {
+      const n = demoBigBranch();
+      if (!n) return;
+      hoverNode = n;
+      state.undo.push(() => { if (hoverNode === n) hoverNode = null; });
+    },
+  },
+  {
+    title: 'Inside a branch',
+    text: 'Every article filed under the branch, colour-coded by evidence tier, with full-text search and a date range. The header also shows terms the branch has learned from your votes.',
+    target: () => document.getElementById('modal'),
+    run() { const n = demoBigBranch(); if (n) openBranchModal(n.branch); },
+  },
+  {
+    title: 'Priority & sorting',
+    text: 'Tier chips filter to just trials or reviews; sorting runs by priority, recency, title, or journal impact factor — the demo just switched to newest-first.',
+    target: () => document.querySelector('#modal .result-count'),
+    also: '#priority-filters',
+    run(state) {
+      state.timers.push(setTimeout(() => {
+        const b = document.querySelector('#modal .sort-btn[data-sort="date-desc"]');
+        if (b) b.click();
+      }, 1800));
+      state.undo.push(() => {
+        const b = document.querySelector('#modal .sort-btn[data-sort="priority"]');
+        if (b && currentBranch) b.click();
+      });
+    },
+  },
+  {
+    title: 'An article card',
+    text: 'Each card links out to the paper. ☆ Save stars it into Bookmarks, and 👍/👎 teach the branch what belongs — repeated votes become learned terms that tune the weekly agent.',
+    target: () => document.querySelector('#article-list .article'),
+  },
+  {
+    title: 'The legend',
+    text: 'Every branch again as a list, with article and ★ boosted counts — click one here to open it without hunting the map.',
+    target: () => document.getElementById('legend'),
+    run() { closeModal(); },
+  },
+  {
+    title: 'Bookmarks',
+    text: 'Articles you star collect here, saved in this browser, so a reading list survives between visits.',
+    target: () => document.getElementById('bm-button'),
+  },
+  {
+    title: 'Reference panels',
+    text: 'What’s New groups articles by the weekly run that added them, newest first. Definitions holds the glossary behind the branch names.',
+    target: () => document.getElementById('new-button'),
+    also: '.def-button',
+  },
+  {
+    title: 'Agent Lab',
+    text: 'The owner’s console: preview what the weekly agent would add before anything is saved, or search PubMed manually and file results into any branch.',
+    when: () => !PUBLIC_MODE,
+    target: () => document.querySelector('#lab-backdrop .lab-modal'),
+    run(state) {
+      document.getElementById('lab-backdrop').classList.add('open');
+      state.undo.push(() => document.getElementById('lab-backdrop').classList.remove('open'));
+    },
+  },
+  {
+    title: 'The other half',
+    text: 'Authors crosses to the Author Tracker, where the same literature is followed researcher by researcher — every paper, correction, and response. It has a ▶ demo of its own.',
+    target: () => document.querySelector('.auth-button'),
+  },
+  {
+    title: 'That’s the tour',
+    text: 'Everything the demo touched has been put back. Explore for real — click any node to open its branch.',
+  },
+];
+
+let DEMO = null;
+
+function demoStart() {
+  if (DEMO) return;
+  DEMO = {
+    i: -1,
+    steps: DEMO_STEPS.filter(s => !s.when || s.when()),
+    timers: [], undo: [], advance: null, paused: false,
+  };
+  document.body.classList.add('demo-on');
+  document.getElementById('demo-pause').textContent = '⏸ Pause';
+  demoStep(1);
+}
+
+function demoClearStep() {
+  DEMO.timers.forEach(clearTimeout);   // also clears intervals — shared id pool
+  DEMO.timers = [];
+  while (DEMO.undo.length) DEMO.undo.pop()();
+}
+
+function demoEnd() {
+  if (!DEMO) return;
+  demoClearStep();
+  document.body.classList.remove('demo-on');
+  closeModal();
+  document.getElementById('lab-backdrop').classList.remove('open');
+  DEMO = null;
+}
+
+function demoStep(dir) {
+  if (!DEMO) return;
+  demoClearStep();
+  let i = DEMO.i + dir;
+  while (i >= 0 && i < DEMO.steps.length) {
+    const s = DEMO.steps[i];
+    const missing = (s.target && !s.target()) || (s.rect && !s.rect());
+    if (!missing) break;
+    i += dir;
+  }
+  if (i < 0) i = 0;
+  if (i >= DEMO.steps.length) { demoEnd(); return; }
+  DEMO.i = i;
+  const s = DEMO.steps[i];
+  if (s.run) s.run(DEMO);
+  // Let any modal opening settle before placing the spotlight.
+  DEMO.timers.push(setTimeout(() => demoShowStep(s), s.run ? 420 : 60));
+}
+
+function demoShowStep(s) {
+  if (!DEMO) return;
+  document.getElementById('demo-eyebrow').textContent = `// DEMO ${DEMO.i + 1} / ${DEMO.steps.length}`;
+  document.getElementById('demo-title').textContent = s.title;
+  document.getElementById('demo-text').textContent = s.text;
+  document.getElementById('demo-bar').style.width =
+    Math.round(100 * (DEMO.i + 1) / DEMO.steps.length) + '%';
+  demoPlace(s);
+  demoArm(s);
+  // Canvas nodes keep drifting on the sim — follow them while spotlit.
+  if (s.rect) DEMO.timers.push(setInterval(() => demoPlace(s), 500));
+}
+
+function demoPlace(s) {
+  if (!DEMO) return;
+  const spot = document.getElementById('demo-spot');
+  let r = null;
+  if (s.rect) {
+    r = s.rect();
+  } else if (s.target) {
+    const el = s.target();
+    if (el) {
+      const b = el.getBoundingClientRect();
+      r = { left: b.left, top: b.top, right: b.right, bottom: b.bottom };
+    }
+  }
+  if (r && s.also) {
+    const extra = document.querySelector(s.also);
+    if (extra && extra.offsetParent !== null) {
+      const b2 = extra.getBoundingClientRect();
+      r.left = Math.min(r.left, b2.left); r.top = Math.min(r.top, b2.top);
+      r.right = Math.max(r.right, b2.right); r.bottom = Math.max(r.bottom, b2.bottom);
+    }
+  }
+  if (r) {
+    const pad = 8;
+    spot.classList.remove('bare');
+    spot.style.left = (r.left - pad) + 'px';
+    spot.style.top = (r.top - pad) + 'px';
+    spot.style.width = (r.right - r.left + pad * 2) + 'px';
+    spot.style.height = (r.bottom - r.top + pad * 2) + 'px';
+  } else {
+    spot.classList.add('bare');
+    spot.style.left = innerWidth / 2 + 'px';
+    spot.style.top = innerHeight / 2 + 'px';
+    spot.style.width = '0px';
+    spot.style.height = '0px';
+  }
+  demoCardPlace(r);
+}
+
+function demoCardPlace(r) {
+  const card = document.getElementById('demo-card');
+  const cw = card.offsetWidth, ch = card.offsetHeight;
+  let x, y;
+  if (!r) {
+    x = (innerWidth - cw) / 2;
+    y = (innerHeight - ch) / 2;
+  } else {
+    x = Math.min(Math.max(r.left, 16), innerWidth - cw - 16);
+    if (r.bottom + ch + 26 < innerHeight) y = r.bottom + 18;
+    else if (r.top - ch - 26 > 0) y = r.top - ch - 18;
+    else {
+      y = Math.max(16, Math.min(r.top, innerHeight - ch - 16));
+      x = r.right + cw + 34 < innerWidth ? r.right + 18 : Math.max(16, r.left - cw - 18);
+    }
+  }
+  card.style.left = x + 'px';
+  card.style.top = y + 'px';
+}
+
+// Auto-advance, paced by how much there is to read on the card.
+function demoArm(s) {
+  if (DEMO.paused) return;
+  const ms = Math.min(11000, Math.max(5200, 2600 + s.text.length * 34));
+  DEMO.advance = setTimeout(() => demoStep(1), ms);
+  DEMO.timers.push(DEMO.advance);
+}
+
+document.getElementById('demo-fab').addEventListener('click', demoStart);
+document.getElementById('demo-shield').addEventListener('click', () => demoStep(1));
+document.getElementById('demo-next').addEventListener('click', () => demoStep(1));
+document.getElementById('demo-back').addEventListener('click', () => demoStep(-1));
+document.getElementById('demo-exit').addEventListener('click', demoEnd);
+document.getElementById('demo-pause').addEventListener('click', () => {
+  if (!DEMO) return;
+  DEMO.paused = !DEMO.paused;
+  document.getElementById('demo-pause').textContent = DEMO.paused ? '▶ Resume' : '⏸ Pause';
+  if (DEMO.paused) clearTimeout(DEMO.advance);
+  else demoArm(DEMO.steps[DEMO.i]);
+});
+document.addEventListener('keydown', (e) => { if (e.key === 'Escape') demoEnd(); });
+window.addEventListener('resize', () => { if (DEMO) demoPlace(DEMO.steps[DEMO.i]); });
 
 boot();
 </script>
