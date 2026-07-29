@@ -1608,6 +1608,22 @@ const TIER_COLORS = {
   'other':                '#5d6783',
 };
 
+// Which node an article belongs to and which journal it came from are two
+// separate questions. A branchKey means the topic query placed it, so it wins
+// the node; the journal catalog still supplies the display name and impact
+// factor whenever the paper is from an indexed journal, even when a branch
+// query is what filed it. Articles may carry either key or both.
+function resolveArticle(a) {
+  const j = JOURNALS[a.journalKey];
+  a.branch = (a.branchKey && BRANCHES[a.branchKey]) ? a.branchKey
+           : (j ? j.branch : 'unknown');
+  a.journalName = j ? j.name : (a.journalDisplay || '(unknown)');
+  a.if = j ? j.if : (a.if_override || 0);
+  if (!a.priority || !TIERS[a.priority]) a.priority = 'other';
+  a.priorityRank = TIERS[a.priority].rank;
+  a.isBoosted = !!TIERS[a.priority].boosted;
+}
+
 async function boot() {
   const bootEl = document.getElementById('boot');
   const msgEl = document.getElementById('boot-msg');
@@ -1629,25 +1645,7 @@ async function boot() {
       'review':               { rank: 5, label: 'Review',               shortLabel: 'REVIEW', boosted: false },
       'other':                { rank: 6, label: 'Other',                shortLabel: 'OTHER',  boosted: false },
     };
-    ARTICLES.forEach(a => {
-      // Branch-only articles carry branchKey + journalDisplay (the PubMed-reported
-      // journal name). Indexed-journal articles carry journalKey that lookups into JOURNALS.
-      if (a.branchKey && BRANCHES[a.branchKey]) {
-        a.branch = a.branchKey;
-        a.journalName = a.journalDisplay || '(other journal)';
-        a.if = a.if_override || 0;
-      } else {
-        const j = JOURNALS[a.journalKey];
-        if (!j) {
-          a.branch = 'unknown'; a.journalName = '(unknown)'; a.if = 0;
-        } else {
-          a.branch = j.branch; a.journalName = j.name; a.if = j.if;
-        }
-      }
-      if (!a.priority || !TIERS[a.priority]) a.priority = 'other';
-      a.priorityRank = TIERS[a.priority].rank;
-      a.isBoosted = !!TIERS[a.priority].boosted;
-    });
+    ARTICLES.forEach(resolveArticle);
     msgEl.textContent = 'INITIALIZING NETWORK...';
     initApp();
     syncUIState();   // pull cross-device UI state (bookmarks/dismissals/feedback)
@@ -2465,17 +2463,7 @@ async function reloadStoreSoft() {
     const data = await r.json();
     ARTICLES.length = 0;
     data.articles.forEach(a => {
-      if (a.branchKey && BRANCHES[a.branchKey]) {
-        a.branch = a.branchKey;
-        a.journalName = a.journalDisplay || '(other journal)';
-        a.if = a.if_override || 0;
-      } else {
-        const j = JOURNALS[a.journalKey];
-        if (j) { a.branch = j.branch; a.journalName = j.name; a.if = j.if; }
-      }
-      if (!a.priority || !TIERS[a.priority]) a.priority = 'other';
-      a.priorityRank = TIERS[a.priority].rank;
-      a.isBoosted = !!TIERS[a.priority].boosted;
+      resolveArticle(a);
       ARTICLES.push(a);
     });
     // Update branch node counts
@@ -2920,6 +2908,12 @@ function renderNewItem(a, dismissable) {
        style="--branch-color:${branchColor};">
       <div class="ni-title">${escapeHtml(a.title)}</div>
       <div class="ni-meta">
+        <span class="fb-ctl">
+          <span class="fb-up${fbState(a.id) === 1 ? ' on' : ''}" title="Relevant — teach this node to find more like it"
+                onclick="event.preventDefault();event.stopPropagation();nodeFeedback('${a.id}',1,this);">👍</span>
+          <span class="fb-down${fbState(a.id) === -1 ? ' on' : ''}" title="Not relevant — teach this node to avoid these"
+                onclick="event.preventDefault();event.stopPropagation();nodeFeedback('${a.id}',-1,this);">👎</span>
+        </span>
         <span class="ni-branch">${escapeHtml(branch ? branch.label : 'Unknown')}</span>
         <span class="ni-tier">${a.isBoosted ? '★ ' : ''}${escapeHtml(tier.shortLabel || tier.label)}</span>
         <span class="ni-journal">${escapeHtml(a.journalName)}</span>

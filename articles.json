@@ -1,7 +1,7 @@
 {
  "_meta": {
   "schema_version": 5,
-  "last_updated": "2026-07-20",
+  "last_updated": "2026-07-29",
   "description": "Article store for the Autism Research Network Atlas.",
   "schema": {
    "id": "unique string id",
@@ -59,8 +59,8 @@
    "alpha": 1.0
   },
   "last_run": {
-   "at": "2026-07-20T10:13:28",
-   "added": 14,
+   "at": "2026-07-29T12:54:36",
+   "added": 29,
    "mode": "weekly"
   }
  },
@@ -285,7 +285,7 @@
     "neg_events": 0,
     "updatedAt": "2026-07-20"
    },
-   "lastFetched": "2026-07-20"
+   "lastFetched": "2026-07-29"
   },
   "cytokines": {
    "color": "#ff2bd6",
@@ -294,7 +294,7 @@
    "pubmedQuery": "(\"IL-17\"[Title/Abstract] OR \"IL17\"[Title/Abstract] OR \"interleukin-17\"[Title/Abstract] OR \"interleukin 17\"[Title/Abstract] OR \"IL-17A\"[Title/Abstract] OR \"IL-17a\"[Title/Abstract] OR \"IL-17E\"[Title/Abstract] OR \"interleukin\"[Title/Abstract] OR \"interleukins\"[Title/Abstract] OR \"cytokine\"[Title/Abstract] OR \"cytokines\"[Title/Abstract] OR \"Th17\"[Title/Abstract] OR \"T helper 17\"[Title/Abstract] OR \"TNF-alpha\"[Title/Abstract] OR \"tumor necrosis factor\"[Title/Abstract] OR \"IL-6\"[Title/Abstract] OR \"IL-1\"[Title/Abstract] OR \"IL-1beta\"[Title/Abstract] OR \"IL-1β\"[Title/Abstract] OR \"IL-8\"[Title/Abstract] OR \"IL-10\"[Title/Abstract] OR \"IL-22\"[Title/Abstract] OR \"IL-33\"[Title/Abstract] OR \"neuroinflammation\"[Title/Abstract] OR \"neuroimmune\"[Title/Abstract] OR \"maternal immune activation\"[Title/Abstract] OR \"MIA\"[Title/Abstract] OR \"pro-inflammatory\"[Title/Abstract] OR \"proinflammatory\"[Title/Abstract] OR \"inflammatory\"[Title/Abstract] OR \"inflammation\"[Title/Abstract])",
    "minYear": 2021,
    "broadAutism": true,
-   "lastFetched": "2026-07-20",
+   "lastFetched": "2026-07-29",
    "learned": {
     "include": {
      "Oxytocin": {
@@ -314,9 +314,9 @@
      }
     },
     "exclude": {},
-    "pos_events": 7,
+    "pos_events": 8,
     "neg_events": 1,
-    "updatedAt": "2026-07-20"
+    "updatedAt": "2026-07-23"
    }
   },
   "behavioral": {
@@ -328,11 +328,11 @@
    "learned": {
     "include": {},
     "exclude": {},
-    "pos_events": 1,
-    "neg_events": 0,
-    "updatedAt": "2026-06-03"
+    "pos_events": 2,
+    "neg_events": 1,
+    "updatedAt": "2026-07-29"
    },
-   "lastFetched": "2026-07-20"
+   "lastFetched": "2026-07-29"
   },
   "neuroscience": {
    "color": "#ffb020",
@@ -346,7 +346,7 @@
     "pos_events": 0,
     "neg_events": 0
    },
-   "lastFetched": "2026-07-20"
+   "lastFetched": "2026-07-29"
   },
   "genetics": {
    "color": "#7a5cff",
@@ -357,11 +357,11 @@
    "learned": {
     "include": {},
     "exclude": {},
-    "pos_events": 2,
+    "pos_events": 3,
     "neg_events": 0,
-    "updatedAt": "2026-07-20"
+    "updatedAt": "2026-07-23"
    },
-   "lastFetched": "2026-07-20"
+   "lastFetched": "2026-07-29"
   },
   "intervention": {
    "color": "#ff5757",
@@ -372,11 +372,11 @@
    "learned": {
     "include": {},
     "exclude": {},
-    "pos_events": 3,
+    "pos_events": 4,
     "neg_events": 0,
-    "updatedAt": "2026-06-02"
+    "updatedAt": "2026-07-29"
    },
-   "lastFetched": "2026-07-20"
+   "lastFetched": "2026-07-29"
   }
  },
  "articles": [
@@ -1064,7 +1064,8 @@
    "journalDisplay": "Molecular psychiatry",
    "journalKey": "mol-psych",
    "_origBranch": "cytokines",
-   "mesh": []
+   "mesh": [],
+   "branchKey": "cytokines"
   },
   {
    "id": "pm-41881165",
@@ -1219,7 +1220,8 @@
     "Behavior, Animal",
     "Neurons",
     "Receptors, Interleukin-17"
-   ]
+   ],
+   "branchKey": "cytokines"
   },
   {
    "id": "pm-41535926",
@@ -1257,7 +1259,8 @@
     "Neurons",
     "Neurodevelopmental Disorders",
     "Brain"
-   ]
+   ],
+   "branchKey": "cytokines"
   },
   {
    "id": "pm-41381014",
@@ -1436,7 +1439,8 @@
     "Cytokines",
     "Infant, Newborn",
     "Multiomics"
-   ]
+   ],
+   "branchKey": "cytokines"
   },
   {
    "id": "pm-40957533",
@@ -1491,7 +1495,8 @@
     "Humans",
     "Hippocampus",
     "Chemokine CXCL16"
-   ]
+   ],
+   "branchKey": "cytokines"
   },
   {
    "id": "pm-40744151",
@@ -1686,7 +1691,8 @@
     "Social Behavior",
     "Cerebral Cortex",
     "Female"
-   ]
+   ],
+   "branchKey": "cytokines"
   },
   {
    "id": "pm-40175518",
@@ -1716,7 +1722,8 @@
     "Brain",
     "Autistic Disorder",
     "Inflammation"
-   ]
+   ],
+   "branchKey": "cytokines"
   },
   {
    "id": "pm-40139186",
@@ -1953,7 +1960,8 @@
     "Male",
     "Rats, Sprague-Dawley",
     "Nerve Tissue Proteins"
-   ]
+   ],
+   "branchKey": "cytokines"
   },
   {
    "id": "pm-39904469",
@@ -2007,7 +2015,8 @@
     "Dopaminergic Neurons",
     "Risperidone",
     "Dopamine"
-   ]
+   ],
+   "branchKey": "cytokines"
   },
   {
    "id": "pm-39719225",
@@ -2060,7 +2069,8 @@
     "Sex Factors",
     "Neurons",
     "Homeodomain Proteins"
-   ]
+   ],
+   "branchKey": "cytokines"
   },
   {
    "id": "pm-39703999",
@@ -2157,7 +2167,8 @@
     "Fragile X Syndrome",
     "Poly I-C",
     "Receptors, Metabotropic Glutamate"
-   ]
+   ],
+   "branchKey": "cytokines"
   },
   {
    "id": "pm-39581290",
@@ -2227,7 +2238,8 @@
     "Australia",
     "Interleukin-6",
     "Infant, Newborn"
-   ]
+   ],
+   "branchKey": "cytokines"
   },
   {
    "id": "pm-39471905",
@@ -2578,7 +2590,8 @@
     "Feces",
     "Gastrointestinal Microbiome",
     "Mood Disorders"
-   ]
+   ],
+   "branchKey": "cytokines"
   },
   {
    "id": "pm-38552922",
@@ -2928,7 +2941,8 @@
     "Disease Models, Animal",
     "Primates",
     "Behavior, Animal"
-   ]
+   ],
+   "branchKey": "cytokines"
   },
   {
    "id": "pm-37573326",
@@ -3062,7 +3076,8 @@
     "Bayes Theorem",
     "Autistic Disorder",
     "Biomarkers"
-   ]
+   ],
+   "branchKey": "cytokines"
   },
   {
    "id": "pm-37011865",
@@ -3108,7 +3123,8 @@
     "Prenatal Exposure Delayed Effects",
     "Brain",
     "Maternal Exposure"
-   ]
+   ],
+   "branchKey": "cytokines"
   },
   {
    "id": "pm-36920424",
@@ -3127,7 +3143,8 @@
     "Autistic Disorder",
     "Inflammation",
     "Age Factors"
-   ]
+   ],
+   "branchKey": "cytokines"
   },
   {
    "id": "pm-36878967",
@@ -3156,7 +3173,8 @@
     "Animals",
     "Mice",
     "Prenatal Exposure Delayed Effects"
-   ]
+   ],
+   "branchKey": "cytokines"
   },
   {
    "id": "pm-36858183",
@@ -3334,7 +3352,8 @@
     "Genome-Wide Association Study",
     "Brain",
     "Alzheimer Disease"
-   ]
+   ],
+   "branchKey": "cytokines"
   },
   {
    "id": "pm-36284159",
@@ -3355,7 +3374,8 @@
     "Inflammation",
     "Neurodevelopmental Disorders",
     "Risk Factors"
-   ]
+   ],
+   "branchKey": "cytokines"
   },
   {
    "id": "pm-36266569",
@@ -3377,7 +3397,8 @@
     "Phosphatidylinositol 3-Kinases",
     "Immunity",
     "Gene Expression"
-   ]
+   ],
+   "branchKey": "cytokines"
   },
   {
    "id": "pm-36028571",
@@ -3402,7 +3423,8 @@
     "Neurodevelopmental Disorders",
     "Primates",
     "Metabolome"
-   ]
+   ],
+   "branchKey": "cytokines"
   },
   {
    "id": "pm-35906621",
@@ -3513,7 +3535,8 @@
     "Gonads",
     "Epigenesis, Genetic",
     "Disease Models, Animal"
-   ]
+   ],
+   "branchKey": "cytokines"
   },
   {
    "id": "pm-35353173",
@@ -3636,7 +3659,8 @@
     "Fetal Blood",
     "Humans",
     "Male"
-   ]
+   ],
+   "branchKey": "cytokines"
   },
   {
    "id": "pm-34954074",
@@ -3973,7 +3997,8 @@
     "Male",
     "Mice",
     "Serotonin"
-   ]
+   ],
+   "branchKey": "cytokines"
   },
   {
    "id": "pm-33892139",
@@ -4772,7 +4797,8 @@
    "addedBy": "agent-2026-06-02",
    "mesh": [],
    "branchKey": "immunology",
-   "journalDisplay": "Nature"
+   "journalDisplay": "Nature",
+   "journalKey": "nature"
   },
   {
    "id": "pm-42128068",
@@ -4849,7 +4875,8 @@
    "addedBy": "agent-2026-06-02",
    "mesh": [],
    "branchKey": "genetics",
-   "journalDisplay": "Molecular Psychiatry"
+   "journalDisplay": "Molecular Psychiatry",
+   "journalKey": "mol-psych"
   },
   {
    "id": "pm-41914215",
@@ -4922,7 +4949,8 @@
     "Environment"
    ],
    "branchKey": "immunology",
-   "journalDisplay": "Nature"
+   "journalDisplay": "Nature",
+   "journalKey": "nature"
   },
   {
    "id": "pm-41786003",
@@ -5091,7 +5119,8 @@
     "Adaptive Immunity"
    ],
    "branchKey": "immunology",
-   "journalDisplay": "Molecular Psychiatry"
+   "journalDisplay": "Molecular Psychiatry",
+   "journalKey": "mol-psych"
   },
   {
    "id": "pm-41243441",
@@ -5144,7 +5173,8 @@
     "Angiotensin-Converting Enzyme Inhibitors"
    ],
    "branchKey": "immunology",
-   "journalDisplay": "Molecular Psychiatry"
+   "journalDisplay": "Molecular Psychiatry",
+   "journalKey": "mol-psych"
   },
   {
    "id": "pm-40780524",
@@ -5193,7 +5223,8 @@
     "Stress, Psychological"
    ],
    "branchKey": "immunology",
-   "journalDisplay": "Molecular Psychiatry"
+   "journalDisplay": "Molecular Psychiatry",
+   "journalKey": "mol-psych"
   },
   {
    "id": "pm-40623670",
@@ -5267,7 +5298,8 @@
     "Brain"
    ],
    "branchKey": "immunology",
-   "journalDisplay": "Molecular Psychiatry"
+   "journalDisplay": "Molecular Psychiatry",
+   "journalKey": "mol-psych"
   },
   {
    "id": "pm-40185900",
@@ -5294,7 +5326,8 @@
     "Brain"
    ],
    "branchKey": "immunology",
-   "journalDisplay": "Molecular Psychiatry"
+   "journalDisplay": "Molecular Psychiatry",
+   "journalKey": "mol-psych"
   },
   {
    "id": "pm-40081369",
@@ -5322,7 +5355,8 @@
     "Lipopolysaccharides"
    ],
    "branchKey": "immunology",
-   "journalDisplay": "Cell"
+   "journalDisplay": "Cell",
+   "journalKey": "cell"
   },
   {
    "id": "pm-40055803",
@@ -5399,7 +5433,8 @@
     "Child, Preschool"
    ],
    "branchKey": "immunology",
-   "journalDisplay": "Nature"
+   "journalDisplay": "Nature",
+   "journalKey": "nature"
   },
   {
    "id": "pm-39542073",
@@ -5483,7 +5518,8 @@
    "addedBy": "agent-2026-06-02",
    "mesh": [],
    "branchKey": "cytokines",
-   "journalDisplay": "Molecular Psychiatry"
+   "journalDisplay": "Molecular Psychiatry",
+   "journalKey": "mol-psych"
   },
   {
    "id": "pm-42190661",
@@ -5539,7 +5575,8 @@
    "addedBy": "agent-2026-06-02",
    "mesh": [],
    "branchKey": "cytokines",
-   "journalDisplay": "Molecular Psychiatry"
+   "journalDisplay": "Molecular Psychiatry",
+   "journalKey": "mol-psych"
   },
   {
    "id": "pm-41956302",
@@ -5715,7 +5752,8 @@
     "Stress, Psychological"
    ],
    "branchKey": "cytokines",
-   "journalDisplay": "Molecular Psychiatry"
+   "journalDisplay": "Molecular Psychiatry",
+   "journalKey": "mol-psych"
   },
   {
    "id": "pm-41110640",
@@ -5773,7 +5811,8 @@
     "Adult"
    ],
    "branchKey": "cytokines",
-   "journalDisplay": "Molecular Psychiatry"
+   "journalDisplay": "Molecular Psychiatry",
+   "journalKey": "mol-psych"
   },
   {
    "id": "pm-40835055",
@@ -5960,7 +5999,8 @@
     "Neuroglia"
    ],
    "branchKey": "cytokines",
-   "journalDisplay": "Molecular Psychiatry"
+   "journalDisplay": "Molecular Psychiatry",
+   "journalKey": "mol-psych"
   },
   {
    "id": "pm-39681198",
@@ -6096,7 +6136,8 @@
    "addedBy": "agent-2026-06-02",
    "mesh": [],
    "branchKey": "intervention",
-   "journalDisplay": "Molecular Psychiatry"
+   "journalDisplay": "Molecular Psychiatry",
+   "journalKey": "mol-psych"
   },
   {
    "id": "pm-42187205",
@@ -6178,7 +6219,8 @@
     "Sociodemographic Factors"
    ],
    "branchKey": "intervention",
-   "journalDisplay": "The Lancet"
+   "journalDisplay": "The Lancet",
+   "journalKey": "lancet"
   },
   {
    "id": "pm-42163528",
@@ -6475,7 +6517,8 @@
    "addedBy": "agent-2026-06-02",
    "mesh": [],
    "branchKey": "neuroscience",
-   "journalDisplay": "Molecular Psychiatry"
+   "journalDisplay": "Molecular Psychiatry",
+   "journalKey": "mol-psych"
   },
   {
    "id": "pm-42063217",
@@ -6690,7 +6733,8 @@
    "addedBy": "agent-2026-06-02",
    "mesh": [],
    "branchKey": "intervention",
-   "journalDisplay": "Molecular Psychiatry"
+   "journalDisplay": "Molecular Psychiatry",
+   "journalKey": "mol-psych"
   },
   {
    "id": "pm-41983504",
@@ -7028,7 +7072,8 @@
    "addedBy": "agent-2026-06-02",
    "mesh": [],
    "branchKey": "genetics",
-   "journalDisplay": "Molecular Psychiatry"
+   "journalDisplay": "Molecular Psychiatry",
+   "journalKey": "mol-psych"
   },
   {
    "id": "pm-42082754",
@@ -7040,7 +7085,8 @@
    "addedBy": "agent-2026-06-02",
    "mesh": [],
    "branchKey": "neuroscience",
-   "journalDisplay": "Molecular Psychiatry"
+   "journalDisplay": "Molecular Psychiatry",
+   "journalKey": "mol-psych"
   },
   {
    "id": "pm-42000906",
@@ -7052,7 +7098,8 @@
    "addedBy": "agent-2026-06-02",
    "mesh": [],
    "branchKey": "neuroscience",
-   "journalDisplay": "Molecular Psychiatry"
+   "journalDisplay": "Molecular Psychiatry",
+   "journalKey": "mol-psych"
   },
   {
    "id": "pm-41992731",
@@ -7075,7 +7122,8 @@
    "addedBy": "agent-2026-06-02",
    "mesh": [],
    "branchKey": "neuroscience",
-   "journalDisplay": "Molecular Psychiatry"
+   "journalDisplay": "Molecular Psychiatry",
+   "journalKey": "mol-psych"
   },
   {
    "id": "pm-41902610",
@@ -7170,7 +7218,8 @@
    "addedBy": "agent-2026-06-02",
    "mesh": [],
    "branchKey": "neuroscience",
-   "journalDisplay": "Molecular Psychiatry"
+   "journalDisplay": "Molecular Psychiatry",
+   "journalKey": "mol-psych"
   },
   {
    "id": "pm-41860335",
@@ -7222,7 +7271,8 @@
     "Biological Evolution"
    ],
    "branchKey": "neuroscience",
-   "journalDisplay": "Nature"
+   "journalDisplay": "Nature",
+   "journalKey": "nature"
   },
   {
    "id": "pm-41844341",
@@ -7293,7 +7343,8 @@
    "addedBy": "agent-2026-06-02",
    "mesh": [],
    "branchKey": "neuroscience",
-   "journalDisplay": "Molecular Psychiatry"
+   "journalDisplay": "Molecular Psychiatry",
+   "journalKey": "mol-psych"
   },
   {
    "id": "pm-41794060",
@@ -7316,7 +7367,8 @@
    "addedBy": "agent-2026-06-02",
    "mesh": [],
    "branchKey": "genetics",
-   "journalDisplay": "Molecular Psychiatry"
+   "journalDisplay": "Molecular Psychiatry",
+   "journalKey": "mol-psych"
   },
   {
    "id": "pm-41742299",
@@ -7339,7 +7391,8 @@
    "addedBy": "agent-2026-06-02",
    "mesh": [],
    "branchKey": "genetics",
-   "journalDisplay": "Molecular Psychiatry"
+   "journalDisplay": "Molecular Psychiatry",
+   "journalKey": "mol-psych"
   },
   {
    "id": "pm-41741707",
@@ -7351,7 +7404,8 @@
    "addedBy": "agent-2026-06-02",
    "mesh": [],
    "branchKey": "genetics",
-   "journalDisplay": "Molecular Psychiatry"
+   "journalDisplay": "Molecular Psychiatry",
+   "journalKey": "mol-psych"
   },
   {
    "id": "pm-41741706",
@@ -7363,7 +7417,8 @@
    "addedBy": "agent-2026-06-02",
    "mesh": [],
    "branchKey": "neuroscience",
-   "journalDisplay": "Molecular Psychiatry"
+   "journalDisplay": "Molecular Psychiatry",
+   "journalKey": "mol-psych"
   },
   {
    "id": "pm-41724591",
@@ -7429,7 +7484,8 @@
     "Hippocampus"
    ],
    "branchKey": "genetics",
-   "journalDisplay": "Nature"
+   "journalDisplay": "Nature",
+   "journalKey": "nature"
   },
   {
    "id": "pm-41703633",
@@ -7452,7 +7508,8 @@
    "addedBy": "agent-2026-06-02",
    "mesh": [],
    "branchKey": "neuroscience",
-   "journalDisplay": "Molecular Psychiatry"
+   "journalDisplay": "Molecular Psychiatry",
+   "journalKey": "mol-psych"
   },
   {
    "id": "pm-41688788",
@@ -7482,7 +7539,8 @@
     "Transcriptome"
    ],
    "branchKey": "neuroscience",
-   "journalDisplay": "Molecular Psychiatry"
+   "journalDisplay": "Molecular Psychiatry",
+   "journalKey": "mol-psych"
   },
   {
    "id": "pm-41684326",
@@ -7584,7 +7642,8 @@
     "Adolescent"
    ],
    "branchKey": "genetics",
-   "journalDisplay": "Molecular Psychiatry"
+   "journalDisplay": "Molecular Psychiatry",
+   "journalKey": "mol-psych"
   },
   {
    "id": "pm-41611887",
@@ -7611,7 +7670,8 @@
     "Cell Line"
    ],
    "branchKey": "neuroscience",
-   "journalDisplay": "Nature"
+   "journalDisplay": "Nature",
+   "journalKey": "nature"
   },
   {
    "id": "pm-41553264",
@@ -7770,7 +7830,8 @@
     "Middle Aged"
    ],
    "branchKey": "neuroscience",
-   "journalDisplay": "Molecular Psychiatry"
+   "journalDisplay": "Molecular Psychiatry",
+   "journalKey": "mol-psych"
   },
   {
    "id": "pm-41437281",
@@ -7822,7 +7883,8 @@
     "Female"
    ],
    "branchKey": "genetics",
-   "journalDisplay": "Molecular Psychiatry"
+   "journalDisplay": "Molecular Psychiatry",
+   "journalKey": "mol-psych"
   },
   {
    "id": "pm-41399120",
@@ -7861,7 +7923,8 @@
    "addedBy": "agent-2026-06-02",
    "mesh": [],
    "branchKey": "genetics",
-   "journalDisplay": "JAMA Psychiatry"
+   "journalDisplay": "JAMA Psychiatry",
+   "journalKey": "jama-psych"
   },
   {
    "id": "pm-42127894",
@@ -7873,7 +7936,8 @@
    "addedBy": "agent-2026-06-02",
    "mesh": [],
    "branchKey": "genetics",
-   "journalDisplay": "Cell"
+   "journalDisplay": "Cell",
+   "journalKey": "cell"
   },
   {
    "id": "pm-42097524",
@@ -7896,7 +7960,8 @@
    "addedBy": "agent-2026-06-02",
    "mesh": [],
    "branchKey": "genetics",
-   "journalDisplay": "Molecular Psychiatry"
+   "journalDisplay": "Molecular Psychiatry",
+   "journalKey": "mol-psych"
   },
   {
    "id": "pm-41947537",
@@ -7919,7 +7984,8 @@
    "addedBy": "agent-2026-06-02",
    "mesh": [],
    "branchKey": "genetics",
-   "journalDisplay": "Molecular Psychiatry"
+   "journalDisplay": "Molecular Psychiatry",
+   "journalKey": "mol-psych"
   },
   {
    "id": "pm-41921886",
@@ -7942,7 +8008,8 @@
    "addedBy": "agent-2026-06-02",
    "mesh": [],
    "branchKey": "intervention",
-   "journalDisplay": "Molecular Psychiatry"
+   "journalDisplay": "Molecular Psychiatry",
+   "journalKey": "mol-psych"
   },
   {
    "id": "pm-41902612",
@@ -8009,7 +8076,8 @@
     "Gene Dosage"
    ],
    "branchKey": "genetics",
-   "journalDisplay": "Molecular Psychiatry"
+   "journalDisplay": "Molecular Psychiatry",
+   "journalKey": "mol-psych"
   },
   {
    "id": "pm-41496709",
@@ -8174,7 +8242,8 @@
     "GTP-Binding Proteins"
    ],
    "branchKey": "genetics",
-   "journalDisplay": "Molecular Psychiatry"
+   "journalDisplay": "Molecular Psychiatry",
+   "journalKey": "mol-psych"
   },
   {
    "id": "pm-41260215",
@@ -8226,7 +8295,8 @@
     "Cerebellum"
    ],
    "branchKey": "genetics",
-   "journalDisplay": "Molecular Psychiatry"
+   "journalDisplay": "Molecular Psychiatry",
+   "journalKey": "mol-psych"
   },
   {
    "id": "pm-41222138",
@@ -8278,7 +8348,8 @@
     "Nerve Tissue Proteins"
    ],
    "branchKey": "genetics",
-   "journalDisplay": "Molecular Psychiatry"
+   "journalDisplay": "Molecular Psychiatry",
+   "journalKey": "mol-psych"
   },
   {
    "id": "pm-41197609",
@@ -8321,7 +8392,8 @@
     "Mammals"
    ],
    "branchKey": "genetics",
-   "journalDisplay": "Nature"
+   "journalDisplay": "Nature",
+   "journalKey": "nature"
   },
   {
    "id": "pm-41174994",
@@ -8376,7 +8448,8 @@
     "Carrier Proteins"
    ],
    "branchKey": "genetics",
-   "journalDisplay": "Molecular Psychiatry"
+   "journalDisplay": "Molecular Psychiatry",
+   "journalKey": "mol-psych"
   },
   {
    "id": "pm-41168819",
@@ -8414,7 +8487,8 @@
     "Neural Pathways"
    ],
    "branchKey": "genetics",
-   "journalDisplay": "Molecular Psychiatry"
+   "journalDisplay": "Molecular Psychiatry",
+   "journalKey": "mol-psych"
   },
   {
    "id": "pm-41094063",
@@ -8441,7 +8515,8 @@
     "Adult"
    ],
    "branchKey": "genetics",
-   "journalDisplay": "Molecular Psychiatry"
+   "journalDisplay": "Molecular Psychiatry",
+   "journalKey": "mol-psych"
   },
   {
    "id": "pm-41061703",
@@ -8464,7 +8539,8 @@
     "Transcription Factors"
    ],
    "branchKey": "genetics",
-   "journalDisplay": "Cell"
+   "journalDisplay": "Cell",
+   "journalKey": "cell"
   },
   {
    "id": "pm-41034588",
@@ -8491,7 +8567,8 @@
     "Infant"
    ],
    "branchKey": "genetics",
-   "journalDisplay": "Nature"
+   "journalDisplay": "Nature",
+   "journalKey": "nature"
   },
   {
    "id": "pm-40992585",
@@ -8559,7 +8636,8 @@
     "Genetic Therapy"
    ],
    "branchKey": "genetics",
-   "journalDisplay": "Nature"
+   "journalDisplay": "Nature",
+   "journalKey": "nature"
   },
   {
    "id": "pm-40940651",
@@ -8614,7 +8692,8 @@
     "Intellectual Disability"
    ],
    "branchKey": "genetics",
-   "journalDisplay": "Molecular Psychiatry"
+   "journalDisplay": "Molecular Psychiatry",
+   "journalKey": "mol-psych"
   },
   {
    "id": "pm-42106926",
@@ -8662,7 +8741,8 @@
    "addedBy": "agent-2026-06-02",
    "mesh": [],
    "branchKey": "intervention",
-   "journalDisplay": "JAMA"
+   "journalDisplay": "JAMA",
+   "journalKey": "jama"
   },
   {
    "id": "pm-41991716",
@@ -8674,7 +8754,8 @@
    "addedBy": "agent-2026-06-02",
    "mesh": [],
    "branchKey": "intervention",
-   "journalDisplay": "Molecular Psychiatry"
+   "journalDisplay": "Molecular Psychiatry",
+   "journalKey": "mol-psych"
   },
   {
    "id": "pm-41983948",
@@ -8787,7 +8868,8 @@
     "White"
    ],
    "branchKey": "intervention",
-   "journalDisplay": "Nature Medicine"
+   "journalDisplay": "Nature Medicine",
+   "journalKey": "nat-med"
   },
   {
    "id": "pm-41891296",
@@ -9245,7 +9327,8 @@
    "addedBy": "agent-2026-06-15",
    "mesh": [],
    "branchKey": "intervention",
-   "journalDisplay": "Molecular Psychiatry"
+   "journalDisplay": "Molecular Psychiatry",
+   "journalKey": "mol-psych"
   },
   {
    "id": "pm-42231396",
@@ -9463,7 +9546,8 @@
    "addedBy": "agent-2026-06-15",
    "mesh": [],
    "branchKey": "intervention",
-   "journalDisplay": "JAMA Psychiatry"
+   "journalDisplay": "JAMA Psychiatry",
+   "journalKey": "jama-psych"
   },
   {
    "id": "pm-42230772",
@@ -9532,7 +9616,8 @@
     "Female"
    ],
    "branchKey": "intervention",
-   "journalDisplay": "Molecular Psychiatry"
+   "journalDisplay": "Molecular Psychiatry",
+   "journalKey": "mol-psych"
   },
   {
    "id": "pm-42250866",
@@ -9554,7 +9639,14 @@
    "url": "https://pubmed.ncbi.nlm.nih.gov/42242209/",
    "priority": "mechanistic",
    "addedBy": "agent-2026-06-15",
-   "mesh": []
+   "mesh": [
+    "Cell Communication",
+    "Humans",
+    "Single-Cell Analysis",
+    "Autistic Disorder",
+    "Software",
+    "Single-Cell Gene Expression Analysis"
+   ]
   },
   {
    "id": "pm-42289961",
@@ -9697,7 +9789,8 @@
    "addedBy": "agent-2026-06-22",
    "mesh": [],
    "branchKey": "behavioral",
-   "journalDisplay": "Molecular Psychiatry"
+   "journalDisplay": "Molecular Psychiatry",
+   "journalKey": "mol-psych"
   },
   {
    "id": "pm-42297632",
@@ -9720,7 +9813,8 @@
    "addedBy": "agent-2026-06-22",
    "mesh": [],
    "branchKey": "genetics",
-   "journalDisplay": "Nature"
+   "journalDisplay": "Nature",
+   "journalKey": "nature"
   },
   {
    "id": "pm-42297935",
@@ -9732,7 +9826,8 @@
    "addedBy": "agent-2026-06-22",
    "mesh": [],
    "branchKey": "genetics",
-   "journalDisplay": "Molecular Psychiatry"
+   "journalDisplay": "Molecular Psychiatry",
+   "journalKey": "mol-psych"
   },
   {
    "id": "pm-42322045",
@@ -10035,7 +10130,8 @@
     "Adult"
    ],
    "branchKey": "behavioral",
-   "journalDisplay": "Molecular Psychiatry"
+   "journalDisplay": "Molecular Psychiatry",
+   "journalKey": "mol-psych"
   },
   {
    "id": "pm-41724671",
@@ -10093,7 +10189,8 @@
    "addedBy": "agent-2026-07-06",
    "mesh": [],
    "branchKey": "genetics",
-   "journalDisplay": "Nature"
+   "journalDisplay": "Nature",
+   "journalKey": "nature"
   },
   {
    "id": "pm-42394366",
@@ -10158,7 +10255,8 @@
     "Adult"
    ],
    "branchKey": "intervention",
-   "journalDisplay": "Molecular Psychiatry"
+   "journalDisplay": "Molecular Psychiatry",
+   "journalKey": "mol-psych"
   },
   {
    "id": "pm-41486975",
@@ -10369,7 +10467,8 @@
    "addedBy": "agent-2026-07-13",
    "mesh": [],
    "branchKey": "genetics",
-   "journalDisplay": "Molecular Psychiatry"
+   "journalDisplay": "Molecular Psychiatry",
+   "journalKey": "mol-psych"
   },
   {
    "id": "pm-42421184",
@@ -10425,7 +10524,8 @@
    "addedBy": "agent-2026-07-20",
    "mesh": [],
    "branchKey": "genetics",
-   "journalDisplay": "Molecular Psychiatry"
+   "journalDisplay": "Molecular Psychiatry",
+   "journalKey": "mol-psych"
   },
   {
    "id": "pm-42469909",
@@ -10514,7 +10614,8 @@
    "addedBy": "agent-2026-07-20",
    "mesh": [],
    "branchKey": "neuroscience",
-   "journalDisplay": "Molecular Psychiatry"
+   "journalDisplay": "Molecular Psychiatry",
+   "journalKey": "mol-psych"
   },
   {
    "id": "pm-42460540",
@@ -10569,6 +10670,343 @@
    "url": "https://pubmed.ncbi.nlm.nih.gov/42473297/",
    "priority": "clinical-observation",
    "addedBy": "agent-2026-07-20",
+   "mesh": []
+  },
+  {
+   "id": "pm-42503182",
+   "title": "Transcriptomic Profiling of the Amygdala of Children With Autism Spectrum Disorder.",
+   "date": "2026-07-26",
+   "authors": "Babu J, Lal A, Challagundla L, et al.",
+   "url": "https://pubmed.ncbi.nlm.nih.gov/42503182/",
+   "priority": "mechanistic",
+   "addedBy": "agent-2026-07-29",
+   "mesh": [],
+   "journalKey": "autism-res"
+  },
+  {
+   "id": "pm-42522543",
+   "title": "\"Everyone Has a Different Body Constitution\": An Interpretative Phenomenological Analysis of the Experiences of Social Interaction and Related Supports in Chinese Autistic Postsecondary Students.",
+   "date": "2026-07-29",
+   "authors": "Tong ASL, Lam GYH",
+   "url": "https://pubmed.ncbi.nlm.nih.gov/42522543/",
+   "priority": "mechanistic",
+   "addedBy": "agent-2026-07-29",
+   "mesh": [],
+   "journalKey": "autism"
+  },
+  {
+   "id": "pm-42522015",
+   "title": "Executive Functioning Is Linked to Internalizing Symptoms in Autistic Adults With Higher Support Needs.",
+   "date": "2026-07-28",
+   "authors": "Greenstein E, Lee NR, McQuaid GA, et al.",
+   "url": "https://pubmed.ncbi.nlm.nih.gov/42522015/",
+   "priority": "mechanistic",
+   "addedBy": "agent-2026-07-29",
+   "mesh": [],
+   "journalKey": "autism"
+  },
+  {
+   "id": "pm-42503632",
+   "title": "Prevalence, Distribution, Co-occurring Neurodevelopmental Conditions, and Associated Factors of Autism Among Children in Northern Uganda.",
+   "date": "2026-07-26",
+   "authors": "Simple O, Estlin EJ, Okello KK, et al.",
+   "url": "https://pubmed.ncbi.nlm.nih.gov/42503632/",
+   "priority": "clinical-observation",
+   "addedBy": "agent-2026-07-29",
+   "mesh": [],
+   "journalKey": "autism"
+  },
+  {
+   "id": "pm-42503195",
+   "title": "Interaction of the Gut Microbiota and the Enteric Nervous System: Implications in Gastrointestinal Disorders Associated With Autism Spectrum Disorder.",
+   "date": "2026-07-26",
+   "authors": "Ganachaud B, Mendoza-León MJ, Marchix J, et al.",
+   "url": "https://pubmed.ncbi.nlm.nih.gov/42503195/",
+   "priority": "review",
+   "addedBy": "agent-2026-07-29",
+   "mesh": [],
+   "journalKey": "autism-res"
+  },
+  {
+   "id": "pm-42500921",
+   "title": "Through Parents' Eyes: Perspectives on Child Development and Family Experience During ESDM Intervention.",
+   "date": "2026-07-25",
+   "authors": "Latrèche K, Journal F, Godel M, et al.",
+   "url": "https://pubmed.ncbi.nlm.nih.gov/42500921/",
+   "priority": "clinical-observation",
+   "addedBy": "agent-2026-07-29",
+   "mesh": [],
+   "journalKey": "autism-res"
+  },
+  {
+   "id": "pm-42500882",
+   "title": "Development and Validation of a Japanese Version of the Sensory Experience Questionnaire (SEQ) 3.0: Structural Differences of Sensory Features Across Autistic Children.",
+   "date": "2026-07-25",
+   "authors": "Atsumi T, Ito H, Shinjo A, et al.",
+   "url": "https://pubmed.ncbi.nlm.nih.gov/42500882/",
+   "priority": "clinical-observation",
+   "addedBy": "agent-2026-07-29",
+   "mesh": [],
+   "journalKey": "autism-res"
+  },
+  {
+   "id": "pm-42494078",
+   "title": "Feasibility and Preliminary Efficacy of a Caregiver-Assisted Group-Based Naturalistic Developmental Behavioral Intervention Program for Autistic Preschoolers: A Pilot Randomized Controlled Trial.",
+   "date": "2026-07-23",
+   "authors": "Seng GJ, Lin JY, Huang WL, et al.",
+   "url": "https://pubmed.ncbi.nlm.nih.gov/42494078/",
+   "priority": "clinical-trial",
+   "addedBy": "agent-2026-07-29",
+   "mesh": [],
+   "journalKey": "autism"
+  },
+  {
+   "id": "pm-42492896",
+   "title": "Are Sensory Features a Subdomain of Restricted and Repetitive Behaviors? Evaluating Empirical Support for the DSM-5 Autism Criteria.",
+   "date": "2026-07-23",
+   "authors": "Spackman E, Chetcuti L, Leekam SR, et al.",
+   "url": "https://pubmed.ncbi.nlm.nih.gov/42492896/",
+   "priority": "clinical-observation",
+   "addedBy": "agent-2026-07-29",
+   "mesh": [],
+   "journalKey": "jaacap"
+  },
+  {
+   "id": "pm-42490140",
+   "title": "Autistic Parents' Experiences Accessing Parenting Support: A Systematic Review and Meta-synthesis of Qualitative Research.",
+   "date": "2026-07-23",
+   "authors": "Rider JV, Honey A, LaVerdure AE, et al.",
+   "url": "https://pubmed.ncbi.nlm.nih.gov/42490140/",
+   "priority": "review",
+   "addedBy": "agent-2026-07-29",
+   "mesh": [],
+   "journalKey": "autism"
+  },
+  {
+   "id": "pm-42487339",
+   "title": "Examining the Roles of Retrieval Practice and Post-Retrieval Feedback in Learning Among Autistic Adults.",
+   "date": "2026-07-22",
+   "authors": "Cairney BE, Haebig E, Lucas HD",
+   "url": "https://pubmed.ncbi.nlm.nih.gov/42487339/",
+   "priority": "mechanistic",
+   "addedBy": "agent-2026-07-29",
+   "mesh": [],
+   "journalKey": "autism"
+  },
+  {
+   "id": "pm-42482104",
+   "title": "Predicting emotional valence in autism: a preregistered study in the Bayesian Brain framework.",
+   "date": "2026-07-21",
+   "authors": "Plank IS, Pior A, Yurova A, et al.",
+   "url": "https://pubmed.ncbi.nlm.nih.gov/42482104/",
+   "priority": "mechanistic",
+   "addedBy": "agent-2026-07-29",
+   "mesh": [],
+   "journalKey": "mol-autism"
+  },
+  {
+   "id": "pm-42478670",
+   "title": "Understanding Autistic Adults' Psychological Experiences of Anxiety Problems: A Qualitative Interview Study.",
+   "date": "2026-07-21",
+   "authors": "Roberts-Davis RJ, Happé FG, Lau-Zhu A",
+   "url": "https://pubmed.ncbi.nlm.nih.gov/42478670/",
+   "priority": "mechanistic",
+   "addedBy": "agent-2026-07-29",
+   "mesh": [
+    "Humans",
+    "Adult",
+    "Adolescent",
+    "Middle Aged",
+    "Young Adult",
+    "Male",
+    "Qualitative Research",
+    "Autistic Disorder",
+    "Female",
+    "Anxiety",
+    "Anxiety Disorders",
+    "Interviews as Topic",
+    "Attentional Bias"
+   ],
+   "journalKey": "autism"
+  },
+  {
+   "id": "pm-42503460",
+   "title": "Night-to-Night Changes in REM Sleep Are Associated With Symptom Severity in Children With Autism Spectrum Disorder: A Two-Night Home Polysomnography Study.",
+   "date": "2026-07-26",
+   "authors": "Jiao J, Zhang H, Yang X, et al.",
+   "url": "https://pubmed.ncbi.nlm.nih.gov/42503460/",
+   "priority": "mechanistic",
+   "addedBy": "agent-2026-07-29",
+   "mesh": [],
+   "journalKey": "autism-res"
+  },
+  {
+   "id": "pm-42502111",
+   "title": "Multi-omic data integration improves the resolution of the molecular etiology of autism in a mouse model.",
+   "date": "2026-07-25",
+   "authors": "Alberca CD, Park K, Papale LA, et al.",
+   "url": "https://pubmed.ncbi.nlm.nih.gov/42502111/",
+   "priority": "mechanistic",
+   "addedBy": "agent-2026-07-29",
+   "mesh": [],
+   "branchKey": "neuroscience",
+   "journalDisplay": "Molecular Psychiatry",
+   "journalKey": "mol-psych"
+  },
+  {
+   "id": "pm-42500834",
+   "title": "Neural Endophenotypes of Semantic Processing and Social Functioning in Autism Spectrum Disorder.",
+   "date": "2026-07-25",
+   "authors": "Lee SH, Liao CC, Chou TL, et al.",
+   "url": "https://pubmed.ncbi.nlm.nih.gov/42500834/",
+   "priority": "mechanistic",
+   "addedBy": "agent-2026-07-29",
+   "mesh": [],
+   "journalKey": "autism-res"
+  },
+  {
+   "id": "pm-42481851",
+   "title": "Individualized antisense oligonucleotides for SCN2A-related developmental epileptic encephalopathy.",
+   "date": "2026-07-21",
+   "authors": "Kim-McManus O, Mignon L, Douville J, et al.",
+   "url": "https://pubmed.ncbi.nlm.nih.gov/42481851/",
+   "priority": "clinical-observation",
+   "addedBy": "agent-2026-07-29",
+   "mesh": [],
+   "branchKey": "genetics",
+   "journalDisplay": "Nature Medicine",
+   "journalKey": "nat-med"
+  },
+  {
+   "id": "pm-42517456",
+   "title": "Exploring the Experiences of First Nations Caregivers of Autistic Children in Canada: A Qualitative Community-Based Participatory Research Study.",
+   "date": "2026-07-28",
+   "authors": "Bruno G, Ahmad M, Cutknife C, et al.",
+   "url": "https://pubmed.ncbi.nlm.nih.gov/42517456/",
+   "priority": "mechanistic",
+   "addedBy": "agent-2026-07-29",
+   "mesh": [],
+   "journalKey": "autism"
+  },
+  {
+   "id": "pm-42509644",
+   "title": "Scaling Up Caregiver Support for Autism in Public Health Care: Adoption, Implementation Pace and Sustainability of a Train-the-Trainer Model for the WHO Caregiver Skills Training in Italy.",
+   "date": "2026-07-27",
+   "authors": "Salomone E, de Leonardis G, Ferrante C, et al.",
+   "url": "https://pubmed.ncbi.nlm.nih.gov/42509644/",
+   "priority": "mechanistic",
+   "addedBy": "agent-2026-07-29",
+   "mesh": [],
+   "journalKey": "autism"
+  },
+  {
+   "id": "pm-42499252",
+   "title": "Sleep in Young Children With Autism, ADHD and Combined Presentations.",
+   "date": "2026-07-25",
+   "authors": "Kurz EM, Bölte S, Falck-Ytter T",
+   "url": "https://pubmed.ncbi.nlm.nih.gov/42499252/",
+   "priority": "clinical-observation",
+   "addedBy": "agent-2026-07-29",
+   "mesh": [],
+   "journalKey": "autism-res"
+  },
+  {
+   "id": "pm-42494082",
+   "title": "A Qualitative Study Exploring the Acceptability of Taking Part in a Large Multicentre RCT of Medication for Anxiety in Autistic Adults (the STRATA Trial).",
+   "date": "2026-07-23",
+   "authors": "Realpe AX, Norris JE, Lorenc A, et al.",
+   "url": "https://pubmed.ncbi.nlm.nih.gov/42494082/",
+   "priority": "clinical-trial",
+   "addedBy": "agent-2026-07-29",
+   "mesh": [],
+   "journalKey": "autism"
+  },
+  {
+   "id": "pm-42487298",
+   "title": "Preliminary Reliability and Validity of the M-CHAT-S, a New Autism Screening Tool for School-Aged Children.",
+   "date": "2026-07-22",
+   "authors": "de Marchena A, Wieckowski AT, Dickerson AF, et al.",
+   "url": "https://pubmed.ncbi.nlm.nih.gov/42487298/",
+   "priority": "clinical-observation",
+   "addedBy": "agent-2026-07-29",
+   "mesh": [],
+   "journalKey": "autism"
+  },
+  {
+   "id": "pm-42482145",
+   "title": "Reported health-condition history profiles among adults with documented or self-reported autism seeking autism-affirming telehealth care: an exploratory latent class analysis.",
+   "date": "2026-07-21",
+   "authors": "Whaling K, Grillo VD, Shinall J, et al.",
+   "url": "https://pubmed.ncbi.nlm.nih.gov/42482145/",
+   "priority": "mechanistic",
+   "addedBy": "agent-2026-07-29",
+   "mesh": [],
+   "journalKey": "mol-autism"
+  },
+  {
+   "id": "pm-42478914",
+   "title": "School-Based Participatory Research with Autistic Children and Young People: A Systematic Review of Approaches, Methods, and Outcomes.",
+   "date": "2026-07-21",
+   "authors": "Johnson C, Wood C, Daley D, et al.",
+   "url": "https://pubmed.ncbi.nlm.nih.gov/42478914/",
+   "priority": "review",
+   "addedBy": "agent-2026-07-29",
+   "mesh": [],
+   "journalKey": "autism"
+  },
+  {
+   "id": "pm-42490156",
+   "title": "Beyond Direct Costs: Expanding the Conceptualization of Caregiver Burden in Autism.",
+   "journalKey": "autism",
+   "date": "2026-07-23",
+   "authors": "Burte B, Tringali S",
+   "url": "https://pubmed.ncbi.nlm.nih.gov/42490156/",
+   "priority": "other",
+   "addedBy": "agent-2026-07-29",
+   "mesh": []
+  },
+  {
+   "id": "pm-42522081",
+   "title": "Sexual and Reproductive Healthcare Among Youth With Autism and ADHD: A Population-Based Study From Sweden.",
+   "journalKey": "autism-res",
+   "date": "2026-07-28",
+   "authors": "Hellsten L, Rast J, Nielsen A, et al.",
+   "url": "https://pubmed.ncbi.nlm.nih.gov/42522081/",
+   "priority": "mechanistic",
+   "addedBy": "agent-2026-07-29",
+   "mesh": []
+  },
+  {
+   "id": "pm-42521637",
+   "title": "Risk of Neurodevelopmental Disorders Following the Herpesviral Infection in Preschooler Children.",
+   "journalKey": "autism-res",
+   "date": "2026-07-28",
+   "authors": "Chen LC, Huang WS, Hsu JW, et al.",
+   "url": "https://pubmed.ncbi.nlm.nih.gov/42521637/",
+   "priority": "mechanistic",
+   "addedBy": "agent-2026-07-29",
+   "mesh": []
+  },
+  {
+   "id": "pm-42515936",
+   "title": "Socioeconomic Status and Quantity of Shared Book Reading, But Not Screen Time, are Positively Associated With Language Skills in a Nationally Representative Sample of Autistic Children.",
+   "journalKey": "autism-res",
+   "date": "2026-07-27",
+   "authors": "Pecukonis M, Geffin A",
+   "url": "https://pubmed.ncbi.nlm.nih.gov/42515936/",
+   "priority": "clinical-observation",
+   "addedBy": "agent-2026-07-29",
+   "mesh": []
+  },
+  {
+   "id": "pm-42500919",
+   "title": "Language Adaptation of Young Bilingual Autistic Children During Semi-Naturalistic Interactions With Their Caregivers.",
+   "journalKey": "autism-res",
+   "date": "2026-07-25",
+   "authors": "Maes P, Tafolla M, Benrey N, et al.",
+   "url": "https://pubmed.ncbi.nlm.nih.gov/42500919/",
+   "priority": "mechanistic",
+   "addedBy": "agent-2026-07-29",
    "mesh": []
   }
  ]
