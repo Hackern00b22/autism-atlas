@@ -311,12 +311,27 @@
       "w": 1.099,
       "pos": 2,
       "neg": 0
+     },
+     "Prenatal Exposure Delayed Effects": {
+      "w": 1.099,
+      "pos": 2,
+      "neg": 0
+     },
+     "Cytokines": {
+      "w": 1.099,
+      "pos": 2,
+      "neg": 0
+     },
+     "Biomarkers": {
+      "w": 1.099,
+      "pos": 2,
+      "neg": 0
      }
     },
     "exclude": {},
-    "pos_events": 8,
+    "pos_events": 11,
     "neg_events": 1,
-    "updatedAt": "2026-07-23"
+    "updatedAt": "2026-08-04"
    }
   },
   "behavioral": {
@@ -370,11 +385,17 @@
    "pubmedQuery": "(\"clinical trial\"[Publication Type] OR \"randomized controlled trial\"[Publication Type] OR \"randomized\"[Title/Abstract] OR \"RCT\"[Title/Abstract] OR \"early intervention\"[Title/Abstract] OR \"early intensive behavioral\"[Title/Abstract] OR \"applied behavior analysis\"[Title/Abstract] OR \"ABA\"[Title/Abstract] OR \"naturalistic developmental behavioral\"[Title/Abstract] OR \"parent-mediated\"[Title/Abstract] OR \"social skills training\"[Title/Abstract] OR \"pivotal response\"[Title/Abstract] OR \"Early Start Denver\"[Title/Abstract] OR \"speech therapy\"[Title/Abstract] OR \"occupational therapy\"[Title/Abstract] OR \"screening\"[Title/Abstract] OR \"early detection\"[Title/Abstract] OR \"diagnosis\"[Title/Abstract] OR \"diagnostic\"[Title/Abstract] OR \"therapy\"[Title/Abstract] OR \"treatment outcome*\"[Title/Abstract] OR \"pharmacolog*\"[Title/Abstract] OR \"risperidone\"[Title/Abstract] OR \"aripiprazole\"[Title/Abstract] OR \"prevalence\"[Title/Abstract] OR \"telehealth\"[Title/Abstract] OR \"cost-effectiveness\"[Title/Abstract])",
    "minYear": 2021,
    "learned": {
-    "include": {},
+    "include": {
+     "Double-Blind Method": {
+      "w": 1.099,
+      "pos": 2,
+      "neg": 0
+     }
+    },
     "exclude": {},
-    "pos_events": 4,
+    "pos_events": 8,
     "neg_events": 0,
-    "updatedAt": "2026-07-29"
+    "updatedAt": "2026-08-04"
    },
    "lastFetched": "2026-07-29"
   }
@@ -5632,7 +5653,23 @@
    "url": "https://pubmed.ncbi.nlm.nih.gov/41740871/",
    "priority": "clinical-observation",
    "addedBy": "agent-2026-06-02",
-   "mesh": [],
+   "mesh": [
+    "Female",
+    "Oxidative Stress",
+    "Humans",
+    "Pregnancy",
+    "Neurodevelopment",
+    "Inflammation",
+    "Prenatal Exposure Delayed Effects",
+    "Child, Preschool",
+    "Male",
+    "Infant",
+    "Biomarkers",
+    "Developmental Origins of Health and Disease",
+    "Puerto Rico",
+    "Child Development",
+    "Adult"
+   ],
    "journalKey": "bbi"
   },
   {
@@ -8578,7 +8615,25 @@
    "url": "https://pubmed.ncbi.nlm.nih.gov/40992585/",
    "priority": "clinical-observation",
    "addedBy": "agent-2026-06-02",
-   "mesh": [],
+   "mesh": [
+    "Humans",
+    "DNA Methylation",
+    "Genetic Predisposition to Disease",
+    "Female",
+    "Schizophrenia",
+    "Genetic Risk Score",
+    "Infant, Newborn",
+    "Autism Spectrum Disorder",
+    "Male",
+    "Attention Deficit Disorder with Hyperactivity",
+    "Child",
+    "Adolescent",
+    "Child, Preschool",
+    "Epigenesis, Genetic",
+    "Neurodevelopmental Disorders",
+    "Fetal Blood",
+    "Infant"
+   ],
    "journalKey": "biol-psych"
   },
   {

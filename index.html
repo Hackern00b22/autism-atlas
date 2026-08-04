@@ -703,6 +703,82 @@
   }
   .lab-tabpanel { display: none; }
   .lab-tabpanel.active { display: block; }
+  /* ---- Ask tab ---- */
+  #lab-panel-ask.active { display: flex; flex-direction: column; }
+  /* The transcript scrolls inside a capped box rather than growing the panel.
+     .lab-body is a block-level scroller, so a percentage height here does not
+     constrain anything — the panel would grow to fit and push the input box
+     far below the fold. */
+  .ask-log {
+    max-height: 46vh; overflow-y: auto;
+    padding: 4px 2px 14px; display: flex; flex-direction: column; gap: 16px;
+  }
+  .ask-intro, .ask-note {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px; line-height: 1.75; color: var(--ink-2);
+  }
+  .ask-note { margin-top: 12px; font-size: 10px; opacity: 0.75; }
+  .ask-examples { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 14px; }
+  .ask-chip {
+    background: rgba(120, 140, 200, 0.08);
+    border: 1px solid rgba(120, 140, 200, 0.2);
+    color: var(--ink-1); padding: 6px 11px; border-radius: 3px;
+    font-family: 'JetBrains Mono', monospace; font-size: 10px;
+    cursor: pointer; transition: all 0.15s;
+  }
+  .ask-chip:hover { border-color: var(--neon-immuno); color: var(--neon-immuno); }
+  .ask-q {
+    align-self: flex-end; max-width: 78%;
+    background: rgba(0, 240, 255, 0.09);
+    border: 1px solid rgba(0, 240, 255, 0.3);
+    color: var(--ink-0); padding: 9px 13px; border-radius: 3px;
+    font-size: 13px; line-height: 1.5;
+  }
+  .ask-a { align-self: stretch; }
+  .ask-a-text {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px; line-height: 1.8; color: var(--ink-1);
+    margin-bottom: 12px;
+  }
+  .ask-a-text b { color: var(--ink-0); font-weight: 500; }
+  .ask-a-text .ask-dim { color: var(--ink-2); }
+  .ask-terms { color: var(--neon-cyto); }
+  /* One result row. Deliberately not the same component as the node modal's
+     article card: this one has to show why it matched. */
+  .ask-hit {
+    display: block; text-decoration: none;
+    border: 1px solid rgba(120, 140, 200, 0.14);
+    border-left: 2px solid var(--hit-color, #5d6783);
+    border-radius: 3px; padding: 10px 13px; margin-bottom: 8px;
+    transition: all 0.15s;
+  }
+  .ask-hit:hover { border-color: rgba(120, 140, 200, 0.4); background: rgba(120, 140, 200, 0.04); }
+  .ask-hit-title { color: var(--ink-0); font-size: 13px; line-height: 1.45; margin-bottom: 6px; }
+  .ask-hit-meta {
+    display: flex; flex-wrap: wrap; gap: 9px; align-items: center;
+    font-family: 'JetBrains Mono', monospace; font-size: 9px;
+    letter-spacing: 0.1em; color: var(--ink-2);
+  }
+  .ask-hit-meta .ask-node { color: var(--hit-color, #98a4c2); }
+  .ask-rel {
+    display: inline-block; width: 42px; height: 3px; border-radius: 2px;
+    background: rgba(120, 140, 200, 0.2); position: relative; overflow: hidden;
+  }
+  .ask-rel i { position: absolute; inset: 0 auto 0 0; background: var(--hit-color, #98a4c2); }
+  .ask-hit-why { margin-top: 7px; font-size: 11px; color: var(--ink-2); line-height: 1.6; }
+  .ask-hit-why em { color: var(--neon-cyto); font-style: normal; }
+  .ask-actions { display: flex; gap: 8px; margin-top: 10px; flex-wrap: wrap; }
+  .ask-act {
+    background: transparent; border: 1px solid rgba(120, 140, 200, 0.22);
+    color: var(--ink-2); padding: 5px 10px; border-radius: 3px;
+    font-family: 'JetBrains Mono', monospace; font-size: 9px;
+    letter-spacing: 0.1em; text-transform: uppercase; cursor: pointer;
+    transition: all 0.15s;
+  }
+  .ask-act:hover { border-color: var(--neon-immuno); color: var(--neon-immuno); }
+  .ask-act.on { border-color: var(--neon-cyto); color: var(--neon-cyto); }
+  .ask-controls { flex-shrink: 0; border-top: 1px solid rgba(120, 140, 200, 0.12); padding-top: 14px; }
+  .ask-controls input[type="search"] { flex: 1; min-width: 220px; }
 
   /* DEFINITIONS MODAL */
   .def-modal {
@@ -1167,6 +1243,45 @@
     text-transform: uppercase; cursor: pointer;
     transition: all 0.15s;
   }
+  /* Scope toggle: this node vs the whole library. The filter has always been
+     node-scoped, which silently returns nothing when you search for a paper
+     that lives somewhere else. */
+  .scope-toggle {
+    display: inline-flex; align-items: center; gap: 6px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px; letter-spacing: 0.1em;
+    text-transform: uppercase; color: var(--ink-2);
+    cursor: pointer; user-select: none;
+    padding: 7px 10px; border-radius: 3px;
+    border: 1px solid rgba(120, 140, 200, 0.18);
+    transition: all 0.15s;
+  }
+  .scope-toggle:hover { border-color: rgba(120, 140, 200, 0.4); color: var(--ink-1); }
+  .scope-toggle input { accent-color: var(--neon-immuno); cursor: pointer; margin: 0; }
+  .scope-toggle.on { border-color: var(--neon-immuno); color: var(--neon-immuno); }
+  /* Shown when a node-scoped search finds nothing but the library has hits. */
+  .scope-hint {
+    margin: 18px auto; max-width: 560px; text-align: center;
+    font-family: 'JetBrains Mono', monospace; font-size: 11px;
+    line-height: 1.7; color: var(--ink-2);
+  }
+  .scope-hint b { color: var(--ink-1); font-weight: 500; }
+  .scope-hint button {
+    display: inline-block; margin-top: 10px;
+    background: rgba(0, 240, 255, 0.1);
+    border: 1px solid var(--neon-immuno); color: var(--neon-immuno);
+    padding: 7px 14px; border-radius: 3px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px; letter-spacing: 0.12em;
+    text-transform: uppercase; cursor: pointer;
+  }
+  .scope-hint button:hover { background: rgba(0, 240, 255, 0.2); }
+  /* Which node a result came from — only meaningful in library-wide results. */
+  .article-meta .node-badge {
+    background: rgba(120, 140, 200, 0.14);
+    padding: 2px 6px; border-radius: 2px;
+    font-size: 9px; letter-spacing: 0.12em;
+  }
   .filter-clear:hover {
     color: var(--ink-0);
     border-color: rgba(120, 140, 200, 0.35);
@@ -1470,6 +1585,7 @@
     <div class="lab-tabs">
       <button class="lab-tab active" data-tab="agent">Agent Run</button>
       <button class="lab-tab" data-tab="search">Manual Search</button>
+      <button class="lab-tab" data-tab="ask">Ask</button>
     </div>
     <div class="lab-body">
       <!-- AGENT RUN TAB -->
@@ -1492,6 +1608,29 @@
         </div>
         <div class="lab-status" id="lab-search-status">Search PubMed across any journal. Results outside the top-10 set can still be added — just pick a branch (and one of the indexed journals) when you save.</div>
         <div id="lab-search-results"></div>
+      </div>
+      <!-- ASK TAB -->
+      <div class="lab-tabpanel" id="lab-panel-ask">
+        <div class="ask-log" id="ask-log">
+          <div class="ask-intro">
+            Ask a question in plain English and I'll rank the
+            <strong id="ask-lib-size">library</strong> against it — matching on titles,
+            MeSH terms and abstracts, not just keywords.
+            <div class="ask-examples">
+              <button class="ask-chip" data-q="gut bacteria and behaviour">gut bacteria and behaviour</button>
+              <button class="ask-chip" data-q="does inflammation cause autism">does inflammation cause autism</button>
+              <button class="ask-chip" data-q="oxytocin randomized trial">oxytocin randomized trial</button>
+              <button class="ask-chip" data-q="eye tracking in toddlers">eye tracking in toddlers</button>
+            </div>
+            <div class="ask-note">Runs entirely on this machine — no API, no key, no cost per question.
+            Tick <em>also check PubMed</em> to look for papers you don't have yet.</div>
+          </div>
+        </div>
+        <div class="lab-controls ask-controls">
+          <input type="search" id="ask-query" placeholder="What do we have on…?" autocomplete="off">
+          <label><input type="checkbox" id="ask-pubmed"> ALSO CHECK PUBMED</label>
+          <button class="lab-btn" id="ask-send">▶ Ask</button>
+        </div>
       </div>
     </div>
   </div>
@@ -1568,7 +1707,10 @@
 
     <div class="modal-filters">
       <span class="filter-label">SEARCH</span>
-      <input type="search" id="filter-search" placeholder="Title, author, or journal..." autocomplete="off">
+      <input type="search" id="filter-search" placeholder="Title, author, journal, or PMID..." autocomplete="off">
+      <label class="scope-toggle" id="filter-scope-label" title="Search every node, not just this one">
+        <input type="checkbox" id="filter-scope"> All nodes
+      </label>
       <span class="filter-label">FROM</span>
       <input type="date" id="filter-from">
       <span class="filter-label">TO</span>
@@ -1646,6 +1788,8 @@ async function boot() {
       'other':                { rank: 6, label: 'Other',                shortLabel: 'OTHER',  boosted: false },
     };
     ARTICLES.forEach(resolveArticle);
+    const askSize = document.getElementById('ask-lib-size');
+    if (askSize) askSize.textContent = ARTICLES.length + ' articles';
     msgEl.textContent = 'INITIALIZING NETWORK...';
     initApp();
     syncUIState();   // pull cross-device UI state (bookmarks/dismissals/feedback)
@@ -2040,6 +2184,8 @@ const titleEl = document.getElementById('modal-title');
 const subEl = document.getElementById('modal-sub');
 const countEl = document.getElementById('result-count-n');
 const searchEl = document.getElementById('filter-search');
+const scopeEl = document.getElementById('filter-scope');
+const scopeLabelEl = document.getElementById('filter-scope-label');
 const fromEl = document.getElementById('filter-from');
 const toEl = document.getElementById('filter-to');
 const clearEl = document.getElementById('filter-clear');
@@ -2080,6 +2226,8 @@ function openBranchModal(branchKey) {
   renderBranchSub(branchKey);
   modal.style.setProperty('--accent', b.color);
   searchEl.value = ''; fromEl.value = ''; toEl.value = '';
+  scopeEl.checked = false;
+  scopeLabelEl.classList.remove('on');
   activeTiers.clear();
   buildPriorityChips();
   renderArticles();
@@ -2087,7 +2235,11 @@ function openBranchModal(branchKey) {
 }
 
 function buildPriorityChips() {
-  const branchArticles = ARTICLES.filter(a => a.branch === currentBranch);
+  // Counts follow the search scope, so the chips never claim a total the
+  // result list below them contradicts.
+  const branchArticles = scopeEl.checked
+    ? ARTICLES.slice()
+    : ARTICLES.filter(a => a.branch === currentBranch);
   const tierCounts = {};
   Object.keys(TIERS).forEach(k => tierCounts[k] = 0);
   branchArticles.forEach(a => { tierCounts[a.priority] = (tierCounts[a.priority] || 0) + 1; });
@@ -2161,15 +2313,10 @@ function renderArticles() {
   const fromD = fromEl.value ? new Date(fromEl.value) : null;
   const toD = toEl.value ? new Date(toEl.value) : null;
 
-  let list = ARTICLES.filter(a => a.branch === currentBranch);
+  const allNodes = scopeEl.checked;
+  let list = allNodes ? ARTICLES.slice() : ARTICLES.filter(a => a.branch === currentBranch);
   if (activeTiers.size > 0) list = list.filter(a => activeTiers.has(a.priority));
-  if (q) {
-    list = list.filter(a =>
-      a.title.toLowerCase().includes(q) ||
-      a.authors.toLowerCase().includes(q) ||
-      a.journalName.toLowerCase().includes(q)
-    );
-  }
+  if (q) list = list.filter(a => matchesQuery(a, q));
   if (fromD) list = list.filter(a => new Date(a.date) >= fromD);
   if (toD)   list = list.filter(a => new Date(a.date) <= toD);
 
@@ -2184,7 +2331,23 @@ function renderArticles() {
   countEl.textContent = list.length;
 
   if (list.length === 0) {
-    listEl.innerHTML = '<div class="empty-state">// NO ARTICLES MATCH YOUR FILTERS</div>';
+    // A node-scoped search that finds nothing is the case that sends people
+    // looking for a paper that is simply filed elsewhere — so say where it is
+    // instead of just reporting no matches.
+    let elsewhere = [];
+    if (q && !allNodes) {
+      elsewhere = ARTICLES.filter(a => a.branch !== currentBranch && matchesQuery(a, q));
+    }
+    if (elsewhere.length) {
+      const nodes = [...new Set(elsewhere.map(a => BRANCHES[a.branch] && BRANCHES[a.branch].label).filter(Boolean))];
+      listEl.innerHTML =
+        '<div class="scope-hint">No matches in <b>' + escapeHtml(BRANCHES[currentBranch].label) + '</b>, ' +
+        'but <b>' + elsewhere.length + '</b> elsewhere in the library — ' +
+        nodes.map(n => escapeHtml(n)).join(', ') + '.' +
+        '<br><button onclick="setSearchScope(true)">Search all nodes</button></div>';
+    } else {
+      listEl.innerHTML = '<div class="empty-state">// NO ARTICLES MATCH YOUR FILTERS</div>';
+    }
     return;
   }
 
@@ -2201,15 +2364,35 @@ function renderArticles() {
     if (showDivider && !dividerInserted && a.isBoosted && html.length === 0) {
       html += '<div class="boosted-separator" style="padding-top:6px;">★ BOOSTED ·  CLINICAL & TRANSLATIONAL</div>';
     }
-    html += renderArticleCard(a);
+    html += renderArticleCard(a, allNodes);
   }
   listEl.innerHTML = html;
 }
 
-function renderArticleCard(a) {
+// Matches on identifiers as well as prose: arriving with a PMID in hand and
+// getting no results is the failure this is here to prevent. `pm-40199322`,
+// `40199322` and a pasted PubMed URL all resolve to the same article.
+function matchesQuery(a, q) {
+  const pmid = (a.url.match(/pubmed\.ncbi\.nlm\.nih\.gov\/(\d+)/) || [])[1] || '';
+  return a.title.toLowerCase().includes(q)
+      || a.authors.toLowerCase().includes(q)
+      || a.journalName.toLowerCase().includes(q)
+      || (a.id || '').toLowerCase().includes(q)
+      || (pmid && (pmid === q || q.includes(pmid)));
+}
+
+function setSearchScope(on) {
+  scopeEl.checked = on;
+  scopeLabelEl.classList.toggle('on', on);
+  buildPriorityChips();
+  renderArticles();
+}
+
+function renderArticleCard(a, showNode) {
   const isNew = a.addedBy && a.addedBy.startsWith('agent-');
   const tier = TIERS[a.priority] || TIERS.other;
   const tierLabel = tier.shortLabel || tier.label;
+  const node = showNode && BRANCHES[a.branch] ? BRANCHES[a.branch].label : null;
   return `
     <a class="article tier-${a.priority}${a.isBoosted ? ' boosted' : ''}" href="${a.url}" target="_blank" rel="noopener">
       <div class="priority-badge${a.isBoosted ? ' boosted' : ''}">${escapeHtml(tierLabel)}</div>
@@ -2223,6 +2406,7 @@ function renderArticleCard(a) {
           <span class="fb-down${fbState(a.id) === -1 ? ' on' : ''}" title="Not relevant — teach this node to avoid these"
                 onclick="event.preventDefault();event.stopPropagation();nodeFeedback('${a.id}',-1,this);">👎</span>
         </span>
+        ${node ? `<span class="node-badge">${escapeHtml(node)}</span>` : ''}
         <span class="journal">${escapeHtml(a.journalName)}</span>
         <span class="if-badge">IF ${a.if.toFixed(1)}</span>
         <span class="date">${formatDate(a.date)}</span>
@@ -2243,11 +2427,12 @@ function formatDate(iso) {
 }
 
 [searchEl, fromEl, toEl].forEach(el => el.addEventListener('input', renderArticles));
+scopeEl.addEventListener('change', () => setSearchScope(scopeEl.checked));
 clearEl.addEventListener('click', () => {
   searchEl.value = ''; fromEl.value = ''; toEl.value = '';
   activeTiers.clear();
   buildPriorityChips();
-  renderArticles();
+  setSearchScope(false);
 });
 
 document.querySelectorAll('.sort-btn').forEach(btn => {
@@ -2591,6 +2776,178 @@ async function doSearch() {
 document.getElementById('lab-do-search').addEventListener('click', doSearch);
 document.getElementById('lab-query').addEventListener('keydown', (e) => {
   if (e.key === 'Enter') doSearch();
+});
+
+// ============ ASK TAB ============
+// Ranking happens server-side in recommend.py — BM25 over title/MeSH/abstract
+// with MeSH-based query expansion. No model, no key, no per-question cost.
+// Every hit is a real store entry resolved server-side, so nothing can appear
+// here that isn't actually in the library.
+const askLog = document.getElementById('ask-log');
+const askInput = document.getElementById('ask-query');
+const askPubmed = document.getElementById('ask-pubmed');
+
+function askAppend(html, cls) {
+  const div = document.createElement('div');
+  div.className = cls;
+  div.innerHTML = html;
+  askLog.appendChild(div);
+  askLog.scrollTop = askLog.scrollHeight;
+  return div;
+}
+
+// Summarises the result set in words rather than making the user read counts
+// off a facet table.
+function askSummary(data) {
+  const n = data.total;
+  if (!n) {
+    return `Nothing in the library matches <span class="ask-terms">${data.terms.map(escapeHtml).join(', ') || '—'}</span>. ` +
+           `Try fewer or more common words${askPubmed.checked ? '' : ', or tick <em>also check PubMed</em> to look outside the library'}.`;
+  }
+  const byBranch = Object.entries(data.facets.branch)
+    .filter(([k]) => k).sort((a, b) => b[1] - a[1]).slice(0, 3);
+  const shown = Math.min(data.results.length, n);
+  let s = `<b>${n}</b> of ${data.library_size} articles match `;
+  s += `<span class="ask-terms">${data.terms.map(escapeHtml).join(', ')}</span>`;
+  if (data.expanded && data.expanded.length) {
+    s += ` <span class="ask-dim">(also searched ${data.expanded.map(escapeHtml).join(', ')})</span>`;
+  }
+  s += '. ';
+  if (byBranch.length) {
+    s += 'Concentrated in ' + byBranch.map(([k, v]) =>
+      `<b>${escapeHtml((BRANCHES[k] && BRANCHES[k].label) || k)}</b> (${v})`).join(', ') + '. ';
+  }
+  s += `<span class="ask-dim">Showing the top ${shown}.</span>`;
+  return s;
+}
+
+function askHitHtml(r) {
+  const a = r.article;
+  const b = BRANCHES[r.branch];
+  const color = b ? b.color : '#5d6783';
+  const tier = TIERS[r.tier] || TIERS.other;
+  const why = r.matched && r.matched.length
+    ? 'matched ' + r.matched.map(t => `<em>${escapeHtml(t)}</em>`).join(', ')
+    : 'related by topic';
+  return `
+    <div class="ask-hit" style="--hit-color:${color};">
+      <a class="ask-hit-title" href="${a.url}" target="_blank" rel="noopener">${escapeHtml(a.title)}</a>
+      <div class="ask-hit-meta">
+        <span class="ask-rel" title="relevance ${Math.round(r.relevance * 100)}%"><i style="width:${Math.round(r.relevance * 100)}%"></i></span>
+        <span class="ask-node">${escapeHtml((b && b.label) || r.branch || 'unfiled')}</span>
+        <span>${escapeHtml(tier.shortLabel || tier.label)}</span>
+        <span>${escapeHtml(a.journalDisplay || (JOURNALS[a.journalKey] || {}).name || '')}</span>
+        <span>${formatDate(a.date)}</span>
+      </div>
+      <div class="ask-hit-why">${why}${r.snippet ? ' · ' + escapeHtml(r.snippet) : ''}</div>
+      <div class="ask-actions">
+        <button class="ask-act ask-bm${isBookmarked(a.id) ? ' on' : ''}" data-id="${a.id}">${isBookmarked(a.id) ? '★ Saved' : '☆ Save'}</button>
+        <button class="ask-act ask-more" data-id="${a.id}">More like this</button>
+        <a class="ask-act" href="${a.url}" target="_blank" rel="noopener">↗ PubMed</a>
+      </div>
+    </div>`;
+}
+
+function askWire(container) {
+  container.querySelectorAll('.ask-bm').forEach(btn => {
+    btn.addEventListener('click', () => {
+      toggleBookmark(btn.dataset.id, null);
+      const on = isBookmarked(btn.dataset.id);
+      btn.classList.toggle('on', on);
+      btn.textContent = on ? '★ Saved' : '☆ Save';
+    });
+  });
+  container.querySelectorAll('.ask-more').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const a = (ARTICLES.find(x => x.id === btn.dataset.id) || {});
+      askRun('more like: ' + (a.title || btn.dataset.id), { moreLike: btn.dataset.id });
+    });
+  });
+}
+
+async function askRun(question, opts = {}) {
+  const q = (question || '').trim();
+  if (!q) return;
+  const intro = askLog.querySelector('.ask-intro');
+  if (intro) intro.remove();
+  askAppend(escapeHtml(q), 'ask-q');
+  const answer = askAppend('<div class="ask-a-text"><span class="lab-loader"></span> searching the library…</div>', 'ask-a');
+
+  try {
+    const body = opts.moreLike
+      ? { query: (ARTICLES.find(x => x.id === opts.moreLike) || {}).title || q, limit: 8 }
+      : { query: q, limit: 10 };
+    const r = await fetch('/api/recommend', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(body),
+    });
+    if (!r.ok) throw new Error('HTTP ' + r.status + ' — is serve.py running?');
+    const data = await r.json();
+    if (data.error) throw new Error(data.error);
+
+    let hits = data.results || [];
+    if (opts.moreLike) hits = hits.filter(h => h.id !== opts.moreLike);
+    let html = `<div class="ask-a-text">${askSummary({ ...data, results: hits })}</div>`;
+    html += hits.map(askHitHtml).join('');
+    answer.innerHTML = html;
+    askWire(answer);
+
+    if (askPubmed.checked && !opts.moreLike) await askPubmedSection(q, answer);
+  } catch (e) {
+    answer.innerHTML = `<div class="ask-a-text">Error: ${escapeHtml(e.message)}<br>
+      <span style="font-size:10px;">Make sure you launched the site with
+      <code style="color:var(--neon-cyto);">python3 serve.py</code> rather than opening the HTML directly.</span></div>`;
+  }
+  askLog.scrollTop = askLog.scrollHeight;
+}
+
+// Optional second pass: papers NOT already in the library, rendered with the
+// same card the Manual Search tab uses so "Add to store" behaves identically.
+// PubMed's API is free, so this stays within the no-cost constraint.
+async function askPubmedSection(q, answer) {
+  const note = document.createElement('div');
+  note.className = 'ask-a-text';
+  note.innerHTML = '<span class="lab-loader"></span> checking PubMed for papers you don\'t have…';
+  answer.appendChild(note);
+  try {
+    const r = await fetch('/api/search-pubmed', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ query: q, autism_filter: true, max_results: 10 }),
+    });
+    if (!r.ok) throw new Error('HTTP ' + r.status);
+    const data = await r.json();
+    if (data.error) throw new Error(data.error);
+    const fresh = (data.results || []).filter(a => !a.already_in_store);
+    if (!fresh.length) {
+      note.innerHTML = '<span class="ask-dim">PubMed returned nothing you don\'t already have.</span>';
+      return;
+    }
+    note.innerHTML = `<b>${fresh.length}</b> more on PubMed that aren't in the library yet — add any that belong:`;
+    const wrap = document.createElement('div');
+    wrap.innerHTML = fresh.map(a => labCardHtml(a, { alreadyInStore: false })).join('');
+    fresh.forEach((a, i) => {
+      const card = wrap.querySelectorAll('.lab-card')[i];
+      if (card) card._articleData = a;
+    });
+    answer.appendChild(wrap);
+    wireUpAddButtons(wrap);
+  } catch (e) {
+    note.innerHTML = `<span class="ask-dim">PubMed check failed: ${escapeHtml(e.message)}</span>`;
+  }
+  askLog.scrollTop = askLog.scrollHeight;
+}
+
+document.getElementById('ask-send').addEventListener('click', () => {
+  const q = askInput.value; askInput.value = ''; askRun(q);
+});
+askInput.addEventListener('keydown', (e) => {
+  if (e.key === 'Enter') { const q = askInput.value; askInput.value = ''; askRun(q); }
+});
+askLog.addEventListener('click', (e) => {
+  const chip = e.target.closest('.ask-chip');
+  if (chip) askRun(chip.dataset.q);
 });
 
 // ============ WHAT'S NEW ============
