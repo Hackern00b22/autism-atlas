@@ -653,7 +653,7 @@ function renderProfile() {
   const papers = p.papers || [];
   main.innerHTML =
     headerHTML(p) + tilesHTML(p, s, papers) + updatesHTML(p, papers) +
-    chartsHTML(s, papers) + papersHTML(p, papers) + reviewHTML(p) + recsHTML(p);
+    chartsHTML(s, papers, p) + papersHTML(p, papers) + reviewHTML(p) + recsHTML(p);
   wireProfile(p);
 }
 
@@ -747,8 +747,20 @@ function updatesHTML(p, papers) {
 }
 
 // --- charts ---
-function chartsHTML(s, papers) {
+function chartsHTML(s, papers, p) {
+  // How much of this record is actually on-subject. A broad researcher's
+  // dossier otherwise reports a career the atlas never asked about — Nels
+  // Elde's output is largely evolutionary virology, so "rising topics" and the
+  // senior-author share describe work that has nothing to do with autism.
+  const asdN = (p && p.asdPaperCount) || 0;
+  const total = papers.length;
+  const scopeNote = total ? `
+    <div class="chart-caption" style="margin-bottom:10px">
+      <b>${asdN}</b> of <b>${total}</b> tracked papers are autism-relevant
+      (${Math.round(asdN / total * 100)}%). Charts below cover the full record.
+    </div>` : '';
   return `<div class="panel"><h3>// Publication record</h3>
+    ${scopeNote}
     <div class="chart-grid">
       <div>
         <div class="sec-title" style="margin-bottom:6px">Papers per year</div>

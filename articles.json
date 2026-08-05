@@ -1,7 +1,7 @@
 {
  "_meta": {
   "schema_version": 5,
-  "last_updated": "2026-07-29",
+  "last_updated": "2026-08-04",
   "description": "Article store for the Autism Research Network Atlas.",
   "schema": {
    "id": "unique string id",
@@ -44,8 +44,14 @@
     "shortLabel": "REVIEW",
     "boosted": false
    },
-   "other": {
+   "unclassified": {
     "rank": 6,
+    "label": "Unclassified",
+    "shortLabel": "UNCL",
+    "boosted": false
+   },
+   "other": {
+    "rank": 7,
     "label": "Other",
     "shortLabel": "OTHER",
     "boosted": false
@@ -364,7 +370,7 @@
     "pos_events": 0,
     "neg_events": 0
    },
-   "lastFetched": "2026-07-29"
+   "lastFetched": "2026-08-04"
   },
   "genetics": {
    "color": "#7a5cff",
@@ -411,7 +417,7 @@
    "date": "2019-03-01",
    "authors": "Grove J, Ripke S, Als TD, et al.",
    "url": "https://pubmed.ncbi.nlm.nih.gov/30804558/",
-   "priority": "mechanistic",
+   "priority": "review",
    "addedBy": "seed",
    "mesh": [
     "Adolescent",
@@ -429,7 +435,8 @@
     "Phenotype",
     "Polymorphism, Single Nucleotide",
     "Risk Factors"
-   ]
+   ],
+   "_priorityWas": "mechanistic"
   },
   {
    "id": "ng-2022-fu",
@@ -438,7 +445,7 @@
    "date": "2022-09-01",
    "authors": "Fu JM, Satterstrom FK, Peng M, et al.",
    "url": "https://pubmed.ncbi.nlm.nih.gov/36038621/",
-   "priority": "mechanistic",
+   "priority": "unclassified",
    "addedBy": "seed",
    "mesh": [
     "Carbon",
@@ -447,7 +454,8 @@
     "Climate",
     "Soil",
     "Temperature"
-   ]
+   ],
+   "_priorityWas": "mechanistic"
   },
   {
    "id": "ng-2017-weiner",
@@ -456,7 +464,7 @@
    "date": "2017-07-01",
    "authors": "Weiner DJ, Wigdor EM, Ripke S, et al.",
    "url": "https://pubmed.ncbi.nlm.nih.gov/28504703/",
-   "priority": "mechanistic",
+   "priority": "clinical-observation",
    "addedBy": "seed",
    "mesh": [
     "Adult",
@@ -480,7 +488,8 @@
     "Risk Factors",
     "Schizophrenia",
     "Sequence Deletion"
-   ]
+   ],
+   "_priorityWas": "mechanistic"
   },
   {
    "id": "ng-2022-trubetskoy",
@@ -489,7 +498,7 @@
    "date": "2022-04-08",
    "authors": "Trubetskoy V, Pardiñas AF, Qi T, et al.",
    "url": "https://pubmed.ncbi.nlm.nih.gov/35396580/",
-   "priority": "mechanistic",
+   "priority": "unclassified",
    "addedBy": "seed",
    "mesh": [
     "Alleles",
@@ -499,7 +508,8 @@
     "Humans",
     "Polymorphism, Single Nucleotide",
     "Schizophrenia"
-   ]
+   ],
+   "_priorityWas": "mechanistic"
   },
   {
    "id": "ajhg-2014-iossifov",
@@ -508,7 +518,7 @@
    "date": "2014-11-13",
    "authors": "Iossifov I, Levy D, Allen J, et al.",
    "url": "https://pubmed.ncbi.nlm.nih.gov/25363768/",
-   "priority": "mechanistic",
+   "priority": "unclassified",
    "addedBy": "seed",
    "mesh": [
     "Child",
@@ -524,7 +534,8 @@
     "Mutation",
     "Open Reading Frames",
     "Reproducibility of Results"
-   ]
+   ],
+   "_priorityWas": "mechanistic"
   },
   {
    "id": "ajhg-2019-ruzzo",
@@ -560,13 +571,35 @@
   },
   {
    "id": "jp-2018-dawson",
-   "title": "Atypical postural control can be detected via computer vision analysis in toddlers with autism spectrum disorder",
-   "journalKey": "jama-psych",
-   "date": "2018-08-01",
+   "title": "Atypical postural control can be detected via computer vision analysis in toddlers with autism spectrum disorder.",
+   "date": "2018-11-19",
    "authors": "Dawson G, Campbell K, Hashemi J, et al.",
-   "url": "https://pubmed.ncbi.nlm.nih.gov/30193373/",
+   "url": "https://pubmed.ncbi.nlm.nih.gov/30451886/",
    "priority": "clinical-observation",
-   "addedBy": "seed"
+   "addedBy": "seed",
+   "mesh": [
+    "Algorithms",
+    "Attention",
+    "Autism Spectrum Disorder",
+    "Case-Control Studies",
+    "Child, Preschool",
+    "Diagnosis, Computer-Assisted",
+    "Female",
+    "Head Movements",
+    "Humans",
+    "Image Processing, Computer-Assisted",
+    "Infant",
+    "Male",
+    "Microscopy, Video",
+    "Posture"
+   ],
+   "journalDisplay": "Scientific Reports",
+   "branchKey": "behavioral",
+   "_correctedFrom": {
+    "url": "https://pubmed.ncbi.nlm.nih.gov/30193373/",
+    "journalKey": "jama-psych",
+    "date": "2018-08-01"
+   }
   },
   {
    "id": "jp-2019-bai",
@@ -607,13 +640,14 @@
    "date": "2021-09-01",
    "authors": "Rogers SJ, et al.",
    "url": "https://pubmed.ncbi.nlm.nih.gov/34076681/",
-   "priority": "clinical-trial",
+   "priority": "unclassified",
    "addedBy": "seed",
    "mesh": [
     "Biliary Tract Surgical Procedures",
     "Humans",
     "Outcome Assessment, Health Care"
-   ]
+   ],
+   "_priorityWas": "clinical-trial"
   },
   {
    "id": "jp-2025-ongur",
@@ -622,9 +656,10 @@
    "date": "2025-05-01",
    "authors": "Öngür D.",
    "url": "https://pubmed.ncbi.nlm.nih.gov/40105809/",
-   "priority": "review",
+   "priority": "unclassified",
    "addedBy": "seed",
-   "mesh": []
+   "mesh": [],
+   "_priorityWas": "review"
   },
   {
    "id": "jcpp-2016-pickles",
@@ -663,7 +698,7 @@
    "date": "2020-04-01",
    "authors": "Livingston LA, Shah P, Happé F.",
    "url": "https://pubmed.ncbi.nlm.nih.gov/30924939/",
-   "priority": "clinical-observation",
+   "priority": "mechanistic",
    "addedBy": "seed",
    "mesh": [
     "Animals",
@@ -679,7 +714,8 @@
     "Rats, Sprague-Dawley",
     "Reproducibility of Results",
     "Rocuronium"
-   ]
+   ],
+   "_priorityWas": "clinical-observation"
   },
   {
    "id": "jcpp-2022-leadbitter",
@@ -688,7 +724,7 @@
    "date": "2022-12-01",
    "authors": "Leadbitter K, et al.",
    "url": "https://pubmed.ncbi.nlm.nih.gov/36214091/",
-   "priority": "clinical-trial",
+   "priority": "mechanistic",
    "addedBy": "seed",
    "mesh": [
     "Animals",
@@ -698,7 +734,8 @@
     "Ovary",
     "Embryo, Mammalian",
     "In Vitro Oocyte Maturation Techniques"
-   ]
+   ],
+   "_priorityWas": "clinical-trial"
   },
   {
    "id": "jcpp-2025-bottema",
@@ -707,7 +744,7 @@
    "date": "2025-06-01",
    "authors": "Bottema-Beutel K, et al.",
    "url": "https://pubmed.ncbi.nlm.nih.gov/39761043/",
-   "priority": "review",
+   "priority": "clinical-observation",
    "addedBy": "seed",
    "mesh": [
     "Humans",
@@ -723,7 +760,8 @@
     "Infant, Newborn",
     "Postpartum Hemorrhage",
     "Obstetric Labor Complications"
-   ]
+   ],
+   "_priorityWas": "review"
   },
   {
    "id": "mmwr-2025-shaw",
@@ -743,7 +781,7 @@
    "date": "2017-02-15",
    "authors": "Hazlett HC, Gu H, Munsell BC, et al.",
    "url": "https://pubmed.ncbi.nlm.nih.gov/28202958/",
-   "priority": "clinical-observation",
+   "priority": "unclassified",
    "addedBy": "seed",
    "mesh": [
     "Aquatic Organisms",
@@ -758,7 +796,8 @@
     "Solubility",
     "Temperature",
     "Time Factors"
-   ]
+   ],
+   "_priorityWas": "clinical-observation"
   },
   {
    "id": "bp-2011-courchesne",
@@ -767,7 +806,7 @@
    "date": "2011-06-15",
    "authors": "Courchesne E, Campbell K, Solso S.",
    "url": "https://pubmed.ncbi.nlm.nih.gov/21163445/",
-   "priority": "translational",
+   "priority": "review",
    "addedBy": "seed",
    "mesh": [
     "Algorithms",
@@ -782,7 +821,8 @@
     "Models, Biological",
     "Receptors, N-Methyl-D-Aspartate",
     "Recovery of Function"
-   ]
+   ],
+   "_priorityWas": "translational"
   },
   {
    "id": "bp-2021-lombardo",
@@ -791,7 +831,7 @@
    "date": "2021-04-01",
    "authors": "Lombardo MV, Eyler L, Pramparo T, et al.",
    "url": "https://pubmed.ncbi.nlm.nih.gov/33823944/",
-   "priority": "translational",
+   "priority": "mechanistic",
    "addedBy": "seed",
    "mesh": [
     "Animals",
@@ -801,6 +841,10 @@
     "Male",
     "Mice",
     "Mice, Inbred C57BL"
+   ],
+   "_priorityWas": "translational",
+   "alsoBranches": [
+    "neuroscience"
    ]
   },
   {
@@ -877,6 +921,9 @@
     "Neuroglia",
     "Protein Array Analysis",
     "Statistics, Nonparametric"
+   ],
+   "alsoBranches": [
+    "cytokines"
    ]
   },
   {
@@ -886,7 +933,7 @@
    "date": "2019-11-13",
    "authors": "Matta SM, Hill-Yardin EL, Crack PJ.",
    "url": "https://pubmed.ncbi.nlm.nih.gov/30708061/",
-   "priority": "review",
+   "priority": "clinical-observation",
    "addedBy": "seed",
    "mesh": [
     "Adult",
@@ -902,7 +949,8 @@
     "Surgeons",
     "Surveys and Questionnaires",
     "United Kingdom"
-   ]
+   ],
+   "_priorityWas": "review"
   },
   {
    "id": "aut-2018-cage",
@@ -911,7 +959,7 @@
    "date": "2018-04-01",
    "authors": "Cage E, Di Monaco J, Newell V.",
    "url": "https://pubmed.ncbi.nlm.nih.gov/29635921/",
-   "priority": "clinical-observation",
+   "priority": "unclassified",
    "addedBy": "seed",
    "mesh": [
     "Adiponectin",
@@ -930,7 +978,8 @@
     "Regression Analysis",
     "Renal Dialysis",
     "Renal Insufficiency, Chronic"
-   ]
+   ],
+   "_priorityWas": "clinical-observation"
   },
   {
    "id": "aut-2018-crane",
@@ -989,9 +1038,10 @@
    "date": "2022-04-01",
    "authors": "Pellicano E, Heyworth M.",
    "url": "https://pubmed.ncbi.nlm.nih.gov/37662728/",
-   "priority": "review",
+   "priority": "unclassified",
    "addedBy": "seed",
-   "mesh": []
+   "mesh": [],
+   "_priorityWas": "review"
   },
   {
    "id": "aut-2024-milner",
@@ -1034,7 +1084,10 @@
    "priority": "mechanistic",
    "addedBy": "agent-2026-05-28",
    "journalKey": "bbi",
-   "mesh": []
+   "mesh": [],
+   "alsoBranches": [
+    "neuroscience"
+   ]
   },
   {
    "id": "pm-42126059",
@@ -1056,7 +1109,28 @@
    "priority": "clinical-observation",
    "addedBy": "agent-2026-05-28",
    "journalKey": "bbi",
-   "mesh": []
+   "mesh": [
+    "Humans",
+    "Female",
+    "Pregnancy",
+    "Male",
+    "Immunoglobulin G",
+    "COVID-19",
+    "SARS-CoV-2",
+    "Neurodevelopmental Disorders",
+    "Immunoglobulin M",
+    "Infant, Newborn",
+    "Spike Glycoprotein, Coronavirus",
+    "Adult",
+    "Antibodies, Viral",
+    "Pregnancy Complications, Infectious",
+    "Prospective Studies",
+    "Longitudinal Studies",
+    "Prenatal Exposure Delayed Effects",
+    "Child, Preschool",
+    "Coronavirus Nucleocapsid Proteins",
+    "Child"
+   ]
   },
   {
    "id": "pm-41921887",
@@ -1088,7 +1162,24 @@
    "journalDisplay": "Molecular psychiatry",
    "journalKey": "mol-psych",
    "_origBranch": "cytokines",
-   "mesh": [],
+   "mesh": [
+    "Animals",
+    "Haploinsufficiency",
+    "Nerve Tissue Proteins",
+    "Mice",
+    "Disease Models, Animal",
+    "Lipopolysaccharides",
+    "Inflammation",
+    "Male",
+    "Microglia",
+    "Microfilament Proteins",
+    "Behavior, Animal",
+    "Penetrance",
+    "Autistic Disorder",
+    "Mice, Inbred C57BL",
+    "Autism Spectrum Disorder",
+    "Anxiety"
+   ],
    "branchKey": "cytokines"
   },
   {
@@ -1100,7 +1191,30 @@
    "priority": "mechanistic",
    "addedBy": "agent-2026-05-28",
    "journalKey": "bbi",
-   "mesh": []
+   "mesh": [
+    "Animals",
+    "Mice",
+    "Disease Models, Animal",
+    "Corpus Striatum",
+    "Chromosomes, Human, Pair 16",
+    "Attention Deficit Disorder with Hyperactivity",
+    "Male",
+    "Chromosome Disorders",
+    "Receptors, Complement",
+    "Microglia",
+    "Chromosome Deletion",
+    "Complement System Proteins",
+    "Hyperkinesis",
+    "Mice, Inbred C57BL",
+    "Cytokines",
+    "Intellectual Disability",
+    "Autistic Disorder",
+    "Neurodevelopmental Disorders",
+    "Brain"
+   ],
+   "alsoBranches": [
+    "immunology"
+   ]
   },
   {
    "id": "pm-41825653",
@@ -1111,7 +1225,24 @@
    "priority": "mechanistic",
    "addedBy": "agent-2026-05-28",
    "journalKey": "bbi",
-   "mesh": []
+   "mesh": [
+    "Animals",
+    "Female",
+    "Granulocyte Colony-Stimulating Factor",
+    "Pregnancy",
+    "Prenatal Exposure Delayed Effects",
+    "Neurodevelopment",
+    "Male",
+    "Synapses",
+    "Social Behavior",
+    "Prefrontal Cortex",
+    "Autism Spectrum Disorder",
+    "Humans",
+    "Mice",
+    "Poly I-C",
+    "Dendritic Spines",
+    "Cytokines"
+   ]
   },
   {
    "id": "pm-41821031",
@@ -1122,7 +1253,25 @@
    "priority": "mechanistic",
    "addedBy": "agent-2026-05-28",
    "journalKey": "j-neuroinfl",
-   "mesh": []
+   "mesh": [
+    "Animals",
+    "Female",
+    "Male",
+    "T-Lymphocytes, Regulatory",
+    "Brain",
+    "Pregnancy",
+    "Sex Characteristics",
+    "Mice",
+    "Adoptive Transfer",
+    "Cytokines",
+    "Mice, Inbred C57BL",
+    "Prenatal Exposure Delayed Effects",
+    "Disease Models, Animal",
+    "Autism Spectrum Disorder"
+   ],
+   "alsoBranches": [
+    "cytokines"
+   ]
   },
   {
    "id": "pm-41742408",
@@ -1152,6 +1301,10 @@
     "Mice, Inbred C57BL",
     "RNA",
     "Histone-Lysine N-Methyltransferase"
+   ],
+   "alsoBranches": [
+    "immunology",
+    "cytokines"
    ]
   },
   {
@@ -1163,7 +1316,28 @@
    "priority": "mechanistic",
    "addedBy": "agent-2026-05-28",
    "journalKey": "j-neuroinfl",
-   "mesh": []
+   "mesh": [
+    "Animals",
+    "Microglia",
+    "Female",
+    "Mice",
+    "src-Family Kinases",
+    "TRPV Cation Channels",
+    "Mice, Knockout",
+    "Humans",
+    "Pregnancy",
+    "Mice, Inbred C57BL",
+    "Disease Models, Animal",
+    "Social Behavior",
+    "Animals, Newborn",
+    "Autism Spectrum Disorder",
+    "Prenatal Exposure Delayed Effects",
+    "Lipopolysaccharides",
+    "Male"
+   ],
+   "alsoBranches": [
+    "cytokines"
+   ]
   },
   {
    "id": "pm-41703554",
@@ -1171,10 +1345,27 @@
    "date": "2026-02-17",
    "authors": "Moreno RJ, Rose D, Ashwood P",
    "url": "https://pubmed.ncbi.nlm.nih.gov/41703554/",
-   "priority": "mechanistic",
+   "priority": "unclassified",
    "addedBy": "agent-2026-05-28",
    "journalKey": "j-neuroinfl",
-   "mesh": []
+   "mesh": [
+    "Humans",
+    "T-Lymphocytes, Regulatory",
+    "Male",
+    "Female",
+    "Gastrointestinal Diseases",
+    "Child",
+    "Phenotype",
+    "Child, Preschool",
+    "Autistic Disorder",
+    "Comorbidity",
+    "Autism Spectrum Disorder",
+    "Gene Expression"
+   ],
+   "_priorityWas": "mechanistic",
+   "alsoBranches": [
+    "genetics"
+   ]
   },
   {
    "id": "pm-41692358",
@@ -1185,7 +1376,25 @@
    "priority": "clinical-trial",
    "addedBy": "agent-2026-05-28",
    "journalKey": "bbi",
-   "mesh": []
+   "mesh": [
+    "Animals",
+    "Pyroptosis",
+    "Astrocytes",
+    "Humans",
+    "Autism Spectrum Disorder",
+    "Mice",
+    "Inflammasomes",
+    "Calcium-Binding Proteins",
+    "Lysophospholipids",
+    "Sphingosine",
+    "Disease Models, Animal",
+    "CARD Signaling Adaptor Proteins",
+    "Male",
+    "Mice, Inbred C57BL",
+    "Female",
+    "Neuroinflammatory Diseases",
+    "Caspase 1"
+   ]
   },
   {
    "id": "pm-41672158",
@@ -1256,7 +1465,22 @@
    "priority": "mechanistic",
    "addedBy": "agent-2026-05-28",
    "journalKey": "j-neuroinfl",
-   "mesh": []
+   "mesh": [
+    "Animals",
+    "Female",
+    "Macaca mulatta",
+    "Pregnancy",
+    "Chorioamnionitis",
+    "Neurons",
+    "Escherichia coli Infections",
+    "Neuroinflammatory Diseases",
+    "Brain",
+    "Cytokines"
+   ],
+   "_priorityWas": "mechanistic",
+   "alsoBranches": [
+    "cytokines"
+   ]
   },
   {
    "id": "pm-41413202",
@@ -1284,7 +1508,11 @@
     "Neurodevelopmental Disorders",
     "Brain"
    ],
-   "branchKey": "cytokines"
+   "branchKey": "cytokines",
+   "alsoBranches": [
+    "genetics",
+    "neuroscience"
+   ]
   },
   {
    "id": "pm-41381014",
@@ -1328,6 +1556,9 @@
     "Chemokines",
     "Macaca mulatta",
     "Animals, Newborn"
+   ],
+   "alsoBranches": [
+    "immunology"
    ]
   },
   {
@@ -1383,6 +1614,9 @@
     "Aging",
     "Transcription, Genetic",
     "Transcriptome"
+   ],
+   "alsoBranches": [
+    "genetics"
    ]
   },
   {
@@ -1472,7 +1706,7 @@
    "date": "2025-09-14",
    "authors": "Lila Y, Tseng CJ, Johnston EG, et al.",
    "url": "https://pubmed.ncbi.nlm.nih.gov/40957533/",
-   "priority": "mechanistic",
+   "priority": "unclassified",
    "addedBy": "agent-2026-05-28",
    "journalKey": "bbi",
    "mesh": [
@@ -1486,7 +1720,8 @@
     "Receptors, GABA",
     "Choroid Plexus",
     "Young Adult"
-   ]
+   ],
+   "_priorityWas": "mechanistic"
   },
   {
    "id": "pm-40855005",
@@ -1520,7 +1755,10 @@
     "Hippocampus",
     "Chemokine CXCL16"
    ],
-   "branchKey": "cytokines"
+   "branchKey": "cytokines",
+   "alsoBranches": [
+    "genetics"
+   ]
   },
   {
    "id": "pm-40744151",
@@ -1600,6 +1838,9 @@
     "Pregnancy",
     "Female",
     "Pregnancy Complications, Infectious"
+   ],
+   "alsoBranches": [
+    "cytokines"
    ]
   },
   {
@@ -1637,6 +1878,9 @@
     "Genetic Predisposition to Disease",
     "Microglia",
     "Inflammation"
+   ],
+   "alsoBranches": [
+    "behavioral"
    ]
   },
   {
@@ -1666,6 +1910,9 @@
     "Prepulse Inhibition",
     "Sex Factors",
     "Mice, Inbred C57BL"
+   ],
+   "alsoBranches": [
+    "neuroscience"
    ]
   },
   {
@@ -1692,6 +1939,9 @@
     "Prenatal Exposure Delayed Effects",
     "Macrophage Activation",
     "Mice, Knockout"
+   ],
+   "alsoBranches": [
+    "immunology"
    ]
   },
   {
@@ -1726,7 +1976,7 @@
    "date": "2025-04-02",
    "authors": "Qin Q, Li M, Fan L, et al.",
    "url": "https://pubmed.ncbi.nlm.nih.gov/40175518/",
-   "priority": "mechanistic",
+   "priority": "unclassified",
    "addedBy": "agent-2026-05-28",
    "journalDisplay": "Molecular psychiatry",
    "journalKey": "mol-psych",
@@ -1749,7 +1999,12 @@
     "Autistic Disorder",
     "Inflammation"
    ],
-   "branchKey": "cytokines"
+   "branchKey": "cytokines",
+   "_priorityWas": "mechanistic",
+   "alsoBranches": [
+    "immunology",
+    "neuroscience"
+   ]
   },
   {
    "id": "pm-40139186",
@@ -1825,6 +2080,9 @@
     "Poly I-C",
     "Mice, Inbred C57BL",
     "Male"
+   ],
+   "alsoBranches": [
+    "cytokines"
    ]
   },
   {
@@ -1855,6 +2113,9 @@
     "Anxiety",
     "Animals, Newborn",
     "Neuroimmunomodulation"
+   ],
+   "alsoBranches": [
+    "immunology"
    ]
   },
   {
@@ -1935,6 +2196,9 @@
     "Risk Factors",
     "Cohort Studies",
     "Cytokines"
+   ],
+   "alsoBranches": [
+    "behavioral"
    ]
   },
   {
@@ -1989,7 +2253,10 @@
     "Rats, Sprague-Dawley",
     "Nerve Tissue Proteins"
    ],
-   "branchKey": "cytokines"
+   "branchKey": "cytokines",
+   "alsoBranches": [
+    "genetics"
+   ]
   },
   {
    "id": "pm-39904469",
@@ -1997,7 +2264,7 @@
    "date": "2025-02-02",
    "authors": "Tseng CJ, Guma E, McDougle CJ, et al.",
    "url": "https://pubmed.ncbi.nlm.nih.gov/39904469/",
-   "priority": "mechanistic",
+   "priority": "unclassified",
    "addedBy": "agent-2026-05-28",
    "journalKey": "bbi",
    "mesh": [
@@ -2014,7 +2281,8 @@
     "Brain",
     "Autistic Disorder",
     "Middle Aged"
-   ]
+   ],
+   "_priorityWas": "mechanistic"
   },
   {
    "id": "pm-39865184",
@@ -2044,7 +2312,11 @@
     "Risperidone",
     "Dopamine"
    ],
-   "branchKey": "cytokines"
+   "branchKey": "cytokines",
+   "alsoBranches": [
+    "intervention",
+    "behavioral"
+   ]
   },
   {
    "id": "pm-39719225",
@@ -2052,7 +2324,7 @@
    "date": "2024-12-22",
    "authors": "Breece E, Moreno RJ, Azzam Y, et al.",
    "url": "https://pubmed.ncbi.nlm.nih.gov/39719225/",
-   "priority": "mechanistic",
+   "priority": "unclassified",
    "addedBy": "agent-2026-05-28",
    "journalKey": "bbi",
    "mesh": [
@@ -2066,6 +2338,10 @@
     "Immunity, Innate",
     "Severity of Illness Index",
     "Autistic Disorder"
+   ],
+   "_priorityWas": "mechanistic",
+   "alsoBranches": [
+    "immunology"
    ]
   },
   {
@@ -2074,7 +2350,7 @@
    "date": "2024-12-23",
    "authors": "Shapira G, Karmon G, Hacohen-Kleiman G, et al.",
    "url": "https://pubmed.ncbi.nlm.nih.gov/39715923/",
-   "priority": "mechanistic",
+   "priority": "unclassified",
    "addedBy": "agent-2026-05-28",
    "journalDisplay": "Molecular psychiatry",
    "journalKey": "mol-psych",
@@ -2098,7 +2374,11 @@
     "Neurons",
     "Homeodomain Proteins"
    ],
-   "branchKey": "cytokines"
+   "branchKey": "cytokines",
+   "_priorityWas": "mechanistic",
+   "alsoBranches": [
+    "genetics"
+   ]
   },
   {
    "id": "pm-39703999",
@@ -2137,6 +2417,9 @@
     "Prenatal Exposure Delayed Effects",
     "Disease Models, Animal",
     "COVID-19"
+   ],
+   "alsoBranches": [
+    "cytokines"
    ]
   },
   {
@@ -2163,6 +2446,9 @@
     "Mice, Transgenic",
     "Mice, Inbred C57BL",
     "Engrailed 2 Protein"
+   ],
+   "alsoBranches": [
+    "cytokines"
    ]
   },
   {
@@ -2196,7 +2482,10 @@
     "Poly I-C",
     "Receptors, Metabotropic Glutamate"
    ],
-   "branchKey": "cytokines"
+   "branchKey": "cytokines",
+   "alsoBranches": [
+    "genetics"
+   ]
   },
   {
    "id": "pm-39581290",
@@ -2214,6 +2503,9 @@
     "Prenatal Exposure Delayed Effects",
     "Autistic Disorder",
     "Inflammation"
+   ],
+   "alsoBranches": [
+    "cytokines"
    ]
   },
   {
@@ -2326,6 +2618,10 @@
     "Neurodevelopmental Disorders",
     "Microglia",
     "Mice, Inbred C57BL"
+   ],
+   "alsoBranches": [
+    "neuroscience",
+    "immunology"
    ]
   },
   {
@@ -2373,6 +2669,9 @@
     "Animals",
     "Autistic Disorder",
     "Central Nervous System"
+   ],
+   "alsoBranches": [
+    "immunology"
    ]
   },
   {
@@ -2396,6 +2695,9 @@
     "Adenosine",
     "Hippocampus",
     "Pregnancy"
+   ],
+   "alsoBranches": [
+    "genetics"
    ]
   },
   {
@@ -2424,6 +2726,9 @@
     "Parvalbumins",
     "Cholecystokinin",
     "Inflammation"
+   ],
+   "alsoBranches": [
+    "neuroscience"
    ]
   },
   {
@@ -2458,7 +2763,7 @@
    "date": "2024-08-23",
    "authors": "Zeng X, Fan L, Qin Q, et al.",
    "url": "https://pubmed.ncbi.nlm.nih.gov/39182588/",
-   "priority": "mechanistic",
+   "priority": "unclassified",
    "addedBy": "agent-2026-05-28",
    "journalKey": "bbi",
    "mesh": [
@@ -2480,7 +2785,8 @@
     "Inflammation",
     "Interleukin-6",
     "Brain"
-   ]
+   ],
+   "_priorityWas": "mechanistic"
   },
   {
    "id": "pm-39025414",
@@ -2562,6 +2868,9 @@
     "Transcriptome",
     "Disease Models, Animal",
     "Fetus"
+   ],
+   "alsoBranches": [
+    "cytokines"
    ]
   },
   {
@@ -2671,6 +2980,9 @@
     "Autism Spectrum Disorder",
     "Administration, Intranasal",
     "Randomized Controlled Trials as Topic"
+   ],
+   "alsoBranches": [
+    "intervention"
    ]
   },
   {
@@ -2770,6 +3082,9 @@
     "Infant, Premature",
     "Cerebellum",
     "RNA, Small Nuclear"
+   ],
+   "alsoBranches": [
+    "neuroscience"
    ]
   },
   {
@@ -2778,7 +3093,7 @@
    "date": "2023-12-28",
    "authors": "Ashwood P",
    "url": "https://pubmed.ncbi.nlm.nih.gov/38157947/",
-   "priority": "mechanistic",
+   "priority": "unclassified",
    "addedBy": "agent-2026-05-28",
    "journalKey": "bbi",
    "mesh": [
@@ -2787,7 +3102,8 @@
     "Autism Spectrum Disorder",
     "Gastrointestinal Microbiome",
     "Lymphocytes"
-   ]
+   ],
+   "_priorityWas": "mechanistic"
   },
   {
    "id": "pm-38142918",
@@ -2902,6 +3218,9 @@
     "Asthma",
     "Cytokines",
     "Inflammation"
+   ],
+   "alsoBranches": [
+    "cytokines"
    ]
   },
   {
@@ -2920,6 +3239,9 @@
     "Mental Disorders",
     "Brain",
     "Brain Diseases"
+   ],
+   "alsoBranches": [
+    "cytokines"
    ]
   },
   {
@@ -3016,6 +3338,9 @@
     "Bayes Theorem",
     "Reproducibility of Results",
     "Cytokines"
+   ],
+   "alsoBranches": [
+    "cytokines"
    ]
   },
   {
@@ -3081,6 +3406,9 @@
     "Macrophage Migration-Inhibitory Factors",
     "Sex Factors",
     "Neurodevelopmental Disorders"
+   ],
+   "alsoBranches": [
+    "immunology"
    ]
   },
   {
@@ -3107,7 +3435,10 @@
     "Autistic Disorder",
     "Biomarkers"
    ],
-   "branchKey": "cytokines"
+   "branchKey": "cytokines",
+   "alsoBranches": [
+    "intervention"
+   ]
   },
   {
    "id": "pm-37011865",
@@ -3154,7 +3485,10 @@
     "Brain",
     "Maternal Exposure"
    ],
-   "branchKey": "cytokines"
+   "branchKey": "cytokines",
+   "alsoBranches": [
+    "immunology"
+   ]
   },
   {
    "id": "pm-36920424",
@@ -3162,7 +3496,7 @@
    "date": "2023-04-04",
    "authors": "Harris E",
    "url": "https://pubmed.ncbi.nlm.nih.gov/36920424/",
-   "priority": "mechanistic",
+   "priority": "unclassified",
    "addedBy": "agent-2026-05-28",
    "journalDisplay": "JAMA",
    "journalKey": "jama",
@@ -3174,7 +3508,8 @@
     "Inflammation",
     "Age Factors"
    ],
-   "branchKey": "cytokines"
+   "branchKey": "cytokines",
+   "_priorityWas": "mechanistic"
   },
   {
    "id": "pm-36878967",
@@ -3253,7 +3588,7 @@
    "date": "2023-01-04",
    "authors": "Hanson KL, Weir RK, Iosif AM, et al.",
    "url": "https://pubmed.ncbi.nlm.nih.gov/36610487/",
-   "priority": "mechanistic",
+   "priority": "unclassified",
    "addedBy": "agent-2026-05-28",
    "journalKey": "bbi",
    "mesh": [
@@ -3271,7 +3606,8 @@
     "Poly I-C",
     "Behavior, Animal",
     "Prefrontal Cortex"
-   ]
+   ],
+   "_priorityWas": "mechanistic"
   },
   {
    "id": "pm-36604742",
@@ -3295,6 +3631,10 @@
     "Disease Models, Animal",
     "Microfilament Proteins",
     "Nerve Tissue Proteins"
+   ],
+   "alsoBranches": [
+    "genetics",
+    "cytokines"
    ]
   },
   {
@@ -3314,6 +3654,10 @@
     "Brain",
     "Microglia",
     "Immunity, Innate"
+   ],
+   "alsoBranches": [
+    "immunology",
+    "behavioral"
    ]
   },
   {
@@ -3338,6 +3682,9 @@
     "Cytokines",
     "Inflammation",
     "Immunity, Innate"
+   ],
+   "alsoBranches": [
+    "cytokines"
    ]
   },
   {
@@ -3369,7 +3716,7 @@
    "date": "2022-11-24",
    "authors": "Chen Y, Dai J, Tang L, et al.",
    "url": "https://pubmed.ncbi.nlm.nih.gov/36424395/",
-   "priority": "mechanistic",
+   "priority": "unclassified",
    "addedBy": "agent-2026-05-28",
    "journalDisplay": "Molecular psychiatry",
    "journalKey": "mol-psych",
@@ -3383,7 +3730,12 @@
     "Brain",
     "Alzheimer Disease"
    ],
-   "branchKey": "cytokines"
+   "branchKey": "cytokines",
+   "_priorityWas": "mechanistic",
+   "alsoBranches": [
+    "immunology",
+    "genetics"
+   ]
   },
   {
    "id": "pm-36284159",
@@ -3413,7 +3765,7 @@
    "date": "2022-10-20",
    "authors": "Bao B, Zahiri J, Gazestani VH, et al.",
    "url": "https://pubmed.ncbi.nlm.nih.gov/36266569/",
-   "priority": "mechanistic",
+   "priority": "unclassified",
    "addedBy": "agent-2026-05-28",
    "journalDisplay": "Molecular psychiatry",
    "journalKey": "mol-psych",
@@ -3428,7 +3780,11 @@
     "Immunity",
     "Gene Expression"
    ],
-   "branchKey": "cytokines"
+   "branchKey": "cytokines",
+   "_priorityWas": "mechanistic",
+   "alsoBranches": [
+    "genetics"
+   ]
   },
   {
    "id": "pm-36028571",
@@ -3478,6 +3834,9 @@
     "Prenatal Exposure Delayed Effects",
     "Receptors, CCR5",
     "Valproic Acid"
+   ],
+   "alsoBranches": [
+    "behavioral"
    ]
   },
   {
@@ -3486,7 +3845,7 @@
    "date": "2022-07-06",
    "authors": "Mitchell AJ, Khambadkone SG, Dunn G, et al.",
    "url": "https://pubmed.ncbi.nlm.nih.gov/35809877/",
-   "priority": "mechanistic",
+   "priority": "unclassified",
    "addedBy": "agent-2026-05-28",
    "journalKey": "bbi",
    "mesh": [
@@ -3499,7 +3858,8 @@
     "Pregnancy",
     "Prenatal Exposure Delayed Effects",
     "Social Participation"
-   ]
+   ],
+   "_priorityWas": "mechanistic"
   },
   {
    "id": "pm-35803480",
@@ -3566,7 +3926,10 @@
     "Epigenesis, Genetic",
     "Disease Models, Animal"
    ],
-   "branchKey": "cytokines"
+   "branchKey": "cytokines",
+   "alsoBranches": [
+    "immunology"
+   ]
   },
   {
    "id": "pm-35353173",
@@ -3597,7 +3960,10 @@
     "Schizophrenia"
    ],
    "_refiledFrom": "intervention",
-   "branchKey": "neuroscience"
+   "branchKey": "neuroscience",
+   "alsoBranches": [
+    "cytokines"
+   ]
   },
   {
    "id": "pm-35245680",
@@ -3624,6 +3990,9 @@
     "Prenatal Exposure Delayed Effects",
     "Rats",
     "Social Behavior"
+   ],
+   "alsoBranches": [
+    "neuroscience"
    ]
   },
   {
@@ -3772,7 +4141,7 @@
    "date": "2021-11-19",
    "authors": "Kim DH, Krakowiak P, Meltzer A, et al.",
    "url": "https://pubmed.ncbi.nlm.nih.gov/34808292/",
-   "priority": "mechanistic",
+   "priority": "clinical-observation",
    "addedBy": "agent-2026-05-28",
    "journalKey": "bbi",
    "mesh": [
@@ -3785,7 +4154,8 @@
     "Developmental Disabilities",
     "Humans",
     "Infant, Newborn"
-   ]
+   ],
+   "_priorityWas": "mechanistic"
   },
   {
    "id": "pm-34641964",
@@ -3891,6 +4261,9 @@
     "Neurons",
     "Protein Serine-Threonine Kinases",
     "Spasms, Infantile"
+   ],
+   "alsoBranches": [
+    "cytokines"
    ]
   },
   {
@@ -3924,7 +4297,7 @@
    "date": "2021-06-23",
    "authors": "Qiu W, Go KA, Wen Y, et al.",
    "url": "https://pubmed.ncbi.nlm.nih.gov/34174336/",
-   "priority": "mechanistic",
+   "priority": "unclassified",
    "addedBy": "agent-2026-05-28",
    "journalKey": "bbi",
    "mesh": [
@@ -3946,7 +4319,8 @@
     "Rats, Sprague-Dawley",
     "Selective Serotonin Reuptake Inhibitors",
     "Stress, Psychological"
-   ]
+   ],
+   "_priorityWas": "mechanistic"
   },
   {
    "id": "pm-34088332",
@@ -3988,6 +4362,9 @@
     "Poly I-C",
     "Pregnancy",
     "Prenatal Exposure Delayed Effects"
+   ],
+   "alsoBranches": [
+    "cytokines"
    ]
   },
   {
@@ -4042,7 +4419,7 @@
    "date": "2021-04-21",
    "authors": "McGarry N, Murray CL, Garvey S, et al.",
    "url": "https://pubmed.ncbi.nlm.nih.gov/33892139/",
-   "priority": "mechanistic",
+   "priority": "unclassified",
    "addedBy": "agent-2026-05-28",
    "journalKey": "bbi",
    "mesh": [
@@ -4057,7 +4434,8 @@
     "RNA, Double-Stranded",
     "Receptor, Interferon alpha-beta",
     "SARS-CoV-2"
-   ]
+   ],
+   "_priorityWas": "mechanistic"
   },
   {
    "id": "pm-33862170",
@@ -4078,6 +4456,9 @@
     "Mice",
     "Microglia",
     "Ovalbumin"
+   ],
+   "alsoBranches": [
+    "immunology"
    ]
   },
   {
@@ -4086,7 +4467,7 @@
    "date": "2021-04-15",
    "authors": "Xu Z, Zhang X, Chang H, et al.",
    "url": "https://pubmed.ncbi.nlm.nih.gov/33859437/",
-   "priority": "mechanistic",
+   "priority": "unclassified",
    "addedBy": "agent-2026-05-28",
    "journalDisplay": "Nature neuroscience",
    "journalKey": "nat-neurosci",
@@ -4106,6 +4487,11 @@
     "Social Interaction",
     "T-Lymphocytes, Regulatory",
     "Vocalization, Animal"
+   ],
+   "_priorityWas": "mechanistic",
+   "alsoBranches": [
+    "immunology",
+    "cytokines"
    ]
   },
   {
@@ -4129,6 +4515,9 @@
     "Prenatal Exposure Delayed Effects",
     "Rats",
     "Social Behavior"
+   ],
+   "alsoBranches": [
+    "immunology"
    ]
   },
   {
@@ -4237,6 +4626,9 @@
     "Synapses",
     "Valproic Acid",
     "Rats"
+   ],
+   "alsoBranches": [
+    "neuroscience"
    ]
   },
   {
@@ -4291,10 +4683,11 @@
    "date": "2026-01-01",
    "authors": "Kalin NH",
    "url": "https://pubmed.ncbi.nlm.nih.gov/41476329/",
-   "priority": "mechanistic",
+   "priority": "unclassified",
    "addedBy": "agent-2026-05-28",
    "journalKey": "ajp",
-   "mesh": []
+   "mesh": [],
+   "_priorityWas": "mechanistic"
   },
   {
    "id": "pm-39611328",
@@ -4458,7 +4851,7 @@
    "date": "2021-12-24",
    "authors": "Soullane S, Spence AR, Abenhaim HA",
    "url": "https://pubmed.ncbi.nlm.nih.gov/34951517/",
-   "priority": "mechanistic",
+   "priority": "clinical-observation",
    "addedBy": "agent-2026-05-28",
    "journalKey": "autism-res",
    "mesh": [
@@ -4473,7 +4866,8 @@
     "Male",
     "Placenta",
     "Pregnancy"
-   ]
+   ],
+   "_priorityWas": "mechanistic"
   },
   {
    "id": "pm-34415116",
@@ -4521,6 +4915,10 @@
     "Macrophages",
     "Monocytes",
     "Tumor Necrosis Factor-alpha"
+   ],
+   "alsoBranches": [
+    "cytokines",
+    "immunology"
    ]
   },
   {
@@ -4673,7 +5071,7 @@
    "date": "2022-01-03",
    "authors": "He D, Xu H, Zhang H, et al.",
    "url": "https://pubmed.ncbi.nlm.nih.gov/34982959/",
-   "priority": "mechanistic",
+   "priority": "unclassified",
    "addedBy": "agent-2026-05-28",
    "journalKey": "immunity",
    "mesh": [
@@ -4694,6 +5092,10 @@
     "Phagocytosis",
     "Seizures",
     "Signal Transduction"
+   ],
+   "_priorityWas": "mechanistic",
+   "alsoBranches": [
+    "immunology"
    ]
   },
   {
@@ -4783,7 +5185,7 @@
    "date": "2022-04-14",
    "authors": "Lee Y, Huh JR",
    "url": "https://pubmed.ncbi.nlm.nih.gov/35427498/",
-   "priority": "mechanistic",
+   "priority": "unclassified",
    "addedBy": "agent-2026-05-28",
    "journalKey": "cell",
    "branchKey": "cytokines",
@@ -4797,7 +5199,8 @@
     "Gastrointestinal Microbiome",
     "Humans",
     "Mice"
-   ]
+   ],
+   "_priorityWas": "mechanistic"
   },
   {
    "id": "pm-42161244",
@@ -4805,7 +5208,7 @@
    "date": "2026-05-20",
    "authors": "Zhan J, Lee HK",
    "url": "https://pubmed.ncbi.nlm.nih.gov/42161244/",
-   "priority": "mechanistic",
+   "priority": "unclassified",
    "addedBy": "agent-2026-06-02",
    "mesh": [
     "Endogenous Retroviruses",
@@ -4816,7 +5219,8 @@
     "Animals",
     "Neurons"
    ],
-   "journalKey": "neuron"
+   "journalKey": "neuron",
+   "_priorityWas": "mechanistic"
   },
   {
    "id": "pm-42157347",
@@ -4826,7 +5230,19 @@
    "url": "https://pubmed.ncbi.nlm.nih.gov/42157347/",
    "priority": "translational",
    "addedBy": "agent-2026-06-02",
-   "mesh": [],
+   "mesh": [
+    "Astrocytes",
+    "Apoptosis",
+    "Animals",
+    "Humans",
+    "Autism Spectrum Disorder",
+    "Signal Transduction",
+    "Gap Junctions",
+    "Neurons",
+    "Mice",
+    "Stress, Physiological",
+    "Male"
+   ],
    "journalKey": "mol-autism",
    "_refiledFrom": "behavioral",
    "branchKey": "genetics"
@@ -4837,12 +5253,31 @@
    "date": "2026-05-13",
    "authors": "Bradley CA, Ko SY, Tian M, et al.",
    "url": "https://pubmed.ncbi.nlm.nih.gov/42129557/",
-   "priority": "mechanistic",
+   "priority": "unclassified",
    "addedBy": "agent-2026-06-02",
-   "mesh": [],
+   "mesh": [
+    "Animals",
+    "Female",
+    "Humans",
+    "Male",
+    "Mice",
+    "Autism Spectrum Disorder",
+    "Autistic Disorder",
+    "Chromosome Deletion",
+    "Disease Models, Animal",
+    "Exons",
+    "Genes, X-Linked",
+    "Genetic Predisposition to Disease",
+    "Hippocampus",
+    "Mice, Knockout",
+    "RNA, Long Noncoding",
+    "Social Behavior",
+    "Membrane Proteins"
+   ],
    "branchKey": "immunology",
    "journalDisplay": "Nature",
-   "journalKey": "nature"
+   "journalKey": "nature",
+   "_priorityWas": "mechanistic"
   },
   {
    "id": "pm-42128068",
@@ -4850,10 +5285,11 @@
    "date": "2026-05-12",
    "authors": "Portela DM, Andrade B, De Lima EV, et al.",
    "url": "https://pubmed.ncbi.nlm.nih.gov/42128068/",
-   "priority": "mechanistic",
+   "priority": "unclassified",
    "addedBy": "agent-2026-06-02",
    "mesh": [],
-   "journalKey": "bbi"
+   "journalKey": "bbi",
+   "_priorityWas": "mechanistic"
   },
   {
    "id": "pm-42070704",
@@ -4863,8 +5299,31 @@
    "url": "https://pubmed.ncbi.nlm.nih.gov/42070704/",
    "priority": "mechanistic",
    "addedBy": "agent-2026-06-02",
-   "mesh": [],
-   "journalKey": "bbi"
+   "mesh": [
+    "Animals",
+    "Prefrontal Cortex",
+    "Microglia",
+    "Male",
+    "Mice",
+    "Autism Spectrum Disorder",
+    "Social Behavior",
+    "Pyrroles",
+    "Aminopyridines",
+    "Disease Models, Animal",
+    "Receptors, Granulocyte-Macrophage Colony-Stimulating Factor",
+    "Synaptic Transmission",
+    "Vesicular Glutamate Transport Protein 1",
+    "Neuronal Plasticity",
+    "Synapses",
+    "Mice, Inbred C57BL",
+    "Behavior, Animal",
+    "Dendritic Spines"
+   ],
+   "journalKey": "bbi",
+   "alsoBranches": [
+    "neuroscience",
+    "behavioral"
+   ]
   },
   {
    "id": "pm-42069619",
@@ -4952,7 +5411,19 @@
    "url": "https://pubmed.ncbi.nlm.nih.gov/41912422/",
    "priority": "clinical-observation",
    "addedBy": "agent-2026-06-02",
-   "mesh": [],
+   "mesh": [
+    "Humans",
+    "Eye-Tracking Technology",
+    "Autism Spectrum Disorder",
+    "Male",
+    "Adolescent",
+    "Female",
+    "Child",
+    "Reproducibility of Results",
+    "Child, Preschool",
+    "Qatar",
+    "Infant"
+   ],
    "journalKey": "autism-res",
    "_refiledFrom": "behavioral",
    "branchKey": "intervention"
@@ -4966,7 +5437,10 @@
    "priority": "review",
    "addedBy": "agent-2026-06-02",
    "mesh": [],
-   "journalKey": "jaacap"
+   "journalKey": "jaacap",
+   "alsoBranches": [
+    "intervention"
+   ]
   },
   {
    "id": "pm-41882355",
@@ -4974,7 +5448,7 @@
    "date": "2026-03-25",
    "authors": "Kamitaki N, Tang D, McCarroll SA, et al.",
    "url": "https://pubmed.ncbi.nlm.nih.gov/41882355/",
-   "priority": "mechanistic",
+   "priority": "unclassified",
    "addedBy": "agent-2026-06-02",
    "mesh": [
     "Humans",
@@ -4996,7 +5470,8 @@
    ],
    "branchKey": "immunology",
    "journalDisplay": "Nature",
-   "journalKey": "nature"
+   "journalKey": "nature",
+   "_priorityWas": "mechanistic"
   },
   {
    "id": "pm-41786003",
@@ -5006,8 +5481,23 @@
    "url": "https://pubmed.ncbi.nlm.nih.gov/41786003/",
    "priority": "mechanistic",
    "addedBy": "agent-2026-06-02",
-   "mesh": [],
-   "journalKey": "bbi"
+   "mesh": [
+    "Animals",
+    "Killer Cells, Natural",
+    "Mice",
+    "Social Behavior",
+    "Dopamine",
+    "Autism Spectrum Disorder",
+    "Disease Models, Animal",
+    "Receptors, Dopamine D1",
+    "Male",
+    "Mice, Inbred C57BL",
+    "Chromosomes, Human, Pair 15"
+   ],
+   "journalKey": "bbi",
+   "alsoBranches": [
+    "immunology"
+   ]
   },
   {
    "id": "pm-41606634",
@@ -5017,7 +5507,22 @@
    "url": "https://pubmed.ncbi.nlm.nih.gov/41606634/",
    "priority": "clinical-observation",
    "addedBy": "agent-2026-06-02",
-   "mesh": [],
+   "mesh": [
+    "Humans",
+    "Down Syndrome",
+    "Folic Acid",
+    "Female",
+    "Male",
+    "Tetrahydrofolates",
+    "Erythrocytes",
+    "Child",
+    "Adolescent",
+    "Prospective Studies",
+    "Adult",
+    "Child, Preschool",
+    "Young Adult",
+    "Brain"
+   ],
    "journalKey": "mol-autism"
   },
   {
@@ -5042,7 +5547,10 @@
    ],
    "journalKey": "autism-res",
    "_refiledFrom": "behavioral",
-   "branchKey": "genetics"
+   "branchKey": "genetics",
+   "alsoBranches": [
+    "neuroscience"
+   ]
   },
   {
    "id": "pm-41534728",
@@ -5050,7 +5558,7 @@
    "date": "2026-01-12",
    "authors": "Jäntti H, Michels S, Cherubini E, et al.",
    "url": "https://pubmed.ncbi.nlm.nih.gov/41534728/",
-   "priority": "mechanistic",
+   "priority": "review",
    "addedBy": "agent-2026-06-02",
    "mesh": [
     "Astrocytes",
@@ -5063,7 +5571,11 @@
     "Synaptic Transmission",
     "Synapses"
    ],
-   "journalKey": "bbi"
+   "journalKey": "bbi",
+   "_priorityWas": "mechanistic",
+   "alsoBranches": [
+    "immunology"
+   ]
   },
   {
    "id": "pm-41483154",
@@ -5117,10 +5629,24 @@
    "date": "2025-12-04",
    "authors": "Zhu EH, Yip BH, Fyfe C, et al.",
    "url": "https://pubmed.ncbi.nlm.nih.gov/41345879/",
-   "priority": "clinical-observation",
+   "priority": "review",
    "addedBy": "agent-2026-06-02",
-   "mesh": [],
-   "journalKey": "mol-autism"
+   "mesh": [
+    "Humans",
+    "Female",
+    "Arthritis, Rheumatoid",
+    "Autism Spectrum Disorder",
+    "Pregnancy",
+    "Birth Cohort",
+    "Prenatal Exposure Delayed Effects",
+    "Risk Factors",
+    "Israel",
+    "Adult",
+    "Male",
+    "Child"
+   ],
+   "journalKey": "mol-autism",
+   "_priorityWas": "clinical-observation"
   },
   {
    "id": "pm-41271186",
@@ -5146,7 +5672,10 @@
     "Mice, Inbred C57BL",
     "CA1 Region, Hippocampal"
    ],
-   "journalKey": "bbi"
+   "journalKey": "bbi",
+   "alsoBranches": [
+    "neuroscience"
+   ]
   },
   {
    "id": "pm-41258377",
@@ -5242,7 +5771,10 @@
     "Animals",
     "Organoids"
    ],
-   "journalKey": "bbi"
+   "journalKey": "bbi",
+   "alsoBranches": [
+    "behavioral"
+   ]
   },
   {
    "id": "pm-40770435",
@@ -5297,7 +5829,11 @@
     "Neurons",
     "K Cl- Cotransporters"
    ],
-   "journalKey": "bbi"
+   "journalKey": "bbi",
+   "alsoBranches": [
+    "neuroscience",
+    "immunology"
+   ]
   },
   {
    "id": "pm-40559513",
@@ -5305,7 +5841,7 @@
    "date": "2025-06-25",
    "authors": "Staunton H, McIver T, Tillmann J, et al.",
    "url": "https://pubmed.ncbi.nlm.nih.gov/40559513/",
-   "priority": "mechanistic",
+   "priority": "unclassified",
    "addedBy": "agent-2026-06-02",
    "mesh": [
     "Humans",
@@ -5318,7 +5854,8 @@
     "Outcome Assessment, Health Care",
     "Parents"
    ],
-   "journalKey": "autism"
+   "journalKey": "autism",
+   "_priorityWas": "mechanistic"
   },
   {
    "id": "pm-40188316",
@@ -5347,7 +5884,10 @@
    ],
    "branchKey": "immunology",
    "journalDisplay": "Molecular Psychiatry",
-   "journalKey": "mol-psych"
+   "journalKey": "mol-psych",
+   "alsoBranches": [
+    "genetics"
+   ]
   },
   {
    "id": "pm-40185900",
@@ -5355,7 +5895,7 @@
    "date": "2025-04-04",
    "authors": "Nishi Y, Toritsuka M, Takada R, et al.",
    "url": "https://pubmed.ncbi.nlm.nih.gov/40185900/",
-   "priority": "mechanistic",
+   "priority": "unclassified",
    "addedBy": "agent-2026-06-02",
    "mesh": [
     "Humans",
@@ -5375,7 +5915,8 @@
    ],
    "branchKey": "immunology",
    "journalDisplay": "Molecular Psychiatry",
-   "journalKey": "mol-psych"
+   "journalKey": "mol-psych",
+   "_priorityWas": "mechanistic"
   },
   {
    "id": "pm-40081369",
@@ -5456,7 +5997,7 @@
    "date": "2025-01-08",
    "authors": "Wang L, Wang C, Moriano JA, et al.",
    "url": "https://pubmed.ncbi.nlm.nih.gov/39779846/",
-   "priority": "mechanistic",
+   "priority": "unclassified",
    "addedBy": "agent-2026-06-02",
    "mesh": [
     "Humans",
@@ -5484,7 +6025,8 @@
    ],
    "branchKey": "immunology",
    "journalDisplay": "Nature",
-   "journalKey": "nature"
+   "journalKey": "nature",
+   "_priorityWas": "mechanistic"
   },
   {
    "id": "pm-39542073",
@@ -5521,7 +6063,7 @@
    "date": "2024-11-03",
    "authors": "Buonfiglioli A, Kübler R, Missall R, et al.",
    "url": "https://pubmed.ncbi.nlm.nih.gov/39500415/",
-   "priority": "mechanistic",
+   "priority": "unclassified",
    "addedBy": "agent-2026-06-02",
    "mesh": [
     "Microglia",
@@ -5537,7 +6079,8 @@
     "Induced Pluripotent Stem Cells",
     "Autistic Disorder"
    ],
-   "journalKey": "bbi"
+   "journalKey": "bbi",
+   "_priorityWas": "mechanistic"
   },
   {
    "id": "pm-39500414",
@@ -5577,10 +6120,15 @@
    "date": "2026-05-26",
    "authors": "Bizzotto M, You SF, Tamborini M, et al.",
    "url": "https://pubmed.ncbi.nlm.nih.gov/42190661/",
-   "priority": "mechanistic",
+   "priority": "unclassified",
    "addedBy": "agent-2026-06-02",
    "mesh": [],
-   "journalKey": "neuron"
+   "journalKey": "neuron",
+   "_priorityWas": "mechanistic",
+   "alsoBranches": [
+    "immunology",
+    "cytokines"
+   ]
   },
   {
    "id": "pm-42128069",
@@ -5599,10 +6147,28 @@
    "date": "2026-04-19",
    "authors": "Muñoz JT, Bohmwald K, Pereira-Sánchez P, et al.",
    "url": "https://pubmed.ncbi.nlm.nih.gov/42013923/",
-   "priority": "mechanistic",
+   "priority": "unclassified",
    "addedBy": "agent-2026-06-02",
-   "mesh": [],
-   "journalKey": "bbi"
+   "mesh": [
+    "Animals",
+    "Female",
+    "Pregnancy",
+    "Respiratory Syncytial Virus Infections",
+    "Mice",
+    "Cytokines",
+    "Inflammation",
+    "Respiratory Syncytial Virus, Human",
+    "Brain",
+    "Pregnancy Complications, Infectious",
+    "Prenatal Exposure Delayed Effects",
+    "Placenta",
+    "Disease Models, Animal",
+    "Behavior, Animal",
+    "Lung",
+    "Humans"
+   ],
+   "journalKey": "bbi",
+   "_priorityWas": "mechanistic"
   },
   {
    "id": "pm-42013920",
@@ -5612,8 +6178,26 @@
    "url": "https://pubmed.ncbi.nlm.nih.gov/42013920/",
    "priority": "mechanistic",
    "addedBy": "agent-2026-06-02",
-   "mesh": [],
-   "journalKey": "bbi"
+   "mesh": [
+    "Animals",
+    "Prefrontal Cortex",
+    "Microglia",
+    "Male",
+    "Pregnancy",
+    "Female",
+    "Neurodevelopment",
+    "Mice",
+    "Prenatal Exposure Delayed Effects",
+    "Neurodevelopmental Disorders",
+    "Mice, Inbred C57BL",
+    "Sex Factors",
+    "Neuronal Plasticity",
+    "Sex Characteristics"
+   ],
+   "journalKey": "bbi",
+   "alsoBranches": [
+    "immunology"
+   ]
   },
   {
    "id": "pm-41998191",
@@ -5636,7 +6220,26 @@
    "url": "https://pubmed.ncbi.nlm.nih.gov/41956302/",
    "priority": "clinical-observation",
    "addedBy": "agent-2026-06-02",
-   "mesh": [],
+   "mesh": [
+    "Humans",
+    "Female",
+    "Depression, Postpartum",
+    "New York City",
+    "Pregnancy",
+    "Inflammation",
+    "Prospective Studies",
+    "Adult",
+    "Biomarkers",
+    "C-Reactive Protein",
+    "Interleukin-6",
+    "Pregnancy Trimester, Third",
+    "Cohort Studies",
+    "Interleukin-17",
+    "Interleukin-1beta",
+    "Depression",
+    "Pregnancy Complications",
+    "Psychiatric Status Rating Scales"
+   ],
    "journalKey": "bbi"
   },
   {
@@ -5661,7 +6264,10 @@
     "Dysbiosis",
     "Child, Preschool"
    ],
-   "journalKey": "bbi"
+   "journalKey": "bbi",
+   "alsoBranches": [
+    "genetics"
+   ]
   },
   {
    "id": "pm-41742209",
@@ -5671,8 +6277,24 @@
    "url": "https://pubmed.ncbi.nlm.nih.gov/41742209/",
    "priority": "mechanistic",
    "addedBy": "agent-2026-06-02",
-   "mesh": [],
-   "journalKey": "j-neuroinfl"
+   "mesh": [
+    "Animals",
+    "Female",
+    "Lipocalin-2",
+    "Pregnancy",
+    "Male",
+    "Mice",
+    "Mice, Knockout",
+    "Prenatal Exposure Delayed Effects",
+    "Lipopolysaccharides",
+    "Mice, Inbred C57BL",
+    "Social Behavior",
+    "Brain"
+   ],
+   "journalKey": "j-neuroinfl",
+   "alsoBranches": [
+    "cytokines"
+   ]
   },
   {
    "id": "pm-41740871",
@@ -5725,7 +6347,10 @@
     "Mice",
     "Rats"
    ],
-   "journalKey": "bbi"
+   "journalKey": "bbi",
+   "alsoBranches": [
+    "neuroscience"
+   ]
   },
   {
    "id": "pm-41610964",
@@ -5765,10 +6390,11 @@
    "date": "2026-01-26",
    "authors": "Campbell OC, Lukens JR",
    "url": "https://pubmed.ncbi.nlm.nih.gov/41605305/",
-   "priority": "mechanistic",
+   "priority": "unclassified",
    "addedBy": "agent-2026-06-02",
    "mesh": [],
-   "journalKey": "bbi"
+   "journalKey": "bbi",
+   "_priorityWas": "mechanistic"
   },
   {
    "id": "pm-41495254",
@@ -5791,7 +6417,11 @@
     "Prenatal Exposure Delayed Effects",
     "Chemokine CXCL12"
    ],
-   "journalKey": "nat-neurosci"
+   "journalKey": "nat-neurosci",
+   "alsoBranches": [
+    "cytokines",
+    "genetics"
+   ]
   },
   {
    "id": "pm-41249551",
@@ -5878,7 +6508,10 @@
    ],
    "branchKey": "cytokines",
    "journalDisplay": "Molecular Psychiatry",
-   "journalKey": "mol-psych"
+   "journalKey": "mol-psych",
+   "alsoBranches": [
+    "genetics"
+   ]
   },
   {
    "id": "pm-40835055",
@@ -6091,7 +6724,10 @@
     "Behavior, Animal",
     "Up-Regulation"
    ],
-   "journalKey": "bbi"
+   "journalKey": "bbi",
+   "alsoBranches": [
+    "neuroscience"
+   ]
   },
   {
    "id": "pm-39675645",
@@ -6099,10 +6735,11 @@
    "date": "2024-12-13",
    "authors": "Hill RA",
    "url": "https://pubmed.ncbi.nlm.nih.gov/39675645/",
-   "priority": "mechanistic",
+   "priority": "unclassified",
    "addedBy": "agent-2026-06-02",
    "mesh": [],
-   "journalKey": "bbi"
+   "journalKey": "bbi",
+   "_priorityWas": "mechanistic"
   },
   {
    "id": "pm-42227962",
@@ -6113,7 +6750,10 @@
    "priority": "clinical-observation",
    "addedBy": "agent-2026-06-02",
    "mesh": [],
-   "journalKey": "autism"
+   "journalKey": "autism",
+   "alsoBranches": [
+    "intervention"
+   ]
   },
   {
    "id": "pm-42226557",
@@ -6123,8 +6763,19 @@
    "url": "https://pubmed.ncbi.nlm.nih.gov/42226557/",
    "priority": "review",
    "addedBy": "agent-2026-06-02",
-   "mesh": [],
-   "journalKey": "autism-res"
+   "mesh": [
+    "Humans",
+    "Autism Spectrum Disorder",
+    "Artificial Intelligence",
+    "Diagnostic and Statistical Manual of Mental Disorders",
+    "Early Diagnosis",
+    "Child",
+    "Child, Preschool"
+   ],
+   "journalKey": "autism-res",
+   "alsoBranches": [
+    "intervention"
+   ]
   },
   {
    "id": "pm-42224253",
@@ -6134,10 +6785,23 @@
    "url": "https://pubmed.ncbi.nlm.nih.gov/42224253/",
    "priority": "clinical-trial",
    "addedBy": "agent-2026-06-02",
-   "mesh": [],
+   "mesh": [
+    "Humans",
+    "Child, Preschool",
+    "Autism Spectrum Disorder",
+    "Reproducibility of Results",
+    "Female",
+    "Male",
+    "Social Interaction",
+    "Communication",
+    "Infant"
+   ],
    "journalKey": "autism",
    "_refiledFrom": "behavioral",
-   "branchKey": "intervention"
+   "branchKey": "intervention",
+   "alsoBranches": [
+    "behavioral"
+   ]
   },
   {
    "id": "pm-42222935",
@@ -6147,7 +6811,12 @@
    "url": "https://pubmed.ncbi.nlm.nih.gov/42222935/",
    "priority": "review",
    "addedBy": "agent-2026-06-02",
-   "mesh": [],
+   "mesh": [
+    "Humans",
+    "Irritable Mood",
+    "Autistic Disorder",
+    "Adult"
+   ],
    "journalKey": "autism-res"
   },
   {
@@ -6158,7 +6827,22 @@
    "url": "https://pubmed.ncbi.nlm.nih.gov/42216930/",
    "priority": "mechanistic",
    "addedBy": "agent-2026-06-02",
-   "mesh": [],
+   "mesh": [
+    "Humans",
+    "Female",
+    "Magnetic Resonance Imaging",
+    "Autistic Disorder",
+    "Cues",
+    "Adolescent",
+    "Male",
+    "Young Adult",
+    "Acoustic Stimulation",
+    "Photic Stimulation",
+    "Brain",
+    "Brain Mapping",
+    "Physical Stimulation",
+    "Adult"
+   ],
    "journalKey": "autism-res",
    "_refiledFrom": "behavioral",
    "branchKey": "neuroscience"
@@ -6169,10 +6853,23 @@
    "date": "2026-05-29",
    "authors": "Yankowitz LD, Zampella CJ, Pandey J, et al.",
    "url": "https://pubmed.ncbi.nlm.nih.gov/42216006/",
-   "priority": "mechanistic",
+   "priority": "unclassified",
    "addedBy": "agent-2026-06-02",
-   "mesh": [],
-   "journalKey": "mol-autism"
+   "mesh": [
+    "Humans",
+    "Child",
+    "Autistic Disorder",
+    "Female",
+    "Male",
+    "Adolescent",
+    "Interpersonal Relations",
+    "Artificial Intelligence",
+    "Social Behavior",
+    "Facial Expression",
+    "Intelligent Systems"
+   ],
+   "journalKey": "mol-autism",
+   "_priorityWas": "mechanistic"
   },
   {
    "id": "pm-42210655",
@@ -6182,7 +6879,19 @@
    "url": "https://pubmed.ncbi.nlm.nih.gov/42210655/",
    "priority": "clinical-observation",
    "addedBy": "agent-2026-06-02",
-   "mesh": [],
+   "mesh": [
+    "Humans",
+    "Child, Preschool",
+    "Male",
+    "Social Skills",
+    "Female",
+    "Autistic Disorder",
+    "Motor Skills",
+    "Motor Skills Disorders",
+    "United States",
+    "Child Development",
+    "Surveys and Questionnaires"
+   ],
    "journalKey": "autism"
   },
   {
@@ -6191,10 +6900,20 @@
    "date": "2026-05-28",
    "authors": "Knott CE, Roberts JE, Will EA",
    "url": "https://pubmed.ncbi.nlm.nih.gov/42210557/",
-   "priority": "mechanistic",
+   "priority": "unclassified",
    "addedBy": "agent-2026-06-02",
-   "mesh": [],
-   "journalKey": "autism"
+   "mesh": [
+    "Humans",
+    "Fragile X Syndrome",
+    "Male",
+    "Child",
+    "Autistic Disorder",
+    "Phenotype",
+    "Child, Preschool",
+    "Sensation Disorders"
+   ],
+   "journalKey": "autism",
+   "_priorityWas": "mechanistic"
   },
   {
    "id": "pm-42192173",
@@ -6202,12 +6921,13 @@
    "date": "2026-05-26",
    "authors": "Flynn CK, Carr K, Whiteley P, et al.",
    "url": "https://pubmed.ncbi.nlm.nih.gov/42192173/",
-   "priority": "mechanistic",
+   "priority": "unclassified",
    "addedBy": "agent-2026-06-02",
    "mesh": [],
    "branchKey": "intervention",
    "journalDisplay": "Molecular Psychiatry",
-   "journalKey": "mol-psych"
+   "journalKey": "mol-psych",
+   "_priorityWas": "mechanistic"
   },
   {
    "id": "pm-42187205",
@@ -6217,7 +6937,22 @@
    "url": "https://pubmed.ncbi.nlm.nih.gov/42187205/",
    "priority": "clinical-trial",
    "addedBy": "agent-2026-06-02",
-   "mesh": [],
+   "mesh": [
+    "Humans",
+    "Female",
+    "Parents",
+    "Acceptance and Commitment Therapy",
+    "Male",
+    "Stress, Psychological",
+    "Adult",
+    "Child",
+    "Sweden",
+    "Neurodevelopmental Disorders",
+    "Treatment Outcome",
+    "Parenting",
+    "Child, Preschool",
+    "Psychotherapy, Group"
+   ],
    "journalKey": "autism-res",
    "_refiledFrom": "behavioral",
    "branchKey": "intervention"
@@ -6228,10 +6963,22 @@
    "date": "2026-05-25",
    "authors": "Kobayashi A, Makino T, Mizuno Y, et al.",
    "url": "https://pubmed.ncbi.nlm.nih.gov/42185743/",
-   "priority": "mechanistic",
+   "priority": "unclassified",
    "addedBy": "agent-2026-06-02",
-   "mesh": [],
-   "journalKey": "autism-res"
+   "mesh": [
+    "Humans",
+    "Social Conformity",
+    "Male",
+    "Adult",
+    "Female",
+    "Autism Spectrum Disorder",
+    "Young Adult",
+    "Autistic Disorder",
+    "Reward",
+    "Social Behavior"
+   ],
+   "journalKey": "autism-res",
+   "_priorityWas": "mechanistic"
   },
   {
    "id": "pm-42175587",
@@ -6241,7 +6988,18 @@
    "url": "https://pubmed.ncbi.nlm.nih.gov/42175587/",
    "priority": "mechanistic",
    "addedBy": "agent-2026-06-02",
-   "mesh": [],
+   "mesh": [
+    "Humans",
+    "Male",
+    "Electroencephalography",
+    "Child",
+    "Autistic Disorder",
+    "Female",
+    "Visual Perception",
+    "Speech Perception",
+    "Photic Stimulation",
+    "Acoustic Stimulation"
+   ],
    "journalKey": "autism-res"
   },
   {
@@ -6250,10 +7008,25 @@
    "date": "2026-05-22",
    "authors": "Chen Y, Hawkins B, Puckett H, et al.",
    "url": "https://pubmed.ncbi.nlm.nih.gov/42174656/",
-   "priority": "mechanistic",
+   "priority": "unclassified",
    "addedBy": "agent-2026-06-02",
-   "mesh": [],
-   "journalKey": "mol-autism"
+   "mesh": [
+    "Humans",
+    "Adolescent",
+    "Male",
+    "Autistic Disorder",
+    "Magnetic Resonance Imaging",
+    "Cognition",
+    "Female",
+    "Learning",
+    "Adaptation, Psychological",
+    "Brain Mapping",
+    "Generalization, Psychological",
+    "Concept Formation",
+    "Brain"
+   ],
+   "journalKey": "mol-autism",
+   "_priorityWas": "mechanistic"
   },
   {
    "id": "pm-42174407",
@@ -6261,12 +7034,29 @@
    "date": "2026-05-22",
    "authors": "Krol MA, Skodova T, Jellema T",
    "url": "https://pubmed.ncbi.nlm.nih.gov/42174407/",
-   "priority": "mechanistic",
+   "priority": "unclassified",
    "addedBy": "agent-2026-06-02",
-   "mesh": [],
+   "mesh": [
+    "Humans",
+    "Goals",
+    "Electroencephalography",
+    "Male",
+    "Female",
+    "Anticipation, Psychological",
+    "Young Adult",
+    "Autistic Disorder",
+    "Adult",
+    "Brain",
+    "Autism Spectrum Disorder",
+    "Brain Mapping",
+    "Social Interaction",
+    "Adolescent",
+    "Motion Perception"
+   ],
    "journalKey": "autism-res",
    "_refiledFrom": "behavioral",
-   "branchKey": "neuroscience"
+   "branchKey": "neuroscience",
+   "_priorityWas": "mechanistic"
   },
   {
    "id": "pm-42167272",
@@ -6302,10 +7092,23 @@
    "date": "2026-05-20",
    "authors": "Grady-Dominguez P, Bundy AC, Mailloux Z, et al.",
    "url": "https://pubmed.ncbi.nlm.nih.gov/42163528/",
-   "priority": "mechanistic",
+   "priority": "clinical-observation",
    "addedBy": "agent-2026-06-02",
-   "mesh": [],
-   "journalKey": "autism-res"
+   "mesh": [
+    "Humans",
+    "Reproducibility of Results",
+    "Child",
+    "Male",
+    "Female",
+    "Child, Preschool",
+    "Autistic Disorder",
+    "Psychometrics",
+    "Brazil",
+    "Australia",
+    "United States"
+   ],
+   "journalKey": "autism-res",
+   "_priorityWas": "mechanistic"
   },
   {
    "id": "pm-42162607",
@@ -6324,10 +7127,22 @@
    "date": "2026-05-19",
    "authors": "Liu CH, Lin WC, Man LLY, et al.",
    "url": "https://pubmed.ncbi.nlm.nih.gov/42153593/",
-   "priority": "mechanistic",
+   "priority": "unclassified",
    "addedBy": "agent-2026-06-02",
-   "mesh": [],
-   "journalKey": "autism"
+   "mesh": [
+    "Humans",
+    "Adolescent",
+    "Taiwan",
+    "Female",
+    "Male",
+    "Autistic Disorder",
+    "Self Concept",
+    "Stereotyping",
+    "Social Interaction",
+    "Qualitative Research"
+   ],
+   "journalKey": "autism",
+   "_priorityWas": "mechanistic"
   },
   {
    "id": "pm-42152716",
@@ -6337,7 +7152,24 @@
    "url": "https://pubmed.ncbi.nlm.nih.gov/42152716/",
    "priority": "clinical-observation",
    "addedBy": "agent-2026-06-02",
-   "mesh": [],
+   "mesh": [
+    "Humans",
+    "Female",
+    "Male",
+    "Singapore",
+    "Adult",
+    "Cross-Sectional Studies",
+    "Multilingualism",
+    "Autistic Disorder",
+    "Cultural Diversity",
+    "Caregivers",
+    "Language",
+    "Middle Aged",
+    "Surveys and Questionnaires",
+    "Young Adult",
+    "Ethnicity",
+    "Patient Preference"
+   ],
    "journalKey": "autism"
   },
   {
@@ -6348,7 +7180,19 @@
    "url": "https://pubmed.ncbi.nlm.nih.gov/42145250/",
    "priority": "mechanistic",
    "addedBy": "agent-2026-06-02",
-   "mesh": [],
+   "mesh": [
+    "Humans",
+    "Empathy",
+    "Male",
+    "Female",
+    "Adolescent",
+    "Young Adult",
+    "Touch Perception",
+    "Autism Spectrum Disorder",
+    "Adult",
+    "Touch",
+    "Social Perception"
+   ],
    "journalKey": "autism-res"
   },
   {
@@ -6359,7 +7203,19 @@
    "url": "https://pubmed.ncbi.nlm.nih.gov/42144892/",
    "priority": "review",
    "addedBy": "agent-2026-06-02",
-   "mesh": [],
+   "mesh": [
+    "Humans",
+    "Evoked Potentials, Auditory",
+    "Child",
+    "Adolescent",
+    "Autistic Disorder",
+    "Auditory Perception",
+    "Electroencephalography",
+    "Acoustic Stimulation",
+    "Adult",
+    "Female",
+    "Autism Spectrum Disorder"
+   ],
    "journalKey": "autism-res"
   },
   {
@@ -6368,10 +7224,20 @@
    "date": "2026-05-17",
    "authors": "Shamhan ANM, Constantinou M, Hajaig H, et al.",
    "url": "https://pubmed.ncbi.nlm.nih.gov/42144861/",
-   "priority": "mechanistic",
+   "priority": "clinical-observation",
    "addedBy": "agent-2026-06-02",
-   "mesh": [],
-   "journalKey": "autism-res"
+   "mesh": [
+    "Humans",
+    "Executive Function",
+    "Child",
+    "Female",
+    "Male",
+    "Autism Spectrum Disorder",
+    "Neuropsychological Tests",
+    "Reproducibility of Results"
+   ],
+   "journalKey": "autism-res",
+   "_priorityWas": "mechanistic"
   },
   {
    "id": "pm-42141457",
@@ -6404,10 +7270,22 @@
    "date": "2026-05-14",
    "authors": "Hadad BS, Leon I, Hartston M, et al.",
    "url": "https://pubmed.ncbi.nlm.nih.gov/42135798/",
-   "priority": "mechanistic",
+   "priority": "unclassified",
    "addedBy": "agent-2026-06-02",
-   "mesh": [],
-   "journalKey": "mol-autism"
+   "mesh": [
+    "Humans",
+    "Autistic Disorder",
+    "Male",
+    "Female",
+    "Bayes Theorem",
+    "Adult",
+    "Adolescent",
+    "Child",
+    "Sensory Thresholds",
+    "Young Adult"
+   ],
+   "journalKey": "mol-autism",
+   "_priorityWas": "mechanistic"
   },
   {
    "id": "pm-42135209",
@@ -6415,10 +7293,23 @@
    "date": "2026-05-14",
    "authors": "Ai W, Anchordoqui A, Bogdanova O, et al.",
    "url": "https://pubmed.ncbi.nlm.nih.gov/42135209/",
-   "priority": "mechanistic",
+   "priority": "unclassified",
    "addedBy": "agent-2026-06-02",
-   "mesh": [],
-   "journalKey": "autism-res"
+   "mesh": [
+    "Humans",
+    "Male",
+    "Female",
+    "Adult",
+    "Gender Identity",
+    "Sex Factors",
+    "France",
+    "Autistic Disorder",
+    "Middle Aged",
+    "Young Adult",
+    "Adolescent"
+   ],
+   "journalKey": "autism-res",
+   "_priorityWas": "mechanistic"
   },
   {
    "id": "pm-42134364",
@@ -6450,10 +7341,25 @@
    "date": "2026-05-13",
    "authors": "Burrows CA, Rothenberg WA, Garcia D, et al.",
    "url": "https://pubmed.ncbi.nlm.nih.gov/42130108/",
-   "priority": "mechanistic",
+   "priority": "unclassified",
    "addedBy": "agent-2026-06-02",
-   "mesh": [],
-   "journalKey": "autism-res"
+   "mesh": [
+    "Humans",
+    "Male",
+    "Child, Preschool",
+    "Child",
+    "Female",
+    "Parent-Child Relations",
+    "Caregivers",
+    "Autistic Disorder",
+    "Problem Behavior",
+    "Behavior Therapy",
+    "Treatment Outcome",
+    "Parents",
+    "Parenting"
+   ],
+   "journalKey": "autism-res",
+   "_priorityWas": "mechanistic"
   },
   {
    "id": "pm-42129634",
@@ -6498,7 +7404,16 @@
    "url": "https://pubmed.ncbi.nlm.nih.gov/42125993/",
    "priority": "clinical-observation",
    "addedBy": "agent-2026-06-02",
-   "mesh": [],
+   "mesh": [
+    "Humans",
+    "Adolescent",
+    "Intellectual Disability",
+    "Female",
+    "Male",
+    "Sports",
+    "Exercise",
+    "Autism Spectrum Disorder"
+   ],
    "journalKey": "autism-res"
   },
   {
@@ -6509,7 +7424,18 @@
    "url": "https://pubmed.ncbi.nlm.nih.gov/42124397/",
    "priority": "clinical-observation",
    "addedBy": "agent-2026-06-02",
-   "mesh": [],
+   "mesh": [
+    "Humans",
+    "Autism Spectrum Disorder",
+    "Male",
+    "Child, Preschool",
+    "Female",
+    "Longitudinal Studies",
+    "Case-Control Studies",
+    "Attention",
+    "Eye-Tracking Technology",
+    "Visual Perception"
+   ],
    "journalKey": "autism-res"
   },
   {
@@ -6518,7 +7444,7 @@
    "date": "2026-05-11",
    "authors": "Clarey MM, Ireland MJ, Abel S, et al.",
    "url": "https://pubmed.ncbi.nlm.nih.gov/42109126/",
-   "priority": "mechanistic",
+   "priority": "unclassified",
    "addedBy": "agent-2026-06-02",
    "mesh": [
     "Humans",
@@ -6532,7 +7458,8 @@
     "Young Adult",
     "Burnout, Professional"
    ],
-   "journalKey": "autism"
+   "journalKey": "autism",
+   "_priorityWas": "mechanistic"
   },
   {
    "id": "pm-42105343",
@@ -6540,10 +7467,25 @@
    "date": "2026-05-09",
    "authors": "Ball RC, Richdale AL, Lawson LP, et al.",
    "url": "https://pubmed.ncbi.nlm.nih.gov/42105343/",
-   "priority": "mechanistic",
+   "priority": "clinical-observation",
    "addedBy": "agent-2026-06-02",
-   "mesh": [],
-   "journalKey": "autism"
+   "mesh": [
+    "Humans",
+    "Male",
+    "Health Services Accessibility",
+    "Female",
+    "Adult",
+    "Autistic Disorder",
+    "Mental Health Services",
+    "Middle Aged",
+    "Young Adult",
+    "Adolescent",
+    "Health Knowledge, Attitudes, Practice",
+    "Surveys and Questionnaires",
+    "Severity of Illness Index"
+   ],
+   "journalKey": "autism",
+   "_priorityWas": "mechanistic"
   },
   {
    "id": "pm-42093663",
@@ -6553,7 +7495,25 @@
    "url": "https://pubmed.ncbi.nlm.nih.gov/42093663/",
    "priority": "clinical-trial",
    "addedBy": "agent-2026-06-02",
-   "mesh": [],
+   "mesh": [
+    "Humans",
+    "Male",
+    "Female",
+    "Adult",
+    "Extinction, Psychological",
+    "Cognitive Behavioral Therapy",
+    "Autistic Disorder",
+    "Phobia, Social",
+    "Anxiety",
+    "Young Adult",
+    "Fear",
+    "Cognition",
+    "Speech",
+    "Attention",
+    "Implosive Therapy",
+    "Treatment Outcome",
+    "Middle Aged"
+   ],
    "journalKey": "autism-res",
    "_refiledFrom": "behavioral",
    "branchKey": "intervention"
@@ -6604,7 +7564,19 @@
    "url": "https://pubmed.ncbi.nlm.nih.gov/42063217/",
    "priority": "clinical-observation",
    "addedBy": "agent-2026-06-02",
-   "mesh": [],
+   "mesh": [
+    "Humans",
+    "Caregivers",
+    "Female",
+    "Male",
+    "Child, Preschool",
+    "Autistic Disorder",
+    "Mass Screening",
+    "Surveys and Questionnaires",
+    "Infant",
+    "Adult",
+    "Retrospective Studies"
+   ],
    "journalKey": "autism-res",
    "_refiledFrom": "behavioral",
    "branchKey": "intervention"
@@ -6615,7 +7587,7 @@
    "date": "2026-04-29",
    "authors": "Wolford GW, Varela G, Freeland RE, et al.",
    "url": "https://pubmed.ncbi.nlm.nih.gov/42052873/",
-   "priority": "mechanistic",
+   "priority": "unclassified",
    "addedBy": "agent-2026-06-02",
    "mesh": [
     "Humans",
@@ -6633,7 +7605,8 @@
     "Interpersonal Relations",
     "Peer Group"
    ],
-   "journalKey": "autism"
+   "journalKey": "autism",
+   "_priorityWas": "mechanistic"
   },
   {
    "id": "pm-42049680",
@@ -6641,10 +7614,24 @@
    "date": "2026-04-28",
    "authors": "Shek AK, Lui SSY, Lai ECL, et al.",
    "url": "https://pubmed.ncbi.nlm.nih.gov/42049680/",
-   "priority": "mechanistic",
+   "priority": "unclassified",
    "addedBy": "agent-2026-06-02",
-   "mesh": [],
-   "journalKey": "autism-res"
+   "mesh": [
+    "Humans",
+    "Empathy",
+    "Affective Symptoms",
+    "Interoception",
+    "Autism Spectrum Disorder",
+    "Male",
+    "Female",
+    "Adolescent",
+    "Young Adult",
+    "Adult",
+    "Awareness",
+    "Self Concept"
+   ],
+   "journalKey": "autism-res",
+   "_priorityWas": "mechanistic"
   },
   {
    "id": "pm-42037214",
@@ -6677,10 +7664,24 @@
    "date": "2026-04-26",
    "authors": "Blanco-Martínez N, Carballo-Afonso R, Estévez-Agudo J, et al.",
    "url": "https://pubmed.ncbi.nlm.nih.gov/42036309/",
-   "priority": "mechanistic",
+   "priority": "clinical-observation",
    "addedBy": "agent-2026-06-02",
-   "mesh": [],
-   "journalKey": "autism-res"
+   "mesh": [
+    "Humans",
+    "Child",
+    "Attention Deficit Disorder with Hyperactivity",
+    "Physical Fitness",
+    "Autism Spectrum Disorder",
+    "Female",
+    "Adolescent",
+    "Male",
+    "Body Mass Index",
+    "Muscle Strength",
+    "Peer Group",
+    "Postural Balance"
+   ],
+   "journalKey": "autism-res",
+   "_priorityWas": "mechanistic"
   },
   {
    "id": "pm-42028804",
@@ -6688,10 +7689,26 @@
    "date": "2026-04-24",
    "authors": "Kenny N, Doyle A, O'Neill C, et al.",
    "url": "https://pubmed.ncbi.nlm.nih.gov/42028804/",
-   "priority": "mechanistic",
+   "priority": "unclassified",
    "addedBy": "agent-2026-06-02",
-   "mesh": [],
-   "journalKey": "autism"
+   "mesh": [
+    "Humans",
+    "Ireland",
+    "Academia",
+    "Autistic Disorder",
+    "Faculty",
+    "Qualitative Research",
+    "Female",
+    "Male",
+    "Burnout, Professional",
+    "Adult",
+    "Universities",
+    "Working Conditions",
+    "Workplace",
+    "Middle Aged"
+   ],
+   "journalKey": "autism",
+   "_priorityWas": "mechanistic"
   },
   {
    "id": "pm-42028803",
@@ -6699,10 +7716,29 @@
    "date": "2026-04-24",
    "authors": "Murdoch S, Donaghy B, Grant A, et al.",
    "url": "https://pubmed.ncbi.nlm.nih.gov/42028803/",
-   "priority": "mechanistic",
+   "priority": "clinical-observation",
    "addedBy": "agent-2026-06-02",
-   "mesh": [],
-   "journalKey": "autism"
+   "mesh": [
+    "Humans",
+    "Female",
+    "Uterine Cervical Neoplasms",
+    "Health Knowledge, Attitudes, Practice",
+    "Adult",
+    "Middle Aged",
+    "United Kingdom",
+    "Autistic Disorder",
+    "Surveys and Questionnaires",
+    "Early Detection of Cancer",
+    "Male",
+    "Patient Acceptance of Health Care",
+    "Young Adult",
+    "Aged",
+    "Mass Screening",
+    "Adolescent",
+    "Vaginal Smears"
+   ],
+   "journalKey": "autism",
+   "_priorityWas": "mechanistic"
   },
   {
    "id": "pm-42028799",
@@ -6733,10 +7769,23 @@
    "date": "2026-04-21",
    "authors": "Król ME, Tokarek A, Król MK",
    "url": "https://pubmed.ncbi.nlm.nih.gov/42012231/",
-   "priority": "mechanistic",
+   "priority": "clinical-observation",
    "addedBy": "agent-2026-06-02",
-   "mesh": [],
-   "journalKey": "autism"
+   "mesh": [
+    "Humans",
+    "Male",
+    "Autistic Disorder",
+    "Female",
+    "Semantics",
+    "Adult",
+    "Young Adult",
+    "Auditory Perception",
+    "Adolescent",
+    "Visual Perception",
+    "Case-Control Studies"
+   ],
+   "journalKey": "autism",
+   "_priorityWas": "mechanistic"
   },
   {
    "id": "pm-42010670",
@@ -6746,8 +7795,30 @@
    "url": "https://pubmed.ncbi.nlm.nih.gov/42010670/",
    "priority": "mechanistic",
    "addedBy": "agent-2026-06-02",
-   "mesh": [],
-   "journalKey": "mol-autism"
+   "mesh": [
+    "Animals",
+    "Nerve Tissue Proteins",
+    "Disease Models, Animal",
+    "Nitric Oxide",
+    "Proteomics",
+    "Autism Spectrum Disorder",
+    "Mice",
+    "Cerebral Cortex",
+    "Male",
+    "Behavior, Animal",
+    "Humans",
+    "Mice, Knockout",
+    "Proteome",
+    "Nitric Oxide Synthase Type I",
+    "Signal Transduction",
+    "Membrane Proteins",
+    "Microfilament Proteins"
+   ],
+   "journalKey": "mol-autism",
+   "alsoBranches": [
+    "neuroscience",
+    "genetics"
+   ]
   },
   {
    "id": "pm-42003395",
@@ -6798,7 +7869,21 @@
    "url": "https://pubmed.ncbi.nlm.nih.gov/41987220/",
    "priority": "clinical-observation",
    "addedBy": "agent-2026-06-02",
-   "mesh": [],
+   "mesh": [
+    "Humans",
+    "Surveys and Questionnaires",
+    "Male",
+    "Female",
+    "Adult",
+    "Autistic Disorder",
+    "Psychometrics",
+    "Middle Aged",
+    "Young Adult",
+    "Adolescent",
+    "Reproducibility of Results",
+    "Autism Spectrum Disorder",
+    "Self Report"
+   ],
    "journalKey": "mol-autism"
   },
   {
@@ -6820,7 +7905,7 @@
    "date": "2026-04-15",
    "authors": "Baysarowich R, Remedios J, King K, et al.",
    "url": "https://pubmed.ncbi.nlm.nih.gov/41983504/",
-   "priority": "mechanistic",
+   "priority": "clinical-observation",
    "addedBy": "agent-2026-06-02",
    "mesh": [
     "Humans",
@@ -6838,7 +7923,8 @@
     "Autism Spectrum Disorder",
     "Autistic Disorder"
    ],
-   "journalKey": "autism"
+   "journalKey": "autism",
+   "_priorityWas": "mechanistic"
   },
   {
    "id": "pm-41968929",
@@ -6846,10 +7932,25 @@
    "date": "2026-04-13",
    "authors": "Diu A, Gaume A, Batty M, et al.",
    "url": "https://pubmed.ncbi.nlm.nih.gov/41968929/",
-   "priority": "mechanistic",
+   "priority": "unclassified",
    "addedBy": "agent-2026-06-02",
-   "mesh": [],
-   "journalKey": "autism-res"
+   "mesh": [
+    "Humans",
+    "Female",
+    "Male",
+    "Adult",
+    "Space Perception",
+    "Young Adult",
+    "Autistic Disorder",
+    "Visual Perception",
+    "Eye-Tracking Technology",
+    "Psychomotor Performance",
+    "Adolescent",
+    "Autism Spectrum Disorder",
+    "Neuropsychological Tests"
+   ],
+   "journalKey": "autism-res",
+   "_priorityWas": "mechanistic"
   },
   {
    "id": "pm-41968904",
@@ -6859,7 +7960,22 @@
    "url": "https://pubmed.ncbi.nlm.nih.gov/41968904/",
    "priority": "clinical-observation",
    "addedBy": "agent-2026-06-02",
-   "mesh": [],
+   "mesh": [
+    "Humans",
+    "Child",
+    "Male",
+    "Female",
+    "Cross-Sectional Studies",
+    "Comorbidity",
+    "Child, Preschool",
+    "Autism Spectrum Disorder",
+    "China",
+    "Adolescent",
+    "Severity of Illness Index",
+    "Intellectual Disability",
+    "Developmental Disabilities",
+    "Sleep Initiation and Maintenance Disorders"
+   ],
    "journalKey": "autism-res"
   },
   {
@@ -6881,8 +7997,21 @@
    "url": "https://pubmed.ncbi.nlm.nih.gov/41964080/",
    "priority": "clinical-trial",
    "addedBy": "agent-2026-06-02",
-   "mesh": [],
-   "journalKey": "mol-autism"
+   "mesh": [
+    "Humans",
+    "Autistic Disorder",
+    "Female",
+    "Adult",
+    "Male",
+    "Social Behavior",
+    "Young Adult",
+    "Middle Aged",
+    "Surveys and Questionnaires"
+   ],
+   "journalKey": "mol-autism",
+   "alsoBranches": [
+    "intervention"
+   ]
   },
   {
    "id": "pm-41954159",
@@ -6892,7 +8021,14 @@
    "url": "https://pubmed.ncbi.nlm.nih.gov/41954159/",
    "priority": "review",
    "addedBy": "agent-2026-06-02",
-   "mesh": [],
+   "mesh": [
+    "Humans",
+    "Autism Spectrum Disorder",
+    "Autistic Disorder",
+    "Body Image",
+    "Proprioception",
+    "Self Concept"
+   ],
    "journalKey": "autism-res"
   },
   {
@@ -6903,7 +8039,18 @@
    "url": "https://pubmed.ncbi.nlm.nih.gov/41944072/",
    "priority": "mechanistic",
    "addedBy": "agent-2026-06-02",
-   "mesh": [],
+   "mesh": [
+    "Humans",
+    "Child",
+    "Electroencephalography",
+    "Male",
+    "Female",
+    "Acoustic Stimulation",
+    "Autism Spectrum Disorder",
+    "Evoked Potentials, Auditory",
+    "Siblings",
+    "Auditory Perception"
+   ],
    "journalKey": "autism-res",
    "_refiledFrom": "behavioral",
    "branchKey": "neuroscience"
@@ -6914,10 +8061,24 @@
    "date": "2026-04-07",
    "authors": "Yu L, Xie S, Wang L, et al.",
    "url": "https://pubmed.ncbi.nlm.nih.gov/41944023/",
-   "priority": "mechanistic",
+   "priority": "unclassified",
    "addedBy": "agent-2026-06-02",
-   "mesh": [],
-   "journalKey": "autism-res"
+   "mesh": [
+    "Humans",
+    "Language Development Disorders",
+    "Male",
+    "Autistic Disorder",
+    "Female",
+    "Child",
+    "Auditory Perception",
+    "Acoustic Stimulation",
+    "Auditory Threshold",
+    "Psychoacoustics",
+    "Child, Preschool",
+    "Time Perception"
+   ],
+   "journalKey": "autism-res",
+   "_priorityWas": "mechanistic"
   },
   {
    "id": "pm-41943995",
@@ -6927,7 +8088,14 @@
    "url": "https://pubmed.ncbi.nlm.nih.gov/41943995/",
    "priority": "review",
    "addedBy": "agent-2026-06-02",
-   "mesh": [],
+   "mesh": [
+    "Child",
+    "Humans",
+    "Autism Spectrum Disorder",
+    "Autistic Disorder",
+    "Facial Expression",
+    "Play and Playthings"
+   ],
    "journalKey": "autism-res",
    "_refiledFrom": "behavioral",
    "branchKey": "intervention"
@@ -6993,7 +8161,22 @@
    "url": "https://pubmed.ncbi.nlm.nih.gov/41932830/",
    "priority": "clinical-observation",
    "addedBy": "agent-2026-06-02",
-   "mesh": [],
+   "mesh": [
+    "Child",
+    "Female",
+    "Humans",
+    "Male",
+    "Actigraphy",
+    "Autistic Disorder",
+    "Child Behavior Disorders",
+    "China",
+    "Pilot Projects",
+    "Problem Behavior",
+    "Sleep",
+    "Sleep Duration",
+    "Sleep Wake Disorders",
+    "Surveys and Questionnaires"
+   ],
    "journalKey": "autism-res"
   },
   {
@@ -7002,7 +8185,7 @@
    "date": "2026-04-02",
    "authors": "Rebours C, Kostrubiec V, Kruck J",
    "url": "https://pubmed.ncbi.nlm.nih.gov/41928573/",
-   "priority": "mechanistic",
+   "priority": "unclassified",
    "addedBy": "agent-2026-06-02",
    "mesh": [
     "Humans",
@@ -7018,7 +8201,8 @@
     "Mental Health",
     "Young Adult"
    ],
-   "journalKey": "autism"
+   "journalKey": "autism",
+   "_priorityWas": "mechanistic"
   },
   {
    "id": "pm-41928551",
@@ -7026,7 +8210,7 @@
    "date": "2026-04-02",
    "authors": "Tokish H, Ingersoll B",
    "url": "https://pubmed.ncbi.nlm.nih.gov/41928551/",
-   "priority": "mechanistic",
+   "priority": "unclassified",
    "addedBy": "agent-2026-06-02",
    "mesh": [
     "Humans",
@@ -7043,7 +8227,8 @@
    ],
    "journalKey": "autism",
    "_refiledFrom": "behavioral",
-   "branchKey": "intervention"
+   "branchKey": "intervention",
+   "_priorityWas": "mechanistic"
   },
   {
    "id": "pm-41928549",
@@ -7077,7 +8262,18 @@
    "url": "https://pubmed.ncbi.nlm.nih.gov/41923483/",
    "priority": "translational",
    "addedBy": "agent-2026-06-02",
-   "mesh": [],
+   "mesh": [
+    "Humans",
+    "Receptors, Serotonin",
+    "Cerebral Cortex",
+    "Magnetic Resonance Imaging",
+    "Autistic Disorder",
+    "Female",
+    "Male",
+    "Child",
+    "Adolescent",
+    "Young Adult"
+   ],
    "journalKey": "autism-res",
    "_refiledFrom": "behavioral",
    "branchKey": "neuroscience"
@@ -7088,7 +8284,7 @@
    "date": "2026-04-01",
    "authors": "Kim H, Dakopolos A, Harvey D, et al.",
    "url": "https://pubmed.ncbi.nlm.nih.gov/41923423/",
-   "priority": "mechanistic",
+   "priority": "unclassified",
    "addedBy": "agent-2026-06-02",
    "mesh": [
     "Humans",
@@ -7102,7 +8298,8 @@
     "Language Development Disorders",
     "Socioeconomic Factors"
    ],
-   "journalKey": "autism-res"
+   "journalKey": "autism-res",
+   "_priorityWas": "mechanistic"
   },
   {
    "id": "pm-41912444",
@@ -7112,7 +8309,20 @@
    "url": "https://pubmed.ncbi.nlm.nih.gov/41912444/",
    "priority": "mechanistic",
    "addedBy": "agent-2026-06-02",
-   "mesh": [],
+   "mesh": [
+    "Humans",
+    "Autism Spectrum Disorder",
+    "Reward",
+    "Child",
+    "Magnetic Resonance Imaging",
+    "Female",
+    "Male",
+    "Adolescent",
+    "Brain",
+    "Young Adult",
+    "Adult",
+    "Social Behavior"
+   ],
    "journalKey": "autism-res",
    "_refiledFrom": "behavioral",
    "branchKey": "neuroscience"
@@ -7126,7 +8336,10 @@
    "priority": "mechanistic",
    "addedBy": "agent-2026-06-02",
    "mesh": [],
-   "journalKey": "neuron"
+   "journalKey": "neuron",
+   "alsoBranches": [
+    "genetics"
+   ]
   },
   {
    "id": "pm-42141308",
@@ -7134,10 +8347,11 @@
    "date": "2026-05-15",
    "authors": "Shnitko TA, Lin SA, Shih YI",
    "url": "https://pubmed.ncbi.nlm.nih.gov/42141308/",
-   "priority": "mechanistic",
+   "priority": "translational",
    "addedBy": "agent-2026-06-02",
    "mesh": [],
-   "journalKey": "nat-neurosci"
+   "journalKey": "nat-neurosci",
+   "_priorityWas": "mechanistic"
   },
   {
    "id": "pm-42141307",
@@ -7147,7 +8361,20 @@
    "url": "https://pubmed.ncbi.nlm.nih.gov/42141307/",
    "priority": "mechanistic",
    "addedBy": "agent-2026-06-02",
-   "mesh": [],
+   "mesh": [
+    "Animals",
+    "Humans",
+    "Magnetic Resonance Imaging",
+    "Brain",
+    "Autistic Disorder",
+    "Male",
+    "Female",
+    "Mice",
+    "Neural Pathways",
+    "Species Specificity",
+    "Brain Mapping",
+    "Disease Models, Animal"
+   ],
    "journalKey": "nat-neurosci"
   },
   {
@@ -7182,12 +8409,13 @@
    "date": "2026-04-18",
    "authors": "Kirschner M, Hodzic-Santor B, Kennedy L, et al.",
    "url": "https://pubmed.ncbi.nlm.nih.gov/42000906/",
-   "priority": "mechanistic",
+   "priority": "unclassified",
    "addedBy": "agent-2026-06-02",
    "mesh": [],
    "branchKey": "neuroscience",
    "journalDisplay": "Molecular Psychiatry",
-   "journalKey": "mol-psych"
+   "journalKey": "mol-psych",
+   "_priorityWas": "mechanistic"
   },
   {
    "id": "pm-41992731",
@@ -7198,7 +8426,10 @@
    "priority": "mechanistic",
    "addedBy": "agent-2026-06-02",
    "mesh": [],
-   "journalKey": "jcpp"
+   "journalKey": "jcpp",
+   "alsoBranches": [
+    "neuroscience"
+   ]
   },
   {
    "id": "pm-41974886",
@@ -7219,7 +8450,7 @@
    "date": "2026-03-28",
    "authors": "Nair A, Jalal R, Lawrence KE, et al.",
    "url": "https://pubmed.ncbi.nlm.nih.gov/41902610/",
-   "priority": "mechanistic",
+   "priority": "clinical-observation",
    "addedBy": "agent-2026-06-02",
    "mesh": [
     "Humans",
@@ -7238,7 +8469,8 @@
    ],
    "journalKey": "autism-res",
    "_refiledFrom": "behavioral",
-   "branchKey": "neuroscience"
+   "branchKey": "neuroscience",
+   "_priorityWas": "mechanistic"
   },
   {
    "id": "pm-41888935",
@@ -7248,7 +8480,18 @@
    "url": "https://pubmed.ncbi.nlm.nih.gov/41888935/",
    "priority": "mechanistic",
    "addedBy": "agent-2026-06-02",
-   "mesh": [],
+   "mesh": [
+    "Animals",
+    "Habenula",
+    "Arvicolinae",
+    "Proto-Oncogene Proteins c-fos",
+    "Male",
+    "Fear",
+    "Social Behavior",
+    "Female",
+    "Social Learning",
+    "Behavior, Animal"
+   ],
    "journalKey": "mol-autism",
    "_refiledFrom": "behavioral",
    "branchKey": "neuroscience"
@@ -7310,10 +8553,28 @@
    "url": "https://pubmed.ncbi.nlm.nih.gov/41872520/",
    "priority": "mechanistic",
    "addedBy": "agent-2026-06-02",
-   "mesh": [],
+   "mesh": [
+    "Animals",
+    "Memory Disorders",
+    "Female",
+    "Mice",
+    "Male",
+    "Autistic Disorder",
+    "DNA-Binding Proteins",
+    "Social Behavior",
+    "Brain",
+    "Disease Models, Animal",
+    "Memory",
+    "Behavior, Animal",
+    "Mutation",
+    "Interneurons",
+    "Mice, Knockout",
+    "Mice, Inbred C57BL"
+   ],
    "branchKey": "neuroscience",
    "journalDisplay": "Molecular Psychiatry",
-   "journalKey": "mol-psych"
+   "journalKey": "mol-psych",
+   "_priorityWas": "mechanistic"
   },
   {
    "id": "pm-41860335",
@@ -7346,7 +8607,7 @@
    "date": "2026-03-18",
    "authors": "Li Z, Kaur N, Santpere G, et al.",
    "url": "https://pubmed.ncbi.nlm.nih.gov/41851468/",
-   "priority": "mechanistic",
+   "priority": "unclassified",
    "addedBy": "agent-2026-06-02",
    "mesh": [
     "Animals",
@@ -7366,7 +8627,8 @@
    ],
    "branchKey": "neuroscience",
    "journalDisplay": "Nature",
-   "journalKey": "nature"
+   "journalKey": "nature",
+   "_priorityWas": "mechanistic"
   },
   {
    "id": "pm-41844341",
@@ -7389,7 +8651,10 @@
     "Neurogenesis",
     "Social Behavior"
    ],
-   "journalKey": "autism-res"
+   "journalKey": "autism-res",
+   "alsoBranches": [
+    "neuroscience"
+   ]
   },
   {
    "id": "pm-41833745",
@@ -7400,7 +8665,10 @@
    "priority": "clinical-observation",
    "addedBy": "agent-2026-06-02",
    "mesh": [],
-   "journalKey": "biol-psych"
+   "journalKey": "biol-psych",
+   "alsoBranches": [
+    "neuroscience"
+   ]
   },
   {
    "id": "pm-41807090",
@@ -7425,7 +8693,10 @@
     "Adult",
     "Psychiatric Status Rating Scales"
    ],
-   "journalKey": "autism-res"
+   "journalKey": "autism-res",
+   "alsoBranches": [
+    "intervention"
+   ]
   },
   {
    "id": "pm-41795048",
@@ -7435,7 +8706,25 @@
    "url": "https://pubmed.ncbi.nlm.nih.gov/41795048/",
    "priority": "translational",
    "addedBy": "agent-2026-06-02",
-   "mesh": [],
+   "mesh": [
+    "Animals",
+    "Valproic Acid",
+    "Mice",
+    "Female",
+    "Eukaryotic Initiation Factor-4E",
+    "Prenatal Exposure Delayed Effects",
+    "Autism Spectrum Disorder",
+    "Disease Models, Animal",
+    "Pregnancy",
+    "Protein Biosynthesis",
+    "Cerebral Cortex",
+    "Mitochondria",
+    "Male",
+    "Mice, Inbred C57BL",
+    "Phosphorylation",
+    "Behavior, Animal",
+    "Ribosomes"
+   ],
    "branchKey": "neuroscience",
    "journalDisplay": "Molecular Psychiatry",
    "journalKey": "mol-psych"
@@ -7448,8 +8737,22 @@
    "url": "https://pubmed.ncbi.nlm.nih.gov/41794060/",
    "priority": "clinical-observation",
    "addedBy": "agent-2026-06-02",
-   "mesh": [],
-   "journalKey": "biol-psych"
+   "mesh": [
+    "Humans",
+    "Male",
+    "Autism Spectrum Disorder",
+    "Electroencephalography",
+    "Female",
+    "Child, Preschool",
+    "Child",
+    "Cross-Sectional Studies",
+    "Theory of Mind",
+    "Brain"
+   ],
+   "journalKey": "biol-psych",
+   "alsoBranches": [
+    "neuroscience"
+   ]
   },
   {
    "id": "pm-41792457",
@@ -7457,12 +8760,30 @@
    "date": "2026-03-06",
    "authors": "Giacomel A, Powell TR, Duarte RRR, et al.",
    "url": "https://pubmed.ncbi.nlm.nih.gov/41792457/",
-   "priority": "mechanistic",
+   "priority": "unclassified",
    "addedBy": "agent-2026-06-02",
-   "mesh": [],
+   "mesh": [
+    "Humans",
+    "Anorexia Nervosa",
+    "Attention Deficit Disorder with Hyperactivity",
+    "Autism Spectrum Disorder",
+    "Bipolar Disorder",
+    "Brain",
+    "Brain Mapping",
+    "Gene Expression Profiling",
+    "Genetic Risk Score",
+    "Genome-Wide Association Study",
+    "Major Depressive Disorder",
+    "Mental Disorders",
+    "Multifactorial Inheritance",
+    "Obsessive-Compulsive Disorder",
+    "Schizophrenia",
+    "Transcriptome"
+   ],
    "branchKey": "genetics",
    "journalDisplay": "Molecular Psychiatry",
-   "journalKey": "mol-psych"
+   "journalKey": "mol-psych",
+   "_priorityWas": "mechanistic"
   },
   {
    "id": "pm-41742299",
@@ -7472,7 +8793,20 @@
    "url": "https://pubmed.ncbi.nlm.nih.gov/41742299/",
    "priority": "clinical-observation",
    "addedBy": "agent-2026-06-02",
-   "mesh": [],
+   "mesh": [
+    "Humans",
+    "Autistic Disorder",
+    "Female",
+    "Magnetic Resonance Imaging",
+    "Mental Health",
+    "Male",
+    "Young Adult",
+    "Nerve Net",
+    "Adult",
+    "Brain Mapping",
+    "Adolescent",
+    "Brain"
+   ],
    "journalKey": "mol-autism",
    "_refiledFrom": "behavioral",
    "branchKey": "neuroscience"
@@ -7485,7 +8819,26 @@
    "url": "https://pubmed.ncbi.nlm.nih.gov/41741708/",
    "priority": "mechanistic",
    "addedBy": "agent-2026-06-02",
-   "mesh": [],
+   "mesh": [
+    "Animals",
+    "GADD45 Proteins",
+    "Autistic Disorder",
+    "Neurons",
+    "Mice",
+    "Mice, Knockout",
+    "DNA-Binding Proteins",
+    "Cell Cycle Proteins",
+    "Female",
+    "Methyl-CpG-Binding Protein 2",
+    "Nuclear Proteins",
+    "Male",
+    "Valproic Acid",
+    "Prefrontal Cortex",
+    "Mice, Inbred C57BL",
+    "Disease Models, Animal",
+    "DNA Methylation",
+    "Proto-Oncogene Proteins"
+   ],
    "branchKey": "genetics",
    "journalDisplay": "Molecular Psychiatry",
    "journalKey": "mol-psych"
@@ -7498,7 +8851,25 @@
    "url": "https://pubmed.ncbi.nlm.nih.gov/41741707/",
    "priority": "translational",
    "addedBy": "agent-2026-06-02",
-   "mesh": [],
+   "mesh": [
+    "Animals",
+    "TOR Serine-Threonine Kinases",
+    "Tuberous Sclerosis Complex 2 Protein",
+    "Autism Spectrum Disorder",
+    "Nitric Oxide",
+    "Mice",
+    "Humans",
+    "Disease Models, Animal",
+    "Tumor Suppressor Proteins",
+    "Nerve Tissue Proteins",
+    "Signal Transduction",
+    "Male",
+    "Female",
+    "Microfilament Proteins",
+    "Mice, Knockout",
+    "Child",
+    "Mice, Inbred C57BL"
+   ],
    "branchKey": "genetics",
    "journalDisplay": "Molecular Psychiatry",
    "journalKey": "mol-psych"
@@ -7511,10 +8882,25 @@
    "url": "https://pubmed.ncbi.nlm.nih.gov/41741706/",
    "priority": "review",
    "addedBy": "agent-2026-06-02",
-   "mesh": [],
+   "mesh": [
+    "Humans",
+    "Autism Spectrum Disorder",
+    "Myelin Sheath",
+    "Brain",
+    "Animals",
+    "Oligodendroglia",
+    "White Matter",
+    "Neurodevelopment",
+    "Neuroglia",
+    "Central Nervous System",
+    "Neurons"
+   ],
    "branchKey": "neuroscience",
    "journalDisplay": "Molecular Psychiatry",
-   "journalKey": "mol-psych"
+   "journalKey": "mol-psych",
+   "alsoBranches": [
+    "behavioral"
+   ]
   },
   {
    "id": "pm-41724591",
@@ -7550,7 +8936,24 @@
    "url": "https://pubmed.ncbi.nlm.nih.gov/41709339/",
    "priority": "clinical-observation",
    "addedBy": "agent-2026-06-02",
-   "mesh": [],
+   "mesh": [
+    "Humans",
+    "White Matter",
+    "Female",
+    "Adult",
+    "Glymphatic System",
+    "Middle Aged",
+    "Aging",
+    "Autistic Disorder",
+    "Male",
+    "Aged",
+    "Young Adult",
+    "Adolescent",
+    "Memory, Long-Term",
+    "Diffusion Tensor Imaging",
+    "Water",
+    "Magnetic Resonance Imaging"
+   ],
    "journalKey": "mol-autism",
    "_refiledFrom": "behavioral",
    "branchKey": "neuroscience"
@@ -7561,7 +8964,7 @@
    "date": "2026-02-18",
    "authors": "Yang K, Li WK, Geng YX, et al.",
    "url": "https://pubmed.ncbi.nlm.nih.gov/41708849/",
-   "priority": "mechanistic",
+   "priority": "unclassified",
    "addedBy": "agent-2026-06-02",
    "mesh": [
     "Animals",
@@ -7585,7 +8988,8 @@
    ],
    "branchKey": "genetics",
    "journalDisplay": "Nature",
-   "journalKey": "nature"
+   "journalKey": "nature",
+   "_priorityWas": "mechanistic"
   },
   {
    "id": "pm-41703633",
@@ -7593,12 +8997,27 @@
    "date": "2026-02-18",
    "authors": "Lin F, Albantakis L, Noppari T, et al.",
    "url": "https://pubmed.ncbi.nlm.nih.gov/41703633/",
-   "priority": "mechanistic",
+   "priority": "unclassified",
    "addedBy": "agent-2026-06-02",
-   "mesh": [],
+   "mesh": [
+    "Humans",
+    "Male",
+    "Magnetic Resonance Imaging",
+    "Female",
+    "Autistic Disorder",
+    "Adult",
+    "Motion Pictures",
+    "Brain",
+    "Young Adult",
+    "Brain Mapping",
+    "Finland",
+    "Germany",
+    "Reproducibility of Results"
+   ],
    "journalKey": "mol-autism",
    "_refiledFrom": "behavioral",
-   "branchKey": "neuroscience"
+   "branchKey": "neuroscience",
+   "_priorityWas": "mechanistic"
   },
   {
    "id": "pm-41703267",
@@ -7608,7 +9027,23 @@
    "url": "https://pubmed.ncbi.nlm.nih.gov/41703267/",
    "priority": "review",
    "addedBy": "agent-2026-06-02",
-   "mesh": [],
+   "mesh": [
+    "Humans",
+    "Attention Deficit Disorder with Hyperactivity",
+    "Reward",
+    "Autism Spectrum Disorder",
+    "Brain",
+    "Neuroimaging",
+    "Magnetic Resonance Imaging",
+    "Prefrontal Cortex",
+    "Brain Mapping",
+    "Male",
+    "Amygdala",
+    "Female",
+    "Functional Neuroimaging",
+    "Neural Pathways",
+    "Child"
+   ],
    "branchKey": "neuroscience",
    "journalDisplay": "Molecular Psychiatry",
    "journalKey": "mol-psych"
@@ -7650,7 +9085,7 @@
    "date": "2026-02-13",
    "authors": "Fanghella M, Dima D, Pinotsis D, et al.",
    "url": "https://pubmed.ncbi.nlm.nih.gov/41684326/",
-   "priority": "mechanistic",
+   "priority": "unclassified",
    "addedBy": "agent-2026-06-02",
    "mesh": [
     "Humans",
@@ -7667,7 +9102,8 @@
    ],
    "journalKey": "autism-res",
    "_refiledFrom": "behavioral",
-   "branchKey": "neuroscience"
+   "branchKey": "neuroscience",
+   "_priorityWas": "mechanistic"
   },
   {
    "id": "pm-41657078",
@@ -7702,8 +9138,25 @@
    "url": "https://pubmed.ncbi.nlm.nih.gov/41633496/",
    "priority": "mechanistic",
    "addedBy": "agent-2026-06-02",
-   "mesh": [],
-   "journalKey": "biol-psych"
+   "mesh": [
+    "Animals",
+    "Autistic Disorder",
+    "Mice",
+    "Transcription Factors",
+    "Mice, Knockout",
+    "Male",
+    "Neurodevelopment",
+    "Cerebral Cortex",
+    "Female",
+    "Microcephaly",
+    "Neurons",
+    "Corpus Callosum"
+   ],
+   "journalKey": "biol-psych",
+   "alsoBranches": [
+    "genetics",
+    "neuroscience"
+   ]
   },
   {
    "id": "pm-41620607",
@@ -7713,7 +9166,20 @@
    "url": "https://pubmed.ncbi.nlm.nih.gov/41620607/",
    "priority": "mechanistic",
    "addedBy": "agent-2026-06-02",
-   "mesh": [],
+   "mesh": [
+    "Animals",
+    "Purkinje Cells",
+    "Nerve Tissue Proteins",
+    "Mice, Knockout",
+    "Male",
+    "Mice",
+    "Gait",
+    "Disease Models, Animal",
+    "Microfilament Proteins",
+    "Cerebellum",
+    "Mice, Inbred C57BL",
+    "Mutation"
+   ],
    "journalKey": "mol-autism",
    "_refiledFrom": "behavioral",
    "branchKey": "neuroscience"
@@ -7749,7 +9215,10 @@
    ],
    "branchKey": "genetics",
    "journalDisplay": "Molecular Psychiatry",
-   "journalKey": "mol-psych"
+   "journalKey": "mol-psych",
+   "alsoBranches": [
+    "neuroscience"
+   ]
   },
   {
    "id": "pm-41611887",
@@ -7757,7 +9226,7 @@
    "date": "2026-01-29",
    "authors": "Gordon A, Yoon SJ, Bicks LK, et al.",
    "url": "https://pubmed.ncbi.nlm.nih.gov/41611887/",
-   "priority": "mechanistic",
+   "priority": "unclassified",
    "addedBy": "agent-2026-06-02",
    "mesh": [
     "Humans",
@@ -7777,7 +9246,8 @@
    ],
    "branchKey": "neuroscience",
    "journalDisplay": "Nature",
-   "journalKey": "nature"
+   "journalKey": "nature",
+   "_priorityWas": "mechanistic"
   },
   {
    "id": "pm-41553264",
@@ -7863,7 +9333,19 @@
    "url": "https://pubmed.ncbi.nlm.nih.gov/41520112/",
    "priority": "clinical-observation",
    "addedBy": "agent-2026-06-02",
-   "mesh": [],
+   "mesh": [
+    "Humans",
+    "Male",
+    "Child, Preschool",
+    "Electroencephalography",
+    "Child",
+    "Autistic Disorder",
+    "Female",
+    "Language",
+    "Rest",
+    "Case-Control Studies",
+    "Language Development"
+   ],
    "journalKey": "mol-autism",
    "_refiledFrom": "behavioral",
    "branchKey": "neuroscience"
@@ -7874,7 +9356,7 @@
    "date": "2026-01-06",
    "authors": "Chetcuti L, Hardan A, Spackman E, et al.",
    "url": "https://pubmed.ncbi.nlm.nih.gov/41492661/",
-   "priority": "mechanistic",
+   "priority": "unclassified",
    "addedBy": "agent-2026-06-02",
    "mesh": [
     "Humans",
@@ -7890,7 +9372,8 @@
     "Reward",
     "Punishment"
    ],
-   "journalKey": "autism-res"
+   "journalKey": "autism-res",
+   "_priorityWas": "mechanistic"
   },
   {
    "id": "pm-41469442",
@@ -7920,7 +9403,7 @@
    "date": "2025-12-27",
    "authors": "Kubota M, Yoshihara Y, Uwatoko T, et al.",
    "url": "https://pubmed.ncbi.nlm.nih.gov/41455837/",
-   "priority": "mechanistic",
+   "priority": "unclassified",
    "addedBy": "agent-2026-06-02",
    "mesh": [
     "Humans",
@@ -7941,7 +9424,11 @@
    ],
    "branchKey": "neuroscience",
    "journalDisplay": "Molecular Psychiatry",
-   "journalKey": "mol-psych"
+   "journalKey": "mol-psych",
+   "_priorityWas": "mechanistic",
+   "alsoBranches": [
+    "behavioral"
+   ]
   },
   {
    "id": "pm-41437281",
@@ -7951,7 +9438,12 @@
    "url": "https://pubmed.ncbi.nlm.nih.gov/41437281/",
    "priority": "review",
    "addedBy": "agent-2026-06-02",
-   "mesh": [],
+   "mesh": [
+    "Humans",
+    "Autism Spectrum Disorder",
+    "Learning",
+    "Cognition"
+   ],
    "journalKey": "mol-autism"
   },
   {
@@ -7962,7 +9454,23 @@
    "url": "https://pubmed.ncbi.nlm.nih.gov/41408339/",
    "priority": "mechanistic",
    "addedBy": "agent-2026-06-02",
-   "mesh": [],
+   "mesh": [
+    "Animals",
+    "Male",
+    "Female",
+    "Mice, Knockout",
+    "Electroencephalography",
+    "Nerve Tissue Proteins",
+    "Mice",
+    "Circadian Rhythm",
+    "Light",
+    "Membrane Proteins",
+    "Sleep",
+    "Autism Spectrum Disorder",
+    "Mice, Inbred C57BL",
+    "Disease Models, Animal",
+    "Wakefulness"
+   ],
    "journalKey": "mol-autism"
   },
   {
@@ -8044,12 +9552,24 @@
    "date": "2026-05-12",
    "authors": "Pendyala S, Partington K, Bradley N, et al.",
    "url": "https://pubmed.ncbi.nlm.nih.gov/42127894/",
-   "priority": "mechanistic",
+   "priority": "unclassified",
    "addedBy": "agent-2026-06-02",
-   "mesh": [],
+   "mesh": [
+    "Lamin Type A",
+    "Genetic Variation",
+    "PTEN Phosphohydrolase",
+    "Sequence Analysis, RNA",
+    "Phenotype",
+    "Humans",
+    "HEK293 Cells",
+    "Cell Line, Tumor",
+    "RNA, Circular",
+    "Single-Cell Gene Expression Analysis"
+   ],
    "branchKey": "genetics",
    "journalDisplay": "Cell",
-   "journalKey": "cell"
+   "journalKey": "cell",
+   "_priorityWas": "mechanistic"
   },
   {
    "id": "pm-42097524",
@@ -8068,12 +9588,13 @@
    "date": "2026-04-24",
    "authors": "Yentür Z, Branco L, Sarieva K, et al.",
    "url": "https://pubmed.ncbi.nlm.nih.gov/42032298/",
-   "priority": "mechanistic",
+   "priority": "unclassified",
    "addedBy": "agent-2026-06-02",
    "mesh": [],
    "branchKey": "genetics",
    "journalDisplay": "Molecular Psychiatry",
-   "journalKey": "mol-psych"
+   "journalKey": "mol-psych",
+   "_priorityWas": "mechanistic"
   },
   {
    "id": "pm-41947537",
@@ -8092,12 +9613,24 @@
    "date": "2026-04-04",
    "authors": "Valone JM, Le BD, Matoba N, et al.",
    "url": "https://pubmed.ncbi.nlm.nih.gov/41935183/",
-   "priority": "mechanistic",
+   "priority": "unclassified",
    "addedBy": "agent-2026-06-02",
-   "mesh": [],
+   "mesh": [
+    "Valproic Acid",
+    "Humans",
+    "Neural Stem Cells",
+    "Lithium",
+    "Female",
+    "Genome-Wide Association Study",
+    "Polymorphism, Single Nucleotide",
+    "Folic Acid",
+    "Gene-Environment Interaction",
+    "Mental Disorders"
+   ],
    "branchKey": "genetics",
    "journalDisplay": "Molecular Psychiatry",
-   "journalKey": "mol-psych"
+   "journalKey": "mol-psych",
+   "_priorityWas": "mechanistic"
   },
   {
    "id": "pm-41921886",
@@ -8107,8 +9640,16 @@
    "url": "https://pubmed.ncbi.nlm.nih.gov/41921886/",
    "priority": "review",
    "addedBy": "agent-2026-06-02",
-   "mesh": [],
-   "journalKey": "biol-psych"
+   "mesh": [
+    "Humans",
+    "Autism Spectrum Disorder",
+    "Genetic Predisposition to Disease",
+    "Genetic Variation"
+   ],
+   "journalKey": "biol-psych",
+   "alsoBranches": [
+    "genetics"
+   ]
   },
   {
    "id": "pm-41904269",
@@ -8118,10 +9659,28 @@
    "url": "https://pubmed.ncbi.nlm.nih.gov/41904269/",
    "priority": "clinical-trial",
    "addedBy": "agent-2026-06-02",
-   "mesh": [],
+   "mesh": [
+    "Humans",
+    "Oxytocin",
+    "Genome-Wide Association Study",
+    "Male",
+    "Polymorphism, Single Nucleotide",
+    "Autism Spectrum Disorder",
+    "Ryanodine Receptor Calcium Release Channel",
+    "Child",
+    "Autistic Disorder",
+    "Treatment Outcome",
+    "Prefrontal Cortex",
+    "Adolescent",
+    "Social Behavior",
+    "Randomized Controlled Trials as Topic"
+   ],
    "branchKey": "intervention",
    "journalDisplay": "Molecular Psychiatry",
-   "journalKey": "mol-psych"
+   "journalKey": "mol-psych",
+   "alsoBranches": [
+    "genetics"
+   ]
   },
   {
    "id": "pm-41902612",
@@ -8214,7 +9773,10 @@
     "Reproducibility of Results",
     "Adult"
    ],
-   "journalKey": "autism-res"
+   "journalKey": "autism-res",
+   "alsoBranches": [
+    "intervention"
+   ]
   },
   {
    "id": "pm-41437869",
@@ -8245,7 +9807,7 @@
    "date": "2025-12-19",
    "authors": "Han S, Sun X, Sloofman L, et al.",
    "url": "https://pubmed.ncbi.nlm.nih.gov/41421362/",
-   "priority": "mechanistic",
+   "priority": "clinical-observation",
    "addedBy": "agent-2026-06-02",
    "mesh": [
     "Humans",
@@ -8259,7 +9821,8 @@
     "Computer Simulation",
     "Exome Sequencing"
    ],
-   "journalKey": "ajhg"
+   "journalKey": "ajhg",
+   "_priorityWas": "mechanistic"
   },
   {
    "id": "pm-41403372",
@@ -8267,7 +9830,7 @@
    "date": "2025-12-17",
    "authors": "Maltman N, Wynn CJ, Wynn EA, et al.",
    "url": "https://pubmed.ncbi.nlm.nih.gov/41403372/",
-   "priority": "mechanistic",
+   "priority": "unclassified",
    "addedBy": "agent-2026-06-02",
    "mesh": [
     "Humans",
@@ -8282,7 +9845,8 @@
     "Fragile X Syndrome",
     "Mother-Child Relations"
    ],
-   "journalKey": "autism"
+   "journalKey": "autism",
+   "_priorityWas": "mechanistic"
   },
   {
    "id": "pm-41338336",
@@ -8292,8 +9856,17 @@
    "url": "https://pubmed.ncbi.nlm.nih.gov/41338336/",
    "priority": "mechanistic",
    "addedBy": "agent-2026-06-02",
-   "mesh": [],
-   "journalKey": "jaacap"
+   "mesh": [
+    "Humans",
+    "Neurodevelopmental Disorders",
+    "Attention Deficit Disorder with Hyperactivity",
+    "Autism Spectrum Disorder",
+    "Early Diagnosis"
+   ],
+   "journalKey": "jaacap",
+   "alsoBranches": [
+    "genetics"
+   ]
   },
   {
    "id": "pm-41310868",
@@ -8303,8 +9876,26 @@
    "url": "https://pubmed.ncbi.nlm.nih.gov/41310868/",
    "priority": "translational",
    "addedBy": "agent-2026-06-02",
-   "mesh": [],
-   "journalKey": "mol-autism"
+   "mesh": [
+    "Angelman Syndrome",
+    "beta Catenin",
+    "Animals",
+    "Ubiquitin-Protein Ligases",
+    "Glycogen Synthase Kinase 3 beta",
+    "Mice",
+    "Humans",
+    "Synapses",
+    "Cognition",
+    "Disease Models, Animal",
+    "Neurons",
+    "Protein Stability",
+    "Motor Activity",
+    "Induced Pluripotent Stem Cells"
+   ],
+   "journalKey": "mol-autism",
+   "alsoBranches": [
+    "neuroscience"
+   ]
   },
   {
    "id": "pm-41291951",
@@ -8326,7 +9917,10 @@
     "Child, Preschool",
     "Treatment Outcome"
    ],
-   "journalKey": "mol-autism"
+   "journalKey": "mol-autism",
+   "alsoBranches": [
+    "intervention"
+   ]
   },
   {
    "id": "pm-41291187",
@@ -8391,7 +9985,7 @@
    "date": "2025-11-14",
    "authors": "Feng D, Li D, Hu C, et al.",
    "url": "https://pubmed.ncbi.nlm.nih.gov/41238842/",
-   "priority": "mechanistic",
+   "priority": "unclassified",
    "addedBy": "agent-2026-06-02",
    "mesh": [
     "Humans",
@@ -8410,7 +10004,11 @@
    ],
    "branchKey": "genetics",
    "journalDisplay": "Molecular Psychiatry",
-   "journalKey": "mol-psych"
+   "journalKey": "mol-psych",
+   "_priorityWas": "mechanistic",
+   "alsoBranches": [
+    "neuroscience"
+   ]
   },
   {
    "id": "pm-41222138",
@@ -8418,7 +10016,7 @@
    "date": "2025-11-12",
    "authors": "de Wit MM, Zinkstok JR, Buijsman R, et al.",
    "url": "https://pubmed.ncbi.nlm.nih.gov/41222138/",
-   "priority": "mechanistic",
+   "priority": "clinical-observation",
    "addedBy": "agent-2026-06-02",
    "mesh": [
     "Humans",
@@ -8435,7 +10033,8 @@
     "Young Adult",
     "Health Knowledge, Attitudes, Practice"
    ],
-   "journalKey": "autism"
+   "journalKey": "autism",
+   "_priorityWas": "mechanistic"
   },
   {
    "id": "pm-41203933",
@@ -8463,7 +10062,10 @@
    ],
    "branchKey": "genetics",
    "journalDisplay": "Molecular Psychiatry",
-   "journalKey": "mol-psych"
+   "journalKey": "mol-psych",
+   "alsoBranches": [
+    "neuroscience"
+   ]
   },
   {
    "id": "pm-41197609",
@@ -8486,7 +10088,10 @@
     "Genetic Variation",
     "Multifactorial Inheritance"
    ],
-   "journalKey": "neuron"
+   "journalKey": "neuron",
+   "alsoBranches": [
+    "genetics"
+   ]
   },
   {
    "id": "pm-41193845",
@@ -8575,7 +10180,24 @@
    "url": "https://pubmed.ncbi.nlm.nih.gov/41168819/",
    "priority": "clinical-observation",
    "addedBy": "agent-2026-06-02",
-   "mesh": [],
+   "mesh": [
+    "Humans",
+    "Child",
+    "Female",
+    "France",
+    "Exome Sequencing",
+    "Male",
+    "Learning Disabilities",
+    "Child, Preschool",
+    "Language Disorders",
+    "Exome",
+    "Cohort Studies",
+    "Adolescent",
+    "Prospective Studies",
+    "Phenotype",
+    "Genetic Predisposition to Disease",
+    "Mutation"
+   ],
    "journalKey": "mol-autism",
    "_refiledFrom": "behavioral",
    "branchKey": "genetics"
@@ -8606,7 +10228,10 @@
    ],
    "branchKey": "genetics",
    "journalDisplay": "Molecular Psychiatry",
-   "journalKey": "mol-psych"
+   "journalKey": "mol-psych",
+   "alsoBranches": [
+    "neuroscience"
+   ]
   },
   {
    "id": "pm-41094063",
@@ -8666,7 +10291,7 @@
    "date": "2025-10-01",
    "authors": "Zhang X, Grove J, Gu Y, et al.",
    "url": "https://pubmed.ncbi.nlm.nih.gov/41034588/",
-   "priority": "mechanistic",
+   "priority": "clinical-observation",
    "addedBy": "agent-2026-06-02",
    "mesh": [
     "Humans",
@@ -8686,7 +10311,8 @@
    ],
    "branchKey": "genetics",
    "journalDisplay": "Nature",
-   "journalKey": "nature"
+   "journalKey": "nature",
+   "_priorityWas": "mechanistic"
   },
   {
    "id": "pm-40992585",
@@ -8694,7 +10320,7 @@
    "date": "2025-09-22",
    "authors": "Schuurmans IK, Smajlagic D, Baltramonaityte V, et al.",
    "url": "https://pubmed.ncbi.nlm.nih.gov/40992585/",
-   "priority": "clinical-observation",
+   "priority": "review",
    "addedBy": "agent-2026-06-02",
    "mesh": [
     "Humans",
@@ -8715,7 +10341,11 @@
     "Fetal Blood",
     "Infant"
    ],
-   "journalKey": "biol-psych"
+   "journalKey": "biol-psych",
+   "_priorityWas": "clinical-observation",
+   "alsoBranches": [
+    "genetics"
+   ]
   },
   {
    "id": "pm-40987292",
@@ -8723,7 +10353,7 @@
    "date": "2025-09-22",
    "authors": "Bou-Rouphael J, Cospain A, Courtin T, et al.",
    "url": "https://pubmed.ncbi.nlm.nih.gov/40987292/",
-   "priority": "mechanistic",
+   "priority": "unclassified",
    "addedBy": "agent-2026-06-02",
    "mesh": [
     "Humans",
@@ -8740,7 +10370,8 @@
     "Mutation",
     "Neural Stem Cells"
    ],
-   "journalKey": "ajhg"
+   "journalKey": "ajhg",
+   "_priorityWas": "mechanistic"
   },
   {
    "id": "pm-40963013",
@@ -8748,7 +10379,7 @@
    "date": "2025-09-17",
    "authors": "Tamura S, Nelson AD, Spratt PWE, et al.",
    "url": "https://pubmed.ncbi.nlm.nih.gov/40963013/",
-   "priority": "mechanistic",
+   "priority": "unclassified",
    "addedBy": "agent-2026-06-02",
    "mesh": [
     "Animals",
@@ -8773,7 +10404,8 @@
    ],
    "branchKey": "genetics",
    "journalDisplay": "Nature",
-   "journalKey": "nature"
+   "journalKey": "nature",
+   "_priorityWas": "mechanistic"
   },
   {
    "id": "pm-40940651",
@@ -8837,7 +10469,7 @@
    "date": "2026-05-10",
    "authors": "Male I, Farr W, McGrevey S, et al.",
    "url": "https://pubmed.ncbi.nlm.nih.gov/42106926/",
-   "priority": "mechanistic",
+   "priority": "unclassified",
    "addedBy": "agent-2026-06-02",
    "mesh": [
     "Humans",
@@ -8854,7 +10486,8 @@
     "State Medicine",
     "Quality Improvement"
    ],
-   "journalKey": "autism"
+   "journalKey": "autism",
+   "_priorityWas": "mechanistic"
   },
   {
    "id": "pm-42047345",
@@ -8862,10 +10495,25 @@
    "date": "2026-04-28",
    "authors": "Sheppard E, Clifton L, Massarella J, et al.",
    "url": "https://pubmed.ncbi.nlm.nih.gov/42047345/",
-   "priority": "mechanistic",
+   "priority": "clinical-observation",
    "addedBy": "agent-2026-06-02",
-   "mesh": [],
-   "journalKey": "autism"
+   "mesh": [
+    "Humans",
+    "Male",
+    "Female",
+    "Autistic Disorder",
+    "Adult",
+    "Social Stigma",
+    "Health Knowledge, Attitudes, Practice",
+    "Reading",
+    "Young Adult",
+    "Middle Aged",
+    "Adolescent",
+    "Video Recording",
+    "Surveys and Questionnaires"
+   ],
+   "journalKey": "autism",
+   "_priorityWas": "mechanistic"
   },
   {
    "id": "pm-42018302",
@@ -8899,10 +10547,27 @@
    "date": "2026-04-15",
    "authors": "Procyshyn TL, Weir EM, Pelton M, et al.",
    "url": "https://pubmed.ncbi.nlm.nih.gov/41983948/",
-   "priority": "mechanistic",
+   "priority": "unclassified",
    "addedBy": "agent-2026-06-02",
-   "mesh": [],
-   "journalKey": "autism-res"
+   "mesh": [
+    "Humans",
+    "Male",
+    "Suicidal Ideation",
+    "Female",
+    "Adolescent",
+    "Young Adult",
+    "Adult",
+    "Autistic Disorder",
+    "Child",
+    "United Kingdom",
+    "Self-Injurious Behavior",
+    "Depression",
+    "Risk Factors",
+    "Self Report",
+    "Mental Health"
+   ],
+   "journalKey": "autism-res",
+   "_priorityWas": "mechanistic"
   },
   {
    "id": "pm-41969149",
@@ -8912,7 +10577,23 @@
    "url": "https://pubmed.ncbi.nlm.nih.gov/41969149/",
    "priority": "clinical-observation",
    "addedBy": "agent-2026-06-02",
-   "mesh": [],
+   "mesh": [
+    "Humans",
+    "Female",
+    "Male",
+    "Adult",
+    "Adolescent",
+    "Young Adult",
+    "Autism Spectrum Disorder",
+    "Referral and Consultation",
+    "London",
+    "Middle Aged",
+    "Autistic Disorder",
+    "Bias",
+    "Healthcare Disparities",
+    "Prevalence",
+    "Sex Factors"
+   ],
    "journalKey": "autism-res"
   },
   {
@@ -8921,12 +10602,21 @@
    "date": "2026-04-09",
    "authors": "Bottema-Beutel K, Hinson-Williams J, Shen Y, et al.",
    "url": "https://pubmed.ncbi.nlm.nih.gov/41956104/",
-   "priority": "mechanistic",
+   "priority": "unclassified",
    "addedBy": "agent-2026-06-02",
-   "mesh": [],
+   "mesh": [
+    "Humans",
+    "Conflict of Interest",
+    "Disclosure",
+    "Applied Behavior Analysis",
+    "Periodicals as Topic",
+    "Autistic Disorder",
+    "Biomedical Research"
+   ],
    "journalKey": "autism",
    "_refiledFrom": "behavioral",
-   "branchKey": "intervention"
+   "branchKey": "intervention",
+   "_priorityWas": "mechanistic"
   },
   {
    "id": "pm-41952526",
@@ -8970,7 +10660,7 @@
    "date": "2026-04-03",
    "authors": "Mair APA, Gonzalez-Figueroa M, McConachie D, et al.",
    "url": "https://pubmed.ncbi.nlm.nih.gov/41933478/",
-   "priority": "mechanistic",
+   "priority": "unclassified",
    "addedBy": "agent-2026-06-02",
    "mesh": [
     "Humans",
@@ -8985,7 +10675,8 @@
     "Middle Aged",
     "Adaptation, Psychological"
    ],
-   "journalKey": "autism"
+   "journalKey": "autism",
+   "_priorityWas": "mechanistic"
   },
   {
    "id": "pm-41912808",
@@ -9042,7 +10733,7 @@
    "date": "2026-03-27",
    "authors": "Bourke M, Walker JL, Thomas G, et al.",
    "url": "https://pubmed.ncbi.nlm.nih.gov/41891157/",
-   "priority": "mechanistic",
+   "priority": "unclassified",
    "addedBy": "agent-2026-06-02",
    "mesh": [
     "Humans",
@@ -9059,7 +10750,8 @@
     "Diet",
     "Mental Health"
    ],
-   "journalKey": "autism-res"
+   "journalKey": "autism-res",
+   "_priorityWas": "mechanistic"
   },
   {
    "id": "pm-41885164",
@@ -9118,7 +10810,7 @@
    "date": "2026-03-24",
    "authors": "Liu J, Lu Q, Singh V, et al.",
    "url": "https://pubmed.ncbi.nlm.nih.gov/41873690/",
-   "priority": "mechanistic",
+   "priority": "unclassified",
    "addedBy": "agent-2026-06-02",
    "mesh": [
     "Humans",
@@ -9134,7 +10826,8 @@
     "Autism Spectrum Disorder",
     "Sensitivity and Specificity"
    ],
-   "journalKey": "autism-res"
+   "journalKey": "autism-res",
+   "_priorityWas": "mechanistic"
   },
   {
    "id": "pm-41871532",
@@ -9159,7 +10852,7 @@
    "date": "2026-03-20",
    "authors": "Neto FR, Andreis LM, Gazola E, et al.",
    "url": "https://pubmed.ncbi.nlm.nih.gov/41862280/",
-   "priority": "mechanistic",
+   "priority": "unclassified",
    "addedBy": "agent-2026-06-02",
    "mesh": [
     "Humans",
@@ -9173,7 +10866,8 @@
     "Brazil",
     "Motor Skills Disorders"
    ],
-   "journalKey": "autism-res"
+   "journalKey": "autism-res",
+   "_priorityWas": "mechanistic"
   },
   {
    "id": "pm-41858181",
@@ -9275,10 +10969,27 @@
    "date": "2026-03-17",
    "authors": "Zidane Burgess AZ, van der Zwaag W, Jonkman KM, et al.",
    "url": "https://pubmed.ncbi.nlm.nih.gov/41841559/",
-   "priority": "mechanistic",
+   "priority": "unclassified",
    "addedBy": "agent-2026-06-02",
-   "mesh": [],
-   "journalKey": "autism"
+   "mesh": [
+    "Humans",
+    "Male",
+    "Female",
+    "Diagnostic Errors",
+    "Delayed Diagnosis",
+    "Adult",
+    "Autistic Disorder",
+    "Gender-Nonconforming Persons",
+    "Middle Aged",
+    "Age Factors",
+    "Young Adult",
+    "Adolescent",
+    "Aged",
+    "Treatment Delay",
+    "Sex Factors"
+   ],
+   "journalKey": "autism",
+   "_priorityWas": "mechanistic"
   },
   {
    "id": "pm-41841515",
@@ -9336,7 +11047,20 @@
    "url": "https://pubmed.ncbi.nlm.nih.gov/41808210/",
    "priority": "mechanistic",
    "addedBy": "agent-2026-06-02",
-   "mesh": [],
+   "mesh": [
+    "Humans",
+    "Autistic Disorder",
+    "Male",
+    "Female",
+    "Facial Expression",
+    "Adult",
+    "Emotions",
+    "Facial Recognition",
+    "Young Adult",
+    "Awareness",
+    "Reaction Time",
+    "Recognition, Psychology"
+   ],
    "journalKey": "mol-autism"
   },
   {
@@ -9375,7 +11099,7 @@
    "date": "2026-03-10",
    "authors": "Wang X, Yu K, Liu S, et al.",
    "url": "https://pubmed.ncbi.nlm.nih.gov/41807112/",
-   "priority": "mechanistic",
+   "priority": "unclassified",
    "addedBy": "agent-2026-06-02",
    "mesh": [
     "Humans",
@@ -9396,7 +11120,8 @@
    ],
    "journalKey": "autism",
    "_refiledFrom": "behavioral",
-   "branchKey": "intervention"
+   "branchKey": "intervention",
+   "_priorityWas": "mechanistic"
   },
   {
    "id": "pm-42101833",
@@ -9404,10 +11129,11 @@
    "date": "2026-06-02",
    "authors": "Anderer S",
    "url": "https://pubmed.ncbi.nlm.nih.gov/42101833/",
-   "priority": "mechanistic",
+   "priority": "unclassified",
    "addedBy": "manual-2026-06-02",
    "mesh": [],
-   "journalKey": "jama"
+   "journalKey": "jama",
+   "_priorityWas": "mechanistic"
   },
   {
    "id": "pm-35131181",
@@ -9429,7 +11155,10 @@
     "Prenatal Exposure Delayed Effects"
    ],
    "branchKey": "immunology",
-   "journalDisplay": "Trends in immunology"
+   "journalDisplay": "Trends in immunology",
+   "alsoBranches": [
+    "cytokines"
+   ]
   },
   {
    "id": "pm-41639232",
@@ -9489,7 +11218,10 @@
    "priority": "mechanistic",
    "addedBy": "agent-2026-06-15",
    "mesh": [],
-   "journalKey": "j-neuroinfl"
+   "journalKey": "j-neuroinfl",
+   "alsoBranches": [
+    "cytokines"
+   ]
   },
   {
    "id": "pm-42271534",
@@ -9510,7 +11242,23 @@
    "url": "https://pubmed.ncbi.nlm.nih.gov/42266020/",
    "priority": "translational",
    "addedBy": "agent-2026-06-15",
-   "mesh": [],
+   "mesh": [
+    "Humans",
+    "Male",
+    "Child",
+    "Child, Preschool",
+    "Autism Spectrum Disorder",
+    "Facial Expression",
+    "Social Interaction",
+    "Severity of Illness Index",
+    "Prefrontal Cortex",
+    "Spectroscopy, Near-Infrared",
+    "Attention",
+    "Gestures",
+    "Cues",
+    "Eye-Tracking Technology",
+    "Autistic Disorder"
+   ],
    "journalKey": "autism-res"
   },
   {
@@ -9519,10 +11267,20 @@
    "date": "2026-06-08",
    "authors": "Lee SC, Huang CY, Huang TY, et al.",
    "url": "https://pubmed.ncbi.nlm.nih.gov/42260987/",
-   "priority": "mechanistic",
+   "priority": "unclassified",
    "addedBy": "agent-2026-06-15",
-   "mesh": [],
-   "journalKey": "autism-res"
+   "mesh": [
+    "Humans",
+    "Theory of Mind",
+    "Child, Preschool",
+    "Male",
+    "Female",
+    "Child",
+    "Autistic Disorder",
+    "Psychometrics"
+   ],
+   "journalKey": "autism-res",
+   "_priorityWas": "mechanistic"
   },
   {
    "id": "pm-42257270",
@@ -9530,10 +11288,27 @@
    "date": "2026-06-08",
    "authors": "De Laet H, Nijhof AD, Wiersema JR",
    "url": "https://pubmed.ncbi.nlm.nih.gov/42257270/",
-   "priority": "mechanistic",
+   "priority": "clinical-observation",
    "addedBy": "agent-2026-06-15",
-   "mesh": [],
-   "journalKey": "autism"
+   "mesh": [
+    "Humans",
+    "Empathy",
+    "Female",
+    "Adult",
+    "Autistic Disorder",
+    "Male",
+    "Young Adult",
+    "Thinking",
+    "Communication",
+    "Social Interaction",
+    "Middle Aged",
+    "Adolescent",
+    "Interpersonal Relations",
+    "Social Perception",
+    "Case-Control Studies"
+   ],
+   "journalKey": "autism",
+   "_priorityWas": "mechanistic"
   },
   {
    "id": "pm-42257266",
@@ -9541,10 +11316,21 @@
    "date": "2026-06-08",
    "authors": "Pelton M, Newell V, French B, et al.",
    "url": "https://pubmed.ncbi.nlm.nih.gov/42257266/",
-   "priority": "mechanistic",
+   "priority": "unclassified",
    "addedBy": "agent-2026-06-15",
-   "mesh": [],
-   "journalKey": "autism"
+   "mesh": [
+    "Humans",
+    "Female",
+    "Self-Injurious Behavior",
+    "Adult",
+    "Male",
+    "Autistic Disorder",
+    "Middle Aged",
+    "Young Adult",
+    "Pilot Projects"
+   ],
+   "journalKey": "autism",
+   "_priorityWas": "mechanistic"
   },
   {
    "id": "pm-42249747",
@@ -9554,7 +11340,24 @@
    "url": "https://pubmed.ncbi.nlm.nih.gov/42249747/",
    "priority": "mechanistic",
    "addedBy": "agent-2026-06-15",
-   "mesh": [],
+   "mesh": [
+    "Animals",
+    "Interneurons",
+    "Calbindin 2",
+    "Nerve Tissue Proteins",
+    "Mice, Knockout",
+    "Female",
+    "Mice",
+    "Social Behavior",
+    "Membrane Proteins",
+    "Male",
+    "Somatosensory Cortex",
+    "Corpus Striatum",
+    "Parvalbumins",
+    "Mice, Inbred C57BL",
+    "Behavior, Animal",
+    "Cerebral Cortex"
+   ],
    "journalKey": "autism-res"
   },
   {
@@ -9565,7 +11368,21 @@
    "url": "https://pubmed.ncbi.nlm.nih.gov/42244394/",
    "priority": "translational",
    "addedBy": "agent-2026-06-15",
-   "mesh": [],
+   "mesh": [
+    "Humans",
+    "Male",
+    "Autism Spectrum Disorder",
+    "Female",
+    "Adult",
+    "Biomarkers",
+    "Energy Metabolism",
+    "Magnetic Resonance Imaging",
+    "Brain",
+    "Psychometrics",
+    "Young Adult",
+    "Attention Deficit Disorder with Hyperactivity",
+    "Adolescent"
+   ],
    "journalKey": "autism-res"
   },
   {
@@ -9576,7 +11393,14 @@
    "url": "https://pubmed.ncbi.nlm.nih.gov/42237211/",
    "priority": "review",
    "addedBy": "agent-2026-06-15",
-   "mesh": [],
+   "mesh": [
+    "Humans",
+    "Speech-Language Pathology",
+    "Child",
+    "Autistic Disorder",
+    "Family",
+    "Communication"
+   ],
    "journalKey": "autism"
   },
   {
@@ -9585,10 +11409,27 @@
    "date": "2026-06-03",
    "authors": "Li J, Shum KK",
    "url": "https://pubmed.ncbi.nlm.nih.gov/42237066/",
-   "priority": "mechanistic",
+   "priority": "unclassified",
    "addedBy": "agent-2026-06-15",
-   "mesh": [],
-   "journalKey": "autism"
+   "mesh": [
+    "Humans",
+    "Motivation",
+    "Male",
+    "Autism Spectrum Disorder",
+    "Adolescent",
+    "Social Behavior",
+    "Eye-Tracking Technology",
+    "Female",
+    "Young Adult",
+    "Parents",
+    "Self Report",
+    "Adult",
+    "Social Group",
+    "Qualitative Research",
+    "Child"
+   ],
+   "journalKey": "autism",
+   "_priorityWas": "mechanistic"
   },
   {
    "id": "pm-41665231",
@@ -9596,7 +11437,7 @@
    "date": "2026-02-10",
    "authors": "Cola M, Schillinger S, Lyons M, et al.",
    "url": "https://pubmed.ncbi.nlm.nih.gov/41665231/",
-   "priority": "mechanistic",
+   "priority": "unclassified",
    "addedBy": "agent-2026-06-15",
    "mesh": [
     "Humans",
@@ -9608,7 +11449,8 @@
     "Social Behavior",
     "Sex Factors"
    ],
-   "journalKey": "autism"
+   "journalKey": "autism",
+   "_priorityWas": "mechanistic"
   },
   {
    "id": "pm-41663347",
@@ -9616,7 +11458,7 @@
    "date": "2026-02-09",
    "authors": "Janicki MP, McCallion P, Jokinen N, et al.",
    "url": "https://pubmed.ncbi.nlm.nih.gov/41663347/",
-   "priority": "mechanistic",
+   "priority": "unclassified",
    "addedBy": "agent-2026-06-15",
    "mesh": [
     "Humans",
@@ -9627,7 +11469,8 @@
    ],
    "journalKey": "autism",
    "_refiledFrom": "behavioral",
-   "branchKey": "intervention"
+   "branchKey": "intervention",
+   "_priorityWas": "mechanistic"
   },
   {
    "id": "pm-41361937",
@@ -9635,7 +11478,7 @@
    "date": "2025-12-08",
    "authors": "Ferguson EF, Spackman E, Hardan AY, et al.",
    "url": "https://pubmed.ncbi.nlm.nih.gov/41361937/",
-   "priority": "mechanistic",
+   "priority": "unclassified",
    "addedBy": "agent-2026-06-15",
    "mesh": [
     "Humans",
@@ -9649,7 +11492,8 @@
     "Psychological Distress",
     "Wounds and Injuries"
    ],
-   "journalKey": "autism"
+   "journalKey": "autism",
+   "_priorityWas": "mechanistic"
   },
   {
    "id": "pm-41252209",
@@ -9686,7 +11530,10 @@
    "priority": "clinical-observation",
    "addedBy": "agent-2026-06-15",
    "mesh": [],
-   "journalKey": "jcpp"
+   "journalKey": "jcpp",
+   "alsoBranches": [
+    "neuroscience"
+   ]
   },
   {
    "id": "pm-42268594",
@@ -9707,7 +11554,7 @@
    "date": "2026-06-02",
    "authors": "Wang Z, Grosvenor L, Ray D, et al.",
    "url": "https://pubmed.ncbi.nlm.nih.gov/42230772/",
-   "priority": "mechanistic",
+   "priority": "unclassified",
    "addedBy": "agent-2026-06-15",
    "mesh": [
     "Humans",
@@ -9724,7 +11571,8 @@
     "Child",
     "Parents"
    ],
-   "journalKey": "nat-genet"
+   "journalKey": "nat-genet",
+   "_priorityWas": "mechanistic"
   },
   {
    "id": "pm-41738769",
@@ -9820,7 +11668,19 @@
    "url": "https://pubmed.ncbi.nlm.nih.gov/42265894/",
    "priority": "clinical-observation",
    "addedBy": "agent-2026-06-15",
-   "mesh": []
+   "mesh": [
+    "Humans",
+    "Male",
+    "Adolescent",
+    "Female",
+    "Autistic Disorder",
+    "Adult",
+    "Young Adult",
+    "Music",
+    "Surveys and Questionnaires",
+    "Singing",
+    "Social Group"
+   ]
   },
   {
    "id": "pm-42244062",
@@ -9831,7 +11691,22 @@
    "url": "https://pubmed.ncbi.nlm.nih.gov/42244062/",
    "priority": "clinical-trial",
    "addedBy": "agent-2026-06-15",
-   "mesh": []
+   "mesh": [
+    "Adolescent",
+    "Adult",
+    "Female",
+    "Humans",
+    "Male",
+    "Young Adult",
+    "Autistic Disorder",
+    "Interview, Psychological",
+    "Pilot Projects",
+    "Self-Injurious Behavior",
+    "Suicidal Ideation",
+    "United Kingdom",
+    "Randomized Controlled Trials as Topic",
+    "Secondary Data Analysis"
+   ]
   },
   {
    "id": "pm-41222131",
@@ -9840,7 +11715,7 @@
    "date": "2025-11-12",
    "authors": "Haebig E, West S, Cox CR",
    "url": "https://pubmed.ncbi.nlm.nih.gov/41222131/",
-   "priority": "mechanistic",
+   "priority": "unclassified",
    "addedBy": "agent-2026-06-15",
    "mesh": [
     "Humans",
@@ -9852,7 +11727,8 @@
     "Autistic Disorder",
     "Child",
     "Infant"
-   ]
+   ],
+   "_priorityWas": "mechanistic"
   },
   {
    "id": "pm-42272041",
@@ -9863,7 +11739,19 @@
    "url": "https://pubmed.ncbi.nlm.nih.gov/42272041/",
    "priority": "clinical-observation",
    "addedBy": "agent-2026-06-15",
-   "mesh": []
+   "mesh": [
+    "Humans",
+    "Peer Group",
+    "Male",
+    "Child",
+    "Social Behavior",
+    "Inhibition, Psychological",
+    "Female",
+    "Autistic Disorder",
+    "China",
+    "Surveys and Questionnaires",
+    "Schools"
+   ]
   },
   {
    "id": "pm-42226652",
@@ -9874,7 +11762,22 @@
    "url": "https://pubmed.ncbi.nlm.nih.gov/42226652/",
    "priority": "clinical-observation",
    "addedBy": "agent-2026-06-15",
-   "mesh": []
+   "mesh": [
+    "Humans",
+    "Longitudinal Studies",
+    "Child, Preschool",
+    "Male",
+    "Child",
+    "Adolescent",
+    "Intelligence",
+    "Activities of Daily Living",
+    "Female",
+    "Autistic Disorder",
+    "Young Adult",
+    "Adult",
+    "Cognition",
+    "Intelligence Tests"
+   ]
   },
   {
    "id": "pm-42321914",
@@ -9885,7 +11788,10 @@
    "priority": "review",
    "addedBy": "agent-2026-06-22",
    "mesh": [],
-   "journalKey": "j-neuroinfl"
+   "journalKey": "j-neuroinfl",
+   "alsoBranches": [
+    "cytokines"
+   ]
   },
   {
    "id": "pm-42322041",
@@ -9907,7 +11813,10 @@
    "priority": "clinical-trial",
    "addedBy": "agent-2026-06-22",
    "mesh": [],
-   "journalKey": "biol-psych"
+   "journalKey": "biol-psych",
+   "alsoBranches": [
+    "behavioral"
+   ]
   },
   {
    "id": "pm-42316431",
@@ -9915,10 +11824,14 @@
    "date": "2026-06-18",
    "authors": "McWeeny S, Ewen JB",
    "url": "https://pubmed.ncbi.nlm.nih.gov/42316431/",
-   "priority": "mechanistic",
+   "priority": "unclassified",
    "addedBy": "agent-2026-06-22",
    "mesh": [],
-   "journalKey": "autism-res"
+   "journalKey": "autism-res",
+   "_priorityWas": "mechanistic",
+   "alsoBranches": [
+    "genetics"
+   ]
   },
   {
    "id": "pm-42304759",
@@ -9926,10 +11839,25 @@
    "date": "2026-06-16",
    "authors": "Holka S, Sörnyei D, Vass Á, et al.",
    "url": "https://pubmed.ncbi.nlm.nih.gov/42304759/",
-   "priority": "mechanistic",
+   "priority": "clinical-observation",
    "addedBy": "agent-2026-06-22",
-   "mesh": [],
-   "journalKey": "autism-res"
+   "mesh": [
+    "Humans",
+    "Male",
+    "Female",
+    "Mentalization",
+    "Adult",
+    "Autism Spectrum Disorder",
+    "Self Concept",
+    "Young Adult",
+    "Autistic Disorder",
+    "Models, Psychological",
+    "Anxiety",
+    "Adolescent",
+    "Theory of Mind"
+   ],
+   "journalKey": "autism-res",
+   "_priorityWas": "mechanistic"
   },
   {
    "id": "pm-42297937",
@@ -9937,12 +11865,13 @@
    "date": "2026-06-16",
    "authors": "Ko SY, Pastore SF, Park S, et al.",
    "url": "https://pubmed.ncbi.nlm.nih.gov/42297937/",
-   "priority": "mechanistic",
+   "priority": "unclassified",
    "addedBy": "agent-2026-06-22",
    "mesh": [],
    "branchKey": "behavioral",
    "journalDisplay": "Molecular Psychiatry",
-   "journalKey": "mol-psych"
+   "journalKey": "mol-psych",
+   "_priorityWas": "mechanistic"
   },
   {
    "id": "pm-42297632",
@@ -9950,12 +11879,20 @@
    "date": "2026-06-15",
    "authors": "Jaber M",
    "url": "https://pubmed.ncbi.nlm.nih.gov/42297632/",
-   "priority": "clinical-observation",
+   "priority": "review",
    "addedBy": "agent-2026-06-22",
-   "mesh": [],
+   "mesh": [
+    "Humans",
+    "Comorbidity",
+    "Autism Spectrum Disorder",
+    "Child",
+    "Motor Disorders",
+    "Movement Disorders"
+   ],
    "journalKey": "autism-res",
    "_refiledFrom": "behavioral",
-   "branchKey": "intervention"
+   "branchKey": "intervention",
+   "_priorityWas": "clinical-observation"
   },
   {
    "id": "pm-42310454",
@@ -9981,7 +11918,10 @@
    "mesh": [],
    "branchKey": "genetics",
    "journalDisplay": "Molecular Psychiatry",
-   "journalKey": "mol-psych"
+   "journalKey": "mol-psych",
+   "alsoBranches": [
+    "neuroscience"
+   ]
   },
   {
    "id": "pm-42322045",
@@ -10002,12 +11942,25 @@
    "date": "2026-06-18",
    "authors": "Lindly OJ, Gorgas C, Gooding L, et al.",
    "url": "https://pubmed.ncbi.nlm.nih.gov/42316828/",
-   "priority": "mechanistic",
+   "priority": "unclassified",
    "addedBy": "agent-2026-06-22",
-   "mesh": [],
+   "mesh": [
+    "Humans",
+    "Pilot Projects",
+    "Autistic Disorder",
+    "Child, Preschool",
+    "Male",
+    "Oregon",
+    "Primary Health Care",
+    "Female",
+    "Infant",
+    "Pediatrics",
+    "Feasibility Studies"
+   ],
    "journalKey": "autism",
    "_refiledFrom": "behavioral",
-   "branchKey": "intervention"
+   "branchKey": "intervention",
+   "_priorityWas": "mechanistic"
   },
   {
    "id": "pm-42303595",
@@ -10017,7 +11970,23 @@
    "url": "https://pubmed.ncbi.nlm.nih.gov/42303595/",
    "priority": "clinical-trial",
    "addedBy": "agent-2026-06-22",
-   "mesh": [],
+   "mesh": [
+    "Humans",
+    "Primary Health Care",
+    "Female",
+    "Male",
+    "Surveys and Questionnaires",
+    "Adult",
+    "Autistic Disorder",
+    "Middle Aged",
+    "Adolescent",
+    "Patient Acceptance of Health Care",
+    "Young Adult",
+    "England",
+    "Interviews as Topic",
+    "Access to Primary Care",
+    "Caregivers"
+   ],
    "journalKey": "autism"
   },
   {
@@ -10026,10 +11995,28 @@
    "date": "2026-06-16",
    "authors": "Carey ME, Graham Holmes L, Shea LL, et al.",
    "url": "https://pubmed.ncbi.nlm.nih.gov/42303593/",
-   "priority": "mechanistic",
+   "priority": "unclassified",
    "addedBy": "agent-2026-06-22",
-   "mesh": [],
-   "journalKey": "autism"
+   "mesh": [
+    "Adolescent",
+    "Adult",
+    "Child",
+    "Female",
+    "Humans",
+    "Male",
+    "Young Adult",
+    "Antidepressive Agents",
+    "Autistic Disorder",
+    "Intellectual Disability",
+    "Major Depressive Disorder",
+    "Medicaid",
+    "Psychotherapy",
+    "United States",
+    "Ethnicity",
+    "Racial Groups"
+   ],
+   "journalKey": "autism",
+   "_priorityWas": "mechanistic"
   },
   {
    "id": "pm-42320783",
@@ -10038,9 +12025,10 @@
    "date": "2026-06-19",
    "authors": "Tzanoulinou S, Astori S, Grandi LC, et al.",
    "url": "https://pubmed.ncbi.nlm.nih.gov/42320783/",
-   "priority": "mechanistic",
+   "priority": "unclassified",
    "addedBy": "agent-2026-06-22",
-   "mesh": []
+   "mesh": [],
+   "_priorityWas": "mechanistic"
   },
   {
    "id": "pm-42322046",
@@ -10072,7 +12060,15 @@
    "url": "https://pubmed.ncbi.nlm.nih.gov/42365510/",
    "priority": "review",
    "addedBy": "agent-2026-06-29",
-   "mesh": [],
+   "mesh": [
+    "Child",
+    "Humans",
+    "Attention",
+    "Autistic Disorder",
+    "Eye-Tracking Technology",
+    "Fixation, Ocular",
+    "Sensitivity and Specificity"
+   ],
    "journalKey": "autism"
   },
   {
@@ -10081,10 +12077,11 @@
    "date": "2026-06-23",
    "authors": "Vogelzang M, Gan SDW, Setch J",
    "url": "https://pubmed.ncbi.nlm.nih.gov/42333816/",
-   "priority": "mechanistic",
+   "priority": "unclassified",
    "addedBy": "agent-2026-06-29",
    "mesh": [],
-   "journalKey": "autism-res"
+   "journalKey": "autism-res",
+   "_priorityWas": "mechanistic"
   },
   {
    "id": "pm-42333800",
@@ -10092,12 +12089,13 @@
    "date": "2026-06-23",
    "authors": "Kim CY, Kim S, Park BY",
    "url": "https://pubmed.ncbi.nlm.nih.gov/42333800/",
-   "priority": "mechanistic",
+   "priority": "unclassified",
    "addedBy": "agent-2026-06-29",
    "mesh": [],
    "journalKey": "autism-res",
    "_refiledFrom": "behavioral",
-   "branchKey": "neuroscience"
+   "branchKey": "neuroscience",
+   "_priorityWas": "mechanistic"
   },
   {
    "id": "pm-42333586",
@@ -10105,10 +12103,23 @@
    "date": "2026-06-23",
    "authors": "Holt JM, Siekman K, Fairbanks M, et al.",
    "url": "https://pubmed.ncbi.nlm.nih.gov/42333586/",
-   "priority": "mechanistic",
+   "priority": "unclassified",
    "addedBy": "agent-2026-06-29",
-   "mesh": [],
-   "journalKey": "autism"
+   "mesh": [
+    "Humans",
+    "Adolescent",
+    "Female",
+    "Qualitative Research",
+    "Young Adult",
+    "Male",
+    "Happiness",
+    "Autistic Disorder",
+    "Family",
+    "Creativity",
+    "Adult"
+   ],
+   "journalKey": "autism",
+   "_priorityWas": "mechanistic"
   },
   {
    "id": "pm-42333534",
@@ -10118,7 +12129,22 @@
    "url": "https://pubmed.ncbi.nlm.nih.gov/42333534/",
    "priority": "clinical-observation",
    "addedBy": "agent-2026-06-29",
-   "mesh": [],
+   "mesh": [
+    "Humans",
+    "Iran",
+    "Male",
+    "Adult",
+    "Reproducibility of Results",
+    "Surveys and Questionnaires",
+    "Cross-Cultural Comparison",
+    "Adolescent",
+    "Middle Aged",
+    "Female",
+    "Young Adult",
+    "Psychometrics",
+    "Autistic Disorder",
+    "Factor Analysis, Statistical"
+   ],
    "journalKey": "autism"
   },
   {
@@ -10151,10 +12177,11 @@
    "date": "2026-06-26",
    "authors": "Ansari SI, Martin LA, Guest KC, et al.",
    "url": "https://pubmed.ncbi.nlm.nih.gov/42363273/",
-   "priority": "mechanistic",
+   "priority": "unclassified",
    "addedBy": "agent-2026-06-29",
    "mesh": [],
-   "journalKey": "autism-res"
+   "journalKey": "autism-res",
+   "_priorityWas": "mechanistic"
   },
   {
    "id": "pm-42332026",
@@ -10185,9 +12212,26 @@
    "date": "2026-06-25",
    "authors": "Minnell H, Waddington H, Jordan P, et al.",
    "url": "https://pubmed.ncbi.nlm.nih.gov/42349898/",
-   "priority": "mechanistic",
+   "priority": "unclassified",
    "addedBy": "agent-2026-06-29",
-   "mesh": []
+   "mesh": [
+    "Humans",
+    "Autistic Disorder",
+    "Female",
+    "Male",
+    "Adult",
+    "Interpersonal Relations",
+    "Australia",
+    "New Zealand",
+    "Middle Aged",
+    "Young Adult",
+    "Friends",
+    "Empathy",
+    "Adolescent",
+    "Social Perception",
+    "Aged"
+   ],
+   "_priorityWas": "mechanistic"
   },
   {
    "id": "pm-42333580",
@@ -10196,9 +12240,26 @@
    "date": "2026-06-23",
    "authors": "Fajutrao Falk S, Hellquist A, Tammimies K",
    "url": "https://pubmed.ncbi.nlm.nih.gov/42333580/",
-   "priority": "mechanistic",
+   "priority": "clinical-observation",
    "addedBy": "agent-2026-06-29",
-   "mesh": []
+   "mesh": [
+    "Sweden",
+    "Autistic Disorder",
+    "Parents",
+    "Surveys and Questionnaires",
+    "Genetic Research",
+    "Humans",
+    "Male",
+    "Female",
+    "Adolescent",
+    "Young Adult",
+    "Adult",
+    "Middle Aged",
+    "Aged",
+    "Qualitative Research",
+    "Attitude to Health"
+   ],
+   "_priorityWas": "mechanistic"
   },
   {
    "id": "pm-42333531",
@@ -10209,7 +12270,21 @@
    "url": "https://pubmed.ncbi.nlm.nih.gov/42333531/",
    "priority": "clinical-observation",
    "addedBy": "agent-2026-06-29",
-   "mesh": []
+   "mesh": [
+    "Humans",
+    "Egypt",
+    "Oman",
+    "Female",
+    "School Teachers",
+    "Male",
+    "Autistic Disorder",
+    "Adult",
+    "Collective Efficacy",
+    "Mainstreaming, Education",
+    "Middle Aged",
+    "Social Inclusion",
+    "Surveys and Questionnaires"
+   ]
   },
   {
    "id": "pm-42363300",
@@ -10218,9 +12293,10 @@
    "date": "2026-06-26",
    "authors": "Eldeeb S, Northrup J, Conner C, et al.",
    "url": "https://pubmed.ncbi.nlm.nih.gov/42363300/",
-   "priority": "mechanistic",
+   "priority": "unclassified",
    "addedBy": "agent-2026-06-29",
-   "mesh": []
+   "mesh": [],
+   "_priorityWas": "mechanistic"
   },
   {
    "id": "pm-42393738",
@@ -10230,7 +12306,18 @@
    "url": "https://pubmed.ncbi.nlm.nih.gov/42393738/",
    "priority": "clinical-trial",
    "addedBy": "agent-2026-07-06",
-   "mesh": [],
+   "mesh": [
+    "Child, Preschool",
+    "Female",
+    "Humans",
+    "Male",
+    "Autistic Disorder",
+    "China",
+    "Communication",
+    "Parents",
+    "Treatment Outcome",
+    "East Asian People"
+   ],
    "journalKey": "mol-autism",
    "_refiledFrom": "behavioral",
    "branchKey": "intervention"
@@ -10241,10 +12328,23 @@
    "date": "2026-07-02",
    "authors": "Boddy A, Cook A",
    "url": "https://pubmed.ncbi.nlm.nih.gov/42389848/",
-   "priority": "mechanistic",
+   "priority": "clinical-observation",
    "addedBy": "agent-2026-07-06",
-   "mesh": [],
-   "journalKey": "autism"
+   "mesh": [
+    "Humans",
+    "Qualitative Research",
+    "Schools",
+    "England",
+    "Mainstreaming, Education",
+    "Adolescent",
+    "Male",
+    "Autistic Disorder",
+    "Female",
+    "Child",
+    "Students"
+   ],
+   "journalKey": "autism",
+   "_priorityWas": "mechanistic"
   },
   {
    "id": "pm-42388058",
@@ -10266,7 +12366,10 @@
    "priority": "clinical-observation",
    "addedBy": "agent-2026-07-06",
    "mesh": [],
-   "journalKey": "mol-autism"
+   "journalKey": "mol-autism",
+   "alsoBranches": [
+    "intervention"
+   ]
   },
   {
    "id": "pm-42375113",
@@ -10349,12 +12452,13 @@
    "date": "2026-07-01",
    "authors": "Tsyporin J, Zhang M, Qi C, et al.",
    "url": "https://pubmed.ncbi.nlm.nih.gov/42386980/",
-   "priority": "mechanistic",
+   "priority": "unclassified",
    "addedBy": "agent-2026-07-06",
    "mesh": [],
    "branchKey": "genetics",
    "journalDisplay": "Nature",
-   "journalKey": "nature"
+   "journalKey": "nature",
+   "_priorityWas": "mechanistic"
   },
   {
    "id": "pm-42394366",
@@ -10373,7 +12477,7 @@
    "date": "2026-06-30",
    "authors": "Siegel M, Lord CL, Tager-Flusberg H, et al.",
    "url": "https://pubmed.ncbi.nlm.nih.gov/42380932/",
-   "priority": "mechanistic",
+   "priority": "unclassified",
    "addedBy": "agent-2026-07-06",
    "mesh": [
     "Humans",
@@ -10383,7 +12487,8 @@
     "Autism Spectrum Disorder",
     "Child"
    ],
-   "journalKey": "mol-autism"
+   "journalKey": "mol-autism",
+   "_priorityWas": "mechanistic"
   },
   {
    "id": "pm-42374865",
@@ -10480,9 +12585,25 @@
    "date": "2026-07-02",
    "authors": "Carbone GA, Nigro L, Ilen L, et al.",
    "url": "https://pubmed.ncbi.nlm.nih.gov/42389843/",
-   "priority": "mechanistic",
+   "priority": "unclassified",
    "addedBy": "agent-2026-07-06",
-   "mesh": []
+   "mesh": [
+    "Humans",
+    "Emotional Regulation",
+    "Adolescent",
+    "Self-Injurious Behavior",
+    "Young Adult",
+    "Female",
+    "Child",
+    "Male",
+    "Adult",
+    "Suicidal Ideation",
+    "Stress, Psychological",
+    "Peer Group",
+    "Autistic Disorder",
+    "Crime Victims"
+   ],
+   "_priorityWas": "mechanistic"
   },
   {
    "id": "pm-42387996",
@@ -10493,7 +12614,17 @@
    "url": "https://pubmed.ncbi.nlm.nih.gov/42387996/",
    "priority": "clinical-observation",
    "addedBy": "agent-2026-07-06",
-   "mesh": []
+   "mesh": [
+    "Humans",
+    "Adolescent",
+    "Male",
+    "Wandering Behavior",
+    "Child",
+    "Female",
+    "Autistic Disorder",
+    "Longitudinal Studies",
+    "Child, Preschool"
+   ]
   },
   {
    "id": "pm-41603207",
@@ -10539,10 +12670,11 @@
    "date": "2026-07-08",
    "authors": "Hager R",
    "url": "https://pubmed.ncbi.nlm.nih.gov/42419649/",
-   "priority": "mechanistic",
+   "priority": "unclassified",
    "addedBy": "agent-2026-07-13",
    "mesh": [],
-   "journalKey": "bbi"
+   "journalKey": "bbi",
+   "_priorityWas": "mechanistic"
   },
   {
    "id": "pm-42409184",
@@ -10550,10 +12682,14 @@
    "date": "2026-07-06",
    "authors": "McEwan F, Santo JD, Kambara C, et al.",
    "url": "https://pubmed.ncbi.nlm.nih.gov/42409184/",
-   "priority": "mechanistic",
+   "priority": "unclassified",
    "addedBy": "agent-2026-07-13",
    "mesh": [],
-   "journalKey": "bbi"
+   "journalKey": "bbi",
+   "_priorityWas": "mechanistic",
+   "alsoBranches": [
+    "genetics"
+   ]
   },
   {
    "id": "pm-42437723",
@@ -10561,10 +12697,11 @@
    "date": "2026-07-12",
    "authors": "Batterink LJ, Liu Y, Westerkamp G, et al.",
    "url": "https://pubmed.ncbi.nlm.nih.gov/42437723/",
-   "priority": "mechanistic",
+   "priority": "unclassified",
    "addedBy": "agent-2026-07-13",
    "mesh": [],
-   "journalKey": "autism-res"
+   "journalKey": "autism-res",
+   "_priorityWas": "mechanistic"
   },
   {
    "id": "pm-42426840",
@@ -10575,7 +12712,10 @@
    "priority": "clinical-observation",
    "addedBy": "agent-2026-07-13",
    "mesh": [],
-   "journalKey": "mol-autism"
+   "journalKey": "mol-autism",
+   "alsoBranches": [
+    "neuroscience"
+   ]
   },
   {
    "id": "pm-42420199",
@@ -10605,10 +12745,11 @@
    "date": "2026-07-06",
    "authors": "Tian M, Cao S, Li X, et al.",
    "url": "https://pubmed.ncbi.nlm.nih.gov/42410944/",
-   "priority": "mechanistic",
+   "priority": "unclassified",
    "addedBy": "agent-2026-07-13",
    "mesh": [],
-   "journalKey": "autism-res"
+   "journalKey": "autism-res",
+   "_priorityWas": "mechanistic"
   },
   {
    "id": "pm-42431437",
@@ -10627,12 +12768,13 @@
    "date": "2026-07-06",
    "authors": "Al Saneh A, Arrieta MFH, Gissot L, et al.",
    "url": "https://pubmed.ncbi.nlm.nih.gov/42410084/",
-   "priority": "mechanistic",
+   "priority": "unclassified",
    "addedBy": "agent-2026-07-13",
    "mesh": [],
    "branchKey": "genetics",
    "journalDisplay": "Molecular Psychiatry",
-   "journalKey": "mol-psych"
+   "journalKey": "mol-psych",
+   "_priorityWas": "mechanistic"
   },
   {
    "id": "pm-42421184",
@@ -10652,9 +12794,10 @@
    "date": "2026-07-11",
    "authors": "Zisman-Ilani Y, Walfisch R, Veenstra-VanderWeele J, et al.",
    "url": "https://pubmed.ncbi.nlm.nih.gov/42437505/",
-   "priority": "mechanistic",
+   "priority": "unclassified",
    "addedBy": "agent-2026-07-13",
-   "mesh": []
+   "mesh": [],
+   "_priorityWas": "mechanistic"
   },
   {
    "id": "pm-42430144",
@@ -10663,9 +12806,10 @@
    "date": "2026-07-10",
    "authors": "Anderer S",
    "url": "https://pubmed.ncbi.nlm.nih.gov/42430144/",
-   "priority": "mechanistic",
+   "priority": "unclassified",
    "addedBy": "agent-2026-07-13",
-   "mesh": []
+   "mesh": [],
+   "_priorityWas": "mechanistic"
   },
   {
    "id": "pm-42411151",
@@ -10721,10 +12865,11 @@
    "date": "2026-07-16",
    "authors": "Finke EH, Dunn DH",
    "url": "https://pubmed.ncbi.nlm.nih.gov/42464574/",
-   "priority": "mechanistic",
+   "priority": "unclassified",
    "addedBy": "agent-2026-07-20",
    "mesh": [],
-   "journalKey": "autism"
+   "journalKey": "autism",
+   "_priorityWas": "mechanistic"
   },
   {
    "id": "pm-42458743",
@@ -10743,10 +12888,14 @@
    "date": "2026-07-15",
    "authors": "Shah UT, Evans K, Banchik M, et al.",
    "url": "https://pubmed.ncbi.nlm.nih.gov/42454526/",
-   "priority": "mechanistic",
+   "priority": "unclassified",
    "addedBy": "agent-2026-07-20",
    "mesh": [],
-   "journalKey": "jcpp"
+   "journalKey": "jcpp",
+   "_priorityWas": "mechanistic",
+   "alsoBranches": [
+    "neuroscience"
+   ]
   },
   {
    "id": "pm-42452988",
@@ -10768,7 +12917,10 @@
    "priority": "clinical-observation",
    "addedBy": "agent-2026-07-20",
    "mesh": [],
-   "journalKey": "mol-autism"
+   "journalKey": "mol-autism",
+   "alsoBranches": [
+    "neuroscience"
+   ]
   },
   {
    "id": "pm-42443391",
@@ -10789,12 +12941,13 @@
    "date": "2026-07-16",
    "authors": "Matyjek M, Faraco SS, Martin CA, et al.",
    "url": "https://pubmed.ncbi.nlm.nih.gov/42460540/",
-   "priority": "mechanistic",
+   "priority": "unclassified",
    "addedBy": "agent-2026-07-20",
    "mesh": [],
    "journalKey": "autism-res",
    "_refiledFrom": "behavioral",
-   "branchKey": "neuroscience"
+   "branchKey": "neuroscience",
+   "_priorityWas": "mechanistic"
   },
   {
    "id": "pm-42464513",
@@ -10846,12 +12999,13 @@
    "date": "2026-07-26",
    "authors": "Babu J, Lal A, Challagundla L, et al.",
    "url": "https://pubmed.ncbi.nlm.nih.gov/42503182/",
-   "priority": "mechanistic",
+   "priority": "unclassified",
    "addedBy": "agent-2026-07-29",
    "mesh": [],
    "journalKey": "autism-res",
    "_refiledFrom": "behavioral",
-   "branchKey": "neuroscience"
+   "branchKey": "neuroscience",
+   "_priorityWas": "mechanistic"
   },
   {
    "id": "pm-42522543",
@@ -10859,10 +13013,11 @@
    "date": "2026-07-29",
    "authors": "Tong ASL, Lam GYH",
    "url": "https://pubmed.ncbi.nlm.nih.gov/42522543/",
-   "priority": "mechanistic",
+   "priority": "unclassified",
    "addedBy": "agent-2026-07-29",
    "mesh": [],
-   "journalKey": "autism"
+   "journalKey": "autism",
+   "_priorityWas": "mechanistic"
   },
   {
    "id": "pm-42522015",
@@ -10870,10 +13025,11 @@
    "date": "2026-07-28",
    "authors": "Greenstein E, Lee NR, McQuaid GA, et al.",
    "url": "https://pubmed.ncbi.nlm.nih.gov/42522015/",
-   "priority": "mechanistic",
+   "priority": "unclassified",
    "addedBy": "agent-2026-07-29",
    "mesh": [],
-   "journalKey": "autism"
+   "journalKey": "autism",
+   "_priorityWas": "mechanistic"
   },
   {
    "id": "pm-42503632",
@@ -10964,10 +13120,11 @@
    "date": "2026-07-22",
    "authors": "Cairney BE, Haebig E, Lucas HD",
    "url": "https://pubmed.ncbi.nlm.nih.gov/42487339/",
-   "priority": "mechanistic",
+   "priority": "unclassified",
    "addedBy": "agent-2026-07-29",
    "mesh": [],
-   "journalKey": "autism"
+   "journalKey": "autism",
+   "_priorityWas": "mechanistic"
   },
   {
    "id": "pm-42482104",
@@ -10975,10 +13132,11 @@
    "date": "2026-07-21",
    "authors": "Plank IS, Pior A, Yurova A, et al.",
    "url": "https://pubmed.ncbi.nlm.nih.gov/42482104/",
-   "priority": "mechanistic",
+   "priority": "unclassified",
    "addedBy": "agent-2026-07-29",
    "mesh": [],
-   "journalKey": "mol-autism"
+   "journalKey": "mol-autism",
+   "_priorityWas": "mechanistic"
   },
   {
    "id": "pm-42478670",
@@ -10986,7 +13144,7 @@
    "date": "2026-07-21",
    "authors": "Roberts-Davis RJ, Happé FG, Lau-Zhu A",
    "url": "https://pubmed.ncbi.nlm.nih.gov/42478670/",
-   "priority": "mechanistic",
+   "priority": "unclassified",
    "addedBy": "agent-2026-07-29",
    "mesh": [
     "Humans",
@@ -11003,7 +13161,8 @@
     "Interviews as Topic",
     "Attentional Bias"
    ],
-   "journalKey": "autism"
+   "journalKey": "autism",
+   "_priorityWas": "mechanistic"
   },
   {
    "id": "pm-42503460",
@@ -11011,10 +13170,11 @@
    "date": "2026-07-26",
    "authors": "Jiao J, Zhang H, Yang X, et al.",
    "url": "https://pubmed.ncbi.nlm.nih.gov/42503460/",
-   "priority": "mechanistic",
+   "priority": "unclassified",
    "addedBy": "agent-2026-07-29",
    "mesh": [],
-   "journalKey": "autism-res"
+   "journalKey": "autism-res",
+   "_priorityWas": "mechanistic"
   },
   {
    "id": "pm-42502111",
@@ -11027,7 +13187,10 @@
    "mesh": [],
    "branchKey": "neuroscience",
    "journalDisplay": "Molecular Psychiatry",
-   "journalKey": "mol-psych"
+   "journalKey": "mol-psych",
+   "alsoBranches": [
+    "genetics"
+   ]
   },
   {
    "id": "pm-42500834",
@@ -11035,10 +13198,11 @@
    "date": "2026-07-25",
    "authors": "Lee SH, Liao CC, Chou TL, et al.",
    "url": "https://pubmed.ncbi.nlm.nih.gov/42500834/",
-   "priority": "mechanistic",
+   "priority": "unclassified",
    "addedBy": "agent-2026-07-29",
    "mesh": [],
-   "journalKey": "autism-res"
+   "journalKey": "autism-res",
+   "_priorityWas": "mechanistic"
   },
   {
    "id": "pm-42481851",
@@ -11059,10 +13223,11 @@
    "date": "2026-07-28",
    "authors": "Bruno G, Ahmad M, Cutknife C, et al.",
    "url": "https://pubmed.ncbi.nlm.nih.gov/42517456/",
-   "priority": "mechanistic",
+   "priority": "unclassified",
    "addedBy": "agent-2026-07-29",
    "mesh": [],
-   "journalKey": "autism"
+   "journalKey": "autism",
+   "_priorityWas": "mechanistic"
   },
   {
    "id": "pm-42509644",
@@ -11070,10 +13235,11 @@
    "date": "2026-07-27",
    "authors": "Salomone E, de Leonardis G, Ferrante C, et al.",
    "url": "https://pubmed.ncbi.nlm.nih.gov/42509644/",
-   "priority": "mechanistic",
+   "priority": "unclassified",
    "addedBy": "agent-2026-07-29",
    "mesh": [],
-   "journalKey": "autism"
+   "journalKey": "autism",
+   "_priorityWas": "mechanistic"
   },
   {
    "id": "pm-42499252",
@@ -11116,12 +13282,13 @@
    "date": "2026-07-21",
    "authors": "Whaling K, Grillo VD, Shinall J, et al.",
    "url": "https://pubmed.ncbi.nlm.nih.gov/42482145/",
-   "priority": "mechanistic",
+   "priority": "unclassified",
    "addedBy": "agent-2026-07-29",
    "mesh": [],
    "journalKey": "mol-autism",
    "_refiledFrom": "behavioral",
-   "branchKey": "intervention"
+   "branchKey": "intervention",
+   "_priorityWas": "mechanistic"
   },
   {
    "id": "pm-42478914",
@@ -11152,9 +13319,10 @@
    "date": "2026-07-28",
    "authors": "Hellsten L, Rast J, Nielsen A, et al.",
    "url": "https://pubmed.ncbi.nlm.nih.gov/42522081/",
-   "priority": "mechanistic",
+   "priority": "unclassified",
    "addedBy": "agent-2026-07-29",
-   "mesh": []
+   "mesh": [],
+   "_priorityWas": "mechanistic"
   },
   {
    "id": "pm-42521637",
@@ -11185,9 +13353,59 @@
    "date": "2026-07-25",
    "authors": "Maes P, Tafolla M, Benrey N, et al.",
    "url": "https://pubmed.ncbi.nlm.nih.gov/42500919/",
-   "priority": "mechanistic",
+   "priority": "unclassified",
    "addedBy": "agent-2026-07-29",
-   "mesh": []
+   "mesh": [],
+   "_priorityWas": "mechanistic"
+  },
+  {
+   "id": "pm-42538576",
+   "title": "Visual Responsivity in Autism: Measuring Visual Responses in Autistic and Non-Autistic Adults Using Psychophysics, fMRI, and EEG.",
+   "date": "2026-07-31",
+   "authors": "Seczon DL, Woodard KM, Kolodny T, et al.",
+   "url": "https://pubmed.ncbi.nlm.nih.gov/42538576/",
+   "priority": "unclassified",
+   "addedBy": "agent-2026-08-04",
+   "mesh": [],
+   "branchKey": "neuroscience",
+   "journalDisplay": "Autism Research"
+  },
+  {
+   "id": "pm-42533130",
+   "title": "The cross-site reproducibility of MRI morphometric phenotypes in psychiatric disorders.",
+   "date": "2026-07-30",
+   "authors": "Cao T, Pang JC, Gajwani M, et al.",
+   "url": "https://pubmed.ncbi.nlm.nih.gov/42533130/",
+   "priority": "unclassified",
+   "addedBy": "agent-2026-08-04",
+   "mesh": [],
+   "journalKey": "nat-neurosci"
+  },
+  {
+   "id": "pm-42527541",
+   "title": "Autism-like behavior induced by conditional ablation of the Bassoon gene in GABAergic interneurons.",
+   "date": "2026-07-29",
+   "authors": "Annamneedi A, Montenegro-Venegas C, Çalışkan G, et al.",
+   "url": "https://pubmed.ncbi.nlm.nih.gov/42527541/",
+   "priority": "mechanistic",
+   "addedBy": "agent-2026-08-04",
+   "mesh": [],
+   "branchKey": "neuroscience",
+   "journalDisplay": "Molecular Psychiatry"
+  },
+  {
+   "id": "pm-42526678",
+   "title": "Cortical Hub Vulnerability and Molecular Signatures of Sulcal Widening in Schizophrenia.",
+   "date": "2026-07-29",
+   "authors": "González-Peñas J, Schnack HG, Hernández CR, et al.",
+   "url": "https://pubmed.ncbi.nlm.nih.gov/42526678/",
+   "priority": "clinical-observation",
+   "addedBy": "agent-2026-08-04",
+   "mesh": [],
+   "journalKey": "biol-psych",
+   "alsoBranches": [
+    "neuroscience"
+   ]
   }
  ]
 }

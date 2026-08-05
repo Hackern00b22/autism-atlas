@@ -1282,6 +1282,13 @@
     padding: 2px 6px; border-radius: 2px;
     font-size: 9px; letter-spacing: 0.12em;
   }
+  /* This node has a claim on the paper but isn't where it lives. Outlined
+     rather than filled, so a co-claim never reads as a filing. */
+  .article-meta .node-badge.also {
+    background: none;
+    border: 1px solid rgba(120, 140, 200, 0.35);
+    color: var(--ink-1);
+  }
   .filter-clear:hover {
     color: var(--ink-0);
     border-color: rgba(120, 140, 200, 0.35);
@@ -1595,7 +1602,7 @@
           <label>MAX/JOURNAL <input type="number" id="lab-max-per-journal" value="5" min="1" max="20"></label>
           <button class="lab-btn" id="lab-run-agent">▶ Run Agent</button>
         </div>
-        <div class="lab-status" id="lab-agent-status">Click "Run Agent" to query PubMed for the most recent autism papers in each indexed journal. Results are previewed — nothing is saved until you click "Add to store" on a specific article.</div>
+        <div class="lab-status" id="lab-agent-status">Click "Run Agent" to run every node's own topic query against PubMed — the same pass the weekly agent uses. Results are previewed — nothing is saved until you click "Add to store" on a specific article.</div>
         <div id="lab-agent-results"></div>
       </div>
       <!-- MANUAL SEARCH TAB -->
@@ -1747,6 +1754,7 @@ const TIER_COLORS = {
   'translational':        '#b6ff3c',
   'mechanistic':          '#98a4c2',
   'review':               '#7a5cff',
+  'unclassified':         '#7e8aa6',
   'other':                '#5d6783',
 };
 
@@ -1759,9 +1767,17 @@ function resolveArticle(a) {
   const j = JOURNALS[a.journalKey];
   a.branch = (a.branchKey && BRANCHES[a.branchKey]) ? a.branchKey
            : (j ? j.branch : 'unknown');
+  // Papers that straddle two fields have a primary node and one or two real
+  // co-claims. `branch` stays the home the article is drawn at; `branches` is
+  // what membership questions should ask, so a maternal-immune-activation
+  // imaging study shows up under Neuroscience as well as Cytokines.
+  a.alsoBranches = (a.alsoBranches || []).filter(k => BRANCHES[k] && k !== a.branch);
+  a.branches = [a.branch, ...a.alsoBranches];
   a.journalName = j ? j.name : (a.journalDisplay || '(unknown)');
   a.if = j ? j.if : (a.if_override || 0);
-  if (!a.priority || !TIERS[a.priority]) a.priority = 'other';
+  // An unrecognised tier means we don't know, not that we looked and found
+  // nothing — 'other' is a verdict and must not absorb missing data.
+  if (!a.priority || !TIERS[a.priority]) a.priority = 'unclassified';
   a.priorityRank = TIERS[a.priority].rank;
   a.isBoosted = !!TIERS[a.priority].boosted;
 }
@@ -1785,7 +1801,10 @@ async function boot() {
       'translational':        { rank: 3, label: 'Bench-to-bedside',     shortLabel: 'TRANS',  boosted: true },
       'mechanistic':          { rank: 4, label: 'Mechanistic',          shortLabel: 'MECH',   boosted: false },
       'review':               { rank: 5, label: 'Review',               shortLabel: 'REVIEW', boosted: false },
-      'other':                { rank: 6, label: 'Other',                shortLabel: 'OTHER',  boosted: false },
+      // Not a verdict — the classifier could not tell. Distinct from 'other',
+      // which means "judged, and not a research article".
+      'unclassified':         { rank: 6, label: 'Unclassified',         shortLabel: 'UNCL',   boosted: false },
+      'other':                { rank: 7, label: 'Other',                shortLabel: 'OTHER',  boosted: false },
     };
     ARTICLES.forEach(resolveArticle);
     const askSize = document.getElementById('ask-lib-size');
@@ -1811,7 +1830,10 @@ function initApp() {
   const legendEl = document.getElementById('legend');
   Object.keys(BRANCHES).forEach(key => {
     const b = BRANCHES[key];
+    // Filed here vs merely claimed here are different facts: the count stays
+    // the honest "lives in this node" number, with co-claims shown separately.
     const n = ARTICLES.filter(a => a.branch === key).length;
+    const alsoN = ARTICLES.filter(a => a.branch !== key && a.branches.includes(key)).length;
     const boostedN = ARTICLES.filter(a => a.branch === key && a.isBoosted).length;
     const div = document.createElement('div');
     div.className = 'legend-item';
@@ -1819,7 +1841,7 @@ function initApp() {
     div.innerHTML = `
       <span class="legend-swatch" style="background:${b.color};color:${b.color};"></span>
       ${b.label}
-      <span class="legend-count">${String(n).padStart(2, '0')}${boostedN ? ' · ★'+boostedN : ''}</span>
+      <span class="legend-count">${String(n).padStart(2, '0')}${alsoN ? ' +'+alsoN : ''}${boostedN ? ' · ★'+boostedN : ''}</span>
     `;
     div.addEventListener('click', () => openBranchModal(key));
     legendEl.appendChild(div);
@@ -1845,6 +1867,10 @@ window.addEventListener('resize', resize);
 
 const nodes = [];
 const links = [];
+// Node-to-node overlap: how many articles two branches both have a claim on.
+// Below this many shared papers the line is noise rather than a relationship.
+const OVERLAP_MIN = 6;
+const overlapLinks = [];
 const activeBranches = new Set();
 const branchNodes = {};
 let core = null;
@@ -1878,6 +1904,22 @@ function buildNetwork() {
     branchNodes[key] = node;
     links.push({ source: core, target: node });
   });
+
+  // Edges between the nodes themselves, weighted by how many articles both
+  // claim. This is the thing the atlas could not previously say: that
+  // Neuroimmunology and Cytokines overlap heavily while Behavioral barely
+  // touches Genetics. Kept out of the physics loop — it describes the library,
+  // it shouldn't drag the layout around.
+  overlapLinks.length = 0;
+  for (let i = 0; i < branchKeys.length; i++) {
+    for (let k = i + 1; k < branchKeys.length; k++) {
+      const [p, q] = [branchKeys[i], branchKeys[k]];
+      const shared = ARTICLES.filter(a => a.branches.includes(p) && a.branches.includes(q)).length;
+      if (shared >= OVERLAP_MIN) {
+        overlapLinks.push({ source: branchNodes[p], target: branchNodes[q], shared });
+      }
+    }
+  }
 }
 
 function isActive(node) {
@@ -1945,6 +1987,33 @@ let t = 0;
 function draw() {
   t += 1;
   ctx.clearRect(0, 0, W, H);
+
+  // Overlap edges first, so the structural spokes always draw on top of them.
+  ctx.save();
+  ctx.setLineDash([4, 6]);
+  for (const link of overlapLinks) {
+    const a = link.source, b = link.target;
+    if (!isActive(a) || !isActive(b)) continue;
+    const dx = b.x - a.x, dy = b.y - a.y;
+    const d = Math.sqrt(dx * dx + dy * dy) || 1;
+    const ux = dx / d, uy = dy / d;
+    const hot = hoverNode && (hoverNode === a || hoverNode === b);
+    ctx.strokeStyle = `rgba(150, 170, 220, ${hot ? 0.55 : 0.22})`;
+    ctx.lineWidth = Math.min(4, 0.7 + link.shared / 12);
+    ctx.beginPath();
+    ctx.moveTo(a.x + ux * a.r, a.y + uy * a.r);
+    ctx.lineTo(b.x - ux * b.r, b.y - uy * b.r);
+    ctx.stroke();
+    if (hot) {
+      ctx.setLineDash([]);
+      ctx.fillStyle = 'rgba(200, 214, 245, 0.85)';
+      ctx.font = '10px ui-monospace, monospace';
+      ctx.textAlign = 'center';
+      ctx.fillText(`${link.shared} shared`, (a.x + b.x) / 2, (a.y + b.y) / 2 - 6);
+      ctx.setLineDash([4, 6]);
+    }
+  }
+  ctx.restore();
 
   for (const link of links) {
     const a = link.source, b = link.target;
@@ -2239,7 +2308,7 @@ function buildPriorityChips() {
   // result list below them contradicts.
   const branchArticles = scopeEl.checked
     ? ARTICLES.slice()
-    : ARTICLES.filter(a => a.branch === currentBranch);
+    : ARTICLES.filter(a => a.branches.includes(currentBranch));
   const tierCounts = {};
   Object.keys(TIERS).forEach(k => tierCounts[k] = 0);
   branchArticles.forEach(a => { tierCounts[a.priority] = (tierCounts[a.priority] || 0) + 1; });
@@ -2314,7 +2383,7 @@ function renderArticles() {
   const toD = toEl.value ? new Date(toEl.value) : null;
 
   const allNodes = scopeEl.checked;
-  let list = allNodes ? ARTICLES.slice() : ARTICLES.filter(a => a.branch === currentBranch);
+  let list = allNodes ? ARTICLES.slice() : ARTICLES.filter(a => a.branches.includes(currentBranch));
   if (activeTiers.size > 0) list = list.filter(a => activeTiers.has(a.priority));
   if (q) list = list.filter(a => matchesQuery(a, q));
   if (fromD) list = list.filter(a => new Date(a.date) >= fromD);
@@ -2393,6 +2462,10 @@ function renderArticleCard(a, showNode) {
   const tier = TIERS[a.priority] || TIERS.other;
   const tierLabel = tier.shortLabel || tier.label;
   const node = showNode && BRANCHES[a.branch] ? BRANCHES[a.branch].label : null;
+  // Viewing a node that has a claim on this paper but isn't its home: name the
+  // home, so appearing in two lists never reads as being filed in both.
+  const visiting = !showNode && currentBranch && a.branch !== currentBranch;
+  const homeNode = visiting && BRANCHES[a.branch] ? BRANCHES[a.branch].label : null;
   return `
     <a class="article tier-${a.priority}${a.isBoosted ? ' boosted' : ''}" href="${a.url}" target="_blank" rel="noopener">
       <div class="priority-badge${a.isBoosted ? ' boosted' : ''}">${escapeHtml(tierLabel)}</div>
@@ -2407,6 +2480,7 @@ function renderArticleCard(a, showNode) {
                 onclick="event.preventDefault();event.stopPropagation();nodeFeedback('${a.id}',-1,this);">👎</span>
         </span>
         ${node ? `<span class="node-badge">${escapeHtml(node)}</span>` : ''}
+        ${homeNode ? `<span class="node-badge also" title="Also relevant here — filed under ${escapeHtml(homeNode)}">◇ ${escapeHtml(homeNode)}</span>` : ''}
         <span class="journal">${escapeHtml(a.journalName)}</span>
         <span class="if-badge">IF ${a.if.toFixed(1)}</span>
         <span class="date">${formatDate(a.date)}</span>
@@ -2677,13 +2751,19 @@ document.getElementById('lab-run-agent').addEventListener('click', async () => {
   const maxPerJournal = +document.getElementById('lab-max-per-journal').value || 5;
   const status = document.getElementById('lab-agent-status');
   const resultsEl = document.getElementById('lab-agent-results');
-  labStatus(status, '<span class="lab-loader"></span> Querying PubMed for each journal · this may take 10–30 seconds…');
+  labStatus(status, '<span class="lab-loader"></span> Running each node topic query against PubMed · this may take 10–30 seconds…');
   resultsEl.innerHTML = '';
   try {
-    const r = await fetch('/api/run-agent', {
+    // The branch agent, not the per-journal sweep. Both endpoints existed but
+    // only the weaker one was ever called: the journal sweep walks the indexed
+    // titles and accounts for under a quarter of what the weekly agent finds,
+    // while the branch pass runs each node's own topic query across the whole
+    // whitelist. Its results are keyed by branch rather than journal, which is
+    // what the normalisation below absorbs.
+    const r = await fetch('/api/run-branch-agent', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ lookback_days: lookback, max_per_journal: maxPerJournal }),
+      body: JSON.stringify({ lookback_days: lookback, max_results: maxPerJournal * 10 }),
     });
     if (!r.ok) throw new Error('HTTP ' + r.status + ' — is serve.py running?');
     const data = await r.json();
@@ -2692,7 +2772,7 @@ document.getElementById('lab-run-agent').addEventListener('click', async () => {
     const totalNew = Object.values(results).reduce((s, g) => s + (g.articles||[]).length, 0);
     labStatus(status, totalNew === 0
       ? 'No new articles found across all journals for the last ' + lookback + ' days.'
-      : '<strong style="color:var(--ink-0)">' + totalNew + '</strong> new article' + (totalNew === 1 ? '' : 's') + ' found across ' + Object.keys(results).length + ' journals. Pick which to add.',
+      : '<strong style="color:var(--ink-0)">' + totalNew + '</strong> new article' + (totalNew === 1 ? '' : 's') + ' found across ' + Object.keys(results).length + ' nodes. Pick which to add.',
       totalNew === 0 ? '' : 'success');
     // Render each group
     let html = '';
@@ -2708,15 +2788,19 @@ document.getElementById('lab-run-agent').addEventListener('click', async () => {
         continue;
       }
       if (!group.articles || group.articles.length === 0) continue;
-      const branch = BRANCHES[group.branch];
+      // Journal results carry .branch and .journalName; branch results are
+      // keyed by the branch itself and carry .branchLabel. Read both.
+      const branchKey = group.branch || journalKey;
+      const branch = BRANCHES[branchKey];
       const color = branch ? branch.color : '#98a4c2';
+      const heading = group.journalName || group.branchLabel || branchKey;
       html += `<div class="lab-result-group">
         <div class="lab-result-header" style="--group-color:${color};">
-          <span class="lab-journal">${escapeHtml(group.journalName)}</span>
-          <span class="lab-branch">${escapeHtml((branch && branch.label) || group.branch || '')}</span>
+          <span class="lab-journal">${escapeHtml(heading)}</span>
+          <span class="lab-branch">${escapeHtml((branch && branch.label) || branchKey || '')}</span>
           <span class="lab-count">${group.articles.length} NEW</span>
         </div>
-        ${group.articles.map(a => labCardHtml(a, { defaultJournalKey: journalKey })).join('')}
+        ${group.articles.map(a => labCardHtml(a, { defaultJournalKey: a.journalKey || null })).join('')}
       </div>`;
     }
     resultsEl.innerHTML = html || '<div class="lab-empty">// NO NEW RESULTS</div>';
