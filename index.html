@@ -1483,6 +1483,21 @@
     animation: fabglow 3s ease-in-out infinite;
   }
   .demo-fab:hover { background: var(--neon-cyto); color: #05060a; animation: none; box-shadow: 0 0 28px rgba(255,43,214,0.55); }
+  /* Library-wide search. The only search until now lived inside a node modal
+     behind an "all nodes" checkbox, so finding a paper meant first guessing
+     which node held it — the exact problem that made the IL-17 preprint feel
+     missing. Sits beside the demo button; no glow, so it doesn't compete. */
+  .search-fab {
+    position: fixed; right: 90px; bottom: 26px; z-index: 90;
+    width: 52px; height: 52px; border-radius: 50%; cursor: pointer;
+    background: rgba(10,13,20,0.92); border: 1px solid var(--neon-immuno);
+    color: var(--neon-immuno); font-size: 19px; line-height: 1;
+    display: flex; align-items: center; justify-content: center;
+    transition: background 0.18s, color 0.18s, box-shadow 0.18s;
+  }
+  .search-fab:hover { background: var(--neon-immuno); color: #05060a;
+                      box-shadow: 0 0 24px rgba(0,240,255,0.45); }
+  body.demo-on .search-fab { display: none; }
   .demo-fab span { margin-left: 3px; }  /* optically centre the ▶ glyph */
   @keyframes fabglow { 0%,100% { box-shadow: 0 0 10px rgba(255,43,214,0.18); } 50% { box-shadow: 0 0 24px rgba(255,43,214,0.45); } }
   body.demo-on .demo-fab { display: none; }
@@ -1576,6 +1591,7 @@
 
 <div class="hint">CLICK A BRANCH NODE · ◈ AUTHORS · ⬢ AGENT LAB · ◆ WHAT'S NEW · ◇ DEFINITIONS · ESC TO CLOSE</div>
 
+<button class="search-fab" id="search-fab" aria-label="Search every node" title="Search the whole library  ( / )">⌕</button>
 <button class="demo-fab" id="demo-fab" aria-label="Play a guided demo of this page"><span>▶</span></button>
 <div class="demo-spot" id="demo-spot"></div>
 <div class="demo-shield" id="demo-shield"></div>
@@ -1703,7 +1719,7 @@
       <div class="modal-title-block">
         <div class="modal-eyebrow">// SAVED</div>
         <div class="modal-title">Bookmarks</div>
-        <div class="modal-sub">Articles you've starred. Saved in this browser.</div>
+        <div class="modal-sub">Articles you've starred. Saved on this machine and synced across devices — they stay until you unstar them.</div>
       </div>
       <button class="modal-close" id="bm-close" aria-label="Close">×</button>
     </div>
@@ -2306,6 +2322,8 @@ function renderBranchSub(branchKey) {
     '</span>' + learnedTermsHtml(branchKey);
 }
 function openBranchModal(branchKey) {
+  GLOBAL_SEARCH = false;
+  scopeLabelEl.style.display = '';   // restore the toggle global search hides
   currentBranch = branchKey;
   const b = BRANCHES[branchKey];
   eyebrowEl.textContent = '// BRANCH · ' + branchKey.toUpperCase();
@@ -2320,6 +2338,36 @@ function openBranchModal(branchKey) {
   buildPriorityChips();
   renderArticles();
   backdrop.classList.add('open');
+}
+
+// Library-wide search. Reuses the results modal rather than duplicating it, so
+// tier chips, date range, sorting and the provenance tokens all behave exactly
+// as they do inside a node. `currentBranch` is still set because the render
+// path guards on it, but with scope forced on it is never used for filtering —
+// and the scope toggle is hidden, since "all nodes" is the whole mode here.
+let GLOBAL_SEARCH = false;
+
+function openGlobalSearch(prefill) {
+  GLOBAL_SEARCH = true;
+  currentBranch = Object.keys(BRANCHES)[0];
+  eyebrowEl.textContent = '// SEARCH · ALL NODES';
+  eyebrowEl.style.color = 'var(--neon-immuno)';
+  titleEl.textContent = 'Search the whole library';
+  subEl.innerHTML =
+    ARTICLES.length + ' articles across ' + Object.keys(BRANCHES).length + ' nodes. ' +
+    'Filter by provenance with <code>is:preprint</code>, <code>is:via</code>, ' +
+    '<code>is:new</code>, <code>is:shared</code> or <code>via:name</code> — terms combine.';
+  modal.style.setProperty('--accent', 'var(--neon-immuno)');
+  searchEl.value = prefill || '';
+  fromEl.value = ''; toEl.value = '';
+  scopeEl.checked = true;
+  scopeLabelEl.classList.add('on');
+  scopeLabelEl.style.display = 'none';
+  activeTiers.clear();
+  buildPriorityChips();
+  renderArticles();
+  backdrop.classList.add('open');
+  setTimeout(() => searchEl.focus(), 60);
 }
 
 function buildPriorityChips() {
@@ -3826,7 +3874,17 @@ function demoArm(s) {
   DEMO.timers.push(DEMO.advance);
 }
 
+document.getElementById('search-fab').addEventListener('click', () => openGlobalSearch());
 document.getElementById('demo-fab').addEventListener('click', demoStart);
+// "/" opens library-wide search, unless you're already typing somewhere.
+document.addEventListener('keydown', (e) => {
+  if (e.key !== '/' || e.metaKey || e.ctrlKey || e.altKey) return;
+  const t = e.target;
+  if (t && (t.tagName === 'INPUT' || t.tagName === 'TEXTAREA' || t.isContentEditable)) return;
+  if (document.body.classList.contains('demo-on')) return;
+  e.preventDefault();
+  openGlobalSearch();
+});
 document.getElementById('demo-shield').addEventListener('click', () => demoStep(1));
 document.getElementById('demo-next').addEventListener('click', () => demoStep(1));
 document.getElementById('demo-back').addEventListener('click', () => demoStep(-1));
