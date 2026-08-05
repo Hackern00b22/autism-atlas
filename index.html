@@ -317,6 +317,8 @@
     .auth-button { right: 32px; top: auto; bottom: 440px; }
   }
 
+  .ni-meta .bm-toggle { cursor: pointer; }
+  .ni-meta .bm-toggle.on { color: var(--neon-behav); }
   /* bookmark toggle on article cards */
   .bm-toggle {
     cursor: pointer; user-select: none; color: #ffd97a;
@@ -1422,6 +1424,23 @@
     font-size: 9px; letter-spacing: 0.15em;
     text-transform: uppercase;
   }
+  /* Not peer reviewed. Loud on purpose: a preprint sitting unmarked next to
+     a Nature paper is the one way this library could actively mislead. */
+  .article-meta .preprint-badge {
+    background: rgba(255, 176, 32, 0.16);
+    color: #ffb020;
+    border: 1px solid rgba(255, 176, 32, 0.4);
+    padding: 2px 6px; border-radius: 2px;
+    font-size: 9px; letter-spacing: 0.15em;
+  }
+  /* Entered on provenance (a tracked author) rather than through the normal
+     autism + journal gates — worth being able to see at a glance. */
+  .article-meta .via-badge {
+    background: none; border: 1px solid rgba(120, 140, 200, 0.3);
+    color: var(--ink-1);
+    padding: 2px 6px; border-radius: 2px;
+    font-size: 9px; letter-spacing: 0.12em;
+  }
   .article-meta .new-badge {
     background: rgba(0, 240, 255, 0.15);
     color: var(--neon-immuno);
@@ -1714,7 +1733,7 @@
 
     <div class="modal-filters">
       <span class="filter-label">SEARCH</span>
-      <input type="search" id="filter-search" placeholder="Title, author, journal, or PMID..." autocomplete="off">
+      <input type="search" id="filter-search" placeholder="Title, author, PMID, or is:preprint · is:via · is:new · is:shared" autocomplete="off">
       <label class="scope-toggle" id="filter-scope-label" title="Search every node, not just this one">
         <input type="checkbox" id="filter-scope"> All nodes
       </label>
@@ -2441,13 +2460,42 @@ function renderArticles() {
 // Matches on identifiers as well as prose: arriving with a PMID in hand and
 // getting no results is the failure this is here to prevent. `pm-40199322`,
 // `40199322` and a pasted PubMed URL all resolve to the same article.
-function matchesQuery(a, q) {
+// Terms are ANDed, and any of them may be a filter token rather than text.
+// Provenance is the thing plain search cannot express: with 594 articles, the
+// 23 that arrived through the tracked-author lane and the single preprint are
+// invisible unless you can ask for them directly.
+const QUERY_TOKENS = [
+  ['is:preprint', 'not peer reviewed'],
+  ['is:via',      'came in via a tracked author'],
+  ['is:new',      'added by an agent, not a seed'],
+  ['is:seed',     'original hand-curated entry'],
+  ['is:shared',   'claimed by more than one node'],
+  ['via:NAME',    'vouched for by that author, e.g. via:huh'],
+];
+
+function matchesTerm(a, t) {
+  if (t === 'is:preprint') return !!a.isPreprint;
+  if (t === 'is:via' || t === 'is:author') return !!(a.viaAuthors && a.viaAuthors.length);
+  if (t === 'is:new') return !!(a.addedBy && a.addedBy !== 'seed');
+  if (t === 'is:seed') return a.addedBy === 'seed';
+  if (t === 'is:shared') return !!(a.alsoBranches && a.alsoBranches.length);
+  if (t.startsWith('via:')) {
+    const who = t.slice(4);
+    return (a.viaAuthors || []).some(v => v.toLowerCase().includes(who));
+  }
   const pmid = (a.url.match(/pubmed\.ncbi\.nlm\.nih\.gov\/(\d+)/) || [])[1] || '';
-  return a.title.toLowerCase().includes(q)
-      || a.authors.toLowerCase().includes(q)
-      || a.journalName.toLowerCase().includes(q)
-      || (a.id || '').toLowerCase().includes(q)
-      || (pmid && (pmid === q || q.includes(pmid)));
+  return a.title.toLowerCase().includes(t)
+      || a.authors.toLowerCase().includes(t)
+      || a.journalName.toLowerCase().includes(t)
+      || (a.id || '').toLowerCase().includes(t)
+      || (a.viaAuthors || []).some(v => v.toLowerCase().includes(t))
+      || (a.viaReason || '').toLowerCase().includes(t)
+      || (pmid && (pmid === t || t.includes(pmid)));
+}
+
+function matchesQuery(a, q) {
+  const terms = q.split(/\s+/).filter(Boolean);
+  return terms.every(t => matchesTerm(a, t));
 }
 
 function setSearchScope(on) {
@@ -2464,6 +2512,11 @@ function renderArticleCard(a, showNode) {
   const node = showNode && BRANCHES[a.branch] ? BRANCHES[a.branch].label : null;
   // Viewing a node that has a claim on this paper but isn't its home: name the
   // home, so appearing in two lists never reads as being filed in both.
+  // Who vouched for it, if it came in through the tracked-author lane.
+  const via = (a.viaAuthors && a.viaAuthors.length)
+    ? (a.viaAuthors.length > 1 ? a.viaAuthors.length + ' tracked authors'
+                               : a.viaAuthors[0].replace(/-/g, ' '))
+    : null;
   const visiting = !showNode && currentBranch && a.branch !== currentBranch;
   const homeNode = visiting && BRANCHES[a.branch] ? BRANCHES[a.branch].label : null;
   return `
@@ -2484,6 +2537,8 @@ function renderArticleCard(a, showNode) {
         <span class="journal">${escapeHtml(a.journalName)}</span>
         <span class="if-badge">IF ${a.if.toFixed(1)}</span>
         <span class="date">${formatDate(a.date)}</span>
+        ${a.isPreprint ? '<span class="preprint-badge" title="Preprint — not peer reviewed">PREPRINT</span>' : ''}
+        ${via ? `<span class="via-badge" title="Imported because a tracked author is on it, not via the usual autism + journal filters">◈ ${escapeHtml(via)}</span>` : ''}
         ${isNew ? '<span class="new-badge">NEW</span>' : ''}
         <span class="ext">↗ PUBMED</span>
         <span class="authors">${escapeHtml(a.authors)}</span>
@@ -3065,12 +3120,21 @@ function isDismissedRun(key) { return DISMISSED.runs.includes(key); }
 // Bookmarks — starred articles, persisted server-side so they sync across
 // devices (localStorage is only the warm-start cache).
 const BOOKMARK_KEY = 'arn-bookmarks-v1';
-let BOOKMARKS = (() => {
-  try { const p = JSON.parse(localStorage.getItem(BOOKMARK_KEY)); return Array.isArray(p) ? p : []; }
+// Un-starring is recorded explicitly rather than inferred from absence. Sync
+// merges the server's list with this browser's, so a bookmark can only ever
+// leave by being deleted here — an empty or stale server copy can no longer
+// erase one. That is precisely how they used to vanish: uistate.json existed
+// with `bookmarks: []`, and every load overwrote localStorage with nothing.
+const BM_REMOVED_KEY = 'arn-bookmarks-removed-v1';
+const readIdList = (key) => {
+  try { const p = JSON.parse(localStorage.getItem(key)); return Array.isArray(p) ? p : []; }
   catch (e) { return []; }
-})();
+};
+let BOOKMARKS = readIdList(BOOKMARK_KEY);
+let BM_REMOVED = readIdList(BM_REMOVED_KEY);
 function saveBookmarks() {
   try { localStorage.setItem(BOOKMARK_KEY, JSON.stringify(BOOKMARKS)); } catch (e) {}
+  try { localStorage.setItem(BM_REMOVED_KEY, JSON.stringify(BM_REMOVED)); } catch (e) {}
   pushUIState();
 }
 function isBookmarked(id) { return BOOKMARKS.includes(id); }
@@ -3095,12 +3159,27 @@ function saveFB() { try { localStorage.setItem(FB_KEY, JSON.stringify(FB)); } ca
 // back, and returning to the tab re-pulls to pick up edits made elsewhere.
 let UISTATE_READY = false;   // gate pushes until the first pull, so a slow load can't clobber the server
 
+// Pushes are serialized. Saving two articles in quick succession fired two
+// overlapping POSTs, and the server takes whichever *arrived* last — which can
+// be the one carrying the older state, silently dropping a bookmark. One
+// request in flight at a time, with a single coalesced follow-up, means the
+// last write always carries the newest state.
+let PUSH_INFLIGHT = false;
+let PUSH_QUEUED = false;
+
 function pushUIState() {
   if (PUBLIC_MODE || !UISTATE_READY) return;
+  if (PUSH_INFLIGHT) { PUSH_QUEUED = true; return; }
+  PUSH_INFLIGHT = true;
   fetch('/api/ui-state', {
     method: 'POST', headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ dismissed: DISMISSED, bookmarks: BOOKMARKS }),
-  }).catch(() => {});   // sync is best-effort; localStorage still has the state
+    body: JSON.stringify({ dismissed: DISMISSED, bookmarks: BOOKMARKS,
+                           bookmarksRemoved: BM_REMOVED }),
+  }).catch(() => {})    // sync is best-effort; localStorage still has the state
+    .finally(() => {
+      PUSH_INFLIGHT = false;
+      if (PUSH_QUEUED) { PUSH_QUEUED = false; pushUIState(); }
+    });
 }
 
 async function syncUIState() {
@@ -3118,9 +3197,16 @@ async function syncUIState() {
       articles: Array.isArray(dis.articles) ? dis.articles : [],
       runs: Array.isArray(dis.runs) ? dis.runs : [],
     };
-    BOOKMARKS = Array.isArray(s.bookmarks) ? s.bookmarks : [];
+    // Union of both sides, minus everything either side says was deleted.
+    const removed = new Set([...(Array.isArray(s.bookmarksRemoved) ? s.bookmarksRemoved : []),
+                             ...BM_REMOVED]);
+    const seen = new Set();
+    BOOKMARKS = [...(Array.isArray(s.bookmarks) ? s.bookmarks : []), ...BOOKMARKS]
+      .filter(id => !removed.has(id) && !seen.has(id) && seen.add(id));
+    BM_REMOVED = [...removed];
     try { localStorage.setItem(DISMISS_KEY, JSON.stringify(DISMISSED)); } catch (e) {}
     try { localStorage.setItem(BOOKMARK_KEY, JSON.stringify(BOOKMARKS)); } catch (e) {}
+    try { localStorage.setItem(BM_REMOVED_KEY, JSON.stringify(BM_REMOVED)); } catch (e) {}
   }
   if (s.feedback && typeof s.feedback === 'object') {
     FB = {};
@@ -3128,7 +3214,10 @@ async function syncUIState() {
     saveFB();
   }
   UISTATE_READY = true;
-  if (!s.exists) pushUIState();   // first sync ever: seed the server from this browser
+  // Always push after a successful pull: the merge above may have folded in
+  // bookmarks this browser made while the server was unreachable, and those
+  // only reach the server here.
+  pushUIState();
 
   // Refresh whatever is on screen with the synced state.
   updateBookmarkCount();
@@ -3174,13 +3263,24 @@ function updateBookmarkCount() {
 }
 function toggleBookmark(id, el) {
   const i = BOOKMARKS.indexOf(id);
-  if (i >= 0) BOOKMARKS.splice(i, 1); else BOOKMARKS.unshift(id);
+  if (i >= 0) {
+    BOOKMARKS.splice(i, 1);
+    if (!BM_REMOVED.includes(id)) BM_REMOVED.push(id);   // tombstone: deliberate
+  } else {
+    BOOKMARKS.unshift(id);
+    const r = BM_REMOVED.indexOf(id);
+    if (r >= 0) BM_REMOVED.splice(r, 1);                  // re-starred, clear it
+  }
   saveBookmarks();
   const on = isBookmarked(id);
   if (el) { el.classList.toggle('on', on); el.textContent = on ? '★ Saved' : '☆ Save'; }
   updateBookmarkCount();
   const bm = document.getElementById('bm-backdrop');
   if (bm && bm.classList.contains('open')) renderBookmarks();
+  // What's New carries its own Save controls, so keep them in step when a
+  // bookmark is toggled from anywhere else.
+  const nb = document.getElementById('new-backdrop');
+  if (nb && nb.classList.contains('open')) renderWhatsNew();
 }
 
 // Best-effort reinforcement signal to the learning agent (-1 dismiss / +1 keep).
@@ -3349,6 +3449,8 @@ function renderNewItem(a, dismissable) {
        style="--branch-color:${branchColor};">
       <div class="ni-title">${escapeHtml(a.title)}</div>
       <div class="ni-meta">
+        <span class="bm-toggle${isBookmarked(a.id) ? ' on' : ''}" role="button" title="Bookmark this article"
+              onclick="event.preventDefault();event.stopPropagation();toggleBookmark('${a.id}',this);">${isBookmarked(a.id) ? '★ Saved' : '☆ Save'}</span>
         <span class="fb-ctl">
           <span class="fb-up${fbState(a.id) === 1 ? ' on' : ''}" title="Relevant — teach this node to find more like it"
                 onclick="event.preventDefault();event.stopPropagation();nodeFeedback('${a.id}',1,this);">👍</span>

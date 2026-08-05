@@ -197,6 +197,14 @@
   .mom-left, .mom-right { display: flex; align-items: center; height: 20px; }
   .mom-left { justify-content: flex-end; }
   .mom-bar { height: 12px; border-radius: 3px; }
+  /* Dismiss control on a research update. Small and quiet — acknowledging an
+     erratum should not look like a primary action. */
+  .alert .upd-x {
+    float: right; background: none; border: none; cursor: pointer;
+    color: var(--ink-2); font-size: 15px; line-height: 1; padding: 0 2px;
+  }
+  .alert .upd-x:hover { color: var(--ink-0); }
+  .alert.dismissed { opacity: 0.45; }
   .mom-bar.r { background: var(--rising); }
   .mom-bar.f { background: var(--fading); }
   .mom-mid { width: 1px; height: 20px; background: var(--ink-2); margin: 0 6px; justify-self: center; }
@@ -536,7 +544,10 @@ const ROLES = [
 ];
 const UPDATE_ICONS = { retraction: '⊘', concern: '⚠', erratum: '✎', republished: '⟳', update: '↑', comment: '❝' };
 
-let DATA = { authors: {}, branches: {}, dismissed: [] };
+let DATA = { authors: {}, branches: {}, dismissed: [], dismissedUpdates: [] };
+// Updates you have acknowledged. Hidden by default but never destroyed —
+// a retraction notice must always be recoverable.
+let SHOW_DISMISSED_UPDATES = false;
 let SELECTED = null;
 let ROLE_FILTER = 'all';
 
@@ -719,8 +730,13 @@ function updatesHTML(p, papers) {
     g.on.push(a);
     byUpdate.set(u.pmid, g);
   }));
-  const all = [...byUpdate.values()];
-  if (!all.length) return '';
+  const hidden = new Set(DATA.dismissedUpdates || []);
+  const everything = [...byUpdate.values()];
+  const all = SHOW_DISMISSED_UPDATES
+    ? everything
+    : everything.filter(u => !hidden.has(String(u.pmid)));
+  const hiddenCount = everything.length - all.length;
+  if (!everything.length) return '';
   all.sort((x, y) => (rank[x.severity] - rank[y.severity]) ||
     (y.on[0].date || '').localeCompare(x.on[0].date || ''));
   const serious = all.filter(u => u.severity !== 'info').length;
@@ -731,9 +747,12 @@ function updatesHTML(p, papers) {
       and preprints that have reached their journal version.${
         serious ? ` <strong style="color:var(--neon-neuro)">${serious} need${serious === 1 ? 's' : ''} attention.</strong>`
                 : ' Nothing here has been corrected or retracted.'}</div>
-    ${shown.map(u => `<div class="alert ${esc(u.severity)}">
+    ${shown.map(u => `<div class="alert ${esc(u.severity)}${hidden.has(String(u.pmid)) ? ' dismissed' : ''}">
       <div class="alert-icon">${UPDATE_ICONS[u.kind] || '•'}</div>
       <div>
+        <button class="upd-x" data-upd="${esc(u.pmid)}" data-undo="${hidden.has(String(u.pmid)) ? '1' : ''}"
+          title="${hidden.has(String(u.pmid)) ? 'Restore this update' : 'Dismiss — hides it until you show dismissed'}"
+          >${hidden.has(String(u.pmid)) ? '↺' : '×'}</button>
         <div class="alert-label">${esc(u.label)}</div>
         <div class="alert-title"><a href="${esc(u.url)}" target="_blank" rel="noopener">${esc(u.title || ('PMID ' + u.pmid))}</a></div>
         <div class="alert-on">on: ${u.on.map(a => esc(a.title)).join('<br>on: ')}
@@ -742,6 +761,11 @@ function updatesHTML(p, papers) {
     ${all.length > UPDATE_PREVIEW
       ? `<button class="fbtn" id="upd-toggle" style="margin-top:6px">${
           UPDATES_EXPANDED ? '− Show fewer' : `+ ${all.length - UPDATE_PREVIEW} more update${all.length - UPDATE_PREVIEW === 1 ? '' : 's'}`}</button>`
+      : ''}
+    ${(hiddenCount || SHOW_DISMISSED_UPDATES)
+      ? `<button class="fbtn" id="upd-dismissed" style="margin-top:6px;margin-left:6px">${
+          SHOW_DISMISSED_UPDATES ? 'Hide dismissed'
+            : `Show ${hiddenCount} dismissed`}</button>`
       : ''}
   </div>`;
 }
@@ -974,6 +998,23 @@ function wireProfile(p) {
 
   const ut = $('upd-toggle');
   if (ut) ut.onclick = () => { UPDATES_EXPANDED = !UPDATES_EXPANDED; renderProfile(); };
+
+  const ud = $('upd-dismissed');
+  if (ud) ud.onclick = () => {
+    SHOW_DISMISSED_UPDATES = !SHOW_DISMISSED_UPDATES; renderProfile();
+  };
+
+  document.querySelectorAll('[data-upd]').forEach(el => el.onclick = async () => {
+    const undo = el.dataset.undo === '1';
+    // Update in place first so the click feels immediate, then persist. A
+    // failed write is corrected by the reload below.
+    const list = DATA.dismissedUpdates || (DATA.dismissedUpdates = []);
+    const pmid = String(el.dataset.upd);
+    if (undo) DATA.dismissedUpdates = list.filter(x => String(x) !== pmid);
+    else if (!list.map(String).includes(pmid)) list.push(pmid);
+    renderProfile();
+    await api('/api/update-dismiss', { pmid, undo });
+  });
 
   document.querySelectorAll('[data-exclude]').forEach(el => el.onclick = async () => {
     await api('/api/author-exclude', { key: p.key, pmid: el.dataset.exclude });

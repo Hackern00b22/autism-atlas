@@ -352,9 +352,9 @@
    "learned": {
     "include": {},
     "exclude": {},
-    "pos_events": 2,
+    "pos_events": 4,
     "neg_events": 1,
-    "updatedAt": "2026-07-29"
+    "updatedAt": "2026-08-05"
    },
    "lastFetched": "2026-07-29"
   },
@@ -367,8 +367,9 @@
    "learned": {
     "include": {},
     "exclude": {},
-    "pos_events": 0,
-    "neg_events": 0
+    "pos_events": 2,
+    "neg_events": 0,
+    "updatedAt": "2026-08-05"
    },
    "lastFetched": "2026-08-04"
   },
@@ -13405,6 +13406,568 @@
    "journalKey": "biol-psych",
    "alsoBranches": [
     "neuroscience"
+   ]
+  },
+  {
+   "id": "pm-42039560",
+   "title": "Genetic comparisons of interleukin-17 reveal a framework for complex signaling evolution.",
+   "date": "2026-04-14",
+   "authors": "Cho SS, Choi GB, Huh JR, et al.",
+   "url": "https://pubmed.ncbi.nlm.nih.gov/42039560/",
+   "priority": "unclassified",
+   "addedBy": "authors-2026-08-05",
+   "mesh": [],
+   "branchKey": "cytokines",
+   "viaAuthors": [
+    "choi-gloria-b",
+    "elde-nels-c",
+    "huh-jun-r"
+   ],
+   "journalDisplay": "bioRxiv : the preprint server for biology",
+   "isPreprint": true,
+   "viaReason": "3 tracked authors"
+  },
+  {
+   "id": "pm-40199321",
+   "title": "Inflammatory and anti-inflammatory cytokines bidirectionally modulate amygdala circuits regulating anxiety.",
+   "date": "2025-04-07",
+   "authors": "Lee B, Kwon JT, Jeong Y, et al.",
+   "url": "https://pubmed.ncbi.nlm.nih.gov/40199321/",
+   "priority": "mechanistic",
+   "addedBy": "authors-2026-08-05",
+   "mesh": [
+    "Animals",
+    "Anxiety",
+    "Mice",
+    "Mice, Inbred C57BL",
+    "Amygdala",
+    "Male",
+    "Basolateral Nuclear Complex",
+    "Neurons",
+    "Interleukin-17",
+    "Cytokines",
+    "Interleukin-10",
+    "Receptors, Interleukin-17",
+    "Inflammation"
+   ],
+   "branchKey": "cytokines",
+   "viaAuthors": [
+    "choi-gloria-b",
+    "huh-jun-r"
+   ],
+   "journalKey": "cell",
+   "viaReason": "2 tracked authors"
+  },
+  {
+   "id": "pm-41297539",
+   "title": "IL-1R1-positive dorsal raphe neurons drive self-imposed social withdrawal in sickness.",
+   "date": "2025-11-25",
+   "authors": "Yang L, Andina ML, Witkowski M, et al.",
+   "url": "https://pubmed.ncbi.nlm.nih.gov/41297539/",
+   "priority": "mechanistic",
+   "addedBy": "authors-2026-08-05",
+   "mesh": [
+    "Animals",
+    "Dorsal Raphe Nucleus",
+    "Neurons",
+    "Mice",
+    "Male",
+    "Receptors, Interleukin-1 Type I",
+    "Mice, Inbred C57BL",
+    "Interleukin-1beta",
+    "Social Isolation",
+    "Inflammation",
+    "Illness Behavior",
+    "Mice, Knockout",
+    "Behavior, Animal"
+   ],
+   "branchKey": "cytokines",
+   "viaAuthors": [
+    "choi-gloria-b",
+    "huh-jun-r"
+   ],
+   "journalKey": "cell",
+   "viaReason": "2 tracked authors"
+  },
+  {
+   "id": "pm-41506266",
+   "title": "In vivo detection of immune responses via cytokine activity labeling.",
+   "date": "2026-01-07",
+   "authors": "Lu G, Zhang S, Feng M, et al.",
+   "url": "https://pubmed.ncbi.nlm.nih.gov/41506266/",
+   "priority": "mechanistic",
+   "addedBy": "authors-2026-08-05",
+   "mesh": [
+    "Animals",
+    "Mice",
+    "Interferon-gamma",
+    "Intestinal Mucosa",
+    "Interleukin-17",
+    "CD8-Positive T-Lymphocytes",
+    "Cytokines",
+    "Mice, Inbred C57BL",
+    "Receptors, Cytokine",
+    "Humans",
+    "Ileum",
+    "Epithelial Cells"
+   ],
+   "branchKey": "cytokines",
+   "viaAuthors": [
+    "choi-gloria-b",
+    "huh-jun-r"
+   ],
+   "journalKey": "cell",
+   "viaReason": "2 tracked authors"
+  },
+  {
+   "id": "pm-37489149",
+   "title": "Complex Neuroimmune Involvement in Neurodevelopment: A Mini-Review.",
+   "date": "2023-07-19",
+   "authors": "Monet MC, Quan N",
+   "url": "https://pubmed.ncbi.nlm.nih.gov/37489149/",
+   "priority": "review",
+   "addedBy": "authors-2026-08-05",
+   "mesh": [],
+   "branchKey": "cytokines",
+   "viaAuthors": [
+    "quan-ning"
+   ],
+   "journalDisplay": "Journal of inflammation research",
+   "viaReason": "neurodevelopmental"
+  },
+  {
+   "id": "pm-40483766",
+   "title": "Neuromodulation by the immune system: implications for brain-directed immunotherapy.",
+   "date": "2025-06-06",
+   "authors": "Cho DH, Huh JR, Choi GB",
+   "url": "https://pubmed.ncbi.nlm.nih.gov/40483766/",
+   "priority": "review",
+   "addedBy": "authors-2026-08-05",
+   "mesh": [
+    "Humans",
+    "Brain",
+    "Animals",
+    "Immunotherapy",
+    "Immune System",
+    "Neuroimmunomodulation",
+    "Mental Disorders"
+   ],
+   "branchKey": "cytokines",
+   "viaAuthors": [
+    "choi-gloria-b",
+    "huh-jun-r"
+   ],
+   "journalDisplay": "Current opinion in immunology",
+   "viaReason": "2 tracked authors"
+  },
+  {
+   "id": "pm-42375470",
+   "title": "Orchestrating neuroinflammation: A symphony of Interleukin-1 and cell type-specific Interleukin-1 receptor type 1 signaling in the brain.",
+   "date": "2026-04-01",
+   "authors": "Nemeth D, Farsian V, Schrier M, et al.",
+   "url": "https://pubmed.ncbi.nlm.nih.gov/42375470/",
+   "priority": "unclassified",
+   "addedBy": "authors-2026-08-05",
+   "mesh": [],
+   "branchKey": "cytokines",
+   "viaAuthors": [
+    "quan-ning"
+   ],
+   "viaReason": "interleukin, il-1",
+   "journalDisplay": "Brain behavior and immunity integrative",
+   "alsoBranches": [
+    "immunology"
+   ]
+  },
+  {
+   "id": "pm-35417672",
+   "title": "Fungus packs a punch in the gut.",
+   "date": "2022-04-12",
+   "authors": "Cho DH, Choi GB",
+   "url": "https://pubmed.ncbi.nlm.nih.gov/35417672/",
+   "priority": "mechanistic",
+   "addedBy": "authors-2026-08-05",
+   "mesh": [
+    "Fungi",
+    "Receptors, Interleukin-17",
+    "Th17 Cells"
+   ],
+   "branchKey": "cytokines",
+   "viaAuthors": [
+    "choi-gloria-b"
+   ],
+   "viaReason": "interleukin, il-17",
+   "journalKey": "immunity"
+  },
+  {
+   "id": "pm-35282272",
+   "title": "Dynamic Interleukin-1 Receptor Type 1 Signaling Mediates Microglia-Vasculature Interactions Following Repeated Systemic LPS.",
+   "date": "2022-03-04",
+   "authors": "Nemeth DP, Liu X, McKim DB, et al.",
+   "url": "https://pubmed.ncbi.nlm.nih.gov/35282272/",
+   "priority": "mechanistic",
+   "addedBy": "authors-2026-08-05",
+   "mesh": [],
+   "branchKey": "cytokines",
+   "viaAuthors": [
+    "quan-ning"
+   ],
+   "viaReason": "interleukin, il-1",
+   "journalDisplay": "Journal of inflammation research"
+  },
+  {
+   "id": "pm-37884959",
+   "title": "IL-1R1 signaling in TBI: assessing chronic impacts and neuroinflammatory dynamics in a mouse model of mild closed-head injury.",
+   "date": "2023-10-26",
+   "authors": "Vincent JC, Garnett CN, Watson JB, et al.",
+   "url": "https://pubmed.ncbi.nlm.nih.gov/37884959/",
+   "priority": "mechanistic",
+   "addedBy": "authors-2026-08-05",
+   "mesh": [
+    "Animals",
+    "Mice",
+    "Brain Injuries, Traumatic",
+    "Cytokines",
+    "Endothelial Cells",
+    "Head Injuries, Closed",
+    "Inflammation",
+    "Interleukin-1",
+    "Mice, Inbred C57BL",
+    "Microglia",
+    "Neuroinflammatory Diseases",
+    "Receptors, Interleukin-1 Type I"
+   ],
+   "branchKey": "cytokines",
+   "viaAuthors": [
+    "quan-ning"
+   ],
+   "viaReason": "interleukin, il-1",
+   "journalKey": "j-neuroinfl",
+   "alsoBranches": [
+    "immunology"
+   ]
+  },
+  {
+   "id": "pm-39563437",
+   "title": "Localization of brain neuronal IL-1R1 reveals specific neural circuitries responsive to immune signaling.",
+   "date": "2024-11-19",
+   "authors": "Nemeth DP, Liu X, Monet MC, et al.",
+   "url": "https://pubmed.ncbi.nlm.nih.gov/39563437/",
+   "priority": "mechanistic",
+   "addedBy": "authors-2026-08-05",
+   "mesh": [
+    "Animals",
+    "Mice",
+    "Male",
+    "Brain",
+    "Neurons",
+    "Signal Transduction",
+    "Mice, Transgenic",
+    "Mice, Inbred C57BL",
+    "Receptors, Interleukin-1 Type I",
+    "Neural Pathways"
+   ],
+   "branchKey": "cytokines",
+   "viaAuthors": [
+    "quan-ning"
+   ],
+   "viaReason": "interleukin, il-1",
+   "journalKey": "j-neuroinfl"
+  },
+  {
+   "id": "pm-41271191",
+   "title": "Temporally-regulated genetic access to IL-1β-expressing cellular networks in homeostasis and following peripheral or central immune stimuli.",
+   "date": "2025-11-19",
+   "authors": "Nemeth DP, Liu X, Chen L, et al.",
+   "url": "https://pubmed.ncbi.nlm.nih.gov/41271191/",
+   "priority": "mechanistic",
+   "addedBy": "authors-2026-08-05",
+   "mesh": [
+    "Animals",
+    "Interleukin-1beta",
+    "Mice",
+    "Homeostasis",
+    "Brain",
+    "Mice, Transgenic",
+    "Male",
+    "Microglia",
+    "Inflammation",
+    "Mice, Inbred C57BL"
+   ],
+   "branchKey": "cytokines",
+   "viaAuthors": [
+    "quan-ning"
+   ],
+   "viaReason": "interleukin, il-1β",
+   "journalKey": "bbi"
+  },
+  {
+   "id": "pm-34093593",
+   "title": "Inflammatory Regulation of CNS Barriers After Traumatic Brain Injury: A Tale Directed by Interleukin-1.",
+   "date": "2021-05-21",
+   "authors": "Bodnar CN, Watson JB, Higgins EK, et al.",
+   "url": "https://pubmed.ncbi.nlm.nih.gov/34093593/",
+   "priority": "review",
+   "addedBy": "authors-2026-08-05",
+   "mesh": [
+    "Animals",
+    "Anti-Inflammatory Agents",
+    "Blood-Brain Barrier",
+    "Blood-Retinal Barrier",
+    "Brain Injuries, Traumatic",
+    "Humans",
+    "Inflammation",
+    "Inflammation Mediators",
+    "Interleukin-1",
+    "Meninges",
+    "Receptors, Interleukin-1 Type I",
+    "Signal Transduction"
+   ],
+   "branchKey": "cytokines",
+   "viaAuthors": [
+    "quan-ning"
+   ],
+   "viaReason": "interleukin",
+   "journalDisplay": "Frontiers in immunology",
+   "alsoBranches": [
+    "immunology"
+   ]
+  },
+  {
+   "id": "pm-40073106",
+   "title": "RTF1 mediates epigenetic control of Th17 cell differentiation via H2B monoubiquitination.",
+   "date": "2025-03-01",
+   "authors": "Galan C, Lu G, Gill R, et al.",
+   "url": "https://pubmed.ncbi.nlm.nih.gov/40073106/",
+   "priority": "unclassified",
+   "addedBy": "authors-2026-08-05",
+   "mesh": [
+    "Th17 Cells",
+    "Cell Differentiation",
+    "Ubiquitination",
+    "Epigenesis, Genetic",
+    "Histones",
+    "Animals",
+    "Mice",
+    "Ubiquitin-Protein Ligases",
+    "Mice, Inbred C57BL",
+    "Mice, Knockout",
+    "Colitis, Ulcerative",
+    "Interleukin-17",
+    "Humans",
+    "T-Lymphocytes, Regulatory",
+    "Transcription Factors"
+   ],
+   "branchKey": "cytokines",
+   "viaAuthors": [
+    "huh-jun-r"
+   ],
+   "viaReason": "interleukin, th17",
+   "journalDisplay": "Journal of immunology (Baltimore, Md. : 1950)",
+   "alsoBranches": [
+    "immunology"
+   ]
+  },
+  {
+   "id": "pm-39839188",
+   "title": "Flavins and Flavoproteins in the Neuroimmune Landscape of Stress Sensitization and Major Depressive Disorder.",
+   "date": "2025-01-16",
+   "authors": "Schrier MS, Smirnova MI, Nemeth DP, et al.",
+   "url": "https://pubmed.ncbi.nlm.nih.gov/39839188/",
+   "priority": "review",
+   "addedBy": "authors-2026-08-05",
+   "mesh": [],
+   "branchKey": "cytokines",
+   "viaAuthors": [
+    "quan-ning"
+   ],
+   "viaReason": "interleukin, il-1β",
+   "journalDisplay": "Journal of inflammation research"
+  },
+  {
+   "id": "pm-40703575",
+   "title": "Modulation of adult hippocampal neurogenesis by interleukin 1 signaling.",
+   "date": "2025-04-25",
+   "authors": "Smirnova MI, Quan N",
+   "url": "https://pubmed.ncbi.nlm.nih.gov/40703575/",
+   "priority": "unclassified",
+   "addedBy": "authors-2026-08-05",
+   "mesh": [],
+   "branchKey": "cytokines",
+   "viaAuthors": [
+    "quan-ning"
+   ],
+   "viaReason": "interleukin, il-1",
+   "journalDisplay": "Neurobiology of sleep and circadian rhythms"
+  },
+  {
+   "id": "pm-34631418",
+   "title": "Modulation of Neural Networks by Interleukin-1.",
+   "date": "2021-08-23",
+   "authors": "Nemeth DP, Quan N",
+   "url": "https://pubmed.ncbi.nlm.nih.gov/34631418/",
+   "priority": "review",
+   "addedBy": "authors-2026-08-05",
+   "mesh": [],
+   "branchKey": "cytokines",
+   "viaAuthors": [
+    "quan-ning"
+   ],
+   "viaReason": "interleukin, il-1",
+   "journalDisplay": "Brain plasticity (Amsterdam, Netherlands)"
+  },
+  {
+   "id": "pm-36216717",
+   "title": "Cutting edge: interleukin-17a prompts HIF1α for wound healing.",
+   "date": "2022-10-07",
+   "authors": "Ahmed M, Huh JR",
+   "url": "https://pubmed.ncbi.nlm.nih.gov/36216717/",
+   "priority": "unclassified",
+   "addedBy": "authors-2026-08-05",
+   "mesh": [
+    "Humans",
+    "Interleukin-17",
+    "Psoriasis",
+    "Wound Healing",
+    "Autoimmune Diseases",
+    "Cytokines"
+   ],
+   "branchKey": "cytokines",
+   "viaAuthors": [
+    "huh-jun-r"
+   ],
+   "viaReason": "interleukin, il-17a",
+   "journalDisplay": "Trends in immunology"
+  },
+  {
+   "id": "pm-36388133",
+   "title": "IL-1 Receptor-1 on Vglut2 + neurons in the hippocampus is critical for neuronal and behavioral sensitization after repeated social stress.",
+   "date": "2022-10-29",
+   "authors": "DiSabato DJ, Yin W, Biltz RG, et al.",
+   "url": "https://pubmed.ncbi.nlm.nih.gov/36388133/",
+   "priority": "unclassified",
+   "addedBy": "authors-2026-08-05",
+   "mesh": [],
+   "branchKey": "cytokines",
+   "viaAuthors": [
+    "quan-ning"
+   ],
+   "viaReason": "interleukin, il-1",
+   "journalDisplay": "Brain, behavior, & immunity - health",
+   "alsoBranches": [
+    "immunology"
+   ]
+  },
+  {
+   "id": "pm-36917985",
+   "title": "Endoplasmic reticulum stress in the intestinal epithelium initiates purine metabolite synthesis and promotes Th17 cell differentiation in the gut.",
+   "date": "2023-03-13",
+   "authors": "Duan J, Matute JD, Unger LW, et al.",
+   "url": "https://pubmed.ncbi.nlm.nih.gov/36917985/",
+   "priority": "mechanistic",
+   "addedBy": "authors-2026-08-05",
+   "mesh": [
+    "Endoplasmic Reticulum Stress",
+    "Intestinal Mucosa",
+    "Th17 Cells",
+    "Cell Differentiation",
+    "Humans",
+    "Animals",
+    "Mice",
+    "Mice, Transgenic",
+    "Anti-Bacterial Agents",
+    "Purines"
+   ],
+   "branchKey": "cytokines",
+   "viaAuthors": [
+    "huh-jun-r"
+   ],
+   "viaReason": "il-17, th17",
+   "journalKey": "immunity"
+  },
+  {
+   "id": "pm-35264870",
+   "title": "Stressor-Induced Reduction in Cognitive Behavior is Associated with Impaired Colonic Mucus Layer Integrity and is Dependent Upon the LPS-Binding Protein Receptor CD14.",
+   "date": "2022-03-03",
+   "authors": "Jaggers RM, DiSabato DJ, Loman BR, et al.",
+   "url": "https://pubmed.ncbi.nlm.nih.gov/35264870/",
+   "priority": "unclassified",
+   "addedBy": "authors-2026-08-05",
+   "mesh": [],
+   "branchKey": "cytokines",
+   "viaAuthors": [
+    "quan-ning"
+   ],
+   "viaReason": "il-6",
+   "journalDisplay": "Journal of inflammation research"
+  },
+  {
+   "id": "pm-41780806",
+   "title": "Interleukin-1 receptor-1 signaling mediates neuroinflammation, neuronal injury, and cognitive decline after diffuse traumatic brain injury.",
+   "date": "2026-03-02",
+   "authors": "Davis AC, Goodman EJ, Wangler LM, et al.",
+   "url": "https://pubmed.ncbi.nlm.nih.gov/41780806/",
+   "priority": "mechanistic",
+   "addedBy": "authors-2026-08-05",
+   "mesh": [
+    "Animals",
+    "Brain Injuries, Traumatic",
+    "Male",
+    "Receptors, Interleukin-1 Type I",
+    "Mice",
+    "Mice, Knockout",
+    "Neurons",
+    "Signal Transduction",
+    "Neuroinflammatory Diseases",
+    "Female",
+    "Mice, Inbred C57BL",
+    "Cognitive Dysfunction",
+    "Hippocampus",
+    "Brain",
+    "Inflammation",
+    "Disease Models, Animal",
+    "Fear"
+   ],
+   "branchKey": "cytokines",
+   "viaAuthors": [
+    "quan-ning"
+   ],
+   "viaReason": "interleukin",
+   "journalKey": "bbi"
+  },
+  {
+   "id": "pm-38459193",
+   "title": "Enhanced fear memory after social defeat in mice is dependent on interleukin-1 receptor signaling in glutamatergic neurons.",
+   "date": "2024-03-08",
+   "authors": "Goodman EJ, Biltz RG, Packer JM, et al.",
+   "url": "https://pubmed.ncbi.nlm.nih.gov/38459193/",
+   "priority": "mechanistic",
+   "addedBy": "authors-2026-08-05",
+   "mesh": [
+    "Animals",
+    "Male",
+    "Mice",
+    "Fear",
+    "Glutamic Acid",
+    "Hippocampus",
+    "Memory",
+    "Mice, Inbred C57BL",
+    "Microglia",
+    "Neurons",
+    "Receptors, Interleukin-1",
+    "Receptors, Interleukin-1 Type I",
+    "Signal Transduction",
+    "Social Defeat",
+    "Stress, Psychological"
+   ],
+   "branchKey": "immunology",
+   "viaAuthors": [
+    "quan-ning"
+   ],
+   "viaReason": "interleukin, il-1β",
+   "journalKey": "mol-psych",
+   "alsoBranches": [
+    "cytokines"
    ]
   }
  ]
