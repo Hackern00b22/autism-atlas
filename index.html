@@ -20,7 +20,7 @@
     --bg-2: #11151f;
     --ink-0: #e6ecff;
     --ink-1: #98a4c2;
-    --ink-2: #5d6783;
+    --ink-2: #78849f;
     --grid: rgba(var(--line-rgb), 0.06);
     --neon-immuno:   #00f0ff;
     --neon-cyto:     #ff2bd6;
@@ -33,13 +33,21 @@
     --tier-trans:  #b6ff3c;
     --tier-mech:   #98a4c2;
     --tier-review: #7a5cff;
+    --tier-uncl:   #7e8aa6;
     --tier-other:  #5d6783;
+    /* Bookmark gold and the preprint warning both need a light-mode value:
+       amber on a pale panel is ~1.2:1, i.e. gone. */
+    --gold: #ffd97a;
+    --warn: #ffb020;
+    --scrim: rgba(var(--void-rgb), 0.86);
     /* Canvas reads these rather than carrying its own copies. */
     --canvas-bg: #05060a;
     --canvas-node-label: rgba(200, 214, 245, 0.85);
     --canvas-core-ring: rgba(255, 255, 255, 0.9);
     --canvas-overlap: 150, 170, 220;
     --canvas-spoke-start: rgba(245, 247, 255, 0.5);
+    --core-fill: #E8EDF7;
+    --core-label: #0B1119;
     /* Text and marks that sit on a filled accent. Dark in this theme because
        the accents are bright neon; white in light mode because they are not. */
     /* Surfaces, not colours-with-alpha. Dark keeps the glass; light goes
@@ -69,7 +77,6 @@
   :root[data-theme="light"] .search-fab,
   :root[data-theme="light"] .export-fab,
   :root[data-theme="light"] .theme-fab,
-  :root[data-theme="light"] .hud,
   :root[data-theme="light"] .legend,
   :root[data-theme="light"] .modal,
   :root[data-theme="light"] .def-modal,
@@ -78,6 +85,9 @@
     box-shadow: var(--panel-shadow);
   }
   /* The scrim behind a modal should dim the page, not frost it. */
+  /* Animations outrank author-normal declarations, so fabglow's box-shadow
+     kept the magenta neon pulse in light mode and swallowed the themed lift. */
+  :root[data-theme="light"] .demo-fab { animation: none; }
   :root[data-theme="light"] .modal-backdrop {
     background: rgba(28, 40, 62, 0.28);
   }
@@ -101,7 +111,7 @@
     --bg-2: #D2DAE6;
     --ink-0: #0F1720;
     --ink-1: #414F66;
-    --ink-2: #6A778F;
+    --ink-2: #55617A;
     --grid: rgba(46, 62, 90, 0.10);
     --neon-immuno:   #00707F;
     --neon-cyto:     #B01B8C;
@@ -114,12 +124,18 @@
     --tier-trans:  #446400;
     --tier-mech:   #5C6A85;
     --tier-review: #5340C4;
-    --tier-other:  #77839B;
+    --tier-uncl:   #5C6A85;
+    --tier-other:  #5F6B82;
+    --gold: #8A5A00;
+    --warn: #9A6300;
+    --scrim: rgba(28, 40, 62, 0.34);
     --canvas-bg: #F4F7FB;
     --canvas-node-label: rgba(28, 38, 52, 0.9);
     --canvas-core-ring: rgba(30, 40, 55, 0.75);
     --canvas-overlap: 96, 116, 158;
     --canvas-spoke-start: rgba(70, 86, 116, 0.55);
+    --core-fill: #2B3852;
+    --core-label: #F4F7FC;
     --surface-1: #F2F5F9;
     --surface-2: #E8EDF4;
     --surface-3: #E3E9F2;
@@ -232,12 +248,17 @@
   .corner.bl { bottom: 16px; left: 16px; border-right: none; border-top: none; }
   .corner.br { bottom: 16px; right: 16px; border-left: none; border-top: none; }
   .hint {
-    position: fixed; bottom: 12px; left: 50%; transform: translateX(-50%);
+    /* left:50% with auto width gives a shrink-to-fit box of only 50vw, so this
+       line wrapped upward into the FAB cluster on any normal laptop. Anchor it
+       to the left of the FABs instead and let it truncate rather than grow. */
+    position: fixed; bottom: 14px; left: 24px; right: 300px;
     font-family: 'JetBrains Mono', ui-monospace, 'SF Mono', SFMono-Regular, Menlo, Consolas, monospace;
-    font-size: 11.5px; letter-spacing: 0.2em;
+    font-size: 11.5px; letter-spacing: 0.12em;
     color: var(--ink-2); text-transform: uppercase;
     z-index: 10; pointer-events: none;
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
   }
+  @media (max-width: 1000px) { .hint { display: none; } }
 
   /* DEFINITIONS BUTTON */
   .def-button {
@@ -361,8 +382,8 @@
     background: var(--surface-1);
     backdrop-filter: var(--blur);
     -webkit-backdrop-filter: var(--blur);
-    border: 1px solid #ffd97a;
-    color: #ffd97a;
+    border: 1px solid var(--gold);
+    color: var(--gold);
     font-family: 'JetBrains Mono', ui-monospace, 'SF Mono', SFMono-Regular, Menlo, Consolas, monospace;
     font-size: 12.5px; letter-spacing: 0.25em;
     text-transform: uppercase;
@@ -374,15 +395,15 @@
     box-shadow: 0 0 12px rgba(255, 217, 122, 0.2);
   }
   .bm-button:hover {
-    background: #ffd97a; color: var(--on-accent);
+    background: var(--gold); color: var(--on-accent);
     box-shadow: 0 0 20px rgba(255, 217, 122, 0.5);
   }
   .bm-button::before { content: '★'; font-size: 13.5px; }
   .bm-button .bm-count {
-    background: #ffd97a; color: var(--on-accent); border-radius: 8px;
+    background: var(--gold); color: var(--on-accent); border-radius: 8px;
     padding: 0 6px; font-size: 11.5px; min-width: 14px; text-align: center; letter-spacing: 0;
   }
-  .bm-button:hover .bm-count { background: var(--invert-bg); color: #ffd97a; }
+  .bm-button:hover .bm-count { background: var(--invert-bg); color: var(--gold); }
   .bm-button .bm-count:empty { display: none; }
   @media (max-width: 1100px) {
     .bm-button { right: 32px; top: auto; bottom: 380px; }
@@ -420,16 +441,16 @@
   }
 
   .ni-meta .bm-toggle { cursor: pointer; }
-  .ni-meta .bm-toggle.on { color: var(--neon-behav); }
+  .ni-meta .bm-toggle.on { background: var(--gold); color: var(--on-accent); }
   /* bookmark toggle on article cards */
   .bm-toggle {
-    cursor: pointer; user-select: none; color: #ffd97a;
+    cursor: pointer; user-select: none; color: var(--gold);
     border: 1px solid rgba(255, 217, 122, 0.4); border-radius: 4px;
     padding: 1px 7px; font-size: 11.5px; letter-spacing: 0.08em;
     transition: all 0.15s; white-space: nowrap;
   }
   .bm-toggle:hover { background: rgba(255, 217, 122, 0.15); }
-  .bm-toggle.on { background: #ffd97a; color: var(--on-accent); border-color: #ffd97a; }
+  .bm-toggle.on { background: var(--gold); color: var(--on-accent); border-color: var(--gold); }
 
   /* per-article node feedback 👍/👎 */
   .fb-ctl { display: inline-flex; gap: 2px; align-items: center; }
@@ -736,7 +757,7 @@
     display: inline-flex; align-items: center; gap: 4px;
     background: rgba(255, 217, 122, 0.1);
     border: 1px solid rgba(255, 217, 122, 0.35);
-    color: #ffd97a;
+    color: var(--gold);
     border-radius: 3px;
     padding: 5px 9px;
     font-family: 'JetBrains Mono', ui-monospace, 'SF Mono', SFMono-Regular, Menlo, Consolas, monospace;
@@ -1336,7 +1357,7 @@
     border-color: var(--accent, var(--neon-immuno));
   }
   .modal-filters input[type="search"] { flex: 1; min-width: 180px; }
-  .modal-filters input[type="date"] { color-scheme: dark; }
+  .modal-filters input[type="date"] { color-scheme: light dark; }
   .filter-clear {
     background: transparent;
     border: 1px solid rgba(var(--line-rgb), 0.18);
@@ -1530,8 +1551,8 @@
      a Nature paper is the one way this library could actively mislead. */
   .article-meta .preprint-badge {
     background: rgba(255, 176, 32, 0.16);
-    color: #ffb020;
-    border: 1px solid rgba(255, 176, 32, 0.4);
+    color: var(--warn);
+    border: 1px solid var(--warn);
     padding: 2px 6px; border-radius: 2px;
     font-size: 11px; letter-spacing: 0.15em;
   }
@@ -1680,7 +1701,7 @@
   .demo-spot {
     position: fixed; z-index: 300; pointer-events: none; display: none;
     border: 1px solid rgba(255,43,214,0.6); border-radius: 8px;
-    box-shadow: 0 0 0 9999px var(--surface-2), 0 0 34px rgba(255,43,214,0.25);
+    box-shadow: 0 0 0 9999px var(--scrim), 0 0 34px rgba(255,43,214,0.25);
     transition: all 0.45s cubic-bezier(0.25, 0.8, 0.3, 1);
   }
   body.demo-on .demo-spot { display: block; }
@@ -1717,6 +1738,7 @@
   .tier-translational        { --priority-color: var(--tier-trans); }
   .tier-mechanistic          { --priority-color: var(--tier-mech); }
   .tier-review               { --priority-color: var(--tier-review); }
+  .tier-unclassified         { --priority-color: var(--tier-uncl); }
   .tier-other                { --priority-color: var(--tier-other); }
 </style>
 </head>
@@ -1994,15 +2016,18 @@
 const PUBLIC_MODE = true;
 
 let JOURNALS, BRANCHES, ARTICLES, META, TIERS;
-const TIER_COLORS = {
-  'clinical-trial':       '#ff5757',
-  'clinical-observation': '#ffb020',
-  'translational':        '#b6ff3c',
-  'mechanistic':          '#98a4c2',
-  'review':               '#7a5cff',
-  'unclassified':         '#7e8aa6',
-  'other':                '#5d6783',
+// Read from the stylesheet, not copied from it. This table used to hold the
+// dark palette verbatim, so in light mode every active priority chip painted a
+// neon fill under white text (the default "All" chip came out at 1.18:1).
+const TIER_VAR = {
+  'clinical-trial': '--tier-trial', 'clinical-observation': '--tier-clin',
+  'translational': '--tier-trans', 'mechanistic': '--tier-mech',
+  'review': '--tier-review', 'unclassified': '--tier-uncl', 'other': '--tier-other',
 };
+function tierColor(key) {
+  return (TIER_VAR[key] && themeVar(TIER_VAR[key])) || themeVar('--ink-1');
+}
+const TIER_COLORS = new Proxy({}, { get: (_, k) => tierColor(k) });
 
 // Which node an article belongs to and which journal it came from are two
 // separate questions. A branchKey means the topic query placed it, so it wins
@@ -2364,11 +2389,7 @@ function draw() {
     ctx.arc(n.x, n.y, n.r, 0, Math.PI * 2);
 
     if (n.type === 'core') {
-      const g = ctx.createRadialGradient(n.x, n.y, 2, n.x, n.y, n.r);
-      g.addColorStop(0, 'rgba(255,255,255,0.95)');
-      g.addColorStop(0.6, 'rgba(180,200,255,0.25)');
-      g.addColorStop(1, `rgba(${themeVar('--line-rgb')}, 0.05)`);
-      ctx.fillStyle = g;
+      ctx.fillStyle = themeVar('--core-fill');
       ctx.fill();
       ctx.lineWidth = 1.4;
       ctx.strokeStyle = themeVar('--canvas-core-ring');
@@ -2428,7 +2449,10 @@ function draw() {
     ctx.shadowBlur = 0;
 
     if (n.type === 'core') {
-      ctx.fillStyle = themeVar('--bg-1');
+      // Chosen against --core-fill, not against the page: the core is now a
+      // solid disc, so the label needs the contrast the gradient used to give
+      // it for free at the centre.
+      ctx.fillStyle = themeVar('--core-label');
       ctx.font = '600 15px "Space Grotesk", sans-serif';
       ctx.textAlign = 'center';
       ctx.textBaseline = 'middle';
@@ -2762,9 +2786,13 @@ function renderArticles() {
   let html = '';
   let dividerInserted = false;
   const showDivider = currentSort === 'priority' && activeTiers.size === 0;
+  const anyBoosted = list.some(a => a.isBoosted);
 
   for (const a of list) {
-    if (showDivider && !dividerInserted && !a.isBoosted && html.length > 0) {
+    // `html.length > 0` was meant to prevent a leading divider, but it also
+    // skipped the very first card — so a result set with nothing boosted got
+    // the divider wedged after card one instead of not appearing at all.
+    if (showDivider && !dividerInserted && !a.isBoosted && anyBoosted) {
       html += '<div class="boosted-separator">— STANDARD PRIORITY —</div>';
       dividerInserted = true;
     }
@@ -2880,6 +2908,9 @@ clearEl.addEventListener('click', () => {
   searchEl.value = ''; fromEl.value = ''; toEl.value = '';
   activeTiers.clear();
   buildPriorityChips();
+  // In library-wide search the scope toggle is hidden, so turning it off here
+  // would strand you inside one node with no visible control to get back out.
+  if (GLOBAL_SEARCH) { renderArticles(); return; }
   setSearchScope(false);
 });
 
@@ -3315,7 +3346,9 @@ function askSummary(data) {
 function askHitHtml(r) {
   const a = r.article;
   const b = BRANCHES[r.branch];
-  const color = b ? branchColor(a.branch) : themeVar('--ink-2');
+  // r.branch comes from the server; `a` is the raw store entry, which carries
+  // no `branch` field — that exists only on the client's resolved copies.
+  const color = b ? branchColor(r.branch) : themeVar('--ink-2');
   const tier = TIERS[r.tier] || TIERS.other;
   const why = r.matched && r.matched.length
     ? 'matched ' + r.matched.map(t => `<em>${escapeHtml(t)}</em>`).join(', ')
@@ -4184,7 +4217,7 @@ function renderBookmarks() {
     body.innerHTML = '<div class="bm-empty">No bookmarks yet.<br>Open a branch node and click <b>☆ Save</b> on any article to star it here.</div>';
     return;
   }
-  body.innerHTML = items.map(renderArticleCard).join('');
+  body.innerHTML = items.map(a => renderArticleCard(a, true)).join('');
 }
 document.getElementById('bm-button').addEventListener('click', () => {
   renderBookmarks();
@@ -4201,6 +4234,8 @@ document.addEventListener('keydown', (e) => {
     newBackdrop.classList.remove('open');
     labBackdrop.classList.remove('open');
     bmBackdrop.classList.remove('open');
+    const expB = document.getElementById('exp-backdrop');
+    if (expB) expB.classList.remove('open');
   }
 });
 
