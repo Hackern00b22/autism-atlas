@@ -55,25 +55,29 @@
      swapped for something else. The ground is a faintly cool white rather than
      pure #fff, which is what keeps the hairline borders visible. */
   :root[data-theme="light"] {
-    --line-rgb: 96, 116, 158;
-    --panel-rgb: 255, 255, 255;
-    --void-rgb: 244, 247, 251;
-    --bg-0: #F4F7FB;
-    --bg-1: #FFFFFF;
-    --bg-2: #E9EEF6;
+    /* A soft slate paper, not a lightbox. Near-white read as glaring against a
+       full-screen canvas, so the ground is dropped well below white and the
+       panels sit just above it — the lift comes from the step between them
+       rather than from raw brightness. */
+    --line-rgb: 86, 104, 140;
+    --panel-rgb: 246, 248, 252;
+    --void-rgb: 226, 231, 240;
+    --bg-0: #DFE5EE;
+    --bg-1: #F2F5F9;
+    --bg-2: #D2DAE6;
     --ink-0: #0F1720;
     --ink-1: #414F66;
     --ink-2: #6A778F;
     --grid: rgba(96, 116, 158, 0.10);
     --neon-immuno:   #00707F;
     --neon-cyto:     #B01B8C;
-    --neon-behav:    #4E7300;
-    --neon-neuro:    #9A6300;
+    --neon-behav:    #446400;
+    --neon-neuro:    #875600;
     --neon-gen:      #5340C4;
-    --neon-interv:   #C0332E;
-    --tier-trial:  #C0332E;
-    --tier-clin:   #9A6300;
-    --tier-trans:  #4E7300;
+    --neon-interv:   #AB2C28;
+    --tier-trial:  #AB2C28;
+    --tier-clin:   #875600;
+    --tier-trans:  #446400;
     --tier-mech:   #5C6A85;
     --tier-review: #5340C4;
     --tier-other:  #77839B;
@@ -2039,7 +2043,7 @@ function initApp() {
     div.className = 'legend-item';
     div.dataset.branch = key;
     div.innerHTML = `
-      <span class="legend-swatch" style="background:${b.color};color:${b.color};"></span>
+      <span class="legend-swatch" style="background:${branchColor(key)};color:${branchColor(key)};"></span>
       ${b.label}
       <span class="legend-count">${String(n).padStart(2, '0')}${alsoN ? ' +'+alsoN : ''}${boostedN ? ' · ★'+boostedN : ''}</span>
     `;
@@ -2097,7 +2101,7 @@ function buildNetwork() {
       x: W / 2 + Math.cos(angle) * dist,
       y: H / 2 + Math.sin(angle) * dist,
       vx: 0, vy: 0, r,
-      color: BRANCHES[key].color, branch: key, angle,
+      color: branchColor(key), branch: key, angle,
       journalCount, articleCount, boostedCount,
     };
     nodes.push(node);
@@ -2194,10 +2198,39 @@ function themeVar(name) {
   return THEME_CACHE[name];
 }
 
+// The six node colours live in articles.json, which knows nothing about
+// themes — so the graph was painting #00f0ff labels onto a white ground. Read
+// them from the stylesheet instead, where each has a light-mode value tuned to
+// stay recognisably itself while carrying real contrast.
+const BRANCH_VAR = {
+  immunology: '--neon-immuno', cytokines: '--neon-cyto', behavioral: '--neon-behav',
+  neuroscience: '--neon-neuro', genetics: '--neon-gen', intervention: '--neon-interv',
+};
+function branchColor(key) {
+  const v = BRANCH_VAR[key] ? themeVar(BRANCH_VAR[key]) : '';
+  return v || (typeof BRANCHES !== 'undefined' && BRANCHES && BRANCHES[key] && BRANCHES[key].color)
+           || themeVar('--ink-1');
+}
+
+// Anything already painted with the old palette has to be repainted.
+function refreshThemeColors() {
+  if (typeof branchNodes !== 'undefined') {
+    for (const [key, node] of Object.entries(branchNodes)) node.color = branchColor(key);
+  }
+  document.querySelectorAll('.legend-item').forEach(el => {
+    const sw = el.querySelector('.legend-swatch');
+    if (sw && el.dataset.branch) {
+      const c = branchColor(el.dataset.branch);
+      sw.style.background = c; sw.style.color = c;
+    }
+  });
+}
+
 const THEME_KEY = 'arn-theme-v1';
 function applyTheme(mode) {
   document.documentElement.setAttribute('data-theme', mode);
   THEME_CACHE = {};                      // palette changed; re-read on next draw
+  try { refreshThemeColors(); } catch (e) {}
   const btn = document.getElementById('theme-fab');
   if (btn) {
     btn.textContent = mode === 'light' ? '\u25D3' : '\u25D2';
@@ -2238,7 +2271,7 @@ function draw() {
     if (hot) {
       ctx.setLineDash([]);
       ctx.fillStyle = themeVar('--canvas-node-label');
-      ctx.font = '10px ui-monospace, monospace';
+      ctx.font = '11.5px ui-monospace, monospace';
       ctx.textAlign = 'center';
       ctx.fillText(`${link.shared} shared`, (a.x + b.x) / 2, (a.y + b.y) / 2 - 6);
       ctx.setLineDash([4, 6]);
@@ -2326,7 +2359,7 @@ function draw() {
       ctx.lineWidth = 1;
       ctx.stroke();
       ctx.fillStyle = n.color;
-      ctx.font = '600 11px "JetBrains Mono", monospace';
+      ctx.font = '600 12.5px "JetBrains Mono", monospace';
       ctx.textAlign = 'center';
       ctx.textBaseline = 'middle';
       ctx.fillText(String(n.articleCount), n.x + n.r * 0.65, n.y - n.r * 0.65);
@@ -2344,7 +2377,7 @@ function draw() {
         ctx.stroke();
         ctx.shadowBlur = 0;
         ctx.fillStyle = '#ffd97a';
-        ctx.font = '600 9px "JetBrains Mono", monospace';
+        ctx.font = '600 11px "JetBrains Mono", monospace';
         ctx.textAlign = 'center';
         ctx.textBaseline = 'middle';
         ctx.fillText('★' + n.boostedCount, n.x - n.r * 0.65, n.y - n.r * 0.65);
@@ -2354,7 +2387,7 @@ function draw() {
 
     if (n.type === 'core') {
       ctx.fillStyle = themeVar('--bg-1');
-      ctx.font = '600 14px "Space Grotesk", sans-serif';
+      ctx.font = '600 15px "Space Grotesk", sans-serif';
       ctx.textAlign = 'center';
       ctx.textBaseline = 'middle';
       const lines = n.label.split('\n');
@@ -2362,7 +2395,7 @@ function draw() {
         ctx.fillText(line, n.x, n.y + (i - (lines.length - 1) / 2) * 16);
       });
     } else {
-      ctx.font = '500 12px "JetBrains Mono", monospace';
+      ctx.font = '500 13.5px "JetBrains Mono", monospace';
       ctx.textAlign = 'center';
       ctx.textBaseline = 'top';
       const words = n.label.toUpperCase().split(' ');
@@ -2389,7 +2422,7 @@ function draw() {
       if (line2) ctx.fillText(line2, n.x, n.y + n.r + 27);
 
       if (isHover) {
-        ctx.font = '400 9px "JetBrains Mono", monospace';
+        ctx.font = '400 11px "JetBrains Mono", monospace';
         ctx.fillStyle = n.color;
         ctx.fillText('▸ CLICK TO OPEN', n.x, n.y + n.r + (line2 ? 46 : 32));
       }
@@ -2523,10 +2556,10 @@ function openBranchModal(branchKey) {
   currentBranch = branchKey;
   const b = BRANCHES[branchKey];
   eyebrowEl.textContent = '// BRANCH · ' + branchKey.toUpperCase();
-  eyebrowEl.style.color = b.color;
+  eyebrowEl.style.color = branchColor(branchKey);
   titleEl.textContent = b.label;
   renderBranchSub(branchKey);
-  modal.style.setProperty('--accent', b.color);
+  modal.style.setProperty('--accent', branchColor(branchKey));
   searchEl.value = ''; fromEl.value = ''; toEl.value = '';
   scopeEl.checked = false;
   scopeLabelEl.classList.remove('on');
@@ -3127,7 +3160,7 @@ document.getElementById('lab-run-agent').addEventListener('click', async () => {
       // keyed by the branch itself and carry .branchLabel. Read both.
       const branchKey = group.branch || journalKey;
       const branch = BRANCHES[branchKey];
-      const color = branch ? branch.color : '#98a4c2';
+      const color = branch ? branchColor(branchKey) : themeVar('--ink-1');
       const heading = group.journalName || group.branchLabel || branchKey;
       html += `<div class="lab-result-group">
         <div class="lab-result-header" style="--group-color:${color};">
@@ -3240,7 +3273,7 @@ function askSummary(data) {
 function askHitHtml(r) {
   const a = r.article;
   const b = BRANCHES[r.branch];
-  const color = b ? b.color : '#5d6783';
+  const color = b ? branchColor(a.branch) : themeVar('--ink-2');
   const tier = TIERS[r.tier] || TIERS.other;
   const why = r.matched && r.matched.length
     ? 'matched ' + r.matched.map(t => `<em>${escapeHtml(t)}</em>`).join(', ')
@@ -3987,12 +4020,12 @@ function renderWhatsNew() {
 
 function renderNewItem(a, dismissable) {
   const branch = BRANCHES[a.branch];
-  const branchColor = branch ? branch.color : '#98a4c2';
+  const branchCol = branch ? branchColor(a.branch) : themeVar('--ink-1');
   const tier = TIERS[a.priority] || TIERS.other;
   const item = `
     <a class="new-item tier-${a.priority} ${a.isBoosted ? 'is-boosted' : ''}"
        href="${a.url}" target="_blank" rel="noopener"
-       style="--branch-color:${branchColor};">
+       style="--branch-color:${branchCol};">
       <div class="ni-title">${escapeHtml(a.title)}</div>
       <div class="ni-meta">
         <span class="bm-toggle${isBookmarked(a.id) ? ' on' : ''}" role="button" title="Bookmark this article"
