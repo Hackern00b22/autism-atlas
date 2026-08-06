@@ -2059,6 +2059,11 @@ function resolveArticle(a) {
   a.alsoBranches = (a.alsoBranches || []).filter(k => BRANCHES[k] && k !== a.branch);
   a.branches = [a.branch, ...a.alsoBranches];
   a.journalName = j ? j.name : (a.journalDisplay || '(unknown)');
+  // A journal we hold no metrics for is unknown, not zero. The numeric 0 exists
+  // only so descending sorts park these at the bottom; the badge must never
+  // render it as a measured value, for the same reason 'other' is not allowed to
+  // absorb a missing tier below.
+  a.ifKnown = !!(j || a.if_override);
   a.if = j ? j.if : (a.if_override || 0);
   a.hIndex = j ? (j.hIndex || 0) : 0;
   // An unrecognised tier means we don't know, not that we looked and found
@@ -2920,8 +2925,9 @@ function renderArticleCard(a, showNode) {
         ${node ? `<span class="node-badge">${escapeHtml(node)}</span>` : ''}
         ${homeNode ? `<span class="node-badge also" title="Also relevant here — filed under ${escapeHtml(homeNode)}">◇ ${escapeHtml(homeNode)}</span>` : ''}
         <span class="journal">${escapeHtml(a.journalName)}</span>
-        <span class="if-badge">IF ${a.if.toFixed(1)}</span>
+        <span class="if-badge"${a.ifKnown ? '' : ' title="Journal is not in the catalogue — impact factor and h-index unknown"'}>IF ${a.ifKnown ? a.if.toFixed(1) : '—'}</span>
         ${a.hIndex ? `<span class="if-badge" title="Journal h-index (OpenAlex)">H ${a.hIndex}</span>` : ''}
+        ${a.viaOpenVenue && !a.journalKey ? '<span class="via-badge" title="Found by topical match in a journal outside the catalogue — admitted on topic score rather than on its journal">◎ OPEN VENUE</span>' : ''}
         <span class="date">${formatDate(a.date)}</span>
         ${a.isPreprint ? '<span class="preprint-badge" title="Preprint — not peer reviewed">PREPRINT</span>' : ''}
         ${via ? `<span class="via-badge" title="Imported because a tracked author is on it, not via the usual autism + journal filters">◈ ${escapeHtml(via)}</span>` : ''}
