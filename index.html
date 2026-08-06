@@ -3566,12 +3566,50 @@ function expFilename(ext) {
   return `atlas-${chosen.length}-runs-${new Date().toISOString().slice(0, 10)}.${ext}`;
 }
 
+// Object URLs are held until the page goes away, deliberately.
+// Revoking on a short timer destroys the blob while Chrome's "ask where to save
+// each file" dialog is still open, and the download dies with a generic
+// "something went wrong". These files are a few hundred KB at most; holding a
+// handful of URLs for the life of the tab costs nothing next to that failure.
+const EXPORT_URLS = [];
+
 function downloadBlob(blob, filename) {
-  const url = URL.createObjectURL(blob);
-  const a = document.createElement('a');
-  a.href = url; a.download = filename;
-  document.body.appendChild(a); a.click(); a.remove();
-  setTimeout(() => URL.revokeObjectURL(url), 2000);
+  try {
+    const url = URL.createObjectURL(blob);
+    EXPORT_URLS.push(url);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = filename;
+    a.rel = 'noopener';
+    a.style.display = 'none';
+    document.body.appendChild(a);
+    a.click();
+    setTimeout(() => a.remove(), 0);   // not in the same tick as the click
+    expStatus(`Saved ${filename}`);
+    return true;
+  } catch (err) {
+    // If the browser refuses the download outright, say so and leave a link the
+    // user can click themselves rather than failing silently.
+    expStatus(`Download blocked by the browser (${err.message}). `, blob, filename);
+    return false;
+  }
+}
+
+window.addEventListener('pagehide', () => {
+  for (const u of EXPORT_URLS) { try { URL.revokeObjectURL(u); } catch (e) {} }
+});
+
+function expStatus(msg, blob, filename) {
+  const el = document.getElementById('exp-hint');
+  if (!el) return;
+  if (blob) {
+    const url = URL.createObjectURL(blob);
+    EXPORT_URLS.push(url);
+    el.innerHTML = escapeHtml(msg) +
+      `<a href="${url}" download="${escapeHtml(filename)}" style="color:var(--neon-immuno)">Save it manually</a>.`;
+  } else {
+    el.textContent = msg;
+  }
 }
 
 function exportCSV() {
@@ -3588,20 +3626,93 @@ function exportCSV() {
     { type: 'text/csv;charset=utf-8' }), expFilename('csv'));
 }
 
+// A real .xlsx, built here rather than pulled from a library — the page loads
+// none and the CSP blocks CDNs. The previous version shipped an HTML table
+// named .xls, which Chrome can treat as a deceptive download and which makes
+// Excel itself warn that the format and extension disagree. A genuine
+// spreadsheet package avoids both. Stored (uncompressed) zip entries keep the
+// writer to a CRC and two headers.
+const CRC_TABLE = (() => {
+  const t = new Uint32Array(256);
+  for (let n = 0; n < 256; n++) {
+    let c = n;
+    for (let k = 0; k < 8; k++) c = (c & 1) ? (0xEDB88320 ^ (c >>> 1)) : (c >>> 1);
+    t[n] = c >>> 0;
+  }
+  return t;
+})();
+
+function crc32(bytes) {
+  let c = 0xFFFFFFFF;
+  for (let i = 0; i < bytes.length; i++) c = CRC_TABLE[(c ^ bytes[i]) & 0xFF] ^ (c >>> 8);
+  return (c ^ 0xFFFFFFFF) >>> 0;
+}
+
+function zipStore(entries) {
+  const enc = new TextEncoder();
+  const parts = [], central = [];
+  let offset = 0;
+  const u16 = n => [n & 0xFF, (n >>> 8) & 0xFF];
+  const u32 = n => [n & 0xFF, (n >>> 8) & 0xFF, (n >>> 16) & 0xFF, (n >>> 24) & 0xFF];
+  for (const { name, text } of entries) {
+    const nameBytes = enc.encode(name);
+    const data = enc.encode(text);
+    const crc = crc32(data);
+    const local = [...u32(0x04034b50), ...u16(20), ...u16(0), ...u16(0),
+                   ...u16(0), ...u16(0), ...u32(crc), ...u32(data.length),
+                   ...u32(data.length), ...u16(nameBytes.length), ...u16(0)];
+    parts.push(new Uint8Array(local), nameBytes, data);
+    central.push({ crc, size: data.length, nameBytes, offset });
+    offset += local.length + nameBytes.length + data.length;
+  }
+  const dirStart = offset;
+  for (const c of central) {
+    const head = [...u32(0x02014b50), ...u16(20), ...u16(20), ...u16(0), ...u16(0),
+                  ...u16(0), ...u16(0), ...u32(c.crc), ...u32(c.size), ...u32(c.size),
+                  ...u16(c.nameBytes.length), ...u16(0), ...u16(0), ...u16(0),
+                  ...u16(0), ...u32(0), ...u32(c.offset)];
+    parts.push(new Uint8Array(head), c.nameBytes);
+    offset += head.length + c.nameBytes.length;
+  }
+  parts.push(new Uint8Array([...u32(0x06054b50), ...u16(0), ...u16(0),
+    ...u16(central.length), ...u16(central.length),
+    ...u32(offset - dirStart), ...u32(dirStart), ...u16(0)]));
+  return new Blob(parts, { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+}
+
+function xmlEsc(v) {
+  return String(v == null ? '' : v)
+    .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;').replace(/'/g, '&apos;')
+    .replace(/[\x00-\x08\x0B\x0C\x0E-\x1F]/g, '');   // control chars are invalid in XML
+}
+
 function exportExcel() {
-  // An HTML table served as .xls: Excel opens it natively with the columns
-  // intact, and it needs no library — which matters, since this page loads none.
-  const { chosen, rows } = expSelected();
-  const head = EXP_COLUMNS.map(c => `<th>${escapeHtml(c[1])}</th>`).join('');
-  const body = rows.map(a => '<tr>' + EXP_COLUMNS.map(([k, , get]) =>
-    `<td${k === 'pmid' || k === 'date' ? ' style="mso-number-format:\\@"' : ''}>${escapeHtml(get(a))}</td>`
-  ).join('') + '</tr>').join('');
-  const html = `<html xmlns:x="urn:schemas-microsoft-com:office:excel"><head><meta charset="utf-8">
-    <style>th{background:#e8eef7;text-align:left;font-weight:bold}td,th{border:1px solid #ccd}</style>
-    </head><body><table>${'<thead><tr>' + head + '</tr></thead>'}<tbody>${body}</tbody></table>
-    <p>Autism Research Network Atlas — ${chosen.length} run(s), ${rows.length} articles, exported ${new Date().toISOString().slice(0, 10)}</p>
-    </body></html>`;
-  downloadBlob(new Blob([html], { type: 'application/vnd.ms-excel' }), expFilename('xls'));
+  const { rows } = expSelected();
+  const col = i => String.fromCharCode(65 + i);
+  // Every cell is an inline string, including PMID and date: they are
+  // identifiers, not quantities, and Excel must not reformat or round them.
+  const sheetRow = (cells, r) => `<row r="${r}">` + cells.map((v, i) =>
+    `<c r="${col(i)}${r}" t="inlineStr"><is><t xml:space="preserve">${xmlEsc(v)}</t></is></c>`
+  ).join('') + '</row>';
+  const body = [sheetRow(EXP_COLUMNS.map(c => c[1]), 1)]
+    .concat(rows.map((a, i) => sheetRow(EXP_COLUMNS.map(([, , get]) => get(a)), i + 2)))
+    .join('');
+  const NS = 'http://schemas.openxmlformats.org/spreadsheetml/2006/main';
+  const REL = 'http://schemas.openxmlformats.org/officeDocument/2006/relationships';
+  const blob = zipStore([
+    { name: '[Content_Types].xml', text:
+      `<?xml version="1.0" encoding="UTF-8" standalone="yes"?><Types xmlns="http://schemas.openxmlformats.org/package/2006/content-types"><Default Extension="rels" ContentType="application/vnd.openxmlformats-package.relationships+xml"/><Default Extension="xml" ContentType="application/xml"/><Override PartName="/xl/workbook.xml" ContentType="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet.main+xml"/><Override PartName="/xl/worksheets/sheet1.xml" ContentType="application/vnd.openxmlformats-officedocument.spreadsheetml.worksheet+xml"/></Types>` },
+    { name: '_rels/.rels', text:
+      `<?xml version="1.0" encoding="UTF-8" standalone="yes"?><Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships"><Relationship Id="rId1" Type="${REL}/officeDocument" Target="xl/workbook.xml"/></Relationships>` },
+    { name: 'xl/workbook.xml', text:
+      `<?xml version="1.0" encoding="UTF-8" standalone="yes"?><workbook xmlns="${NS}" xmlns:r="${REL}"><sheets><sheet name="Articles" sheetId="1" r:id="rId1"/></sheets></workbook>` },
+    { name: 'xl/_rels/workbook.xml.rels', text:
+      `<?xml version="1.0" encoding="UTF-8" standalone="yes"?><Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships"><Relationship Id="rId1" Type="${REL}/worksheet" Target="worksheets/sheet1.xml"/></Relationships>` },
+    { name: 'xl/worksheets/sheet1.xml', text:
+      `<?xml version="1.0" encoding="UTF-8" standalone="yes"?><worksheet xmlns="${NS}"><cols><col min="1" max="1" width="12"/><col min="2" max="3" width="18"/><col min="4" max="4" width="30"/><col min="5" max="5" width="12"/><col min="6" max="6" width="70"/></cols><sheetData>${body}</sheetData></worksheet>` },
+  ]);
+  downloadBlob(blob, expFilename('xlsx'));
 }
 
 function exportPrint() {
@@ -3638,6 +3749,7 @@ function exportPrint() {
   w.document.close();
   w.focus();
   setTimeout(() => w.print(), 350);
+  expStatus(`Opened a print view of ${rows.length} article${rows.length === 1 ? '' : 's'} — choose "Save as PDF" for a file.`);
 }
 
 function openExport() {
@@ -3649,6 +3761,7 @@ function openExport() {
     + `<option value="${runs.length}">All ${runs.length} runs</option>`;
   sel.value = String(choices.includes(3) ? 3 : runs.length);
   renderExport();
+  expStatus('PDF and Print both open your browser\u2019s print dialog \u2014 choose \u201CSave as PDF\u201D there for a file.');
   document.getElementById('exp-backdrop').classList.add('open');
 }
 
