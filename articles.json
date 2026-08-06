@@ -1993,7 +1993,10 @@
    "_refiledFrom": "intervention",
    "branchKey": "immunology",
    "firstAuthor": "Upthegrove R",
-   "lastAuthor": "Vernon AC"
+   "lastAuthor": "Vernon AC",
+   "alsoBranches": [
+    "cytokines"
+   ]
   },
   {
    "id": "pm-40628340",
@@ -3898,7 +3901,7 @@
     "Nerve Tissue Proteins"
    ],
    "alsoBranches": [
-    "genetics",
+    "behavioral",
     "cytokines"
    ],
    "_refiledFrom": "behavioral",
@@ -4008,8 +4011,8 @@
    "branchKey": "cytokines",
    "_priorityWas": "mechanistic",
    "alsoBranches": [
-    "immunology",
-    "genetics"
+    "genetics",
+    "immunology"
    ],
    "firstAuthor": "Chen Y",
    "lastAuthor": "Liu C"
@@ -5291,7 +5294,6 @@
     "Tumor Necrosis Factor-alpha"
    ],
    "alsoBranches": [
-    "cytokines",
     "immunology"
    ],
    "_refiledFrom": "behavioral",
@@ -5767,7 +5769,10 @@
    "mesh": [],
    "journalKey": "bbi",
    "firstAuthor": "Moreno RJ",
-   "lastAuthor": "Ashwood P"
+   "lastAuthor": "Ashwood P",
+   "alsoBranches": [
+    "immunology"
+   ]
   },
   {
    "id": "pm-42034056",
@@ -10261,7 +10266,10 @@
    "journalDisplay": "Molecular Psychiatry",
    "journalKey": "mol-psych",
    "firstAuthor": "Devienne G",
-   "lastAuthor": "Huguenard JR"
+   "lastAuthor": "Huguenard JR",
+   "alsoBranches": [
+    "behavioral"
+   ]
   },
   {
    "id": "pm-41399120",
@@ -13081,7 +13089,10 @@
    "branchKey": "neuroscience",
    "_priorityWas": "mechanistic",
    "firstAuthor": "Kim CY",
-   "lastAuthor": "Park BY"
+   "lastAuthor": "Park BY",
+   "alsoBranches": [
+    "behavioral"
+   ]
   },
   {
    "id": "pm-42333586",
