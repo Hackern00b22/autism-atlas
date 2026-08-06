@@ -1547,6 +1547,19 @@
   .search-fab:hover { background: var(--neon-immuno); color: #05060a;
                       box-shadow: 0 0 24px rgba(0,240,255,0.45); }
   body.demo-on .search-fab { display: none; }
+  /* Export sits with the other two round controls rather than in the top bar,
+     which is already full at five buttons. */
+  .export-fab {
+    position: fixed; right: 154px; bottom: 26px; z-index: 90;
+    width: 52px; height: 52px; border-radius: 50%; cursor: pointer;
+    background: rgba(10,13,20,0.92); border: 1px solid var(--neon-behav);
+    color: var(--neon-behav); font-size: 19px; line-height: 1;
+    display: flex; align-items: center; justify-content: center;
+    transition: background 0.18s, color 0.18s, box-shadow 0.18s;
+  }
+  .export-fab:hover { background: var(--neon-behav); color: #05060a;
+                      box-shadow: 0 0 24px rgba(182,255,60,0.4); }
+  body.demo-on .export-fab { display: none; }
   .demo-fab span { margin-left: 3px; }  /* optically centre the ▶ glyph */
   @keyframes fabglow { 0%,100% { box-shadow: 0 0 10px rgba(255,43,214,0.18); } 50% { box-shadow: 0 0 24px rgba(255,43,214,0.45); } }
   body.demo-on .demo-fab { display: none; }
@@ -1638,9 +1651,10 @@
 <button class="new-button" id="new-button" aria-label="See what's new">What's New <span class="pulse-dot"></span></button>
 <button class="def-button" id="def-button" aria-label="Open definitions">Definitions</button>
 
-<div class="hint">CLICK A BRANCH NODE · ◈ AUTHORS · ⬢ AGENT LAB · ◆ WHAT'S NEW · ◇ DEFINITIONS · ESC TO CLOSE</div>
+<div class="hint">CLICK A BRANCH NODE · ◈ AUTHORS · ⬢ AGENT LAB · ◆ WHAT'S NEW · ⌕ SEARCH · ⇩ EXPORT · ESC TO CLOSE</div>
 
 <button class="search-fab" id="search-fab" aria-label="Search every node" title="Search the whole library  ( / )">⌕</button>
+<button class="export-fab" id="export-fab" aria-label="Export runs as a table" title="Export runs as CSV, Excel or PDF">&#8615;</button>
 <button class="demo-fab" id="demo-fab" aria-label="Play a guided demo of this page"><span>▶</span></button>
 <div class="demo-spot" id="demo-spot"></div>
 <div class="demo-shield" id="demo-shield"></div>
@@ -4147,6 +4161,7 @@ function demoArm(s) {
 }
 
 document.getElementById('search-fab').addEventListener('click', () => openGlobalSearch());
+document.getElementById('export-fab').addEventListener('click', openExport);
 document.getElementById('demo-fab').addEventListener('click', demoStart);
 // "/" opens library-wide search, unless you're already typing somewhere.
 document.addEventListener('keydown', (e) => {
