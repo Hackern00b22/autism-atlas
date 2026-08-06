@@ -1,7 +1,7 @@
 {
  "_meta": {
   "schema_version": 5,
-  "last_updated": "2026-08-04",
+  "last_updated": "2026-08-05",
   "description": "Article store for the Autism Research Network Atlas.",
   "schema": {
    "id": "unique string id",
@@ -283,6 +283,21 @@
    "minYear": 2021,
    "learned": {
     "include": {
+     "Clustered Regularly Interspaced Short Palindromic Repeats": {
+      "w": 1.099,
+      "pos": 2,
+      "neg": 0
+     },
+     "Induced Pluripotent Stem Cells": {
+      "w": 1.099,
+      "pos": 2,
+      "neg": 0
+     },
+     "CRISPR-Cas Systems": {
+      "w": 1.099,
+      "pos": 2,
+      "neg": 0
+     },
      "Inflammation": {
       "w": 1.099,
       "pos": 2,
@@ -290,11 +305,11 @@
      }
     },
     "exclude": {},
-    "pos_events": 3,
+    "pos_events": 5,
     "neg_events": 0,
-    "updatedAt": "2026-07-20"
+    "updatedAt": "2026-08-05"
    },
-   "lastFetched": "2026-07-29"
+   "lastFetched": "2026-08-05"
   },
   "cytokines": {
    "color": "#ff2bd6",
@@ -303,7 +318,7 @@
    "pubmedQuery": "(\"IL-17\"[Title/Abstract] OR \"IL17\"[Title/Abstract] OR \"interleukin-17\"[Title/Abstract] OR \"interleukin 17\"[Title/Abstract] OR \"IL-17A\"[Title/Abstract] OR \"IL-17a\"[Title/Abstract] OR \"IL-17E\"[Title/Abstract] OR \"interleukin\"[Title/Abstract] OR \"interleukins\"[Title/Abstract] OR \"cytokine\"[Title/Abstract] OR \"cytokines\"[Title/Abstract] OR \"Th17\"[Title/Abstract] OR \"T helper 17\"[Title/Abstract] OR \"TNF-alpha\"[Title/Abstract] OR \"tumor necrosis factor\"[Title/Abstract] OR \"IL-6\"[Title/Abstract] OR \"IL-1\"[Title/Abstract] OR \"IL-1beta\"[Title/Abstract] OR \"IL-1β\"[Title/Abstract] OR \"IL-8\"[Title/Abstract] OR \"IL-10\"[Title/Abstract] OR \"IL-22\"[Title/Abstract] OR \"IL-33\"[Title/Abstract] OR \"neuroinflammation\"[Title/Abstract] OR \"neuroimmune\"[Title/Abstract] OR \"maternal immune activation\"[Title/Abstract] OR \"MIA\"[Title/Abstract] OR \"pro-inflammatory\"[Title/Abstract] OR \"proinflammatory\"[Title/Abstract] OR \"inflammatory\"[Title/Abstract] OR \"inflammation\"[Title/Abstract])",
    "minYear": 2021,
    "broadAutism": true,
-   "lastFetched": "2026-07-29",
+   "lastFetched": "2026-08-05",
    "learned": {
     "include": {
      "Oxytocin": {
@@ -311,7 +326,7 @@
       "pos": 3,
       "neg": 0
      },
-     "Administration, Intranasal": {
+     "Cytokines": {
       "w": 1.099,
       "pos": 2,
       "neg": 0
@@ -321,12 +336,12 @@
       "pos": 2,
       "neg": 0
      },
-     "Prenatal Exposure Delayed Effects": {
+     "Inflammation": {
       "w": 1.099,
       "pos": 2,
       "neg": 0
      },
-     "Cytokines": {
+     "Prenatal Exposure Delayed Effects": {
       "w": 1.099,
       "pos": 2,
       "neg": 0
@@ -335,12 +350,22 @@
       "w": 1.099,
       "pos": 2,
       "neg": 0
+     },
+     "Administration, Intranasal": {
+      "w": 1.099,
+      "pos": 2,
+      "neg": 0
+     },
+     "Brain": {
+      "w": 1.099,
+      "pos": 2,
+      "neg": 0
      }
     },
     "exclude": {},
-    "pos_events": 11,
+    "pos_events": 13,
     "neg_events": 1,
-    "updatedAt": "2026-08-04"
+    "updatedAt": "2026-08-05"
    }
   },
   "behavioral": {
@@ -356,7 +381,7 @@
     "neg_events": 1,
     "updatedAt": "2026-08-05"
    },
-   "lastFetched": "2026-07-29"
+   "lastFetched": "2026-08-05"
   },
   "neuroscience": {
    "color": "#ffb020",
@@ -371,7 +396,7 @@
     "neg_events": 0,
     "updatedAt": "2026-08-05"
    },
-   "lastFetched": "2026-08-04"
+   "lastFetched": "2026-08-05"
   },
   "genetics": {
    "color": "#7a5cff",
@@ -386,7 +411,7 @@
     "neg_events": 0,
     "updatedAt": "2026-07-23"
    },
-   "lastFetched": "2026-07-29"
+   "lastFetched": "2026-08-05"
   },
   "intervention": {
    "color": "#ff5757",
@@ -404,10 +429,10 @@
     },
     "exclude": {},
     "pos_events": 8,
-    "neg_events": 0,
-    "updatedAt": "2026-08-04"
+    "neg_events": 1,
+    "updatedAt": "2026-08-05"
    },
-   "lastFetched": "2026-07-29"
+   "lastFetched": "2026-08-05"
   }
  },
  "articles": [
@@ -437,7 +462,9 @@
     "Polymorphism, Single Nucleotide",
     "Risk Factors"
    ],
-   "_priorityWas": "mechanistic"
+   "_priorityWas": "mechanistic",
+   "firstAuthor": "Grove J",
+   "lastAuthor": "Børglum AD"
   },
   {
    "id": "ng-2022-fu",
@@ -456,7 +483,9 @@
     "Soil",
     "Temperature"
    ],
-   "_priorityWas": "mechanistic"
+   "_priorityWas": "mechanistic",
+   "firstAuthor": "Mouraux C",
+   "lastAuthor": "Dufraisse A"
   },
   {
    "id": "ng-2017-weiner",
@@ -490,7 +519,9 @@
     "Schizophrenia",
     "Sequence Deletion"
    ],
-   "_priorityWas": "mechanistic"
+   "_priorityWas": "mechanistic",
+   "firstAuthor": "Weiner DJ",
+   "lastAuthor": "Robinson EB"
   },
   {
    "id": "ng-2022-trubetskoy",
@@ -510,7 +541,9 @@
     "Polymorphism, Single Nucleotide",
     "Schizophrenia"
    ],
-   "_priorityWas": "mechanistic"
+   "_priorityWas": "mechanistic",
+   "firstAuthor": "Trubetskoy V",
+   "lastAuthor": "Schizophrenia Working Group of the Psychiatric Genomics Consortium"
   },
   {
    "id": "ajhg-2014-iossifov",
@@ -536,7 +569,9 @@
     "Open Reading Frames",
     "Reproducibility of Results"
    ],
-   "_priorityWas": "mechanistic"
+   "_priorityWas": "mechanistic",
+   "firstAuthor": "Iossifov I",
+   "lastAuthor": "Wigler M"
   },
   {
    "id": "ajhg-2019-ruzzo",
@@ -568,7 +603,9 @@
     "Polymorphism, Single Nucleotide",
     "Trinucleotide Repeat Expansion",
     "Young Adult"
-   ]
+   ],
+   "firstAuthor": "Genetic Modifiers of Huntington’s Disease (GeM-HD) Consortium. Electronic address: gusella@helix.mgh.harvard.edu",
+   "lastAuthor": "Genetic Modifiers of Huntington’s Disease (GeM-HD) Consortium"
   },
   {
    "id": "jp-2018-dawson",
@@ -600,7 +637,9 @@
     "url": "https://pubmed.ncbi.nlm.nih.gov/30193373/",
     "journalKey": "jama-psych",
     "date": "2018-08-01"
-   }
+   },
+   "firstAuthor": "Dawson G",
+   "lastAuthor": "Sapiro G"
   },
   {
    "id": "jp-2019-bai",
@@ -632,7 +671,9 @@
     "Sensitivity and Specificity",
     "Sweden",
     "Western Australia"
-   ]
+   ],
+   "firstAuthor": "Bai D",
+   "lastAuthor": "Sandin S"
   },
   {
    "id": "jp-2021-rogers",
@@ -648,7 +689,8 @@
     "Humans",
     "Outcome Assessment, Health Care"
    ],
-   "_priorityWas": "clinical-trial"
+   "_priorityWas": "clinical-trial",
+   "firstAuthor": "Fong Y"
   },
   {
    "id": "jp-2025-ongur",
@@ -660,7 +702,8 @@
    "priority": "unclassified",
    "addedBy": "seed",
    "mesh": [],
-   "_priorityWas": "review"
+   "_priorityWas": "review",
+   "firstAuthor": "Öngür D"
   },
   {
    "id": "jcpp-2016-pickles",
@@ -690,7 +733,9 @@
     "Sex Factors",
     "Time-to-Treatment",
     "Treatment Outcome"
-   ]
+   ],
+   "firstAuthor": "Mentias A",
+   "lastAuthor": "Kapadia SR"
   },
   {
    "id": "jcpp-2020-livingston",
@@ -716,7 +761,9 @@
     "Reproducibility of Results",
     "Rocuronium"
    ],
-   "_priorityWas": "clinical-observation"
+   "_priorityWas": "clinical-observation",
+   "firstAuthor": "Shopova T",
+   "lastAuthor": "Kreuer S"
   },
   {
    "id": "jcpp-2022-leadbitter",
@@ -736,7 +783,9 @@
     "Embryo, Mammalian",
     "In Vitro Oocyte Maturation Techniques"
    ],
-   "_priorityWas": "clinical-trial"
+   "_priorityWas": "clinical-trial",
+   "firstAuthor": "Dai S",
+   "lastAuthor": "Zeng S"
   },
   {
    "id": "jcpp-2025-bottema",
@@ -762,7 +811,9 @@
     "Postpartum Hemorrhage",
     "Obstetric Labor Complications"
    ],
-   "_priorityWas": "review"
+   "_priorityWas": "review",
+   "firstAuthor": "Willy AS",
+   "lastAuthor": "Caughey AB"
   },
   {
    "id": "mmwr-2025-shaw",
@@ -773,7 +824,8 @@
    "url": "https://pubmed.ncbi.nlm.nih.gov/40232955/",
    "priority": "clinical-observation",
    "addedBy": "seed",
-   "mesh": []
+   "mesh": [],
+   "firstAuthor": "Bryner J"
   },
   {
    "id": "bp-2017-hazlett",
@@ -798,7 +850,9 @@
     "Temperature",
     "Time Factors"
    ],
-   "_priorityWas": "clinical-observation"
+   "_priorityWas": "clinical-observation",
+   "firstAuthor": "Schmidtko S",
+   "lastAuthor": "Visbeck M"
   },
   {
    "id": "bp-2011-courchesne",
@@ -823,7 +877,9 @@
     "Receptors, N-Methyl-D-Aspartate",
     "Recovery of Function"
    ],
-   "_priorityWas": "translational"
+   "_priorityWas": "translational",
+   "firstAuthor": "Dalmau J",
+   "lastAuthor": "Balice-Gordon R"
   },
   {
    "id": "bp-2021-lombardo",
@@ -846,7 +902,9 @@
    "_priorityWas": "translational",
    "alsoBranches": [
     "neuroscience"
-   ]
+   ],
+   "firstAuthor": "Xu X",
+   "lastAuthor": "Brown A"
   },
   {
    "id": "bp-2024-li",
@@ -862,7 +920,9 @@
     "Neuroimaging",
     "Autism Spectrum Disorder",
     "Brain"
-   ]
+   ],
+   "firstAuthor": "Duan X",
+   "lastAuthor": "Chen H"
   },
   {
    "id": "bbi-2024-moreno",
@@ -889,7 +949,9 @@
     "Interleukin-4",
     "Interleukin-17",
     "Epidermal Growth Factor"
-   ]
+   ],
+   "firstAuthor": "Moreno RJ",
+   "lastAuthor": "Ashwood P"
   },
   {
    "id": "jni-2005-vargas",
@@ -925,7 +987,9 @@
    ],
    "alsoBranches": [
     "cytokines"
-   ]
+   ],
+   "firstAuthor": "Vargas DL",
+   "lastAuthor": "Pardo CA"
   },
   {
    "id": "jni-2019-matta",
@@ -951,7 +1015,9 @@
     "Surveys and Questionnaires",
     "United Kingdom"
    ],
-   "_priorityWas": "review"
+   "_priorityWas": "review",
+   "firstAuthor": "Patel K",
+   "lastAuthor": "Mohan HM"
   },
   {
    "id": "aut-2018-cage",
@@ -980,7 +1046,9 @@
     "Renal Dialysis",
     "Renal Insufficiency, Chronic"
    ],
-   "_priorityWas": "clinical-observation"
+   "_priorityWas": "clinical-observation",
+   "firstAuthor": "Hou JS",
+   "lastAuthor": "Hsu BG"
   },
   {
    "id": "aut-2018-crane",
@@ -1009,7 +1077,9 @@
     "Surveys and Questionnaires",
     "Toilet Facilities",
     "Water Supply"
-   ]
+   ],
+   "firstAuthor": "Rheinländer T",
+   "lastAuthor": "Konradsen F"
   },
   {
    "id": "aut-2020-cassidy",
@@ -1030,7 +1100,9 @@
     "Pilot Projects",
     "Quality of Life",
     "Rhinitis"
-   ]
+   ],
+   "firstAuthor": "Parsel SM",
+   "lastAuthor": "McCoul ED"
   },
   {
    "id": "aut-2022-pellicano",
@@ -1042,7 +1114,9 @@
    "priority": "unclassified",
    "addedBy": "seed",
    "mesh": [],
-   "_priorityWas": "review"
+   "_priorityWas": "review",
+   "firstAuthor": "Dashputre NL",
+   "lastAuthor": "Kshirsagar SJ"
   },
   {
    "id": "aut-2024-milner",
@@ -1063,7 +1137,9 @@
     "Social Behavior",
     "Surveys and Questionnaires",
     "Self Report"
-   ]
+   ],
+   "firstAuthor": "Milner V",
+   "lastAuthor": "Happé F"
   },
   {
    "id": "pm-42173410",
@@ -1074,7 +1150,9 @@
    "priority": "clinical-observation",
    "addedBy": "agent-2026-05-28",
    "journalKey": "bbi",
-   "mesh": []
+   "mesh": [],
+   "firstAuthor": "Spagnuolo MS",
+   "lastAuthor": "Tartaglione AM"
   },
   {
    "id": "pm-42162800",
@@ -1088,7 +1166,9 @@
    "mesh": [],
    "alsoBranches": [
     "neuroscience"
-   ]
+   ],
+   "firstAuthor": "Zhong Z",
+   "lastAuthor": "Yang Y"
   },
   {
    "id": "pm-42126059",
@@ -1099,7 +1179,8 @@
    "priority": "clinical-observation",
    "addedBy": "agent-2026-05-28",
    "journalKey": "jcpp",
-   "mesh": []
+   "mesh": [],
+   "firstAuthor": "Ayoub G"
   },
   {
    "id": "pm-41956300",
@@ -1131,7 +1212,9 @@
     "Child, Preschool",
     "Coronavirus Nucleocapsid Proteins",
     "Child"
-   ]
+   ],
+   "firstAuthor": "Croen LA",
+   "lastAuthor": "Yolken R"
   },
   {
    "id": "pm-41921887",
@@ -1150,7 +1233,9 @@
     "Adaptive Immunity",
     "Schizophrenia",
     "Immunity, Innate"
-   ]
+   ],
+   "firstAuthor": "Le Clerc S",
+   "lastAuthor": "Leboyer M"
   },
   {
    "id": "pm-41882256",
@@ -1181,7 +1266,9 @@
     "Autism Spectrum Disorder",
     "Anxiety"
    ],
-   "branchKey": "cytokines"
+   "branchKey": "cytokines",
+   "firstAuthor": "Qiao SN",
+   "lastAuthor": "Jiang YH"
   },
   {
    "id": "pm-41881165",
@@ -1215,7 +1302,9 @@
    ],
    "alsoBranches": [
     "immunology"
-   ]
+   ],
+   "firstAuthor": "Kelvington BA",
+   "lastAuthor": "Abel T"
   },
   {
    "id": "pm-41825653",
@@ -1243,7 +1332,9 @@
     "Poly I-C",
     "Dendritic Spines",
     "Cytokines"
-   ]
+   ],
+   "firstAuthor": "Kirikae H",
+   "lastAuthor": "Maekawa M"
   },
   {
    "id": "pm-41821031",
@@ -1272,7 +1363,9 @@
    ],
    "alsoBranches": [
     "cytokines"
-   ]
+   ],
+   "firstAuthor": "Rose D",
+   "lastAuthor": "Ashwood P"
   },
   {
    "id": "pm-41742408",
@@ -1306,7 +1399,9 @@
    "alsoBranches": [
     "immunology",
     "cytokines"
-   ]
+   ],
+   "firstAuthor": "Chen S",
+   "lastAuthor": "Mo W"
   },
   {
    "id": "pm-41715101",
@@ -1338,7 +1433,9 @@
    ],
    "alsoBranches": [
     "cytokines"
-   ]
+   ],
+   "firstAuthor": "Islam R",
+   "lastAuthor": "Hanafy KA"
   },
   {
    "id": "pm-41703554",
@@ -1366,7 +1463,9 @@
    "_priorityWas": "mechanistic",
    "alsoBranches": [
     "genetics"
-   ]
+   ],
+   "firstAuthor": "Moreno RJ",
+   "lastAuthor": "Ashwood P"
   },
   {
    "id": "pm-41692358",
@@ -1395,7 +1494,9 @@
     "Female",
     "Neuroinflammatory Diseases",
     "Caspase 1"
-   ]
+   ],
+   "firstAuthor": "Shi Y",
+   "lastAuthor": "Wu L"
   },
   {
    "id": "pm-41672158",
@@ -1421,7 +1522,9 @@
     "Female",
     "Depression",
     "Mice, Knockout"
-   ]
+   ],
+   "firstAuthor": "Liu Z",
+   "lastAuthor": "Han Y"
   },
   {
    "id": "pm-41663713",
@@ -1455,7 +1558,9 @@
     "Neurons",
     "Receptors, Interleukin-17"
    ],
-   "branchKey": "cytokines"
+   "branchKey": "cytokines",
+   "firstAuthor": "Yin J",
+   "lastAuthor": "Zhu JN"
   },
   {
    "id": "pm-41535926",
@@ -1481,7 +1586,9 @@
    "_priorityWas": "mechanistic",
    "alsoBranches": [
     "cytokines"
-   ]
+   ],
+   "firstAuthor": "Presicce P",
+   "lastAuthor": "Kallapur SG"
   },
   {
    "id": "pm-41413202",
@@ -1513,7 +1620,9 @@
    "alsoBranches": [
     "genetics",
     "neuroscience"
-   ]
+   ],
+   "firstAuthor": "Ander BP",
+   "lastAuthor": "Schumann CM"
   },
   {
    "id": "pm-41381014",
@@ -1534,7 +1643,9 @@
     "Prenatal Exposure Delayed Effects",
     "Lipopolysaccharides",
     "Behavior, Animal"
-   ]
+   ],
+   "firstAuthor": "Florek W",
+   "lastAuthor": "Sampino S"
   },
   {
    "id": "pm-41344579",
@@ -1560,7 +1671,9 @@
    ],
    "alsoBranches": [
     "immunology"
-   ]
+   ],
+   "firstAuthor": "Kelland C",
+   "lastAuthor": "de Water JV"
   },
   {
    "id": "pm-41187794",
@@ -1592,7 +1705,9 @@
     "Sex Factors",
     "Sex Characteristics",
     "Spatial Memory"
-   ]
+   ],
+   "firstAuthor": "Delpech JC",
+   "lastAuthor": "Ikezu S"
   },
   {
    "id": "pm-41125877",
@@ -1618,7 +1733,9 @@
    ],
    "alsoBranches": [
     "genetics"
-   ]
+   ],
+   "firstAuthor": "Nguyen C",
+   "lastAuthor": "Coufal NG"
   },
   {
    "id": "pm-41104705",
@@ -1638,7 +1755,8 @@
     "Pregnancy",
     "Autistic Disorder",
     "Environmental Exposure"
-   ]
+   ],
+   "firstAuthor": "Fombonne E"
   },
   {
    "id": "pm-41038357",
@@ -1667,7 +1785,9 @@
     "Brain",
     "Disease Models, Animal",
     "Diabetes Mellitus, Experimental"
-   ]
+   ],
+   "firstAuthor": "Qin G",
+   "lastAuthor": "Xiao X"
   },
   {
    "id": "pm-40962828",
@@ -1699,7 +1819,9 @@
     "Infant, Newborn",
     "Multiomics"
    ],
-   "branchKey": "cytokines"
+   "branchKey": "cytokines",
+   "firstAuthor": "Noone A",
+   "lastAuthor": "English JA"
   },
   {
    "id": "pm-40957533",
@@ -1722,7 +1844,9 @@
     "Choroid Plexus",
     "Young Adult"
    ],
-   "_priorityWas": "mechanistic"
+   "_priorityWas": "mechanistic",
+   "firstAuthor": "Lila Y",
+   "lastAuthor": "Zürcher NR"
   },
   {
    "id": "pm-40855005",
@@ -1759,7 +1883,9 @@
    "branchKey": "cytokines",
    "alsoBranches": [
     "genetics"
-   ]
+   ],
+   "firstAuthor": "Li T",
+   "lastAuthor": "Liu X"
   },
   {
    "id": "pm-40744151",
@@ -1789,7 +1915,9 @@
     "Behavior, Animal",
     "Anxiety",
     "Organic Chemicals"
-   ]
+   ],
+   "firstAuthor": "Ciano Albanese N",
+   "lastAuthor": "Ricceri L"
   },
   {
    "id": "pm-40721173",
@@ -1817,7 +1945,9 @@
     "Cytokines",
     "Quality of Life",
     "Neuroinflammatory Diseases"
-   ]
+   ],
+   "firstAuthor": "Campêlo Borba de Morais RM",
+   "lastAuthor": "Martinez RCR"
   },
   {
    "id": "pm-40713568",
@@ -1842,7 +1972,9 @@
    ],
    "alsoBranches": [
     "cytokines"
-   ]
+   ],
+   "firstAuthor": "Szabó D",
+   "lastAuthor": "Sperlágh B"
   },
   {
    "id": "pm-40632530",
@@ -1859,7 +1991,9 @@
     "Mental Disorders"
    ],
    "_refiledFrom": "intervention",
-   "branchKey": "immunology"
+   "branchKey": "immunology",
+   "firstAuthor": "Upthegrove R",
+   "lastAuthor": "Vernon AC"
   },
   {
    "id": "pm-40628340",
@@ -1882,7 +2016,9 @@
    ],
    "alsoBranches": [
     "behavioral"
-   ]
+   ],
+   "firstAuthor": "Boller AL",
+   "lastAuthor": "Alferink J"
   },
   {
    "id": "pm-40623669",
@@ -1914,7 +2050,9 @@
    ],
    "alsoBranches": [
     "neuroscience"
-   ]
+   ],
+   "firstAuthor": "Schaer R",
+   "lastAuthor": "Meyer U"
   },
   {
    "id": "pm-40381623",
@@ -1943,7 +2081,9 @@
    ],
    "alsoBranches": [
     "immunology"
-   ]
+   ],
+   "firstAuthor": "Bian Q",
+   "lastAuthor": "Fu B"
   },
   {
    "id": "pm-40199322",
@@ -1969,7 +2109,9 @@
     "Cerebral Cortex",
     "Female"
    ],
-   "branchKey": "cytokines"
+   "branchKey": "cytokines",
+   "firstAuthor": "Lee Y",
+   "lastAuthor": "Huh JR"
   },
   {
    "id": "pm-40175518",
@@ -2005,7 +2147,9 @@
    "alsoBranches": [
     "immunology",
     "neuroscience"
-   ]
+   ],
+   "firstAuthor": "Qin Q",
+   "lastAuthor": "Liang S"
   },
   {
    "id": "pm-40139186",
@@ -2029,7 +2173,9 @@
     "Autism Spectrum Disorder",
     "Retinoblastoma Protein",
     "Pluripotent Stem Cells"
-   ]
+   ],
+   "firstAuthor": "Hu X",
+   "lastAuthor": "Ding S"
   },
   {
    "id": "pm-40118225",
@@ -2056,7 +2202,9 @@
     "Mice, Inbred C57BL",
     "Behavior, Animal",
     "Disease Models, Animal"
-   ]
+   ],
+   "firstAuthor": "Delorme TC",
+   "lastAuthor": "Cermakian N"
   },
   {
    "id": "pm-40089736",
@@ -2084,7 +2232,9 @@
    ],
    "alsoBranches": [
     "cytokines"
-   ]
+   ],
+   "firstAuthor": "Sun YQ",
+   "lastAuthor": "Sun XL"
   },
   {
    "id": "pm-40081778",
@@ -2117,7 +2267,9 @@
    ],
    "alsoBranches": [
     "immunology"
-   ]
+   ],
+   "firstAuthor": "Davis LK",
+   "lastAuthor": "Fonken LK"
   },
   {
    "id": "pm-40072459",
@@ -2143,7 +2295,9 @@
     "Biomarkers"
    ],
    "_refiledFrom": "intervention",
-   "branchKey": "cytokines"
+   "branchKey": "cytokines",
+   "firstAuthor": "Wang T",
+   "lastAuthor": "Ebdrup BH"
   },
   {
    "id": "pm-40023202",
@@ -2172,7 +2326,9 @@
     "Acetylcysteine",
     "Brain",
     "Autistic Disorder"
-   ]
+   ],
+   "firstAuthor": "Pangrazzi L",
+   "lastAuthor": "Bozzi Y"
   },
   {
    "id": "pm-40010548",
@@ -2200,7 +2356,9 @@
    ],
    "alsoBranches": [
     "behavioral"
-   ]
+   ],
+   "firstAuthor": "Li W",
+   "lastAuthor": "Zhu C"
   },
   {
    "id": "pm-39984136",
@@ -2227,7 +2385,9 @@
     "Inflammation",
     "Prenatal Exposure Delayed Effects",
     "Disease Models, Animal"
-   ]
+   ],
+   "firstAuthor": "Velloso FJ",
+   "lastAuthor": "Levison SW"
   },
   {
    "id": "pm-39929953",
@@ -2257,7 +2417,9 @@
    "branchKey": "cytokines",
    "alsoBranches": [
     "genetics"
-   ]
+   ],
+   "firstAuthor": "McLellan J",
+   "lastAuthor": "Van de Water J"
   },
   {
    "id": "pm-39904469",
@@ -2283,7 +2445,9 @@
     "Autistic Disorder",
     "Middle Aged"
    ],
-   "_priorityWas": "mechanistic"
+   "_priorityWas": "mechanistic",
+   "firstAuthor": "Tseng CJ",
+   "lastAuthor": "Zürcher NR"
   },
   {
    "id": "pm-39865184",
@@ -2317,7 +2481,9 @@
    "alsoBranches": [
     "intervention",
     "behavioral"
-   ]
+   ],
+   "firstAuthor": "De Risi M",
+   "lastAuthor": "De Leonibus E"
   },
   {
    "id": "pm-39719225",
@@ -2343,7 +2509,9 @@
    "_priorityWas": "mechanistic",
    "alsoBranches": [
     "immunology"
-   ]
+   ],
+   "firstAuthor": "Breece E",
+   "lastAuthor": "Ashwood P"
   },
   {
    "id": "pm-39715923",
@@ -2379,7 +2547,9 @@
    "_priorityWas": "mechanistic",
    "alsoBranches": [
     "genetics"
-   ]
+   ],
+   "firstAuthor": "Shapira G",
+   "lastAuthor": "Gozes I"
   },
   {
    "id": "pm-39703999",
@@ -2397,7 +2567,9 @@
     "Mental Disorders",
     "Dietary Supplements",
     "Autism Spectrum Disorder"
-   ]
+   ],
+   "firstAuthor": "Rucklidge JJ",
+   "lastAuthor": "Johnstone JM"
   },
   {
    "id": "pm-39617194",
@@ -2421,7 +2593,9 @@
    ],
    "alsoBranches": [
     "cytokines"
-   ]
+   ],
+   "firstAuthor": "Santoni M",
+   "lastAuthor": "Pistis M"
   },
   {
    "id": "pm-39609827",
@@ -2450,7 +2624,9 @@
    ],
    "alsoBranches": [
     "cytokines"
-   ]
+   ],
+   "firstAuthor": "Bahaaeldin M",
+   "lastAuthor": "Baader SL"
   },
   {
    "id": "pm-39604505",
@@ -2486,7 +2662,9 @@
    "branchKey": "cytokines",
    "alsoBranches": [
     "genetics"
-   ]
+   ],
+   "firstAuthor": "Hilal ML",
+   "lastAuthor": "Bagni C"
   },
   {
    "id": "pm-39581290",
@@ -2507,7 +2685,9 @@
    ],
    "alsoBranches": [
     "cytokines"
-   ]
+   ],
+   "firstAuthor": "Gardner RM",
+   "lastAuthor": "Karlsson H"
   },
   {
    "id": "pm-39521032",
@@ -2527,7 +2707,9 @@
     "Female",
     "Adolescent",
     "Gene-Environment Interaction"
-   ]
+   ],
+   "firstAuthor": "Korgan AC",
+   "lastAuthor": "Bale TL"
   },
   {
    "id": "pm-39478169",
@@ -2560,7 +2742,9 @@
     "Interleukin-6",
     "Infant, Newborn"
    ],
-   "branchKey": "cytokines"
+   "branchKey": "cytokines",
+   "firstAuthor": "Hill RA",
+   "lastAuthor": "Sundram S"
   },
   {
    "id": "pm-39471905",
@@ -2589,7 +2773,9 @@
     "Sex Factors",
     "Anxiety",
     "Cytokines"
-   ]
+   ],
+   "firstAuthor": "Salia S",
+   "lastAuthor": "Swift-Gallant A"
   },
   {
    "id": "pm-39442636",
@@ -2623,7 +2809,9 @@
    "alsoBranches": [
     "neuroscience",
     "immunology"
-   ]
+   ],
+   "firstAuthor": "Morin C",
+   "lastAuthor": "Bokobza C"
   },
   {
    "id": "pm-39425203",
@@ -2650,7 +2838,9 @@
     "Receptors, Granulocyte-Macrophage Colony-Stimulating Factor",
     "Social Behavior",
     "Valproic Acid"
-   ]
+   ],
+   "firstAuthor": "Meng J",
+   "lastAuthor": "Liu H"
   },
   {
    "id": "pm-39378971",
@@ -2673,7 +2863,9 @@
    ],
    "alsoBranches": [
     "immunology"
-   ]
+   ],
+   "firstAuthor": "Moreno RJ",
+   "lastAuthor": "Ashwood P"
   },
   {
    "id": "pm-39367406",
@@ -2699,7 +2891,9 @@
    ],
    "alsoBranches": [
     "genetics"
-   ]
+   ],
+   "firstAuthor": "Mao Y",
+   "lastAuthor": "Huang H"
   },
   {
    "id": "pm-39293693",
@@ -2730,7 +2924,9 @@
    ],
    "alsoBranches": [
     "neuroscience"
-   ]
+   ],
+   "firstAuthor": "Griego E",
+   "lastAuthor": "Galván EJ"
   },
   {
    "id": "pm-39243986",
@@ -2756,7 +2952,9 @@
     "Nerve Net",
     "Male",
     "Alleles"
-   ]
+   ],
+   "firstAuthor": "Bose R",
+   "lastAuthor": "Ceccatelli S"
   },
   {
    "id": "pm-39182588",
@@ -2787,7 +2985,9 @@
     "Interleukin-6",
     "Brain"
    ],
-   "_priorityWas": "mechanistic"
+   "_priorityWas": "mechanistic",
+   "firstAuthor": "Zeng X",
+   "lastAuthor": "Liang S"
   },
   {
    "id": "pm-39025414",
@@ -2814,7 +3014,9 @@
     "Prenatal Exposure Delayed Effects",
     "Progesterone",
     "Gene Knock-In Techniques"
-   ]
+   ],
+   "firstAuthor": "Yin H",
+   "lastAuthor": "Xie J"
   },
   {
    "id": "pm-38897330",
@@ -2841,7 +3043,9 @@
     "Behavior, Animal",
     "Fetus",
     "Uterus"
-   ]
+   ],
+   "firstAuthor": "Schaer R",
+   "lastAuthor": "Meyer U"
   },
   {
    "id": "pm-38715090",
@@ -2872,7 +3076,9 @@
    ],
    "alsoBranches": [
     "cytokines"
-   ]
+   ],
+   "firstAuthor": "Osman HC",
+   "lastAuthor": "Ashwood P"
   },
   {
    "id": "pm-38608740",
@@ -2901,7 +3107,9 @@
     "Social Behavior",
     "Obesity",
     "Endocannabinoids"
-   ]
+   ],
+   "firstAuthor": "da Silva Rodrigues F",
+   "lastAuthor": "Padilha Guedes R"
   },
   {
    "id": "pm-38574728",
@@ -2929,7 +3137,9 @@
     "Gastrointestinal Microbiome",
     "Mood Disorders"
    ],
-   "branchKey": "cytokines"
+   "branchKey": "cytokines",
+   "firstAuthor": "Ahrens AP",
+   "lastAuthor": "Ludvigsson J"
   },
   {
    "id": "pm-38552922",
@@ -2957,7 +3167,9 @@
     "Behavior, Animal",
     "Down-Regulation",
     "Inflammation"
-   ]
+   ],
+   "firstAuthor": "Liang ZK",
+   "lastAuthor": "Feng X"
   },
   {
    "id": "pm-38461957",
@@ -2984,7 +3196,9 @@
    ],
    "alsoBranches": [
     "intervention"
-   ]
+   ],
+   "firstAuthor": "Wakuda T",
+   "lastAuthor": "Yamasue H"
   },
   {
    "id": "pm-38383466",
@@ -3013,7 +3227,9 @@
     "Dendrites"
    ],
    "_refiledFrom": "behavioral",
-   "branchKey": "cytokines"
+   "branchKey": "cytokines",
+   "firstAuthor": "Takada R",
+   "lastAuthor": "Makinodan M"
   },
   {
    "id": "pm-38307446",
@@ -3036,7 +3252,9 @@
     "Synapses",
     "Interleukin-1",
     "Mammals"
-   ]
+   ],
+   "firstAuthor": "Borreca A",
+   "lastAuthor": "Matteoli M"
   },
   {
    "id": "pm-38233886",
@@ -3057,7 +3275,9 @@
     "Inflammation",
     "Lactoferrin",
     "Leukocyte L1 Antigen Complex"
-   ]
+   ],
+   "firstAuthor": "Mathew NE",
+   "lastAuthor": "Ooi CY"
   },
   {
    "id": "pm-38200558",
@@ -3086,7 +3306,9 @@
    ],
    "alsoBranches": [
     "neuroscience"
-   ]
+   ],
+   "firstAuthor": "Newman J",
+   "lastAuthor": "Schmidt AF"
   },
   {
    "id": "pm-38157947",
@@ -3104,7 +3326,8 @@
     "Gastrointestinal Microbiome",
     "Lymphocytes"
    ],
-   "_priorityWas": "mechanistic"
+   "_priorityWas": "mechanistic",
+   "firstAuthor": "Ashwood P"
   },
   {
    "id": "pm-38142918",
@@ -3130,7 +3353,9 @@
     "Poly I-C",
     "Dietary Supplements",
     "Prenatal Exposure Delayed Effects"
-   ]
+   ],
+   "firstAuthor": "Gillespie B",
+   "lastAuthor": "Cardoso BR"
   },
   {
    "id": "pm-38070621",
@@ -3153,7 +3378,9 @@
     "Neurodevelopmental Disorders",
     "Disease Models, Animal",
     "Prenatal Exposure Delayed Effects"
-   ]
+   ],
+   "firstAuthor": "Tamayo JM",
+   "lastAuthor": "Ashwood P"
   },
   {
    "id": "pm-37972879",
@@ -3174,7 +3401,9 @@
     "Biomarkers",
     "Macrophages",
     "Chemokines"
-   ]
+   ],
+   "firstAuthor": "Sreenivas N",
+   "lastAuthor": "Debnath M"
   },
   {
    "id": "pm-37968722",
@@ -3196,7 +3425,9 @@
     "Mice, Inbred Strains",
     "Brain",
     "Hyperthermia, Induced"
-   ]
+   ],
+   "firstAuthor": "Lopez-Rodriguez AB",
+   "lastAuthor": "Cunningham C"
   },
   {
    "id": "pm-37919762",
@@ -3222,7 +3453,9 @@
    ],
    "alsoBranches": [
     "cytokines"
-   ]
+   ],
+   "firstAuthor": "Tamayo JM",
+   "lastAuthor": "Ashwood P"
   },
   {
    "id": "pm-37918459",
@@ -3243,7 +3476,9 @@
    ],
    "alsoBranches": [
     "cytokines"
-   ]
+   ],
+   "firstAuthor": "Ross FC",
+   "lastAuthor": "Mayer EA"
   },
   {
    "id": "pm-37793488",
@@ -3269,7 +3504,9 @@
     "Antibodies, Monoclonal",
     "Transforming Growth Factor beta",
     "RNA, Messenger"
-   ]
+   ],
+   "firstAuthor": "Butera A",
+   "lastAuthor": "Ricceri L"
   },
   {
    "id": "pm-37582858",
@@ -3295,7 +3532,9 @@
     "Primates",
     "Behavior, Animal"
    ],
-   "branchKey": "cytokines"
+   "branchKey": "cytokines",
+   "firstAuthor": "Lesh TA",
+   "lastAuthor": "Carter CS"
   },
   {
    "id": "pm-37573326",
@@ -3317,7 +3556,9 @@
     "Estradiol",
     "Testosterone",
     "Biomarkers"
-   ]
+   ],
+   "firstAuthor": "Bilder DA",
+   "lastAuthor": "Bakian AV"
   },
   {
    "id": "pm-37365313",
@@ -3342,7 +3583,9 @@
    ],
    "alsoBranches": [
     "cytokines"
-   ]
+   ],
+   "firstAuthor": "Morton JT",
+   "lastAuthor": "Taroncher-Oldenburg G"
   },
   {
    "id": "pm-37315701",
@@ -3363,7 +3606,9 @@
     "Inflammatory Bowel Diseases",
     "Mice, Inbred C57BL",
     "Disease Models, Animal"
-   ]
+   ],
+   "firstAuthor": "Li Q",
+   "lastAuthor": "Huang C"
   },
   {
    "id": "pm-37301236",
@@ -3381,7 +3626,9 @@
     "Interferons",
     "Neurons",
     "RNA, Long Noncoding"
-   ]
+   ],
+   "firstAuthor": "Teng P",
+   "lastAuthor": "Feng Y"
   },
   {
    "id": "pm-37164311",
@@ -3410,7 +3657,9 @@
    ],
    "alsoBranches": [
     "immunology"
-   ]
+   ],
+   "firstAuthor": "Kim DHJ",
+   "lastAuthor": "Van de Water J"
   },
   {
    "id": "pm-37037873",
@@ -3439,7 +3688,9 @@
    "branchKey": "cytokines",
    "alsoBranches": [
     "intervention"
-   ]
+   ],
+   "firstAuthor": "Che X",
+   "lastAuthor": "Lipkin WI"
   },
   {
    "id": "pm-37011865",
@@ -3459,7 +3710,9 @@
     "Autism Spectrum Disorder",
     "Surveys and Questionnaires",
     "Cytokines"
-   ]
+   ],
+   "firstAuthor": "Zhang L",
+   "lastAuthor": "Zhu C"
   },
   {
    "id": "pm-36973347",
@@ -3489,7 +3742,9 @@
    "branchKey": "cytokines",
    "alsoBranches": [
     "immunology"
-   ]
+   ],
+   "firstAuthor": "Bruce MR",
+   "lastAuthor": "Van de Water J"
   },
   {
    "id": "pm-36920424",
@@ -3510,7 +3765,8 @@
     "Age Factors"
    ],
    "branchKey": "cytokines",
-   "_priorityWas": "mechanistic"
+   "_priorityWas": "mechanistic",
+   "firstAuthor": "Harris E"
   },
   {
    "id": "pm-36878967",
@@ -3540,7 +3796,9 @@
     "Mice",
     "Prenatal Exposure Delayed Effects"
    ],
-   "branchKey": "cytokines"
+   "branchKey": "cytokines",
+   "firstAuthor": "Sarieva K",
+   "lastAuthor": "Mayer S"
   },
   {
    "id": "pm-36858183",
@@ -3562,7 +3820,9 @@
     "Mice, Knockout",
     "Fish Oils",
     "Fragile X Messenger Ribonucleoprotein 1"
-   ]
+   ],
+   "firstAuthor": "Guo P",
+   "lastAuthor": "Li Y"
   },
   {
    "id": "pm-36781081",
@@ -3581,7 +3841,9 @@
     "Microglia",
     "Neural Stem Cells",
     "Receptors, Interleukin-6"
-   ]
+   ],
+   "firstAuthor": "Couch ACM",
+   "lastAuthor": "Vernon AC"
   },
   {
    "id": "pm-36610487",
@@ -3608,7 +3870,9 @@
     "Behavior, Animal",
     "Prefrontal Cortex"
    ],
-   "_priorityWas": "mechanistic"
+   "_priorityWas": "mechanistic",
+   "firstAuthor": "Hanson KL",
+   "lastAuthor": "Schumann CM"
   },
   {
    "id": "pm-36604742",
@@ -3636,7 +3900,11 @@
    "alsoBranches": [
     "genetics",
     "cytokines"
-   ]
+   ],
+   "_refiledFrom": "behavioral",
+   "branchKey": "genetics",
+   "firstAuthor": "Atanasova E",
+   "lastAuthor": "Boeckers TM"
   },
   {
    "id": "pm-36494048",
@@ -3659,7 +3927,9 @@
    "alsoBranches": [
     "immunology",
     "behavioral"
-   ]
+   ],
+   "firstAuthor": "Hughes HK",
+   "lastAuthor": "Ashwood P"
   },
   {
    "id": "pm-36463221",
@@ -3686,7 +3956,9 @@
    ],
    "alsoBranches": [
     "cytokines"
-   ]
+   ],
+   "firstAuthor": "Hughes HK",
+   "lastAuthor": "Ashwood P"
   },
   {
    "id": "pm-36457055",
@@ -3709,7 +3981,9 @@
     "Seizures",
     "Transforming Growth Factor beta2",
     "RNA, Circular"
-   ]
+   ],
+   "firstAuthor": "Hu Y",
+   "lastAuthor": "Yang X"
   },
   {
    "id": "pm-36424395",
@@ -3736,7 +4010,9 @@
    "alsoBranches": [
     "immunology",
     "genetics"
-   ]
+   ],
+   "firstAuthor": "Chen Y",
+   "lastAuthor": "Liu C"
   },
   {
    "id": "pm-36284159",
@@ -3758,7 +4034,9 @@
     "Neurodevelopmental Disorders",
     "Risk Factors"
    ],
-   "branchKey": "cytokines"
+   "branchKey": "cytokines",
+   "firstAuthor": "Jameson C",
+   "lastAuthor": "Guastella AJ"
   },
   {
    "id": "pm-36266569",
@@ -3785,7 +4063,9 @@
    "_priorityWas": "mechanistic",
    "alsoBranches": [
     "genetics"
-   ]
+   ],
+   "firstAuthor": "Bao B",
+   "lastAuthor": "Courchesne E"
   },
   {
    "id": "pm-36028571",
@@ -3811,7 +4091,9 @@
     "Primates",
     "Metabolome"
    ],
-   "branchKey": "cytokines"
+   "branchKey": "cytokines",
+   "firstAuthor": "Boktor JC",
+   "lastAuthor": "Needham BD"
   },
   {
    "id": "pm-35906621",
@@ -3838,7 +4120,9 @@
    ],
    "alsoBranches": [
     "behavioral"
-   ]
+   ],
+   "firstAuthor": "Ishihara Y",
+   "lastAuthor": "Tominaga T"
   },
   {
    "id": "pm-35809877",
@@ -3860,7 +4144,9 @@
     "Prenatal Exposure Delayed Effects",
     "Social Participation"
    ],
-   "_priorityWas": "mechanistic"
+   "_priorityWas": "mechanistic",
+   "firstAuthor": "Mitchell AJ",
+   "lastAuthor": "Sullivan EL"
   },
   {
    "id": "pm-35803480",
@@ -3883,7 +4169,9 @@
     "Pregnancy",
     "Pyramidal Cells",
     "Schizophrenia"
-   ]
+   ],
+   "firstAuthor": "Griego E",
+   "lastAuthor": "Galván EJ"
   },
   {
    "id": "pm-35714916",
@@ -3904,7 +4192,9 @@
     "Intestines",
     "Mice",
     "Valproic Acid"
-   ]
+   ],
+   "firstAuthor": "Li J",
+   "lastAuthor": "Wang Q"
   },
   {
    "id": "pm-35491410",
@@ -3930,7 +4220,9 @@
    "branchKey": "cytokines",
    "alsoBranches": [
     "immunology"
-   ]
+   ],
+   "firstAuthor": "Lin CW",
+   "lastAuthor": "Takumi T"
   },
   {
    "id": "pm-35353173",
@@ -3964,7 +4256,9 @@
    "branchKey": "neuroscience",
    "alsoBranches": [
     "cytokines"
-   ]
+   ],
+   "firstAuthor": "Williams JA",
+   "lastAuthor": "PIMS Collaboration"
   },
   {
    "id": "pm-35245680",
@@ -3994,7 +4288,9 @@
    ],
    "alsoBranches": [
     "neuroscience"
-   ]
+   ],
+   "firstAuthor": "Breach MR",
+   "lastAuthor": "Lenz KM"
   },
   {
    "id": "pm-35065198",
@@ -4019,7 +4315,9 @@
     "Pregnancy",
     "Prenatal Exposure Delayed Effects",
     "Receptors, Purinergic P2X7"
-   ]
+   ],
+   "firstAuthor": "Szabó D",
+   "lastAuthor": "Sperlágh B"
   },
   {
    "id": "pm-35021058",
@@ -4039,7 +4337,9 @@
     "Microbiota",
     "Prenatal Exposure Delayed Effects",
     "Stomach"
-   ]
+   ],
+   "firstAuthor": "Zengeler KE",
+   "lastAuthor": "Lukens JR"
   },
   {
    "id": "pm-34987169",
@@ -4062,7 +4362,9 @@
     "Humans",
     "Male"
    ],
-   "branchKey": "cytokines"
+   "branchKey": "cytokines",
+   "firstAuthor": "Che X",
+   "lastAuthor": "Lipkin WI"
   },
   {
    "id": "pm-34954074",
@@ -4086,7 +4388,9 @@
     "Neurogenesis",
     "Pregnancy",
     "Social Behavior"
-   ]
+   ],
+   "firstAuthor": "Velloso FJ",
+   "lastAuthor": "Levison SW"
   },
   {
    "id": "pm-34879222",
@@ -4116,7 +4420,9 @@
     "Neurodevelopmental Disorders",
     "Pregnancy",
     "Prenatal Exposure Delayed Effects"
-   ]
+   ],
+   "firstAuthor": "Kim E",
+   "lastAuthor": "Huh JR"
   },
   {
    "id": "pm-34848339",
@@ -4134,7 +4440,9 @@
     "Mucocutaneous Lymph Node Syndrome",
     "Prospective Studies",
     "Taiwan"
-   ]
+   ],
+   "firstAuthor": "Chen DT",
+   "lastAuthor": "Su KP"
   },
   {
    "id": "pm-34808292",
@@ -4156,7 +4464,9 @@
     "Humans",
     "Infant, Newborn"
    ],
-   "_priorityWas": "mechanistic"
+   "_priorityWas": "mechanistic",
+   "firstAuthor": "Kim DH",
+   "lastAuthor": "Van de Water J"
   },
   {
    "id": "pm-34641964",
@@ -4172,7 +4482,11 @@
     "Child",
     "Humans",
     "T-Lymphocytes, Regulatory"
-   ]
+   ],
+   "_refiledFrom": "behavioral",
+   "branchKey": "immunology",
+   "firstAuthor": "Ellul P",
+   "lastAuthor": "Delorme R"
   },
   {
    "id": "pm-34537069",
@@ -4193,7 +4507,9 @@
     "Pregnancy Complications",
     "Pregnancy Trimester, First",
     "Risk Factors"
-   ]
+   ],
+   "firstAuthor": "Antoun S",
+   "lastAuthor": "Delorme R"
   },
   {
    "id": "pm-34403735",
@@ -4212,7 +4528,9 @@
     "Humans",
     "Ileitis",
     "Mice"
-   ]
+   ],
+   "firstAuthor": "Gomez-Nguyen A",
+   "lastAuthor": "Cominelli F"
   },
   {
    "id": "pm-34343619",
@@ -4237,7 +4555,9 @@
     "Microglia",
     "Phenotype",
     "Pregnancy"
-   ]
+   ],
+   "firstAuthor": "Fernández de Cossío L",
+   "lastAuthor": "Tremblay MÈ"
   },
   {
    "id": "pm-34238328",
@@ -4265,7 +4585,9 @@
    ],
    "alsoBranches": [
     "cytokines"
-   ]
+   ],
+   "firstAuthor": "Galvani G",
+   "lastAuthor": "Trazzi S"
   },
   {
    "id": "pm-34193257",
@@ -4290,7 +4612,9 @@
     "Young Adult"
    ],
    "_refiledFrom": "behavioral",
-   "branchKey": "neuroscience"
+   "branchKey": "neuroscience",
+   "firstAuthor": "Andica C",
+   "lastAuthor": "Aoki S"
   },
   {
    "id": "pm-34174336",
@@ -4321,7 +4645,9 @@
     "Selective Serotonin Reuptake Inhibitors",
     "Stress, Psychological"
    ],
-   "_priorityWas": "mechanistic"
+   "_priorityWas": "mechanistic",
+   "firstAuthor": "Qiu W",
+   "lastAuthor": "Galea LAM"
   },
   {
    "id": "pm-34088332",
@@ -4342,7 +4668,9 @@
     "Microglia",
     "Neurons",
     "Social Behavior"
-   ]
+   ],
+   "firstAuthor": "Sarn N",
+   "lastAuthor": "Eng C"
   },
   {
    "id": "pm-34053674",
@@ -4366,7 +4694,9 @@
    ],
    "alsoBranches": [
     "cytokines"
-   ]
+   ],
+   "firstAuthor": "Guma E",
+   "lastAuthor": "Chakravarty MM"
   },
   {
    "id": "pm-34034808",
@@ -4388,7 +4718,9 @@
     "United States"
    ],
    "_refiledFrom": "behavioral",
-   "branchKey": "intervention"
+   "branchKey": "intervention",
+   "firstAuthor": "Zimmerman AW",
+   "lastAuthor": "Fahey JW"
   },
   {
    "id": "pm-33931727",
@@ -4412,7 +4744,9 @@
     "Mice",
     "Serotonin"
    ],
-   "branchKey": "cytokines"
+   "branchKey": "cytokines",
+   "firstAuthor": "Takahashi A",
+   "lastAuthor": "Russo SJ"
   },
   {
    "id": "pm-33892139",
@@ -4436,7 +4770,9 @@
     "Receptor, Interferon alpha-beta",
     "SARS-CoV-2"
    ],
-   "_priorityWas": "mechanistic"
+   "_priorityWas": "mechanistic",
+   "firstAuthor": "McGarry N",
+   "lastAuthor": "Cunningham C"
   },
   {
    "id": "pm-33862170",
@@ -4460,7 +4796,9 @@
    ],
    "alsoBranches": [
     "immunology"
-   ]
+   ],
+   "firstAuthor": "Saitoh BY",
+   "lastAuthor": "Kira JI"
   },
   {
    "id": "pm-33859437",
@@ -4493,7 +4831,9 @@
    "alsoBranches": [
     "immunology",
     "cytokines"
-   ]
+   ],
+   "firstAuthor": "Xu Z",
+   "lastAuthor": "Zhou Z"
   },
   {
    "id": "pm-33798637",
@@ -4519,7 +4859,9 @@
    ],
    "alsoBranches": [
     "immunology"
-   ]
+   ],
+   "firstAuthor": "Breach MR",
+   "lastAuthor": "Lenz KM"
   },
   {
    "id": "pm-33766701",
@@ -4543,7 +4885,9 @@
     "Pregnancy",
     "Prenatal Exposure Delayed Effects",
     "Social Behavior"
-   ]
+   ],
+   "firstAuthor": "Zhao X",
+   "lastAuthor": "Kentner AC"
   },
   {
    "id": "pm-33736683",
@@ -4572,7 +4916,9 @@
     "Thyroid Hormones",
     "Vitamin D",
     "Young Adult"
-   ]
+   ],
+   "firstAuthor": "Lyall K",
+   "lastAuthor": "Croen LA"
   },
   {
    "id": "pm-33705867",
@@ -4596,7 +4942,9 @@
     "Mice",
     "Mice, Inbred C57BL",
     "Milk Hypersensitivity"
-   ]
+   ],
+   "firstAuthor": "Smith NA",
+   "lastAuthor": "Nagamoto-Combs K"
   },
   {
    "id": "pm-33676530",
@@ -4630,7 +4978,9 @@
    ],
    "alsoBranches": [
     "neuroscience"
-   ]
+   ],
+   "firstAuthor": "Traetta ME",
+   "lastAuthor": "Reinés A"
   },
   {
    "id": "pm-33412254",
@@ -4653,7 +5003,9 @@
     "Poly I-C",
     "Pregnancy",
     "Prenatal Exposure Delayed Effects"
-   ]
+   ],
+   "firstAuthor": "Delorme TC",
+   "lastAuthor": "Cermakian N"
   },
   {
    "id": "pm-33187600",
@@ -4676,7 +5028,9 @@
     "Odds Ratio",
     "Pregnancy",
     "Risk Factors"
-   ]
+   ],
+   "firstAuthor": "Gardner RM",
+   "lastAuthor": "Karlsson H"
   },
   {
    "id": "pm-41476329",
@@ -4688,7 +5042,8 @@
    "addedBy": "agent-2026-05-28",
    "journalKey": "ajp",
    "mesh": [],
-   "_priorityWas": "mechanistic"
+   "_priorityWas": "mechanistic",
+   "firstAuthor": "Kalin NH"
   },
   {
    "id": "pm-39611328",
@@ -4717,7 +5072,9 @@
     "Oxidative Stress",
     "DNA Polymerase gamma",
     "Adolescent"
-   ]
+   ],
+   "firstAuthor": "Rojas V",
+   "lastAuthor": "Ruiz LM"
   },
   {
    "id": "pm-37909397",
@@ -4734,7 +5091,9 @@
     "Kynurenine",
     "Autism Spectrum Disorder",
     "Kynurenic Acid"
-   ]
+   ],
+   "firstAuthor": "Almulla AF",
+   "lastAuthor": "Maes M"
   },
   {
    "id": "pm-37400063",
@@ -4757,7 +5116,9 @@
     "Placenta",
     "Risk Factors",
     "Adolescent Behavior"
-   ]
+   ],
+   "firstAuthor": "Suleri A",
+   "lastAuthor": "Rommel AS"
   },
   {
    "id": "pm-37119025",
@@ -4778,7 +5139,9 @@
     "Gastrointestinal Diseases",
     "Phenotype",
     "Cytokines"
-   ]
+   ],
+   "firstAuthor": "Muller E",
+   "lastAuthor": "Eran A"
   },
   {
    "id": "pm-36938998",
@@ -4804,7 +5167,9 @@
     "Bromodomain Containing Proteins"
    ],
    "_refiledFrom": "behavioral",
-   "branchKey": "genetics"
+   "branchKey": "genetics",
+   "firstAuthor": "Freedman AN",
+   "lastAuthor": "Fry RC"
   },
   {
    "id": "pm-36475375",
@@ -4824,7 +5189,9 @@
     "Research Design"
    ],
    "_refiledFrom": "intervention",
-   "branchKey": "neuroscience"
+   "branchKey": "neuroscience",
+   "firstAuthor": "Parellada M",
+   "lastAuthor": "Sanders SJ"
   },
   {
    "id": "pm-36189896",
@@ -4844,7 +5211,9 @@
     "Odds Ratio",
     "Logistic Models",
     "Autoimmune Diseases"
-   ]
+   ],
+   "firstAuthor": "Nielsen TC",
+   "lastAuthor": "Lain SJ"
   },
   {
    "id": "pm-34951517",
@@ -4868,7 +5237,9 @@
     "Placenta",
     "Pregnancy"
    ],
-   "_priorityWas": "mechanistic"
+   "_priorityWas": "mechanistic",
+   "firstAuthor": "Soullane S",
+   "lastAuthor": "Abenhaim HA"
   },
   {
    "id": "pm-34415116",
@@ -4897,7 +5268,9 @@
     "Vinca Alkaloids"
    ],
    "_refiledFrom": "behavioral",
-   "branchKey": "cytokines"
+   "branchKey": "cytokines",
+   "firstAuthor": "Luhach K",
+   "lastAuthor": "Sharma B"
   },
   {
    "id": "pm-34374213",
@@ -4920,7 +5293,11 @@
    "alsoBranches": [
     "cytokines",
     "immunology"
-   ]
+   ],
+   "_refiledFrom": "behavioral",
+   "branchKey": "cytokines",
+   "firstAuthor": "Yamauchi T",
+   "lastAuthor": "Kishimoto T"
   },
   {
    "id": "pm-33979488",
@@ -4946,7 +5323,9 @@
     "Middle Aged",
     "Quality of Life",
     "Young Adult"
-   ]
+   ],
+   "firstAuthor": "Menzies-Gow A",
+   "lastAuthor": "Colice G"
   },
   {
    "id": "pm-28902835",
@@ -4976,7 +5355,9 @@
     "Social Behavior",
     "Somatosensory Cortex",
     "Th17 Cells"
-   ]
+   ],
+   "firstAuthor": "Shin Yim Y",
+   "lastAuthor": "Choi GB"
   },
   {
    "id": "pm-33361822",
@@ -5010,7 +5391,9 @@
     "Sex Characteristics",
     "Signal Transduction",
     "Stress, Psychological"
-   ]
+   ],
+   "firstAuthor": "Kalish BT",
+   "lastAuthor": "Huh JR"
   },
   {
    "id": "pm-31751540",
@@ -5032,7 +5415,9 @@
     "Phenotype",
     "RNA, Messenger",
     "RNA-Binding Proteins"
-   ]
+   ],
+   "firstAuthor": "Kim E",
+   "lastAuthor": "Huh JR"
   },
   {
    "id": "pm-28902840",
@@ -5064,7 +5449,9 @@
     "Prenatal Exposure Delayed Effects",
     "Symbiosis",
     "Th17 Cells"
-   ]
+   ],
+   "firstAuthor": "Kim S",
+   "lastAuthor": "Huh JR"
   },
   {
    "id": "pm-34982959",
@@ -5097,7 +5484,9 @@
    "_priorityWas": "mechanistic",
    "alsoBranches": [
     "immunology"
-   ]
+   ],
+   "firstAuthor": "He D",
+   "lastAuthor": "Kuchroo VK"
   },
   {
    "id": "pm-38565970",
@@ -5116,7 +5505,9 @@
     "Neuroimmunomodulation",
     "Neurodevelopmental Disorders",
     "Disease Models, Animal"
-   ]
+   ],
+   "firstAuthor": "Kim E",
+   "lastAuthor": "Choi GB"
   },
   {
    "id": "pm-31853066",
@@ -5143,7 +5534,9 @@
     "Pregnancy",
     "Prenatal Exposure Delayed Effects",
     "Social Behavior"
-   ]
+   ],
+   "firstAuthor": "Reed MD",
+   "lastAuthor": "Choi GB"
   },
   {
    "id": "pm-26822608",
@@ -5178,7 +5571,9 @@
     "Signal Transduction",
     "Th17 Cells",
     "Retinoic Acid Receptor gamma"
-   ]
+   ],
+   "firstAuthor": "Choi GB",
+   "lastAuthor": "Huh JR"
   },
   {
    "id": "pm-35427498",
@@ -5201,7 +5596,9 @@
     "Humans",
     "Mice"
    ],
-   "_priorityWas": "mechanistic"
+   "_priorityWas": "mechanistic",
+   "firstAuthor": "Lee Y",
+   "lastAuthor": "Huh JR"
   },
   {
    "id": "pm-42161244",
@@ -5221,7 +5618,9 @@
     "Neurons"
    ],
    "journalKey": "neuron",
-   "_priorityWas": "mechanistic"
+   "_priorityWas": "mechanistic",
+   "firstAuthor": "Zhan J",
+   "lastAuthor": "Lee HK"
   },
   {
    "id": "pm-42157347",
@@ -5246,7 +5645,9 @@
    ],
    "journalKey": "mol-autism",
    "_refiledFrom": "behavioral",
-   "branchKey": "genetics"
+   "branchKey": "genetics",
+   "firstAuthor": "Wang Q",
+   "lastAuthor": "Shan Z"
   },
   {
    "id": "pm-42129557",
@@ -5278,7 +5679,9 @@
    "branchKey": "immunology",
    "journalDisplay": "Nature",
    "journalKey": "nature",
-   "_priorityWas": "mechanistic"
+   "_priorityWas": "mechanistic",
+   "firstAuthor": "Bradley CA",
+   "lastAuthor": "Scherer SW"
   },
   {
    "id": "pm-42128068",
@@ -5290,7 +5693,9 @@
    "addedBy": "agent-2026-06-02",
    "mesh": [],
    "journalKey": "bbi",
-   "_priorityWas": "mechanistic"
+   "_priorityWas": "mechanistic",
+   "firstAuthor": "Portela DM",
+   "lastAuthor": "Clarke JR"
   },
   {
    "id": "pm-42070704",
@@ -5324,7 +5729,9 @@
    "alsoBranches": [
     "neuroscience",
     "behavioral"
-   ]
+   ],
+   "firstAuthor": "Zhang X",
+   "lastAuthor": "Fan X"
   },
   {
    "id": "pm-42069619",
@@ -5345,7 +5752,9 @@
     "Case-Control Studies",
     "Eye Movements"
    ],
-   "journalKey": "mol-autism"
+   "journalKey": "mol-autism",
+   "firstAuthor": "Xu D",
+   "lastAuthor": "Kendrick KM"
   },
   {
    "id": "pm-42049157",
@@ -5356,7 +5765,9 @@
    "priority": "review",
    "addedBy": "agent-2026-06-02",
    "mesh": [],
-   "journalKey": "bbi"
+   "journalKey": "bbi",
+   "firstAuthor": "Moreno RJ",
+   "lastAuthor": "Ashwood P"
   },
   {
    "id": "pm-42034056",
@@ -5367,7 +5778,9 @@
    "priority": "mechanistic",
    "addedBy": "agent-2026-06-02",
    "mesh": [],
-   "journalKey": "neuron"
+   "journalKey": "neuron",
+   "firstAuthor": "Tavares GA",
+   "lastAuthor": "Louveau A"
   },
   {
    "id": "pm-42020718",
@@ -5380,7 +5793,9 @@
    "mesh": [],
    "branchKey": "genetics",
    "journalDisplay": "Molecular Psychiatry",
-   "journalKey": "mol-psych"
+   "journalKey": "mol-psych",
+   "firstAuthor": "Wang X",
+   "lastAuthor": "Yang L"
   },
   {
    "id": "pm-41914215",
@@ -5402,7 +5817,11 @@
     "Autistic Disorder",
     "Sulfhydryl Compounds"
    ],
-   "journalKey": "autism-res"
+   "journalKey": "autism-res",
+   "_refiledFrom": "behavioral",
+   "branchKey": "intervention",
+   "firstAuthor": "Sandoni L",
+   "lastAuthor": "Persico AM"
   },
   {
    "id": "pm-41912422",
@@ -5427,7 +5846,9 @@
    ],
    "journalKey": "autism-res",
    "_refiledFrom": "behavioral",
-   "branchKey": "intervention"
+   "branchKey": "intervention",
+   "firstAuthor": "Shaban FA",
+   "lastAuthor": "Thompson IR"
   },
   {
    "id": "pm-41895438",
@@ -5441,7 +5862,9 @@
    "journalKey": "jaacap",
    "alsoBranches": [
     "intervention"
-   ]
+   ],
+   "firstAuthor": "Trelles P",
+   "lastAuthor": "Siegel M"
   },
   {
    "id": "pm-41882355",
@@ -5472,7 +5895,9 @@
    "branchKey": "immunology",
    "journalDisplay": "Nature",
    "journalKey": "nature",
-   "_priorityWas": "mechanistic"
+   "_priorityWas": "mechanistic",
+   "firstAuthor": "Kamitaki N",
+   "lastAuthor": "Loh PR"
   },
   {
    "id": "pm-41786003",
@@ -5498,7 +5923,9 @@
    "journalKey": "bbi",
    "alsoBranches": [
     "immunology"
-   ]
+   ],
+   "firstAuthor": "Chen X",
+   "lastAuthor": "Zhang C"
   },
   {
    "id": "pm-41606634",
@@ -5524,7 +5951,9 @@
     "Young Adult",
     "Brain"
    ],
-   "journalKey": "mol-autism"
+   "journalKey": "mol-autism",
+   "firstAuthor": "Santoro JD",
+   "lastAuthor": "Rafii MS"
   },
   {
    "id": "pm-41549851",
@@ -5551,7 +5980,9 @@
    "branchKey": "genetics",
    "alsoBranches": [
     "neuroscience"
-   ]
+   ],
+   "firstAuthor": "Quiñones-Medina E",
+   "lastAuthor": "Bustos FJ"
   },
   {
    "id": "pm-41534728",
@@ -5576,7 +6007,9 @@
    "_priorityWas": "mechanistic",
    "alsoBranches": [
     "immunology"
-   ]
+   ],
+   "firstAuthor": "Jäntti H",
+   "lastAuthor": "Malm T"
   },
   {
    "id": "pm-41483154",
@@ -5597,7 +6030,9 @@
     "Reflex, Startle",
     "Autism Spectrum Disorder"
    ],
-   "journalKey": "autism-res"
+   "journalKey": "autism-res",
+   "firstAuthor": "Gultig KD",
+   "lastAuthor": "Boele HJ"
   },
   {
    "id": "pm-41382128",
@@ -5622,7 +6057,9 @@
     "Spinal Cord",
     "Signal Transduction"
    ],
-   "journalKey": "j-neuroinfl"
+   "journalKey": "j-neuroinfl",
+   "firstAuthor": "Chen YN",
+   "lastAuthor": "Zhang YX"
   },
   {
    "id": "pm-41345879",
@@ -5647,7 +6084,9 @@
     "Child"
    ],
    "journalKey": "mol-autism",
-   "_priorityWas": "clinical-observation"
+   "_priorityWas": "clinical-observation",
+   "firstAuthor": "Zhu EH",
+   "lastAuthor": "Sandin S"
   },
   {
    "id": "pm-41271186",
@@ -5676,7 +6115,9 @@
    "journalKey": "bbi",
    "alsoBranches": [
     "neuroscience"
-   ]
+   ],
+   "firstAuthor": "Bagnall-Moreau C",
+   "lastAuthor": "Brimberg L"
   },
   {
    "id": "pm-41258377",
@@ -5698,7 +6139,9 @@
    ],
    "branchKey": "immunology",
    "journalDisplay": "Molecular Psychiatry",
-   "journalKey": "mol-psych"
+   "journalKey": "mol-psych",
+   "firstAuthor": "Dong B",
+   "lastAuthor": "Guo B"
   },
   {
    "id": "pm-41243441",
@@ -5718,7 +6161,9 @@
     "Psychiatric Status Rating Scales",
     "Siblings"
    ],
-   "journalKey": "jcpp"
+   "journalKey": "jcpp",
+   "firstAuthor": "Schaubroeck S",
+   "lastAuthor": "Roeyers H"
   },
   {
    "id": "pm-41131280",
@@ -5752,7 +6197,9 @@
    ],
    "branchKey": "immunology",
    "journalDisplay": "Molecular Psychiatry",
-   "journalKey": "mol-psych"
+   "journalKey": "mol-psych",
+   "firstAuthor": "Spielman B",
+   "lastAuthor": "Brimberg L"
   },
   {
    "id": "pm-40780524",
@@ -5775,7 +6222,9 @@
    "journalKey": "bbi",
    "alsoBranches": [
     "behavioral"
-   ]
+   ],
+   "firstAuthor": "Michels S",
+   "lastAuthor": "Malm T"
   },
   {
    "id": "pm-40770435",
@@ -5805,7 +6254,9 @@
    ],
    "branchKey": "immunology",
    "journalDisplay": "Molecular Psychiatry",
-   "journalKey": "mol-psych"
+   "journalKey": "mol-psych",
+   "firstAuthor": "Zhang QM",
+   "lastAuthor": "Yao J"
   },
   {
    "id": "pm-40623670",
@@ -5834,7 +6285,9 @@
    "alsoBranches": [
     "neuroscience",
     "immunology"
-   ]
+   ],
+   "firstAuthor": "Giniatullin R",
+   "lastAuthor": "Cherubini E"
   },
   {
    "id": "pm-40559513",
@@ -5856,7 +6309,9 @@
     "Parents"
    ],
    "journalKey": "autism",
-   "_priorityWas": "mechanistic"
+   "_priorityWas": "mechanistic",
+   "firstAuthor": "Staunton H",
+   "lastAuthor": "Barrett L"
   },
   {
    "id": "pm-40188316",
@@ -5888,7 +6343,9 @@
    "journalKey": "mol-psych",
    "alsoBranches": [
     "genetics"
-   ]
+   ],
+   "firstAuthor": "Teter OM",
+   "lastAuthor": "Kampmann M"
   },
   {
    "id": "pm-40185900",
@@ -5917,7 +6374,9 @@
    "branchKey": "immunology",
    "journalDisplay": "Molecular Psychiatry",
    "journalKey": "mol-psych",
-   "_priorityWas": "mechanistic"
+   "_priorityWas": "mechanistic",
+   "firstAuthor": "Nishi Y",
+   "lastAuthor": "Makinodan M"
   },
   {
    "id": "pm-40081369",
@@ -5946,7 +6405,9 @@
    ],
    "branchKey": "immunology",
    "journalDisplay": "Cell",
-   "journalKey": "cell"
+   "journalKey": "cell",
+   "firstAuthor": "Binan L",
+   "lastAuthor": "Farhi SL"
   },
   {
    "id": "pm-40055803",
@@ -5971,7 +6432,9 @@
    ],
    "journalKey": "mol-autism",
    "_refiledFrom": "behavioral",
-   "branchKey": "genetics"
+   "branchKey": "genetics",
+   "firstAuthor": "Hooshmandi M",
+   "lastAuthor": "Khoutorsky A"
   },
   {
    "id": "pm-40015282",
@@ -5990,7 +6453,9 @@
     "Genome-Wide Association Study",
     "Autism Spectrum Disorder"
    ],
-   "journalKey": "ajhg"
+   "journalKey": "ajhg",
+   "firstAuthor": "Dhindsa RS",
+   "lastAuthor": "Zoghbi AW"
   },
   {
    "id": "pm-39779846",
@@ -6027,7 +6492,9 @@
    "branchKey": "immunology",
    "journalDisplay": "Nature",
    "journalKey": "nature",
-   "_priorityWas": "mechanistic"
+   "_priorityWas": "mechanistic",
+   "firstAuthor": "Wang L",
+   "lastAuthor": "Kriegstein AR"
   },
   {
    "id": "pm-39542073",
@@ -6056,7 +6523,9 @@
     "Putamen",
     "Microglia"
    ],
-   "journalKey": "bbi"
+   "journalKey": "bbi",
+   "firstAuthor": "Clark DN",
+   "lastAuthor": "Filiano AJ"
   },
   {
    "id": "pm-39500415",
@@ -6081,7 +6550,9 @@
     "Autistic Disorder"
    ],
    "journalKey": "bbi",
-   "_priorityWas": "mechanistic"
+   "_priorityWas": "mechanistic",
+   "firstAuthor": "Buonfiglioli A",
+   "lastAuthor": "De Witte LD"
   },
   {
    "id": "pm-39500414",
@@ -6100,7 +6571,9 @@
     "Biomarkers",
     "Tight Junctions"
    ],
-   "journalKey": "bbi"
+   "journalKey": "bbi",
+   "firstAuthor": "Maridaki Z",
+   "lastAuthor": "Konstantinou GN"
   },
   {
    "id": "pm-42209704",
@@ -6113,7 +6586,9 @@
    "mesh": [],
    "branchKey": "cytokines",
    "journalDisplay": "Molecular Psychiatry",
-   "journalKey": "mol-psych"
+   "journalKey": "mol-psych",
+   "firstAuthor": "Volk T",
+   "lastAuthor": "Beyer N"
   },
   {
    "id": "pm-42190661",
@@ -6129,7 +6604,9 @@
    "alsoBranches": [
     "immunology",
     "cytokines"
-   ]
+   ],
+   "firstAuthor": "Bizzotto M",
+   "lastAuthor": "Filipello F"
   },
   {
    "id": "pm-42128069",
@@ -6140,7 +6617,9 @@
    "priority": "translational",
    "addedBy": "agent-2026-06-02",
    "mesh": [],
-   "journalKey": "bbi"
+   "journalKey": "bbi",
+   "firstAuthor": "Jeon S",
+   "lastAuthor": "Kalish BT"
   },
   {
    "id": "pm-42013923",
@@ -6169,7 +6648,9 @@
     "Humans"
    ],
    "journalKey": "bbi",
-   "_priorityWas": "mechanistic"
+   "_priorityWas": "mechanistic",
+   "firstAuthor": "Muñoz JT",
+   "lastAuthor": "Kalergis AM"
   },
   {
    "id": "pm-42013920",
@@ -6198,7 +6679,9 @@
    "journalKey": "bbi",
    "alsoBranches": [
     "immunology"
-   ]
+   ],
+   "firstAuthor": "Liu C",
+   "lastAuthor": "Liu F"
   },
   {
    "id": "pm-41998191",
@@ -6211,7 +6694,9 @@
    "mesh": [],
    "branchKey": "cytokines",
    "journalDisplay": "Molecular Psychiatry",
-   "journalKey": "mol-psych"
+   "journalKey": "mol-psych",
+   "firstAuthor": "Deng YY",
+   "lastAuthor": "Guo RM"
   },
   {
    "id": "pm-41956302",
@@ -6241,7 +6726,9 @@
     "Pregnancy Complications",
     "Psychiatric Status Rating Scales"
    ],
-   "journalKey": "bbi"
+   "journalKey": "bbi",
+   "firstAuthor": "Cohen LE",
+   "lastAuthor": "Rommel AS"
   },
   {
    "id": "pm-41941984",
@@ -6268,7 +6755,9 @@
    "journalKey": "bbi",
    "alsoBranches": [
     "genetics"
-   ]
+   ],
+   "firstAuthor": "Margaux E",
+   "lastAuthor": "Kaat A"
   },
   {
    "id": "pm-41742209",
@@ -6295,7 +6784,9 @@
    "journalKey": "j-neuroinfl",
    "alsoBranches": [
     "cytokines"
-   ]
+   ],
+   "firstAuthor": "Pekala M",
+   "lastAuthor": "Kalita K"
   },
   {
    "id": "pm-41740871",
@@ -6322,7 +6813,9 @@
     "Child Development",
     "Adult"
    ],
-   "journalKey": "bbi"
+   "journalKey": "bbi",
+   "firstAuthor": "Park S",
+   "lastAuthor": "Meeker JD"
   },
   {
    "id": "pm-41617159",
@@ -6351,7 +6844,9 @@
    "journalKey": "bbi",
    "alsoBranches": [
     "neuroscience"
-   ]
+   ],
+   "firstAuthor": "Fu Q",
+   "lastAuthor": "Liang J"
   },
   {
    "id": "pm-41610964",
@@ -6383,7 +6878,9 @@
     "Protein Serine-Threonine Kinases",
     "Human Umbilical Vein Endothelial Cells"
    ],
-   "journalKey": "bbi"
+   "journalKey": "bbi",
+   "firstAuthor": "Zhang J",
+   "lastAuthor": "Chen L"
   },
   {
    "id": "pm-41605305",
@@ -6395,7 +6892,9 @@
    "addedBy": "agent-2026-06-02",
    "mesh": [],
    "journalKey": "bbi",
-   "_priorityWas": "mechanistic"
+   "_priorityWas": "mechanistic",
+   "firstAuthor": "Campbell OC",
+   "lastAuthor": "Lukens JR"
   },
   {
    "id": "pm-41495254",
@@ -6422,7 +6921,9 @@
    "alsoBranches": [
     "cytokines",
     "genetics"
-   ]
+   ],
+   "firstAuthor": "Kukreja B",
+   "lastAuthor": "Kalish BT"
   },
   {
    "id": "pm-41249551",
@@ -6450,7 +6951,9 @@
    ],
    "branchKey": "cytokines",
    "journalDisplay": "Molecular Psychiatry",
-   "journalKey": "mol-psych"
+   "journalKey": "mol-psych",
+   "firstAuthor": "Martz J",
+   "lastAuthor": "Kentner AC"
   },
   {
    "id": "pm-41110640",
@@ -6482,7 +6985,9 @@
     "Risk Factors",
     "Mothers"
    ],
-   "journalKey": "bbi"
+   "journalKey": "bbi",
+   "firstAuthor": "Zarchev M",
+   "lastAuthor": "Bergink V"
   },
   {
    "id": "pm-40883450",
@@ -6512,7 +7017,9 @@
    "journalKey": "mol-psych",
    "alsoBranches": [
     "genetics"
-   ]
+   ],
+   "firstAuthor": "Woods RM",
+   "lastAuthor": "Hager R"
   },
   {
    "id": "pm-40835055",
@@ -6538,7 +7045,9 @@
     "Anti-Retroviral Agents",
     "Anti-HIV Agents"
    ],
-   "journalKey": "bbi"
+   "journalKey": "bbi",
+   "firstAuthor": "Ntuli L",
+   "lastAuthor": "Ngcapu S"
   },
   {
    "id": "pm-40780523",
@@ -6566,7 +7075,9 @@
     "Choroid Plexus",
     "Neurodevelopmental Disorders"
    ],
-   "journalKey": "bbi"
+   "journalKey": "bbi",
+   "firstAuthor": "Gonzalez-Ricon RJ",
+   "lastAuthor": "Antonson AM"
   },
   {
    "id": "pm-40578538",
@@ -6594,7 +7105,9 @@
     "Rats, Sprague-Dawley",
     "Temozolomide"
    ],
-   "journalKey": "bbi"
+   "journalKey": "bbi",
+   "firstAuthor": "Zhao Q",
+   "lastAuthor": "You Z"
   },
   {
    "id": "pm-40499513",
@@ -6618,7 +7131,9 @@
     "Microglia",
     "Placenta"
    ],
-   "journalKey": "immunity"
+   "journalKey": "immunity",
+   "firstAuthor": "Shreeve N",
+   "lastAuthor": "Colucci F"
   },
   {
    "id": "pm-40484148",
@@ -6645,7 +7160,9 @@
     "Cognition",
     "Prefrontal Cortex"
    ],
-   "journalKey": "bbi"
+   "journalKey": "bbi",
+   "firstAuthor": "Potter HG",
+   "lastAuthor": "Hager R"
   },
   {
    "id": "pm-40456300",
@@ -6671,7 +7188,9 @@
     "Mice, Inbred C57BL",
     "Sex Factors"
    ],
-   "journalKey": "bbi"
+   "journalKey": "bbi",
+   "firstAuthor": "Gao F",
+   "lastAuthor": "Gao Y"
   },
   {
    "id": "pm-39900676",
@@ -6700,7 +7219,9 @@
    ],
    "branchKey": "cytokines",
    "journalDisplay": "Molecular Psychiatry",
-   "journalKey": "mol-psych"
+   "journalKey": "mol-psych",
+   "firstAuthor": "Martín-Guerrero SM",
+   "lastAuthor": "López-Giménez JF"
   },
   {
    "id": "pm-39681198",
@@ -6728,7 +7249,9 @@
    "journalKey": "bbi",
    "alsoBranches": [
     "neuroscience"
-   ]
+   ],
+   "firstAuthor": "Liu W",
+   "lastAuthor": "Yang J"
   },
   {
    "id": "pm-39675645",
@@ -6740,7 +7263,8 @@
    "addedBy": "agent-2026-06-02",
    "mesh": [],
    "journalKey": "bbi",
-   "_priorityWas": "mechanistic"
+   "_priorityWas": "mechanistic",
+   "firstAuthor": "Hill RA"
   },
   {
    "id": "pm-42227962",
@@ -6754,7 +7278,9 @@
    "journalKey": "autism",
    "alsoBranches": [
     "intervention"
-   ]
+   ],
+   "firstAuthor": "Safer-Lichtenstein J",
+   "lastAuthor": "Troxel M"
   },
   {
    "id": "pm-42226557",
@@ -6776,7 +7302,9 @@
    "journalKey": "autism-res",
    "alsoBranches": [
     "intervention"
-   ]
+   ],
+   "firstAuthor": "Zoromba MA",
+   "lastAuthor": "El-Gazar HE"
   },
   {
    "id": "pm-42224253",
@@ -6802,7 +7330,9 @@
    "branchKey": "intervention",
    "alsoBranches": [
     "behavioral"
-   ]
+   ],
+   "firstAuthor": "Jay A",
+   "lastAuthor": "IDEA Study Group"
   },
   {
    "id": "pm-42222935",
@@ -6818,7 +7348,11 @@
     "Autistic Disorder",
     "Adult"
    ],
-   "journalKey": "autism-res"
+   "journalKey": "autism-res",
+   "_refiledFrom": "behavioral",
+   "branchKey": "intervention",
+   "firstAuthor": "Lin HY",
+   "lastAuthor": "Jha MK"
   },
   {
    "id": "pm-42216930",
@@ -6846,7 +7380,9 @@
    ],
    "journalKey": "autism-res",
    "_refiledFrom": "behavioral",
-   "branchKey": "neuroscience"
+   "branchKey": "neuroscience",
+   "firstAuthor": "Yosef B",
+   "lastAuthor": "Green S"
   },
   {
    "id": "pm-42216006",
@@ -6870,7 +7406,9 @@
     "Intelligent Systems"
    ],
    "journalKey": "mol-autism",
-   "_priorityWas": "mechanistic"
+   "_priorityWas": "mechanistic",
+   "firstAuthor": "Yankowitz LD",
+   "lastAuthor": "Sariyanidi E"
   },
   {
    "id": "pm-42210655",
@@ -6893,7 +7431,9 @@
     "Child Development",
     "Surveys and Questionnaires"
    ],
-   "journalKey": "autism"
+   "journalKey": "autism",
+   "firstAuthor": "Pokoski OM",
+   "lastAuthor": "Durkin MS"
   },
   {
    "id": "pm-42210557",
@@ -6914,7 +7454,9 @@
     "Sensation Disorders"
    ],
    "journalKey": "autism",
-   "_priorityWas": "mechanistic"
+   "_priorityWas": "mechanistic",
+   "firstAuthor": "Knott CE",
+   "lastAuthor": "Will EA"
   },
   {
    "id": "pm-42192173",
@@ -6928,7 +7470,9 @@
    "branchKey": "intervention",
    "journalDisplay": "Molecular Psychiatry",
    "journalKey": "mol-psych",
-   "_priorityWas": "mechanistic"
+   "_priorityWas": "mechanistic",
+   "firstAuthor": "Flynn CK",
+   "lastAuthor": "Kadzielski S"
   },
   {
    "id": "pm-42187205",
@@ -6956,7 +7500,9 @@
    ],
    "journalKey": "autism-res",
    "_refiledFrom": "behavioral",
-   "branchKey": "intervention"
+   "branchKey": "intervention",
+   "firstAuthor": "Holmberg Bergman T",
+   "lastAuthor": "Hirvikoski T"
   },
   {
    "id": "pm-42185743",
@@ -6979,7 +7525,9 @@
     "Social Behavior"
    ],
    "journalKey": "autism-res",
-   "_priorityWas": "mechanistic"
+   "_priorityWas": "mechanistic",
+   "firstAuthor": "Kobayashi A",
+   "lastAuthor": "Izuma K"
   },
   {
    "id": "pm-42175587",
@@ -7001,7 +7549,9 @@
     "Photic Stimulation",
     "Acoustic Stimulation"
    ],
-   "journalKey": "autism-res"
+   "journalKey": "autism-res",
+   "firstAuthor": "Feng S",
+   "lastAuthor": "Yi L"
   },
   {
    "id": "pm-42174656",
@@ -7027,7 +7577,9 @@
     "Brain"
    ],
    "journalKey": "mol-autism",
-   "_priorityWas": "mechanistic"
+   "_priorityWas": "mechanistic",
+   "firstAuthor": "Chen Y",
+   "lastAuthor": "Vaidya CJ"
   },
   {
    "id": "pm-42174407",
@@ -7057,7 +7609,9 @@
    "journalKey": "autism-res",
    "_refiledFrom": "behavioral",
    "branchKey": "neuroscience",
-   "_priorityWas": "mechanistic"
+   "_priorityWas": "mechanistic",
+   "firstAuthor": "Krol MA",
+   "lastAuthor": "Jellema T"
   },
   {
    "id": "pm-42167272",
@@ -7085,7 +7639,8 @@
    ],
    "branchKey": "intervention",
    "journalDisplay": "The Lancet",
-   "journalKey": "lancet"
+   "journalKey": "lancet",
+   "firstAuthor": "GBD 2023 Mental Disorder Collaborators"
   },
   {
    "id": "pm-42163528",
@@ -7109,7 +7664,9 @@
     "United States"
    ],
    "journalKey": "autism-res",
-   "_priorityWas": "mechanistic"
+   "_priorityWas": "mechanistic",
+   "firstAuthor": "Grady-Dominguez P",
+   "lastAuthor": "Schaaf RC"
   },
   {
    "id": "pm-42162607",
@@ -7120,7 +7677,9 @@
    "priority": "clinical-trial",
    "addedBy": "agent-2026-06-02",
    "mesh": [],
-   "journalKey": "jaacap"
+   "journalKey": "jaacap",
+   "firstAuthor": "Bugarski-Kirola D",
+   "lastAuthor": "Arango C"
   },
   {
    "id": "pm-42153593",
@@ -7143,7 +7702,9 @@
     "Qualitative Research"
    ],
    "journalKey": "autism",
-   "_priorityWas": "mechanistic"
+   "_priorityWas": "mechanistic",
+   "firstAuthor": "Liu CH",
+   "lastAuthor": "Lai MC"
   },
   {
    "id": "pm-42152716",
@@ -7171,7 +7732,9 @@
     "Ethnicity",
     "Patient Preference"
    ],
-   "journalKey": "autism"
+   "journalKey": "autism",
+   "firstAuthor": "Suhumaran S",
+   "lastAuthor": "Wong CM"
   },
   {
    "id": "pm-42145250",
@@ -7194,7 +7757,9 @@
     "Touch",
     "Social Perception"
    ],
-   "journalKey": "autism-res"
+   "journalKey": "autism-res",
+   "firstAuthor": "Pereira AR",
+   "lastAuthor": "Sampaio A"
   },
   {
    "id": "pm-42144892",
@@ -7217,7 +7782,9 @@
     "Female",
     "Autism Spectrum Disorder"
    ],
-   "journalKey": "autism-res"
+   "journalKey": "autism-res",
+   "firstAuthor": "Cacciato-Salcedo S",
+   "lastAuthor": "Petrinovic MM"
   },
   {
    "id": "pm-42144861",
@@ -7238,7 +7805,9 @@
     "Reproducibility of Results"
    ],
    "journalKey": "autism-res",
-   "_priorityWas": "mechanistic"
+   "_priorityWas": "mechanistic",
+   "firstAuthor": "Shamhan ANM",
+   "lastAuthor": "Al-Thani D"
   },
   {
    "id": "pm-42141457",
@@ -7263,7 +7832,9 @@
     "Depression",
     "Longitudinal Studies"
    ],
-   "journalKey": "mol-autism"
+   "journalKey": "mol-autism",
+   "firstAuthor": "Mullin LJ",
+   "lastAuthor": "Girault JB"
   },
   {
    "id": "pm-42135798",
@@ -7286,7 +7857,9 @@
     "Young Adult"
    ],
    "journalKey": "mol-autism",
-   "_priorityWas": "mechanistic"
+   "_priorityWas": "mechanistic",
+   "firstAuthor": "Hadad BS",
+   "lastAuthor": "Abu-Akel A"
   },
   {
    "id": "pm-42135209",
@@ -7310,7 +7883,9 @@
     "Adolescent"
    ],
    "journalKey": "autism-res",
-   "_priorityWas": "mechanistic"
+   "_priorityWas": "mechanistic",
+   "firstAuthor": "Ai W",
+   "lastAuthor": "Amestoy A"
   },
   {
    "id": "pm-42134364",
@@ -7334,7 +7909,9 @@
     "Fathers",
     "Risk Factors"
    ],
-   "journalKey": "lancet-psych"
+   "journalKey": "lancet-psych",
+   "firstAuthor": "Chan JKN",
+   "lastAuthor": "Chang WC"
   },
   {
    "id": "pm-42130108",
@@ -7360,7 +7937,9 @@
     "Parenting"
    ],
    "journalKey": "autism-res",
-   "_priorityWas": "mechanistic"
+   "_priorityWas": "mechanistic",
+   "firstAuthor": "Burrows CA",
+   "lastAuthor": "Parladé MV"
   },
   {
    "id": "pm-42129634",
@@ -7384,7 +7963,9 @@
     "United States",
     "Social Interaction"
    ],
-   "journalKey": "autism"
+   "journalKey": "autism",
+   "firstAuthor": "Song W",
+   "lastAuthor": "Wallace GL"
   },
   {
    "id": "pm-42127910",
@@ -7395,7 +7976,9 @@
    "priority": "clinical-observation",
    "addedBy": "agent-2026-06-02",
    "mesh": [],
-   "journalKey": "neuron"
+   "journalKey": "neuron",
+   "firstAuthor": "Jiang M",
+   "lastAuthor": "Lu Z"
   },
   {
    "id": "pm-42125993",
@@ -7415,7 +7998,8 @@
     "Exercise",
     "Autism Spectrum Disorder"
    ],
-   "journalKey": "autism-res"
+   "journalKey": "autism-res",
+   "firstAuthor": "Lidstone DE"
   },
   {
    "id": "pm-42124397",
@@ -7437,7 +8021,9 @@
     "Eye-Tracking Technology",
     "Visual Perception"
    ],
-   "journalKey": "autism-res"
+   "journalKey": "autism-res",
+   "firstAuthor": "Raji N",
+   "lastAuthor": "Bast N"
   },
   {
    "id": "pm-42109126",
@@ -7460,7 +8046,9 @@
     "Burnout, Professional"
    ],
    "journalKey": "autism",
-   "_priorityWas": "mechanistic"
+   "_priorityWas": "mechanistic",
+   "firstAuthor": "Clarey MM",
+   "lastAuthor": "Brownlow C"
   },
   {
    "id": "pm-42105343",
@@ -7486,7 +8074,9 @@
     "Severity of Illness Index"
    ],
    "journalKey": "autism",
-   "_priorityWas": "mechanistic"
+   "_priorityWas": "mechanistic",
+   "firstAuthor": "Ball RC",
+   "lastAuthor": "Morris EM"
   },
   {
    "id": "pm-42093663",
@@ -7517,7 +8107,9 @@
    ],
    "journalKey": "autism-res",
    "_refiledFrom": "behavioral",
-   "branchKey": "intervention"
+   "branchKey": "intervention",
+   "firstAuthor": "B Roisenberg B",
+   "lastAuthor": "Guastella AJ"
   },
   {
    "id": "pm-42076791",
@@ -7542,7 +8134,9 @@
     "Factor Analysis, Statistical",
     "Surveys and Questionnaires"
    ],
-   "journalKey": "autism"
+   "journalKey": "autism",
+   "firstAuthor": "Roos M",
+   "lastAuthor": "Schuwerk T"
   },
   {
    "id": "pm-42069873",
@@ -7555,7 +8149,9 @@
    "mesh": [],
    "branchKey": "neuroscience",
    "journalDisplay": "Molecular Psychiatry",
-   "journalKey": "mol-psych"
+   "journalKey": "mol-psych",
+   "firstAuthor": "Liu T",
+   "lastAuthor": "Liao X"
   },
   {
    "id": "pm-42063217",
@@ -7580,7 +8176,9 @@
    ],
    "journalKey": "autism-res",
    "_refiledFrom": "behavioral",
-   "branchKey": "intervention"
+   "branchKey": "intervention",
+   "firstAuthor": "Aishworiya R",
+   "lastAuthor": "Ozonoff S"
   },
   {
    "id": "pm-42052873",
@@ -7607,7 +8205,9 @@
     "Peer Group"
    ],
    "journalKey": "autism",
-   "_priorityWas": "mechanistic"
+   "_priorityWas": "mechanistic",
+   "firstAuthor": "Wolford GW",
+   "lastAuthor": "Bellon-Harn ML"
   },
   {
    "id": "pm-42049680",
@@ -7632,7 +8232,9 @@
     "Self Concept"
    ],
    "journalKey": "autism-res",
-   "_priorityWas": "mechanistic"
+   "_priorityWas": "mechanistic",
+   "firstAuthor": "Shek AK",
+   "lastAuthor": "Chan RCK"
   },
   {
    "id": "pm-42037214",
@@ -7657,7 +8259,9 @@
     "Cohort Studies",
     "Risk Factors"
    ],
-   "journalKey": "autism"
+   "journalKey": "autism",
+   "firstAuthor": "Bishop L",
+   "lastAuthor": "Hand BN"
   },
   {
    "id": "pm-42036309",
@@ -7682,7 +8286,9 @@
     "Postural Balance"
    ],
    "journalKey": "autism-res",
-   "_priorityWas": "mechanistic"
+   "_priorityWas": "mechanistic",
+   "firstAuthor": "Blanco-Martínez N",
+   "lastAuthor": "Diz-Gómez JC"
   },
   {
    "id": "pm-42028804",
@@ -7709,7 +8315,9 @@
     "Middle Aged"
    ],
    "journalKey": "autism",
-   "_priorityWas": "mechanistic"
+   "_priorityWas": "mechanistic",
+   "firstAuthor": "Kenny N",
+   "lastAuthor": "Neilson S"
   },
   {
    "id": "pm-42028803",
@@ -7739,7 +8347,9 @@
     "Vaginal Smears"
    ],
    "journalKey": "autism",
-   "_priorityWas": "mechanistic"
+   "_priorityWas": "mechanistic",
+   "firstAuthor": "Murdoch S",
+   "lastAuthor": "Moore DJ"
   },
   {
    "id": "pm-42028799",
@@ -7762,7 +8372,9 @@
     "Young Adult",
     "Aged, 80 and over"
    ],
-   "journalKey": "autism"
+   "journalKey": "autism",
+   "firstAuthor": "Greig L",
+   "lastAuthor": "Henry JD"
   },
   {
    "id": "pm-42012231",
@@ -7786,7 +8398,9 @@
     "Case-Control Studies"
    ],
    "journalKey": "autism",
-   "_priorityWas": "mechanistic"
+   "_priorityWas": "mechanistic",
+   "firstAuthor": "Król ME",
+   "lastAuthor": "Król MK"
   },
   {
    "id": "pm-42010670",
@@ -7819,7 +8433,9 @@
    "alsoBranches": [
     "neuroscience",
     "genetics"
-   ]
+   ],
+   "firstAuthor": "Bazbaz W",
+   "lastAuthor": "Amal H"
   },
   {
    "id": "pm-42003395",
@@ -7842,7 +8458,9 @@
     "Students",
     "Ethnicity"
    ],
-   "journalKey": "autism"
+   "journalKey": "autism",
+   "firstAuthor": "Morgan PL",
+   "lastAuthor": "Hengyu Hu E"
   },
   {
    "id": "pm-42003394",
@@ -7860,7 +8478,9 @@
     "Child, Preschool",
     "Family"
    ],
-   "journalKey": "autism"
+   "journalKey": "autism",
+   "firstAuthor": "Jordan P",
+   "lastAuthor": "Tupou J"
   },
   {
    "id": "pm-41987220",
@@ -7885,7 +8505,9 @@
     "Autism Spectrum Disorder",
     "Self Report"
    ],
-   "journalKey": "mol-autism"
+   "journalKey": "mol-autism",
+   "firstAuthor": "Livingston LA",
+   "lastAuthor": "Jones CRG"
   },
   {
    "id": "pm-41986743",
@@ -7898,7 +8520,9 @@
    "mesh": [],
    "branchKey": "intervention",
    "journalDisplay": "Molecular Psychiatry",
-   "journalKey": "mol-psych"
+   "journalKey": "mol-psych",
+   "firstAuthor": "Liu Q",
+   "lastAuthor": "Liu H"
   },
   {
    "id": "pm-41983504",
@@ -7925,7 +8549,9 @@
     "Autistic Disorder"
    ],
    "journalKey": "autism",
-   "_priorityWas": "mechanistic"
+   "_priorityWas": "mechanistic",
+   "firstAuthor": "Baysarowich R",
+   "lastAuthor": "Raza S"
   },
   {
    "id": "pm-41968929",
@@ -7951,7 +8577,9 @@
     "Neuropsychological Tests"
    ],
    "journalKey": "autism-res",
-   "_priorityWas": "mechanistic"
+   "_priorityWas": "mechanistic",
+   "firstAuthor": "Diu A",
+   "lastAuthor": "Bouvet L"
   },
   {
    "id": "pm-41968904",
@@ -7977,7 +8605,9 @@
     "Developmental Disabilities",
     "Sleep Initiation and Maintenance Disorders"
    ],
-   "journalKey": "autism-res"
+   "journalKey": "autism-res",
+   "firstAuthor": "Pang D",
+   "lastAuthor": "Zhu C"
   },
   {
    "id": "pm-41964372",
@@ -7988,7 +8618,9 @@
    "priority": "clinical-observation",
    "addedBy": "agent-2026-06-02",
    "mesh": [],
-   "journalKey": "jcpp"
+   "journalKey": "jcpp",
+   "firstAuthor": "Kenworthy L",
+   "lastAuthor": "Fritz MS"
   },
   {
    "id": "pm-41964080",
@@ -8012,7 +8644,9 @@
    "journalKey": "mol-autism",
    "alsoBranches": [
     "intervention"
-   ]
+   ],
+   "firstAuthor": "Ai W",
+   "lastAuthor": "Lai MC"
   },
   {
    "id": "pm-41954159",
@@ -8030,7 +8664,9 @@
     "Proprioception",
     "Self Concept"
    ],
-   "journalKey": "autism-res"
+   "journalKey": "autism-res",
+   "firstAuthor": "Mourad J",
+   "lastAuthor": "Bonnechère B"
   },
   {
    "id": "pm-41944072",
@@ -8054,7 +8690,9 @@
    ],
    "journalKey": "autism-res",
    "_refiledFrom": "behavioral",
-   "branchKey": "neuroscience"
+   "branchKey": "neuroscience",
+   "firstAuthor": "Darrell M",
+   "lastAuthor": "Molholm S"
   },
   {
    "id": "pm-41944023",
@@ -8079,7 +8717,9 @@
     "Time Perception"
    ],
    "journalKey": "autism-res",
-   "_priorityWas": "mechanistic"
+   "_priorityWas": "mechanistic",
+   "firstAuthor": "Yu L",
+   "lastAuthor": "Mottron L"
   },
   {
    "id": "pm-41943995",
@@ -8099,7 +8739,9 @@
    ],
    "journalKey": "autism-res",
    "_refiledFrom": "behavioral",
-   "branchKey": "intervention"
+   "branchKey": "intervention",
+   "firstAuthor": "Hijab MHF",
+   "lastAuthor": "Al-Thani D"
   },
   {
    "id": "pm-41943243",
@@ -8123,7 +8765,9 @@
     "Middle Aged",
     "Surveys and Questionnaires"
    ],
-   "journalKey": "autism"
+   "journalKey": "autism",
+   "firstAuthor": "Adams KL",
+   "lastAuthor": "Bird G"
   },
   {
    "id": "pm-41933479",
@@ -8152,7 +8796,9 @@
     "Factor Analysis, Statistical",
     "Mental Health"
    ],
-   "journalKey": "autism"
+   "journalKey": "autism",
+   "firstAuthor": "Krijnen LJ",
+   "lastAuthor": "Plak RD"
   },
   {
    "id": "pm-41932830",
@@ -8178,7 +8824,9 @@
     "Sleep Wake Disorders",
     "Surveys and Questionnaires"
    ],
-   "journalKey": "autism-res"
+   "journalKey": "autism-res",
+   "firstAuthor": "Zhong Y",
+   "lastAuthor": "Dimitriou D"
   },
   {
    "id": "pm-41928573",
@@ -8203,7 +8851,9 @@
     "Young Adult"
    ],
    "journalKey": "autism",
-   "_priorityWas": "mechanistic"
+   "_priorityWas": "mechanistic",
+   "firstAuthor": "Rebours C",
+   "lastAuthor": "Kruck J"
   },
   {
    "id": "pm-41928551",
@@ -8229,7 +8879,9 @@
    "journalKey": "autism",
    "_refiledFrom": "behavioral",
    "branchKey": "intervention",
-   "_priorityWas": "mechanistic"
+   "_priorityWas": "mechanistic",
+   "firstAuthor": "Tokish H",
+   "lastAuthor": "RISE Research Network"
   },
   {
    "id": "pm-41928549",
@@ -8253,7 +8905,9 @@
     "Social Cognition",
     "Surveys and Questionnaires"
    ],
-   "journalKey": "autism"
+   "journalKey": "autism",
+   "firstAuthor": "Barnicot K",
+   "lastAuthor": "Parker J"
   },
   {
    "id": "pm-41923483",
@@ -8277,7 +8931,9 @@
    ],
    "journalKey": "autism-res",
    "_refiledFrom": "behavioral",
-   "branchKey": "neuroscience"
+   "branchKey": "neuroscience",
+   "firstAuthor": "Tarchi L",
+   "lastAuthor": "Ehrlich S"
   },
   {
    "id": "pm-41923423",
@@ -8300,7 +8956,9 @@
     "Socioeconomic Factors"
    ],
    "journalKey": "autism-res",
-   "_priorityWas": "mechanistic"
+   "_priorityWas": "mechanistic",
+   "firstAuthor": "Kim H",
+   "lastAuthor": "Andrews DS"
   },
   {
    "id": "pm-41912444",
@@ -8326,7 +8984,9 @@
    ],
    "journalKey": "autism-res",
    "_refiledFrom": "behavioral",
-   "branchKey": "neuroscience"
+   "branchKey": "neuroscience",
+   "firstAuthor": "Yang C",
+   "lastAuthor": "Yuan LX"
   },
   {
    "id": "pm-42155452",
@@ -8340,7 +9000,9 @@
    "journalKey": "neuron",
    "alsoBranches": [
     "genetics"
-   ]
+   ],
+   "firstAuthor": "Suresh A",
+   "lastAuthor": "Portera-Cailliau C"
   },
   {
    "id": "pm-42141308",
@@ -8352,7 +9014,9 @@
    "addedBy": "agent-2026-06-02",
    "mesh": [],
    "journalKey": "nat-neurosci",
-   "_priorityWas": "mechanistic"
+   "_priorityWas": "mechanistic",
+   "firstAuthor": "Shnitko TA",
+   "lastAuthor": "Shih YI"
   },
   {
    "id": "pm-42141307",
@@ -8376,7 +9040,9 @@
     "Brain Mapping",
     "Disease Models, Animal"
    ],
-   "journalKey": "nat-neurosci"
+   "journalKey": "nat-neurosci",
+   "firstAuthor": "Pagani M",
+   "lastAuthor": "Gozzi A"
   },
   {
    "id": "pm-42106518",
@@ -8389,7 +9055,9 @@
    "mesh": [],
    "branchKey": "genetics",
    "journalDisplay": "Molecular Psychiatry",
-   "journalKey": "mol-psych"
+   "journalKey": "mol-psych",
+   "firstAuthor": "Kim J",
+   "lastAuthor": "Kim E"
   },
   {
    "id": "pm-42082754",
@@ -8402,7 +9070,9 @@
    "mesh": [],
    "branchKey": "neuroscience",
    "journalDisplay": "Molecular Psychiatry",
-   "journalKey": "mol-psych"
+   "journalKey": "mol-psych",
+   "firstAuthor": "Hasenpusch-Theil K",
+   "lastAuthor": "Theil T"
   },
   {
    "id": "pm-42000906",
@@ -8416,7 +9086,9 @@
    "branchKey": "neuroscience",
    "journalDisplay": "Molecular Psychiatry",
    "journalKey": "mol-psych",
-   "_priorityWas": "mechanistic"
+   "_priorityWas": "mechanistic",
+   "firstAuthor": "Kirschner M",
+   "lastAuthor": "Modinos G"
   },
   {
    "id": "pm-41992731",
@@ -8430,7 +9102,9 @@
    "journalKey": "jcpp",
    "alsoBranches": [
     "neuroscience"
-   ]
+   ],
+   "firstAuthor": "Polzer L",
+   "lastAuthor": "Luckhardt C"
   },
   {
    "id": "pm-41974886",
@@ -8443,7 +9117,9 @@
    "mesh": [],
    "branchKey": "neuroscience",
    "journalDisplay": "Molecular Psychiatry",
-   "journalKey": "mol-psych"
+   "journalKey": "mol-psych",
+   "firstAuthor": "Subramanian D",
+   "lastAuthor": "Santhakumar V"
   },
   {
    "id": "pm-41902610",
@@ -8471,7 +9147,9 @@
    "journalKey": "autism-res",
    "_refiledFrom": "behavioral",
    "branchKey": "neuroscience",
-   "_priorityWas": "mechanistic"
+   "_priorityWas": "mechanistic",
+   "firstAuthor": "Nair A",
+   "lastAuthor": "Bearden CE"
   },
   {
    "id": "pm-41888935",
@@ -8495,7 +9173,9 @@
    ],
    "journalKey": "mol-autism",
    "_refiledFrom": "behavioral",
-   "branchKey": "neuroscience"
+   "branchKey": "neuroscience",
+   "firstAuthor": "Pabón DG",
+   "lastAuthor": "Andari E"
   },
   {
    "id": "pm-41885009",
@@ -8519,7 +9199,11 @@
     "Brain Mapping",
     "Oxygen"
    ],
-   "journalKey": "autism-res"
+   "journalKey": "autism-res",
+   "_refiledFrom": "behavioral",
+   "branchKey": "intervention",
+   "firstAuthor": "Pedrahita S",
+   "lastAuthor": "Carper R"
   },
   {
    "id": "pm-41878804",
@@ -8544,7 +9228,9 @@
    ],
    "journalKey": "autism-res",
    "_refiledFrom": "behavioral",
-   "branchKey": "neuroscience"
+   "branchKey": "neuroscience",
+   "firstAuthor": "Fadeev KA",
+   "lastAuthor": "Orekhova EV"
   },
   {
    "id": "pm-41872520",
@@ -8575,7 +9261,9 @@
    "branchKey": "neuroscience",
    "journalDisplay": "Molecular Psychiatry",
    "journalKey": "mol-psych",
-   "_priorityWas": "mechanistic"
+   "_priorityWas": "mechanistic",
+   "firstAuthor": "Yoon SH",
+   "lastAuthor": "Hunt RF"
   },
   {
    "id": "pm-41860335",
@@ -8600,7 +9288,9 @@
     "Cell Adhesion Molecules, Neuronal",
     "Mice, Knockout"
    ],
-   "journalKey": "autism-res"
+   "journalKey": "autism-res",
+   "firstAuthor": "Roddick KM",
+   "lastAuthor": "Balcı F"
   },
   {
    "id": "pm-41851468",
@@ -8629,7 +9319,9 @@
    "branchKey": "neuroscience",
    "journalDisplay": "Nature",
    "journalKey": "nature",
-   "_priorityWas": "mechanistic"
+   "_priorityWas": "mechanistic",
+   "firstAuthor": "Li Z",
+   "lastAuthor": "Sestan N"
   },
   {
    "id": "pm-41844341",
@@ -8655,7 +9347,9 @@
    "journalKey": "autism-res",
    "alsoBranches": [
     "neuroscience"
-   ]
+   ],
+   "firstAuthor": "Vashisth S",
+   "lastAuthor": "Chahrour MH"
   },
   {
    "id": "pm-41833745",
@@ -8669,7 +9363,9 @@
    "journalKey": "biol-psych",
    "alsoBranches": [
     "neuroscience"
-   ]
+   ],
+   "firstAuthor": "Xu B",
+   "lastAuthor": "Tiemeier H"
   },
   {
    "id": "pm-41807090",
@@ -8697,7 +9393,9 @@
    "journalKey": "autism-res",
    "alsoBranches": [
     "intervention"
-   ]
+   ],
+   "firstAuthor": "Zukerman G",
+   "lastAuthor": "Ben-Itzchak E"
   },
   {
    "id": "pm-41795048",
@@ -8728,7 +9426,9 @@
    ],
    "branchKey": "neuroscience",
    "journalDisplay": "Molecular Psychiatry",
-   "journalKey": "mol-psych"
+   "journalKey": "mol-psych",
+   "firstAuthor": "Huang M",
+   "lastAuthor": "Shi L"
   },
   {
    "id": "pm-41794060",
@@ -8753,7 +9453,9 @@
    "journalKey": "biol-psych",
    "alsoBranches": [
     "neuroscience"
-   ]
+   ],
+   "firstAuthor": "Peng Y",
+   "lastAuthor": "Zhao S"
   },
   {
    "id": "pm-41792457",
@@ -8784,7 +9486,9 @@
    "branchKey": "genetics",
    "journalDisplay": "Molecular Psychiatry",
    "journalKey": "mol-psych",
-   "_priorityWas": "mechanistic"
+   "_priorityWas": "mechanistic",
+   "firstAuthor": "Giacomel A",
+   "lastAuthor": "Dima D"
   },
   {
    "id": "pm-41742299",
@@ -8810,7 +9514,9 @@
    ],
    "journalKey": "mol-autism",
    "_refiledFrom": "behavioral",
-   "branchKey": "neuroscience"
+   "branchKey": "neuroscience",
+   "firstAuthor": "Guo H",
+   "lastAuthor": "Xu L"
   },
   {
    "id": "pm-41741708",
@@ -8842,7 +9548,9 @@
    ],
    "branchKey": "genetics",
    "journalDisplay": "Molecular Psychiatry",
-   "journalKey": "mol-psych"
+   "journalKey": "mol-psych",
+   "firstAuthor": "Guo J",
+   "lastAuthor": "Tang T"
   },
   {
    "id": "pm-41741707",
@@ -8873,7 +9581,9 @@
    ],
    "branchKey": "genetics",
    "journalDisplay": "Molecular Psychiatry",
-   "journalKey": "mol-psych"
+   "journalKey": "mol-psych",
+   "firstAuthor": "Ojha SK",
+   "lastAuthor": "Amal H"
   },
   {
    "id": "pm-41741706",
@@ -8901,7 +9611,9 @@
    "journalKey": "mol-psych",
    "alsoBranches": [
     "behavioral"
-   ]
+   ],
+   "firstAuthor": "Adès N",
+   "lastAuthor": "Bouslama-Oueghlani L"
   },
   {
    "id": "pm-41724591",
@@ -8927,7 +9639,9 @@
    ],
    "journalKey": "autism-res",
    "_refiledFrom": "behavioral",
-   "branchKey": "neuroscience"
+   "branchKey": "neuroscience",
+   "firstAuthor": "Quesnel K",
+   "lastAuthor": "Bérubé NG"
   },
   {
    "id": "pm-41709339",
@@ -8957,7 +9671,9 @@
    ],
    "journalKey": "mol-autism",
    "_refiledFrom": "behavioral",
-   "branchKey": "neuroscience"
+   "branchKey": "neuroscience",
+   "firstAuthor": "Zhang Y",
+   "lastAuthor": "Braden BB"
   },
   {
    "id": "pm-41708849",
@@ -8990,7 +9706,9 @@
    "branchKey": "genetics",
    "journalDisplay": "Nature",
    "journalKey": "nature",
-   "_priorityWas": "mechanistic"
+   "_priorityWas": "mechanistic",
+   "firstAuthor": "Yang K",
+   "lastAuthor": "Qiu Z"
   },
   {
    "id": "pm-41703633",
@@ -9018,7 +9736,9 @@
    "journalKey": "mol-autism",
    "_refiledFrom": "behavioral",
    "branchKey": "neuroscience",
-   "_priorityWas": "mechanistic"
+   "_priorityWas": "mechanistic",
+   "firstAuthor": "Lin F",
+   "lastAuthor": "Lahnakoski JM"
   },
   {
    "id": "pm-41703267",
@@ -9047,7 +9767,9 @@
    ],
    "branchKey": "neuroscience",
    "journalDisplay": "Molecular Psychiatry",
-   "journalKey": "mol-psych"
+   "journalKey": "mol-psych",
+   "firstAuthor": "Zhu C",
+   "lastAuthor": "Feng T"
   },
   {
    "id": "pm-41688788",
@@ -9078,7 +9800,9 @@
    ],
    "branchKey": "neuroscience",
    "journalDisplay": "Molecular Psychiatry",
-   "journalKey": "mol-psych"
+   "journalKey": "mol-psych",
+   "firstAuthor": "Proce RO",
+   "lastAuthor": "Hörnberg H"
   },
   {
    "id": "pm-41684326",
@@ -9104,7 +9828,9 @@
    "journalKey": "autism-res",
    "_refiledFrom": "behavioral",
    "branchKey": "neuroscience",
-   "_priorityWas": "mechanistic"
+   "_priorityWas": "mechanistic",
+   "firstAuthor": "Fanghella M",
+   "lastAuthor": "Forster B"
   },
   {
    "id": "pm-41657078",
@@ -9129,7 +9855,11 @@
     "Autism Spectrum Disorder",
     "Rest"
    ],
-   "journalKey": "autism-res"
+   "journalKey": "autism-res",
+   "_refiledFrom": "behavioral",
+   "branchKey": "intervention",
+   "firstAuthor": "Proteau-Lemieux M",
+   "lastAuthor": "Lippé S"
   },
   {
    "id": "pm-41633496",
@@ -9157,7 +9887,9 @@
    "alsoBranches": [
     "genetics",
     "neuroscience"
-   ]
+   ],
+   "firstAuthor": "K C R",
+   "lastAuthor": "Galazo MJ"
   },
   {
    "id": "pm-41620607",
@@ -9183,7 +9915,9 @@
    ],
    "journalKey": "mol-autism",
    "_refiledFrom": "behavioral",
-   "branchKey": "neuroscience"
+   "branchKey": "neuroscience",
+   "firstAuthor": "Liu H",
+   "lastAuthor": "Wang W"
   },
   {
    "id": "pm-41620577",
@@ -9219,7 +9953,9 @@
    "journalKey": "mol-psych",
    "alsoBranches": [
     "neuroscience"
-   ]
+   ],
+   "firstAuthor": "Varella-Branco E",
+   "lastAuthor": "Dos Santos E Passos Bueno MR"
   },
   {
    "id": "pm-41611887",
@@ -9248,7 +9984,9 @@
    "branchKey": "neuroscience",
    "journalDisplay": "Nature",
    "journalKey": "nature",
-   "_priorityWas": "mechanistic"
+   "_priorityWas": "mechanistic",
+   "firstAuthor": "Gordon A",
+   "lastAuthor": "Geschwind DH"
   },
   {
    "id": "pm-41553264",
@@ -9271,7 +10009,9 @@
     "Adolescent",
     "Visual Perception"
    ],
-   "journalKey": "autism-res"
+   "journalKey": "autism-res",
+   "firstAuthor": "Fewster E",
+   "lastAuthor": "Freud E"
   },
   {
    "id": "pm-41549599",
@@ -9298,7 +10038,9 @@
    ],
    "journalKey": "autism-res",
    "_refiledFrom": "behavioral",
-   "branchKey": "neuroscience"
+   "branchKey": "neuroscience",
+   "firstAuthor": "Chien YL",
+   "lastAuthor": "Gau SS"
   },
   {
    "id": "pm-41544630",
@@ -9324,7 +10066,9 @@
     "Infant",
     "Brain"
    ],
-   "journalKey": "ajhg"
+   "journalKey": "ajhg",
+   "firstAuthor": "Levine JM",
+   "lastAuthor": "Lupski JR"
   },
   {
    "id": "pm-41520112",
@@ -9349,7 +10093,9 @@
    ],
    "journalKey": "mol-autism",
    "_refiledFrom": "behavioral",
-   "branchKey": "neuroscience"
+   "branchKey": "neuroscience",
+   "firstAuthor": "Chen Y",
+   "lastAuthor": "Wilkinson CL"
   },
   {
    "id": "pm-41492661",
@@ -9374,7 +10120,9 @@
     "Punishment"
    ],
    "journalKey": "autism-res",
-   "_priorityWas": "mechanistic"
+   "_priorityWas": "mechanistic",
+   "firstAuthor": "Chetcuti L",
+   "lastAuthor": "Uljarevic M"
   },
   {
    "id": "pm-41469442",
@@ -9396,7 +10144,9 @@
     "Neurodevelopmental Disorders",
     "Digital Health"
    ],
-   "journalKey": "nat-neurosci"
+   "journalKey": "nat-neurosci",
+   "firstAuthor": "Hacohen M",
+   "lastAuthor": "Dinstein I"
   },
   {
    "id": "pm-41455837",
@@ -9429,7 +10179,9 @@
    "_priorityWas": "mechanistic",
    "alsoBranches": [
     "behavioral"
-   ]
+   ],
+   "firstAuthor": "Kubota M",
+   "lastAuthor": "Murai T"
   },
   {
    "id": "pm-41437281",
@@ -9445,7 +10197,9 @@
     "Learning",
     "Cognition"
    ],
-   "journalKey": "mol-autism"
+   "journalKey": "mol-autism",
+   "firstAuthor": "Bell RR",
+   "lastAuthor": "Eigsti IM"
   },
   {
    "id": "pm-41408339",
@@ -9472,7 +10226,9 @@
     "Disease Models, Animal",
     "Wakefulness"
    ],
-   "journalKey": "mol-autism"
+   "journalKey": "mol-autism",
+   "firstAuthor": "Wang Y",
+   "lastAuthor": "Colwell CS"
   },
   {
    "id": "pm-41402480",
@@ -9503,7 +10259,9 @@
    ],
    "branchKey": "genetics",
    "journalDisplay": "Molecular Psychiatry",
-   "journalKey": "mol-psych"
+   "journalKey": "mol-psych",
+   "firstAuthor": "Devienne G",
+   "lastAuthor": "Huguenard JR"
   },
   {
    "id": "pm-41399120",
@@ -9532,7 +10290,9 @@
    ],
    "journalKey": "autism-res",
    "_refiledFrom": "behavioral",
-   "branchKey": "genetics"
+   "branchKey": "genetics",
+   "firstAuthor": "Möhrle D",
+   "lastAuthor": "Cheng N"
   },
   {
    "id": "pm-42201728",
@@ -9545,7 +10305,9 @@
    "mesh": [],
    "branchKey": "genetics",
    "journalDisplay": "JAMA Psychiatry",
-   "journalKey": "jama-psych"
+   "journalKey": "jama-psych",
+   "firstAuthor": "Vaez M",
+   "lastAuthor": "LINC Consortium"
   },
   {
    "id": "pm-42127894",
@@ -9570,7 +10332,9 @@
    "branchKey": "genetics",
    "journalDisplay": "Cell",
    "journalKey": "cell",
-   "_priorityWas": "mechanistic"
+   "_priorityWas": "mechanistic",
+   "firstAuthor": "Pendyala S",
+   "lastAuthor": "Fowler DM"
   },
   {
    "id": "pm-42097524",
@@ -9581,7 +10345,9 @@
    "priority": "mechanistic",
    "addedBy": "agent-2026-06-02",
    "mesh": [],
-   "journalKey": "biol-psych"
+   "journalKey": "biol-psych",
+   "firstAuthor": "Reichenberg A",
+   "lastAuthor": "Sandin S"
   },
   {
    "id": "pm-42032298",
@@ -9595,7 +10361,9 @@
    "branchKey": "genetics",
    "journalDisplay": "Molecular Psychiatry",
    "journalKey": "mol-psych",
-   "_priorityWas": "mechanistic"
+   "_priorityWas": "mechanistic",
+   "firstAuthor": "Yentür Z",
+   "lastAuthor": "Mayer S"
   },
   {
    "id": "pm-41947537",
@@ -9606,7 +10374,9 @@
    "priority": "clinical-trial",
    "addedBy": "agent-2026-06-02",
    "mesh": [],
-   "journalKey": "jcpp"
+   "journalKey": "jcpp",
+   "firstAuthor": "Pan M",
+   "lastAuthor": "Shi X"
   },
   {
    "id": "pm-41935183",
@@ -9631,7 +10401,9 @@
    "branchKey": "genetics",
    "journalDisplay": "Molecular Psychiatry",
    "journalKey": "mol-psych",
-   "_priorityWas": "mechanistic"
+   "_priorityWas": "mechanistic",
+   "firstAuthor": "Valone JM",
+   "lastAuthor": "Stein JL"
   },
   {
    "id": "pm-41921886",
@@ -9650,7 +10422,9 @@
    "journalKey": "biol-psych",
    "alsoBranches": [
     "genetics"
-   ]
+   ],
+   "firstAuthor": "Yang K",
+   "lastAuthor": "Qiu Z"
   },
   {
    "id": "pm-41904269",
@@ -9681,7 +10455,9 @@
    "journalKey": "mol-psych",
    "alsoBranches": [
     "genetics"
-   ]
+   ],
+   "firstAuthor": "Kuwabara H",
+   "lastAuthor": "Yamasue H"
   },
   {
    "id": "pm-41902612",
@@ -9697,7 +10473,8 @@
     "Signal Transduction",
     "Mitochondria"
    ],
-   "journalKey": "autism-res"
+   "journalKey": "autism-res",
+   "firstAuthor": "Naviaux RK"
   },
   {
    "id": "pm-41693594",
@@ -9720,7 +10497,9 @@
     "Child",
     "Asian People"
    ],
-   "journalKey": "autism-res"
+   "journalKey": "autism-res",
+   "firstAuthor": "Zhang J",
+   "lastAuthor": "Song R"
   },
   {
    "id": "pm-41634133",
@@ -9749,7 +10528,9 @@
    ],
    "branchKey": "genetics",
    "journalDisplay": "Molecular Psychiatry",
-   "journalKey": "mol-psych"
+   "journalKey": "mol-psych",
+   "firstAuthor": "Xue H",
+   "lastAuthor": "Liu F"
   },
   {
    "id": "pm-41496709",
@@ -9777,7 +10558,9 @@
    "journalKey": "autism-res",
    "alsoBranches": [
     "intervention"
-   ]
+   ],
+   "firstAuthor": "Oztan O",
+   "lastAuthor": "Parker KJ"
   },
   {
    "id": "pm-41437869",
@@ -9800,7 +10583,9 @@
    ],
    "journalKey": "autism-res",
    "_refiledFrom": "behavioral",
-   "branchKey": "genetics"
+   "branchKey": "genetics",
+   "firstAuthor": "Torigata K",
+   "lastAuthor": "Takumi T"
   },
   {
    "id": "pm-41421362",
@@ -9823,7 +10608,9 @@
     "Exome Sequencing"
    ],
    "journalKey": "ajhg",
-   "_priorityWas": "mechanistic"
+   "_priorityWas": "mechanistic",
+   "firstAuthor": "Han S",
+   "lastAuthor": "He X"
   },
   {
    "id": "pm-41403372",
@@ -9847,7 +10634,9 @@
     "Mother-Child Relations"
    ],
    "journalKey": "autism",
-   "_priorityWas": "mechanistic"
+   "_priorityWas": "mechanistic",
+   "firstAuthor": "Maltman N",
+   "lastAuthor": "Sterling A"
   },
   {
    "id": "pm-41338336",
@@ -9867,7 +10656,8 @@
    "journalKey": "jaacap",
    "alsoBranches": [
     "genetics"
-   ]
+   ],
+   "firstAuthor": "Frye RE"
   },
   {
    "id": "pm-41310868",
@@ -9896,7 +10686,9 @@
    "journalKey": "mol-autism",
    "alsoBranches": [
     "neuroscience"
-   ]
+   ],
+   "firstAuthor": "Yang X",
+   "lastAuthor": "Marshall J"
   },
   {
    "id": "pm-41291951",
@@ -9921,7 +10713,9 @@
    "journalKey": "mol-autism",
    "alsoBranches": [
     "intervention"
-   ]
+   ],
+   "firstAuthor": "Zhu Y",
+   "lastAuthor": "Xu Q"
   },
   {
    "id": "pm-41291187",
@@ -9952,7 +10746,9 @@
    ],
    "branchKey": "genetics",
    "journalDisplay": "Molecular Psychiatry",
-   "journalKey": "mol-psych"
+   "journalKey": "mol-psych",
+   "firstAuthor": "Yuan Y",
+   "lastAuthor": "Xu Z"
   },
   {
    "id": "pm-41260215",
@@ -9978,7 +10774,9 @@
     "Child, Preschool",
     "Syndrome"
    ],
-   "journalKey": "ajhg"
+   "journalKey": "ajhg",
+   "firstAuthor": "Kröll-Hermi A",
+   "lastAuthor": "Muller J"
   },
   {
    "id": "pm-41238842",
@@ -10009,7 +10807,9 @@
    "_priorityWas": "mechanistic",
    "alsoBranches": [
     "neuroscience"
-   ]
+   ],
+   "firstAuthor": "Feng D",
+   "lastAuthor": "Li R"
   },
   {
    "id": "pm-41222138",
@@ -10035,7 +10835,9 @@
     "Health Knowledge, Attitudes, Practice"
    ],
    "journalKey": "autism",
-   "_priorityWas": "mechanistic"
+   "_priorityWas": "mechanistic",
+   "firstAuthor": "de Wit MM",
+   "lastAuthor": "Polderman TJ"
   },
   {
    "id": "pm-41203933",
@@ -10066,7 +10868,9 @@
    "journalKey": "mol-psych",
    "alsoBranches": [
     "neuroscience"
-   ]
+   ],
+   "firstAuthor": "Ma Y",
+   "lastAuthor": "Lutz AK"
   },
   {
    "id": "pm-41197609",
@@ -10092,7 +10896,9 @@
    "journalKey": "neuron",
    "alsoBranches": [
     "genetics"
-   ]
+   ],
+   "firstAuthor": "Margolis MP",
+   "lastAuthor": "Gandal MJ"
   },
   {
    "id": "pm-41193845",
@@ -10113,7 +10919,9 @@
    ],
    "branchKey": "genetics",
    "journalDisplay": "Nature",
-   "journalKey": "nature"
+   "journalKey": "nature",
+   "firstAuthor": "Nowakowski TJ",
+   "lastAuthor": "Zeng H"
   },
   {
    "id": "pm-41174994",
@@ -10138,7 +10946,9 @@
    ],
    "journalKey": "autism-res",
    "_refiledFrom": "behavioral",
-   "branchKey": "genetics"
+   "branchKey": "genetics",
+   "firstAuthor": "D'Incal CP",
+   "lastAuthor": "Kooy RF"
   },
   {
    "id": "pm-41174051",
@@ -10171,7 +10981,9 @@
    ],
    "branchKey": "genetics",
    "journalDisplay": "Molecular Psychiatry",
-   "journalKey": "mol-psych"
+   "journalKey": "mol-psych",
+   "firstAuthor": "Jung H",
+   "lastAuthor": "Um JW"
   },
   {
    "id": "pm-41168819",
@@ -10201,7 +11013,9 @@
    ],
    "journalKey": "mol-autism",
    "_refiledFrom": "behavioral",
-   "branchKey": "genetics"
+   "branchKey": "genetics",
+   "firstAuthor": "Viora-Dupont E",
+   "lastAuthor": "Faivre L"
   },
   {
    "id": "pm-41131279",
@@ -10232,7 +11046,9 @@
    "journalKey": "mol-psych",
    "alsoBranches": [
     "neuroscience"
-   ]
+   ],
+   "firstAuthor": "Segura P",
+   "lastAuthor": "Di Martino A"
   },
   {
    "id": "pm-41094063",
@@ -10260,7 +11076,9 @@
    ],
    "branchKey": "genetics",
    "journalDisplay": "Molecular Psychiatry",
-   "journalKey": "mol-psych"
+   "journalKey": "mol-psych",
+   "firstAuthor": "Cleper R",
+   "lastAuthor": "Gross R"
   },
   {
    "id": "pm-41061703",
@@ -10284,7 +11102,9 @@
    ],
    "branchKey": "genetics",
    "journalDisplay": "Cell",
-   "journalKey": "cell"
+   "journalKey": "cell",
+   "firstAuthor": "Jensen M",
+   "lastAuthor": "Girirajan S"
   },
   {
    "id": "pm-41034588",
@@ -10313,7 +11133,9 @@
    "branchKey": "genetics",
    "journalDisplay": "Nature",
    "journalKey": "nature",
-   "_priorityWas": "mechanistic"
+   "_priorityWas": "mechanistic",
+   "firstAuthor": "Zhang X",
+   "lastAuthor": "Warrier V"
   },
   {
    "id": "pm-40992585",
@@ -10346,7 +11168,9 @@
    "_priorityWas": "clinical-observation",
    "alsoBranches": [
     "genetics"
-   ]
+   ],
+   "firstAuthor": "Schuurmans IK",
+   "lastAuthor": "Cecil CAM"
   },
   {
    "id": "pm-40987292",
@@ -10372,7 +11196,9 @@
     "Neural Stem Cells"
    ],
    "journalKey": "ajhg",
-   "_priorityWas": "mechanistic"
+   "_priorityWas": "mechanistic",
+   "firstAuthor": "Bou-Rouphael J",
+   "lastAuthor": "El Khattabi L"
   },
   {
    "id": "pm-40963013",
@@ -10406,7 +11232,9 @@
    "branchKey": "genetics",
    "journalDisplay": "Nature",
    "journalKey": "nature",
-   "_priorityWas": "mechanistic"
+   "_priorityWas": "mechanistic",
+   "firstAuthor": "Tamura S",
+   "lastAuthor": "Bender KJ"
   },
   {
    "id": "pm-40940651",
@@ -10429,7 +11257,9 @@
     "Neurodevelopment",
     "Ganglia, Spinal"
    ],
-   "journalKey": "autism-res"
+   "journalKey": "autism-res",
+   "firstAuthor": "Fernandez A",
+   "lastAuthor": "Wright KM"
   },
   {
    "id": "pm-40885846",
@@ -10462,7 +11292,9 @@
    ],
    "branchKey": "genetics",
    "journalDisplay": "Molecular Psychiatry",
-   "journalKey": "mol-psych"
+   "journalKey": "mol-psych",
+   "firstAuthor": "Li X",
+   "lastAuthor": "Li JD"
   },
   {
    "id": "pm-42106926",
@@ -10488,7 +11320,9 @@
     "Quality Improvement"
    ],
    "journalKey": "autism",
-   "_priorityWas": "mechanistic"
+   "_priorityWas": "mechanistic",
+   "firstAuthor": "Male I",
+   "lastAuthor": "Wilson P"
   },
   {
    "id": "pm-42047345",
@@ -10514,7 +11348,9 @@
     "Surveys and Questionnaires"
    ],
    "journalKey": "autism",
-   "_priorityWas": "mechanistic"
+   "_priorityWas": "mechanistic",
+   "firstAuthor": "Sheppard E",
+   "lastAuthor": "Withey E"
   },
   {
    "id": "pm-42018302",
@@ -10527,7 +11363,8 @@
    "mesh": [],
    "branchKey": "intervention",
    "journalDisplay": "JAMA",
-   "journalKey": "jama"
+   "journalKey": "jama",
+   "firstAuthor": "Angus DC"
   },
   {
    "id": "pm-41991716",
@@ -10540,7 +11377,9 @@
    "mesh": [],
    "branchKey": "intervention",
    "journalDisplay": "Molecular Psychiatry",
-   "journalKey": "mol-psych"
+   "journalKey": "mol-psych",
+   "firstAuthor": "Peeples ES",
+   "lastAuthor": "Mirnics K"
   },
   {
    "id": "pm-41983948",
@@ -10568,7 +11407,9 @@
     "Mental Health"
    ],
    "journalKey": "autism-res",
-   "_priorityWas": "mechanistic"
+   "_priorityWas": "mechanistic",
+   "firstAuthor": "Procyshyn TL",
+   "lastAuthor": "Baron-Cohen S"
   },
   {
    "id": "pm-41969149",
@@ -10595,7 +11436,11 @@
     "Prevalence",
     "Sex Factors"
    ],
-   "journalKey": "autism-res"
+   "journalKey": "autism-res",
+   "_refiledFrom": "behavioral",
+   "branchKey": "intervention",
+   "firstAuthor": "Woolhouse R",
+   "lastAuthor": "Nicholson SL"
   },
   {
    "id": "pm-41956104",
@@ -10617,7 +11462,9 @@
    "journalKey": "autism",
    "_refiledFrom": "behavioral",
    "branchKey": "intervention",
-   "_priorityWas": "mechanistic"
+   "_priorityWas": "mechanistic",
+   "firstAuthor": "Bottema-Beutel K",
+   "lastAuthor": "LaPoint S"
   },
   {
    "id": "pm-41952526",
@@ -10642,7 +11489,9 @@
    ],
    "journalKey": "autism-res",
    "_refiledFrom": "behavioral",
-   "branchKey": "intervention"
+   "branchKey": "intervention",
+   "firstAuthor": "Ingol TT",
+   "lastAuthor": "Daniels JL"
   },
   {
    "id": "pm-41933650",
@@ -10653,7 +11502,8 @@
    "priority": "other",
    "addedBy": "agent-2026-06-02",
    "mesh": [],
-   "journalKey": "jaacap"
+   "journalKey": "jaacap",
+   "firstAuthor": "Vitiello B"
   },
   {
    "id": "pm-41933478",
@@ -10677,7 +11527,9 @@
     "Adaptation, Psychological"
    ],
    "journalKey": "autism",
-   "_priorityWas": "mechanistic"
+   "_priorityWas": "mechanistic",
+   "firstAuthor": "Mair APA",
+   "lastAuthor": "Gillespie-Smith K"
   },
   {
    "id": "pm-41912808",
@@ -10701,7 +11553,9 @@
    ],
    "branchKey": "intervention",
    "journalDisplay": "Nature Medicine",
-   "journalKey": "nat-med"
+   "journalKey": "nat-med",
+   "firstAuthor": "Natividad Avila M",
+   "lastAuthor": "Buxbaum JD"
   },
   {
    "id": "pm-41891296",
@@ -10726,7 +11580,9 @@
     "Parents",
     "Executive Function"
    ],
-   "journalKey": "autism"
+   "journalKey": "autism",
+   "firstAuthor": "Lacroix A",
+   "lastAuthor": "Ego A"
   },
   {
    "id": "pm-41891157",
@@ -10752,7 +11608,9 @@
     "Mental Health"
    ],
    "journalKey": "autism-res",
-   "_priorityWas": "mechanistic"
+   "_priorityWas": "mechanistic",
+   "firstAuthor": "Bourke M",
+   "lastAuthor": "O'Flaherty M"
   },
   {
    "id": "pm-41885164",
@@ -10779,7 +11637,9 @@
    ],
    "journalKey": "autism",
    "_refiledFrom": "behavioral",
-   "branchKey": "intervention"
+   "branchKey": "intervention",
+   "firstAuthor": "Roisenberg BB",
+   "lastAuthor": "Guastella AJ"
   },
   {
    "id": "pm-41873702",
@@ -10803,7 +11663,9 @@
     "Transgender Persons",
     "Gender Identity"
    ],
-   "journalKey": "autism-res"
+   "journalKey": "autism-res",
+   "firstAuthor": "Topaz E",
+   "lastAuthor": "Perl L"
   },
   {
    "id": "pm-41873690",
@@ -10828,7 +11690,9 @@
     "Sensitivity and Specificity"
    ],
    "journalKey": "autism-res",
-   "_priorityWas": "mechanistic"
+   "_priorityWas": "mechanistic",
+   "firstAuthor": "Liu J",
+   "lastAuthor": "Hong JS"
   },
   {
    "id": "pm-41871532",
@@ -10845,7 +11709,9 @@
     "Students, Health Occupations",
     "Learning"
    ],
-   "journalKey": "autism"
+   "journalKey": "autism",
+   "firstAuthor": "Edwards E",
+   "lastAuthor": "Reynolds G"
   },
   {
    "id": "pm-41862280",
@@ -10868,7 +11734,9 @@
     "Motor Skills Disorders"
    ],
    "journalKey": "autism-res",
-   "_priorityWas": "mechanistic"
+   "_priorityWas": "mechanistic",
+   "firstAuthor": "Neto FR",
+   "lastAuthor": "Germano AMC"
   },
   {
    "id": "pm-41858181",
@@ -10891,7 +11759,9 @@
     "Autistic Disorder",
     "East Asian People"
    ],
-   "journalKey": "autism-res"
+   "journalKey": "autism-res",
+   "firstAuthor": "Zhang F",
+   "lastAuthor": "Deng H"
   },
   {
    "id": "pm-41858075",
@@ -10916,7 +11786,9 @@
     "Parent-Child Relations",
     "Longitudinal Studies"
    ],
-   "journalKey": "autism-res"
+   "journalKey": "autism-res",
+   "firstAuthor": "Monnier M",
+   "lastAuthor": "Elena Study Group"
   },
   {
    "id": "pm-41856944",
@@ -10944,7 +11816,9 @@
    ],
    "journalKey": "autism",
    "_refiledFrom": "behavioral",
-   "branchKey": "intervention"
+   "branchKey": "intervention",
+   "firstAuthor": "Zhu H",
+   "lastAuthor": "Li X"
   },
   {
    "id": "pm-41856154",
@@ -10962,7 +11836,9 @@
     "Randomized Controlled Trials as Topic",
     "Treatment Outcome"
    ],
-   "journalKey": "lancet-psych"
+   "journalKey": "lancet-psych",
+   "firstAuthor": "Wilson J",
+   "lastAuthor": "Stockings E"
   },
   {
    "id": "pm-41841559",
@@ -10990,7 +11866,9 @@
     "Sex Factors"
    ],
    "journalKey": "autism",
-   "_priorityWas": "mechanistic"
+   "_priorityWas": "mechanistic",
+   "firstAuthor": "Zidane Burgess AZ",
+   "lastAuthor": "Begeer S"
   },
   {
    "id": "pm-41841515",
@@ -11018,7 +11896,9 @@
    ],
    "journalKey": "autism",
    "_refiledFrom": "behavioral",
-   "branchKey": "intervention"
+   "branchKey": "intervention",
+   "firstAuthor": "Sakhardande KA",
+   "lastAuthor": "Roy R"
   },
   {
    "id": "pm-41834083",
@@ -11038,7 +11918,9 @@
     "Surveys and Questionnaires",
     "Anxiety"
    ],
-   "journalKey": "autism-res"
+   "journalKey": "autism-res",
+   "firstAuthor": "Ebert J",
+   "lastAuthor": "Corbett BA"
   },
   {
    "id": "pm-41808210",
@@ -11062,7 +11944,9 @@
     "Reaction Time",
     "Recognition, Psychology"
    ],
-   "journalKey": "mol-autism"
+   "journalKey": "mol-autism",
+   "firstAuthor": "Kirsch S",
+   "lastAuthor": "van Elst LT"
   },
   {
    "id": "pm-41807126",
@@ -11092,7 +11976,9 @@
    ],
    "journalKey": "autism",
    "_refiledFrom": "behavioral",
-   "branchKey": "intervention"
+   "branchKey": "intervention",
+   "firstAuthor": "Santos JCCD",
+   "lastAuthor": "Gonçalves CL"
   },
   {
    "id": "pm-41807112",
@@ -11122,7 +12008,9 @@
    "journalKey": "autism",
    "_refiledFrom": "behavioral",
    "branchKey": "intervention",
-   "_priorityWas": "mechanistic"
+   "_priorityWas": "mechanistic",
+   "firstAuthor": "Wang X",
+   "lastAuthor": "Wang Z"
   },
   {
    "id": "pm-42101833",
@@ -11134,7 +12022,8 @@
    "addedBy": "manual-2026-06-02",
    "mesh": [],
    "journalKey": "jama",
-   "_priorityWas": "mechanistic"
+   "_priorityWas": "mechanistic",
+   "firstAuthor": "Anderer S"
   },
   {
    "id": "pm-35131181",
@@ -11159,7 +12048,9 @@
    "journalDisplay": "Trends in immunology",
    "alsoBranches": [
     "cytokines"
-   ]
+   ],
+   "firstAuthor": "Kwon HK",
+   "lastAuthor": "Huh JR"
   },
   {
    "id": "pm-41639232",
@@ -11195,7 +12086,9 @@
     "Pregnancy Complications",
     "Japan"
    ],
-   "journalKey": "mol-psych"
+   "journalKey": "mol-psych",
+   "firstAuthor": "Duan C",
+   "lastAuthor": "Tomita H"
   },
   {
    "id": "pm-42243298",
@@ -11208,7 +12101,9 @@
    "mesh": [],
    "branchKey": "intervention",
    "journalDisplay": "Molecular Psychiatry",
-   "journalKey": "mol-psych"
+   "journalKey": "mol-psych",
+   "firstAuthor": "Kunevičius A",
+   "lastAuthor": "Gawliński D"
   },
   {
    "id": "pm-42231396",
@@ -11222,7 +12117,9 @@
    "journalKey": "j-neuroinfl",
    "alsoBranches": [
     "cytokines"
-   ]
+   ],
+   "firstAuthor": "Salia S",
+   "lastAuthor": "Swift-Gallant A"
   },
   {
    "id": "pm-42271534",
@@ -11233,7 +12130,9 @@
    "priority": "clinical-trial",
    "addedBy": "agent-2026-06-15",
    "mesh": [],
-   "journalKey": "mol-autism"
+   "journalKey": "mol-autism",
+   "firstAuthor": "Rum Y",
+   "lastAuthor": "Baron-Cohen S"
   },
   {
    "id": "pm-42266020",
@@ -11260,7 +12159,9 @@
     "Eye-Tracking Technology",
     "Autistic Disorder"
    ],
-   "journalKey": "autism-res"
+   "journalKey": "autism-res",
+   "firstAuthor": "Kou J",
+   "lastAuthor": "Lei Y"
   },
   {
    "id": "pm-42260987",
@@ -11281,7 +12182,9 @@
     "Psychometrics"
    ],
    "journalKey": "autism-res",
-   "_priorityWas": "mechanistic"
+   "_priorityWas": "mechanistic",
+   "firstAuthor": "Lee SC",
+   "lastAuthor": "Chen KL"
   },
   {
    "id": "pm-42257270",
@@ -11309,7 +12212,9 @@
     "Case-Control Studies"
    ],
    "journalKey": "autism",
-   "_priorityWas": "mechanistic"
+   "_priorityWas": "mechanistic",
+   "firstAuthor": "De Laet H",
+   "lastAuthor": "Wiersema JR"
   },
   {
    "id": "pm-42257266",
@@ -11331,7 +12236,9 @@
     "Pilot Projects"
    ],
    "journalKey": "autism",
-   "_priorityWas": "mechanistic"
+   "_priorityWas": "mechanistic",
+   "firstAuthor": "Pelton M",
+   "lastAuthor": "Cassidy S"
   },
   {
    "id": "pm-42249747",
@@ -11359,7 +12266,9 @@
     "Behavior, Animal",
     "Cerebral Cortex"
    ],
-   "journalKey": "autism-res"
+   "journalKey": "autism-res",
+   "firstAuthor": "Sáfár K",
+   "lastAuthor": "Adorján I"
   },
   {
    "id": "pm-42244394",
@@ -11384,7 +12293,9 @@
     "Attention Deficit Disorder with Hyperactivity",
     "Adolescent"
    ],
-   "journalKey": "autism-res"
+   "journalKey": "autism-res",
+   "firstAuthor": "Esposto E",
+   "lastAuthor": "Maier S"
   },
   {
    "id": "pm-42237211",
@@ -11402,7 +12313,9 @@
     "Family",
     "Communication"
    ],
-   "journalKey": "autism"
+   "journalKey": "autism",
+   "firstAuthor": "Albin M",
+   "lastAuthor": "Phoenix M"
   },
   {
    "id": "pm-42237066",
@@ -11430,7 +12343,9 @@
     "Child"
    ],
    "journalKey": "autism",
-   "_priorityWas": "mechanistic"
+   "_priorityWas": "mechanistic",
+   "firstAuthor": "Li J",
+   "lastAuthor": "Shum KK"
   },
   {
    "id": "pm-41665231",
@@ -11451,7 +12366,9 @@
     "Sex Factors"
    ],
    "journalKey": "autism",
-   "_priorityWas": "mechanistic"
+   "_priorityWas": "mechanistic",
+   "firstAuthor": "Cola M",
+   "lastAuthor": "Parish-Morris J"
   },
   {
    "id": "pm-41663347",
@@ -11471,7 +12388,9 @@
    "journalKey": "autism",
    "_refiledFrom": "behavioral",
    "branchKey": "intervention",
-   "_priorityWas": "mechanistic"
+   "_priorityWas": "mechanistic",
+   "firstAuthor": "Janicki MP",
+   "lastAuthor": "Palanisamy V"
   },
   {
    "id": "pm-41361937",
@@ -11494,7 +12413,9 @@
     "Wounds and Injuries"
    ],
    "journalKey": "autism",
-   "_priorityWas": "mechanistic"
+   "_priorityWas": "mechanistic",
+   "firstAuthor": "Ferguson EF",
+   "lastAuthor": "Uljarević M"
   },
   {
    "id": "pm-41252209",
@@ -11520,7 +12441,9 @@
     "Cerebral Cortex",
     "Functional Neuroimaging"
    ],
-   "journalKey": "jcpp"
+   "journalKey": "jcpp",
+   "firstAuthor": "Li K",
+   "lastAuthor": "Tang W"
   },
   {
    "id": "pm-42272254",
@@ -11534,7 +12457,9 @@
    "journalKey": "jcpp",
    "alsoBranches": [
     "neuroscience"
-   ]
+   ],
+   "firstAuthor": "van Uum FJE",
+   "lastAuthor": "van Haren NEM"
   },
   {
    "id": "pm-42268594",
@@ -11547,7 +12472,9 @@
    "mesh": [],
    "branchKey": "intervention",
    "journalDisplay": "JAMA Psychiatry",
-   "journalKey": "jama-psych"
+   "journalKey": "jama-psych",
+   "firstAuthor": "LaBianca S",
+   "lastAuthor": "iPSYCH Study Consortium and Autism Spectrum Disorder Working Group of the Psychiatric Genomics Consortium"
   },
   {
    "id": "pm-42230772",
@@ -11573,7 +12500,9 @@
     "Parents"
    ],
    "journalKey": "nat-genet",
-   "_priorityWas": "mechanistic"
+   "_priorityWas": "mechanistic",
+   "firstAuthor": "Wang Z",
+   "lastAuthor": "Chatterjee N"
   },
   {
    "id": "pm-41738769",
@@ -11595,7 +12524,9 @@
     "Feeding Behavior",
     "Child Behavior"
    ],
-   "journalKey": "autism"
+   "journalKey": "autism",
+   "firstAuthor": "Wallisch A",
+   "lastAuthor": "Davis A"
   },
   {
    "id": "pm-41634135",
@@ -11618,7 +12549,9 @@
    ],
    "branchKey": "intervention",
    "journalDisplay": "Molecular Psychiatry",
-   "journalKey": "mol-psych"
+   "journalKey": "mol-psych",
+   "firstAuthor": "Kinjo M",
+   "lastAuthor": "Noda Y"
   },
   {
    "id": "pm-42250866",
@@ -11629,7 +12562,9 @@
    "url": "https://pubmed.ncbi.nlm.nih.gov/42250866/",
    "priority": "translational",
    "addedBy": "agent-2026-06-15",
-   "mesh": []
+   "mesh": [],
+   "firstAuthor": "State MW",
+   "lastAuthor": "Malenka RC"
   },
   {
    "id": "pm-42242209",
@@ -11647,7 +12582,9 @@
     "Autistic Disorder",
     "Software",
     "Single-Cell Gene Expression Analysis"
-   ]
+   ],
+   "firstAuthor": "Dai Q",
+   "lastAuthor": "Epstein MP"
   },
   {
    "id": "pm-42289961",
@@ -11658,7 +12595,9 @@
    "url": "https://pubmed.ncbi.nlm.nih.gov/42289961/",
    "priority": "other",
    "addedBy": "agent-2026-06-15",
-   "mesh": []
+   "mesh": [],
+   "firstAuthor": "Cobbaert L",
+   "lastAuthor": "Pavlopoulou G"
   },
   {
    "id": "pm-42265894",
@@ -11681,7 +12620,9 @@
     "Surveys and Questionnaires",
     "Singing",
     "Social Group"
-   ]
+   ],
+   "firstAuthor": "Petit N",
+   "lastAuthor": "Jurek L"
   },
   {
    "id": "pm-42244062",
@@ -11707,7 +12648,9 @@
     "United Kingdom",
     "Randomized Controlled Trials as Topic",
     "Secondary Data Analysis"
-   ]
+   ],
+   "firstAuthor": "Gordon I",
+   "lastAuthor": "Cassidy S"
   },
   {
    "id": "pm-41222131",
@@ -11729,7 +12672,9 @@
     "Child",
     "Infant"
    ],
-   "_priorityWas": "mechanistic"
+   "_priorityWas": "mechanistic",
+   "firstAuthor": "Haebig E",
+   "lastAuthor": "Cox CR"
   },
   {
    "id": "pm-42272041",
@@ -11752,7 +12697,9 @@
     "China",
     "Surveys and Questionnaires",
     "Schools"
-   ]
+   ],
+   "firstAuthor": "Wu S",
+   "lastAuthor": "Huang S"
   },
   {
    "id": "pm-42226652",
@@ -11778,7 +12725,9 @@
     "Adult",
     "Cognition",
     "Intelligence Tests"
-   ]
+   ],
+   "firstAuthor": "Clarke EB",
+   "lastAuthor": "Bal VH"
   },
   {
    "id": "pm-42321914",
@@ -11792,7 +12741,9 @@
    "journalKey": "j-neuroinfl",
    "alsoBranches": [
     "cytokines"
-   ]
+   ],
+   "firstAuthor": "Li C",
+   "lastAuthor": "Wei P"
   },
   {
    "id": "pm-42322041",
@@ -11803,7 +12754,9 @@
    "priority": "mechanistic",
    "addedBy": "agent-2026-06-22",
    "mesh": [],
-   "journalKey": "autism-res"
+   "journalKey": "autism-res",
+   "firstAuthor": "Ng SH",
+   "lastAuthor": "Wong OWH"
   },
   {
    "id": "pm-42320780",
@@ -11817,7 +12770,9 @@
    "journalKey": "biol-psych",
    "alsoBranches": [
     "behavioral"
-   ]
+   ],
+   "firstAuthor": "Gao B",
+   "lastAuthor": "Ou J"
   },
   {
    "id": "pm-42316431",
@@ -11832,7 +12787,9 @@
    "_priorityWas": "mechanistic",
    "alsoBranches": [
     "genetics"
-   ]
+   ],
+   "firstAuthor": "McWeeny S",
+   "lastAuthor": "Ewen JB"
   },
   {
    "id": "pm-42304759",
@@ -11858,7 +12815,9 @@
     "Theory of Mind"
    ],
    "journalKey": "autism-res",
-   "_priorityWas": "mechanistic"
+   "_priorityWas": "mechanistic",
+   "firstAuthor": "Holka S",
+   "lastAuthor": "Farkas K"
   },
   {
    "id": "pm-42297937",
@@ -11872,7 +12831,9 @@
    "branchKey": "behavioral",
    "journalDisplay": "Molecular Psychiatry",
    "journalKey": "mol-psych",
-   "_priorityWas": "mechanistic"
+   "_priorityWas": "mechanistic",
+   "firstAuthor": "Ko SY",
+   "lastAuthor": "Frankland PW"
   },
   {
    "id": "pm-42297632",
@@ -11893,7 +12854,8 @@
    "journalKey": "autism-res",
    "_refiledFrom": "behavioral",
    "branchKey": "intervention",
-   "_priorityWas": "clinical-observation"
+   "_priorityWas": "clinical-observation",
+   "firstAuthor": "Jaber M"
   },
   {
    "id": "pm-42310454",
@@ -11906,7 +12868,9 @@
    "mesh": [],
    "branchKey": "genetics",
    "journalDisplay": "Nature",
-   "journalKey": "nature"
+   "journalKey": "nature",
+   "firstAuthor": "Schwarz LA",
+   "lastAuthor": "Novarino G"
   },
   {
    "id": "pm-42297935",
@@ -11922,7 +12886,9 @@
    "journalKey": "mol-psych",
    "alsoBranches": [
     "neuroscience"
-   ]
+   ],
+   "firstAuthor": "Yu B",
+   "lastAuthor": "Guo H"
   },
   {
    "id": "pm-42322045",
@@ -11935,7 +12901,9 @@
    "mesh": [],
    "journalKey": "autism-res",
    "_refiledFrom": "behavioral",
-   "branchKey": "intervention"
+   "branchKey": "intervention",
+   "firstAuthor": "Penner M",
+   "lastAuthor": "McNally Keehn R"
   },
   {
    "id": "pm-42316828",
@@ -11961,7 +12929,9 @@
    "journalKey": "autism",
    "_refiledFrom": "behavioral",
    "branchKey": "intervention",
-   "_priorityWas": "mechanistic"
+   "_priorityWas": "mechanistic",
+   "firstAuthor": "Lindly OJ",
+   "lastAuthor": "Freeman KA"
   },
   {
    "id": "pm-42303595",
@@ -11988,7 +12958,9 @@
     "Access to Primary Care",
     "Caregivers"
    ],
-   "journalKey": "autism"
+   "journalKey": "autism",
+   "firstAuthor": "Merrick H",
+   "lastAuthor": "Parr JR"
   },
   {
    "id": "pm-42303593",
@@ -12017,7 +12989,9 @@
     "Racial Groups"
    ],
    "journalKey": "autism",
-   "_priorityWas": "mechanistic"
+   "_priorityWas": "mechanistic",
+   "firstAuthor": "Carey ME",
+   "lastAuthor": "Lyall K"
   },
   {
    "id": "pm-42320783",
@@ -12029,7 +13003,9 @@
    "priority": "unclassified",
    "addedBy": "agent-2026-06-22",
    "mesh": [],
-   "_priorityWas": "mechanistic"
+   "_priorityWas": "mechanistic",
+   "firstAuthor": "Tzanoulinou S",
+   "lastAuthor": "Vassalli A"
   },
   {
    "id": "pm-42322046",
@@ -12040,7 +13016,9 @@
    "url": "https://pubmed.ncbi.nlm.nih.gov/42322046/",
    "priority": "mechanistic",
    "addedBy": "agent-2026-06-22",
-   "mesh": []
+   "mesh": [],
+   "firstAuthor": "Bu F",
+   "lastAuthor": "Jin Q"
   },
   {
    "id": "pm-42298948",
@@ -12051,7 +13029,8 @@
    "url": "https://pubmed.ncbi.nlm.nih.gov/42298948/",
    "priority": "other",
    "addedBy": "agent-2026-06-22",
-   "mesh": []
+   "mesh": [],
+   "firstAuthor": "Doherty M"
   },
   {
    "id": "pm-42365510",
@@ -12070,7 +13049,9 @@
     "Fixation, Ocular",
     "Sensitivity and Specificity"
    ],
-   "journalKey": "autism"
+   "journalKey": "autism",
+   "firstAuthor": "Christian Alejandro DW",
+   "lastAuthor": "Silvia G"
   },
   {
    "id": "pm-42333816",
@@ -12082,7 +13063,9 @@
    "addedBy": "agent-2026-06-29",
    "mesh": [],
    "journalKey": "autism-res",
-   "_priorityWas": "mechanistic"
+   "_priorityWas": "mechanistic",
+   "firstAuthor": "Vogelzang M",
+   "lastAuthor": "Setch J"
   },
   {
    "id": "pm-42333800",
@@ -12096,7 +13079,9 @@
    "journalKey": "autism-res",
    "_refiledFrom": "behavioral",
    "branchKey": "neuroscience",
-   "_priorityWas": "mechanistic"
+   "_priorityWas": "mechanistic",
+   "firstAuthor": "Kim CY",
+   "lastAuthor": "Park BY"
   },
   {
    "id": "pm-42333586",
@@ -12120,7 +13105,9 @@
     "Adult"
    ],
    "journalKey": "autism",
-   "_priorityWas": "mechanistic"
+   "_priorityWas": "mechanistic",
+   "firstAuthor": "Holt JM",
+   "lastAuthor": "Stern N"
   },
   {
    "id": "pm-42333534",
@@ -12146,7 +13133,9 @@
     "Autistic Disorder",
     "Factor Analysis, Statistical"
    ],
-   "journalKey": "autism"
+   "journalKey": "autism",
+   "firstAuthor": "Abdolmohamadi K",
+   "lastAuthor": "Hull L"
   },
   {
    "id": "pm-42309315",
@@ -12157,7 +13146,8 @@
    "priority": "other",
    "addedBy": "agent-2026-06-29",
    "mesh": [],
-   "journalKey": "jaacap"
+   "journalKey": "jaacap",
+   "firstAuthor": "Sannar EM"
   },
   {
    "id": "pm-42366594",
@@ -12170,7 +13160,9 @@
    "mesh": [],
    "journalKey": "autism-res",
    "_refiledFrom": "behavioral",
-   "branchKey": "intervention"
+   "branchKey": "intervention",
+   "firstAuthor": "Levy T",
+   "lastAuthor": "Kolevzon A"
   },
   {
    "id": "pm-42363273",
@@ -12182,7 +13174,9 @@
    "addedBy": "agent-2026-06-29",
    "mesh": [],
    "journalKey": "autism-res",
-   "_priorityWas": "mechanistic"
+   "_priorityWas": "mechanistic",
+   "firstAuthor": "Ansari SI",
+   "lastAuthor": "Kana RK"
   },
   {
    "id": "pm-42332026",
@@ -12193,7 +13187,9 @@
    "url": "https://pubmed.ncbi.nlm.nih.gov/42332026/",
    "priority": "clinical-observation",
    "addedBy": "agent-2026-06-29",
-   "mesh": []
+   "mesh": [],
+   "firstAuthor": "Mithani K",
+   "lastAuthor": "Ibrahim GM"
   },
   {
    "id": "pm-42309312",
@@ -12204,7 +13200,8 @@
    "url": "https://pubmed.ncbi.nlm.nih.gov/42309312/",
    "priority": "other",
    "addedBy": "agent-2026-06-29",
-   "mesh": []
+   "mesh": [],
+   "firstAuthor": "İçen S"
   },
   {
    "id": "pm-42349898",
@@ -12232,7 +13229,9 @@
     "Social Perception",
     "Aged"
    ],
-   "_priorityWas": "mechanistic"
+   "_priorityWas": "mechanistic",
+   "firstAuthor": "Minnell H",
+   "lastAuthor": "Bowden CJ"
   },
   {
    "id": "pm-42333580",
@@ -12260,7 +13259,9 @@
     "Qualitative Research",
     "Attitude to Health"
    ],
-   "_priorityWas": "mechanistic"
+   "_priorityWas": "mechanistic",
+   "firstAuthor": "Fajutrao Falk S",
+   "lastAuthor": "Tammimies K"
   },
   {
    "id": "pm-42333531",
@@ -12285,7 +13286,9 @@
     "Middle Aged",
     "Social Inclusion",
     "Surveys and Questionnaires"
-   ]
+   ],
+   "firstAuthor": "Emam M",
+   "lastAuthor": "Hemdan A"
   },
   {
    "id": "pm-42363300",
@@ -12297,7 +13300,9 @@
    "priority": "unclassified",
    "addedBy": "agent-2026-06-29",
    "mesh": [],
-   "_priorityWas": "mechanistic"
+   "_priorityWas": "mechanistic",
+   "firstAuthor": "Eldeeb S",
+   "lastAuthor": "Mazefsky C"
   },
   {
    "id": "pm-42393738",
@@ -12321,7 +13326,9 @@
    ],
    "journalKey": "mol-autism",
    "_refiledFrom": "behavioral",
-   "branchKey": "intervention"
+   "branchKey": "intervention",
+   "firstAuthor": "Wang L",
+   "lastAuthor": "Wong PCM"
   },
   {
    "id": "pm-42389848",
@@ -12345,7 +13352,9 @@
     "Students"
    ],
    "journalKey": "autism",
-   "_priorityWas": "mechanistic"
+   "_priorityWas": "mechanistic",
+   "firstAuthor": "Boddy A",
+   "lastAuthor": "Cook A"
   },
   {
    "id": "pm-42388058",
@@ -12356,7 +13365,9 @@
    "priority": "review",
    "addedBy": "agent-2026-07-06",
    "mesh": [],
-   "journalKey": "autism"
+   "journalKey": "autism",
+   "firstAuthor": "Rajesh Kumar V",
+   "lastAuthor": "Oram J"
   },
   {
    "id": "pm-42387549",
@@ -12370,7 +13381,9 @@
    "journalKey": "mol-autism",
    "alsoBranches": [
     "intervention"
-   ]
+   ],
+   "firstAuthor": "Payne JM",
+   "lastAuthor": "Pride NA"
   },
   {
    "id": "pm-42375113",
@@ -12381,7 +13394,9 @@
    "priority": "mechanistic",
    "addedBy": "agent-2026-07-06",
    "mesh": [],
-   "journalKey": "autism-res"
+   "journalKey": "autism-res",
+   "firstAuthor": "Andreou M",
+   "lastAuthor": "Peristeri E"
   },
   {
    "id": "pm-41851340",
@@ -12399,7 +13414,9 @@
    ],
    "branchKey": "behavioral",
    "journalDisplay": "Molecular Psychiatry",
-   "journalKey": "mol-psych"
+   "journalKey": "mol-psych",
+   "firstAuthor": "Wang Y",
+   "lastAuthor": "Yin Q"
   },
   {
    "id": "pm-41724671",
@@ -12420,7 +13437,9 @@
     "Healthy Aging",
     "Aged"
    ],
-   "journalKey": "autism"
+   "journalKey": "autism",
+   "firstAuthor": "Ommensen B",
+   "lastAuthor": "Sofronoff K"
   },
   {
    "id": "pm-41550040",
@@ -12445,7 +13464,9 @@
     "Outcome Assessment, Health Care",
     "Double-Blind Method"
    ],
-   "journalKey": "jcpp"
+   "journalKey": "jcpp",
+   "firstAuthor": "Boulton KA",
+   "lastAuthor": "Guastella AJ"
   },
   {
    "id": "pm-42386980",
@@ -12459,7 +13480,9 @@
    "branchKey": "genetics",
    "journalDisplay": "Nature",
    "journalKey": "nature",
-   "_priorityWas": "mechanistic"
+   "_priorityWas": "mechanistic",
+   "firstAuthor": "Tsyporin J",
+   "lastAuthor": "Sestan N"
   },
   {
    "id": "pm-42394366",
@@ -12470,7 +13493,9 @@
    "priority": "clinical-trial",
    "addedBy": "agent-2026-07-06",
    "mesh": [],
-   "journalKey": "autism-res"
+   "journalKey": "autism-res",
+   "firstAuthor": "Enav Y",
+   "lastAuthor": "Mayer Y"
   },
   {
    "id": "pm-42380932",
@@ -12489,7 +13514,9 @@
     "Child"
    ],
    "journalKey": "mol-autism",
-   "_priorityWas": "mechanistic"
+   "_priorityWas": "mechanistic",
+   "firstAuthor": "Siegel M",
+   "lastAuthor": "Singer AT"
   },
   {
    "id": "pm-42374865",
@@ -12500,7 +13527,9 @@
    "priority": "clinical-observation",
    "addedBy": "agent-2026-07-06",
    "mesh": [],
-   "journalKey": "autism-res"
+   "journalKey": "autism-res",
+   "firstAuthor": "Barzilay R",
+   "lastAuthor": "Gur RE"
   },
   {
    "id": "pm-41764339",
@@ -12526,7 +13555,9 @@
    ],
    "branchKey": "intervention",
    "journalDisplay": "Molecular Psychiatry",
-   "journalKey": "mol-psych"
+   "journalKey": "mol-psych",
+   "firstAuthor": "Zhao X",
+   "lastAuthor": "Nahata MC"
   },
   {
    "id": "pm-41486975",
@@ -12553,7 +13584,9 @@
     "Vitamins",
     "Infant, Newborn"
    ],
-   "journalKey": "jcpp"
+   "journalKey": "jcpp",
+   "firstAuthor": "Sandboge S",
+   "lastAuthor": "Heinonen K"
   },
   {
    "id": "pm-41075976",
@@ -12577,7 +13610,9 @@
     "Child, Preschool",
     "Boston"
    ],
-   "journalKey": "jaacap"
+   "journalKey": "jaacap",
+   "firstAuthor": "Qu X",
+   "lastAuthor": "Volk HE"
   },
   {
    "id": "pm-42389843",
@@ -12604,7 +13639,9 @@
     "Autistic Disorder",
     "Crime Victims"
    ],
-   "_priorityWas": "mechanistic"
+   "_priorityWas": "mechanistic",
+   "firstAuthor": "Carbone GA",
+   "lastAuthor": "Schneider M"
   },
   {
    "id": "pm-42387996",
@@ -12625,7 +13662,9 @@
     "Autistic Disorder",
     "Longitudinal Studies",
     "Child, Preschool"
-   ]
+   ],
+   "firstAuthor": "Wiggins LD",
+   "lastAuthor": "Tinker S"
   },
   {
    "id": "pm-41603207",
@@ -12652,7 +13691,9 @@
     "Intelligence",
     "Autism Spectrum Disorder",
     "Comorbidity"
-   ]
+   ],
+   "firstAuthor": "Clarke EB",
+   "lastAuthor": "Bal VH"
   },
   {
    "id": "pm-42437582",
@@ -12663,7 +13704,9 @@
    "priority": "clinical-observation",
    "addedBy": "agent-2026-07-13",
    "mesh": [],
-   "journalKey": "bbi"
+   "journalKey": "bbi",
+   "firstAuthor": "González-Franco DA",
+   "lastAuthor": "Pacheco-López G"
   },
   {
    "id": "pm-42419649",
@@ -12675,7 +13718,8 @@
    "addedBy": "agent-2026-07-13",
    "mesh": [],
    "journalKey": "bbi",
-   "_priorityWas": "mechanistic"
+   "_priorityWas": "mechanistic",
+   "firstAuthor": "Hager R"
   },
   {
    "id": "pm-42409184",
@@ -12690,7 +13734,9 @@
    "_priorityWas": "mechanistic",
    "alsoBranches": [
     "genetics"
-   ]
+   ],
+   "firstAuthor": "McEwan F",
+   "lastAuthor": "Hager R"
   },
   {
    "id": "pm-42437723",
@@ -12702,7 +13748,9 @@
    "addedBy": "agent-2026-07-13",
    "mesh": [],
    "journalKey": "autism-res",
-   "_priorityWas": "mechanistic"
+   "_priorityWas": "mechanistic",
+   "firstAuthor": "Batterink LJ",
+   "lastAuthor": "Pedapati EV"
   },
   {
    "id": "pm-42426840",
@@ -12716,7 +13764,9 @@
    "journalKey": "mol-autism",
    "alsoBranches": [
     "neuroscience"
-   ]
+   ],
+   "firstAuthor": "Wang XK",
+   "lastAuthor": "Ouyang G"
   },
   {
    "id": "pm-42420199",
@@ -12727,7 +13777,9 @@
    "priority": "mechanistic",
    "addedBy": "agent-2026-07-13",
    "mesh": [],
-   "journalKey": "autism-res"
+   "journalKey": "autism-res",
+   "firstAuthor": "Lin X",
+   "lastAuthor": "Jiang K"
   },
   {
    "id": "pm-42415507",
@@ -12738,7 +13790,9 @@
    "priority": "clinical-observation",
    "addedBy": "agent-2026-07-13",
    "mesh": [],
-   "journalKey": "autism-res"
+   "journalKey": "autism-res",
+   "firstAuthor": "Brouwer EC",
+   "lastAuthor": "Kelley E"
   },
   {
    "id": "pm-42410944",
@@ -12750,7 +13804,9 @@
    "addedBy": "agent-2026-07-13",
    "mesh": [],
    "journalKey": "autism-res",
-   "_priorityWas": "mechanistic"
+   "_priorityWas": "mechanistic",
+   "firstAuthor": "Tian M",
+   "lastAuthor": "Luo T"
   },
   {
    "id": "pm-42431437",
@@ -12761,7 +13817,9 @@
    "priority": "review",
    "addedBy": "agent-2026-07-13",
    "mesh": [],
-   "journalKey": "biol-psych"
+   "journalKey": "biol-psych",
+   "firstAuthor": "Guttikonda SR",
+   "lastAuthor": "Makinson CD"
   },
   {
    "id": "pm-42410084",
@@ -12775,7 +13833,9 @@
    "branchKey": "genetics",
    "journalDisplay": "Molecular Psychiatry",
    "journalKey": "mol-psych",
-   "_priorityWas": "mechanistic"
+   "_priorityWas": "mechanistic",
+   "firstAuthor": "Al Saneh A",
+   "lastAuthor": "Williams AJ"
   },
   {
    "id": "pm-42421184",
@@ -12786,7 +13846,9 @@
    "priority": "clinical-observation",
    "addedBy": "agent-2026-07-13",
    "mesh": [],
-   "journalKey": "autism"
+   "journalKey": "autism",
+   "firstAuthor": "Fraser B",
+   "lastAuthor": "Bowden NJ"
   },
   {
    "id": "pm-42437505",
@@ -12798,7 +13860,9 @@
    "priority": "unclassified",
    "addedBy": "agent-2026-07-13",
    "mesh": [],
-   "_priorityWas": "mechanistic"
+   "_priorityWas": "mechanistic",
+   "firstAuthor": "Zisman-Ilani Y",
+   "lastAuthor": "Mandell DS"
   },
   {
    "id": "pm-42430144",
@@ -12810,7 +13874,8 @@
    "priority": "unclassified",
    "addedBy": "agent-2026-07-13",
    "mesh": [],
-   "_priorityWas": "mechanistic"
+   "_priorityWas": "mechanistic",
+   "firstAuthor": "Anderer S"
   },
   {
    "id": "pm-42411151",
@@ -12821,7 +13886,9 @@
    "url": "https://pubmed.ncbi.nlm.nih.gov/42411151/",
    "priority": "review",
    "addedBy": "agent-2026-07-13",
-   "mesh": []
+   "mesh": [],
+   "firstAuthor": "Nosova E",
+   "lastAuthor": "Leadbitter K"
   },
   {
    "id": "pm-42463903",
@@ -12834,7 +13901,9 @@
    "mesh": [],
    "branchKey": "genetics",
    "journalDisplay": "Molecular Psychiatry",
-   "journalKey": "mol-psych"
+   "journalKey": "mol-psych",
+   "firstAuthor": "Tan S",
+   "lastAuthor": "Xia K"
   },
   {
    "id": "pm-42469909",
@@ -12845,7 +13914,9 @@
    "priority": "clinical-observation",
    "addedBy": "agent-2026-07-20",
    "mesh": [],
-   "journalKey": "mol-autism"
+   "journalKey": "mol-autism",
+   "firstAuthor": "Uglik-Marucha N",
+   "lastAuthor": "Vitoratou S"
   },
   {
    "id": "pm-42464871",
@@ -12858,7 +13929,9 @@
    "mesh": [],
    "journalKey": "autism-res",
    "_refiledFrom": "behavioral",
-   "branchKey": "neuroscience"
+   "branchKey": "neuroscience",
+   "firstAuthor": "Rodríguez-Herreros B",
+   "lastAuthor": "Chabane N"
   },
   {
    "id": "pm-42464574",
@@ -12870,7 +13943,9 @@
    "addedBy": "agent-2026-07-20",
    "mesh": [],
    "journalKey": "autism",
-   "_priorityWas": "mechanistic"
+   "_priorityWas": "mechanistic",
+   "firstAuthor": "Finke EH",
+   "lastAuthor": "Dunn DH"
   },
   {
    "id": "pm-42458743",
@@ -12881,7 +13956,9 @@
    "priority": "review",
    "addedBy": "agent-2026-07-20",
    "mesh": [],
-   "journalKey": "autism"
+   "journalKey": "autism",
+   "firstAuthor": "Cullen I",
+   "lastAuthor": "Parma V"
   },
   {
    "id": "pm-42454526",
@@ -12896,7 +13973,9 @@
    "_priorityWas": "mechanistic",
    "alsoBranches": [
     "neuroscience"
-   ]
+   ],
+   "firstAuthor": "Shah UT",
+   "lastAuthor": "Green SA"
   },
   {
    "id": "pm-42452988",
@@ -12907,7 +13986,9 @@
    "priority": "clinical-observation",
    "addedBy": "agent-2026-07-20",
    "mesh": [],
-   "journalKey": "autism-res"
+   "journalKey": "autism-res",
+   "firstAuthor": "Avşar V",
+   "lastAuthor": "Şengül Avşar A"
   },
   {
    "id": "pm-42444012",
@@ -12921,7 +14002,9 @@
    "journalKey": "mol-autism",
    "alsoBranches": [
     "neuroscience"
-   ]
+   ],
+   "firstAuthor": "Yue Z",
+   "lastAuthor": "Ke X"
   },
   {
    "id": "pm-42443391",
@@ -12934,7 +14017,9 @@
    "mesh": [],
    "branchKey": "neuroscience",
    "journalDisplay": "Molecular Psychiatry",
-   "journalKey": "mol-psych"
+   "journalKey": "mol-psych",
+   "firstAuthor": "Ciano L",
+   "lastAuthor": "Michetti C"
   },
   {
    "id": "pm-42460540",
@@ -12948,7 +14033,9 @@
    "journalKey": "autism-res",
    "_refiledFrom": "behavioral",
    "branchKey": "neuroscience",
-   "_priorityWas": "mechanistic"
+   "_priorityWas": "mechanistic",
+   "firstAuthor": "Matyjek M",
+   "lastAuthor": "Cuello MT"
   },
   {
    "id": "pm-42464513",
@@ -12959,7 +14046,9 @@
    "priority": "clinical-observation",
    "addedBy": "agent-2026-07-20",
    "mesh": [],
-   "journalKey": "autism-res"
+   "journalKey": "autism-res",
+   "firstAuthor": "Lushin V",
+   "lastAuthor": "Marcus S"
   },
   {
    "id": "pm-42444032",
@@ -12970,7 +14059,9 @@
    "priority": "other",
    "addedBy": "agent-2026-07-20",
    "mesh": [],
-   "journalKey": "autism"
+   "journalKey": "autism",
+   "firstAuthor": "Grammatikou M",
+   "lastAuthor": "Manning C"
   },
   {
    "id": "pm-42449513",
@@ -12981,7 +14072,9 @@
    "url": "https://pubmed.ncbi.nlm.nih.gov/42449513/",
    "priority": "other",
    "addedBy": "agent-2026-07-20",
-   "mesh": []
+   "mesh": [],
+   "firstAuthor": "Campbell-Mapplebeck A",
+   "lastAuthor": "Davis R"
   },
   {
    "id": "pm-42473297",
@@ -12992,7 +14085,9 @@
    "url": "https://pubmed.ncbi.nlm.nih.gov/42473297/",
    "priority": "clinical-observation",
    "addedBy": "agent-2026-07-20",
-   "mesh": []
+   "mesh": [],
+   "firstAuthor": "de Oliveira LC",
+   "lastAuthor": "Silva SM"
   },
   {
    "id": "pm-42503182",
@@ -13006,7 +14101,9 @@
    "journalKey": "autism-res",
    "_refiledFrom": "behavioral",
    "branchKey": "neuroscience",
-   "_priorityWas": "mechanistic"
+   "_priorityWas": "mechanistic",
+   "firstAuthor": "Babu J",
+   "lastAuthor": "Pantazopoulos H"
   },
   {
    "id": "pm-42522543",
@@ -13018,7 +14115,9 @@
    "addedBy": "agent-2026-07-29",
    "mesh": [],
    "journalKey": "autism",
-   "_priorityWas": "mechanistic"
+   "_priorityWas": "mechanistic",
+   "firstAuthor": "Tong ASL",
+   "lastAuthor": "Lam GYH"
   },
   {
    "id": "pm-42522015",
@@ -13030,7 +14129,9 @@
    "addedBy": "agent-2026-07-29",
    "mesh": [],
    "journalKey": "autism",
-   "_priorityWas": "mechanistic"
+   "_priorityWas": "mechanistic",
+   "firstAuthor": "Greenstein E",
+   "lastAuthor": "Wallace GL"
   },
   {
    "id": "pm-42503632",
@@ -13043,7 +14144,9 @@
    "mesh": [],
    "journalKey": "autism",
    "_refiledFrom": "behavioral",
-   "branchKey": "intervention"
+   "branchKey": "intervention",
+   "firstAuthor": "Simple O",
+   "lastAuthor": "Vincent J"
   },
   {
    "id": "pm-42503195",
@@ -13054,7 +14157,9 @@
    "priority": "review",
    "addedBy": "agent-2026-07-29",
    "mesh": [],
-   "journalKey": "autism-res"
+   "journalKey": "autism-res",
+   "firstAuthor": "Ganachaud B",
+   "lastAuthor": "Boudin H"
   },
   {
    "id": "pm-42500921",
@@ -13067,7 +14172,9 @@
    "mesh": [],
    "journalKey": "autism-res",
    "_refiledFrom": "behavioral",
-   "branchKey": "intervention"
+   "branchKey": "intervention",
+   "firstAuthor": "Latrèche K",
+   "lastAuthor": "Schaer M"
   },
   {
    "id": "pm-42500882",
@@ -13078,7 +14185,9 @@
    "priority": "clinical-observation",
    "addedBy": "agent-2026-07-29",
    "mesh": [],
-   "journalKey": "autism-res"
+   "journalKey": "autism-res",
+   "firstAuthor": "Atsumi T",
+   "lastAuthor": "Matsushima K"
   },
   {
    "id": "pm-42494078",
@@ -13091,7 +14200,9 @@
    "mesh": [],
    "journalKey": "autism",
    "_refiledFrom": "behavioral",
-   "branchKey": "intervention"
+   "branchKey": "intervention",
+   "firstAuthor": "Seng GJ",
+   "lastAuthor": "Gau SS"
   },
   {
    "id": "pm-42492896",
@@ -13102,7 +14213,9 @@
    "priority": "clinical-observation",
    "addedBy": "agent-2026-07-29",
    "mesh": [],
-   "journalKey": "jaacap"
+   "journalKey": "jaacap",
+   "firstAuthor": "Spackman E",
+   "lastAuthor": "Uljarević M"
   },
   {
    "id": "pm-42490140",
@@ -13113,7 +14226,9 @@
    "priority": "review",
    "addedBy": "agent-2026-07-29",
    "mesh": [],
-   "journalKey": "autism"
+   "journalKey": "autism",
+   "firstAuthor": "Rider JV",
+   "lastAuthor": "McGrath M"
   },
   {
    "id": "pm-42487339",
@@ -13125,7 +14240,9 @@
    "addedBy": "agent-2026-07-29",
    "mesh": [],
    "journalKey": "autism",
-   "_priorityWas": "mechanistic"
+   "_priorityWas": "mechanistic",
+   "firstAuthor": "Cairney BE",
+   "lastAuthor": "Lucas HD"
   },
   {
    "id": "pm-42482104",
@@ -13137,7 +14254,9 @@
    "addedBy": "agent-2026-07-29",
    "mesh": [],
    "journalKey": "mol-autism",
-   "_priorityWas": "mechanistic"
+   "_priorityWas": "mechanistic",
+   "firstAuthor": "Plank IS",
+   "lastAuthor": "Falter-Wagner CM"
   },
   {
    "id": "pm-42478670",
@@ -13163,7 +14282,9 @@
     "Attentional Bias"
    ],
    "journalKey": "autism",
-   "_priorityWas": "mechanistic"
+   "_priorityWas": "mechanistic",
+   "firstAuthor": "Roberts-Davis RJ",
+   "lastAuthor": "Lau-Zhu A"
   },
   {
    "id": "pm-42503460",
@@ -13175,7 +14296,9 @@
    "addedBy": "agent-2026-07-29",
    "mesh": [],
    "journalKey": "autism-res",
-   "_priorityWas": "mechanistic"
+   "_priorityWas": "mechanistic",
+   "firstAuthor": "Jiao J",
+   "lastAuthor": "Tang X"
   },
   {
    "id": "pm-42502111",
@@ -13191,7 +14314,9 @@
    "journalKey": "mol-psych",
    "alsoBranches": [
     "genetics"
-   ]
+   ],
+   "firstAuthor": "Alberca CD",
+   "lastAuthor": "Alisch RS"
   },
   {
    "id": "pm-42500834",
@@ -13203,7 +14328,9 @@
    "addedBy": "agent-2026-07-29",
    "mesh": [],
    "journalKey": "autism-res",
-   "_priorityWas": "mechanistic"
+   "_priorityWas": "mechanistic",
+   "firstAuthor": "Lee SH",
+   "lastAuthor": "Gau SS"
   },
   {
    "id": "pm-42481851",
@@ -13216,7 +14343,9 @@
    "mesh": [],
    "branchKey": "genetics",
    "journalDisplay": "Nature Medicine",
-   "journalKey": "nat-med"
+   "journalKey": "nat-med",
+   "firstAuthor": "Kim-McManus O",
+   "lastAuthor": "Berry-Kravis E"
   },
   {
    "id": "pm-42517456",
@@ -13228,7 +14357,9 @@
    "addedBy": "agent-2026-07-29",
    "mesh": [],
    "journalKey": "autism",
-   "_priorityWas": "mechanistic"
+   "_priorityWas": "mechanistic",
+   "firstAuthor": "Bruno G",
+   "lastAuthor": "Nicholas D"
   },
   {
    "id": "pm-42509644",
@@ -13240,7 +14371,9 @@
    "addedBy": "agent-2026-07-29",
    "mesh": [],
    "journalKey": "autism",
-   "_priorityWas": "mechanistic"
+   "_priorityWas": "mechanistic",
+   "firstAuthor": "Salomone E",
+   "lastAuthor": "Scattoni ML"
   },
   {
    "id": "pm-42499252",
@@ -13251,7 +14384,9 @@
    "priority": "clinical-observation",
    "addedBy": "agent-2026-07-29",
    "mesh": [],
-   "journalKey": "autism-res"
+   "journalKey": "autism-res",
+   "firstAuthor": "Kurz EM",
+   "lastAuthor": "Falck-Ytter T"
   },
   {
    "id": "pm-42494082",
@@ -13262,7 +14397,11 @@
    "priority": "clinical-trial",
    "addedBy": "agent-2026-07-29",
    "mesh": [],
-   "journalKey": "autism"
+   "journalKey": "autism",
+   "_refiledFrom": "behavioral",
+   "branchKey": "intervention",
+   "firstAuthor": "Realpe AX",
+   "lastAuthor": "Strata Collaboration Group"
   },
   {
    "id": "pm-42487298",
@@ -13275,7 +14414,9 @@
    "mesh": [],
    "journalKey": "autism",
    "_refiledFrom": "behavioral",
-   "branchKey": "intervention"
+   "branchKey": "intervention",
+   "firstAuthor": "de Marchena A",
+   "lastAuthor": "Robins DL"
   },
   {
    "id": "pm-42482145",
@@ -13289,7 +14430,9 @@
    "journalKey": "mol-autism",
    "_refiledFrom": "behavioral",
    "branchKey": "intervention",
-   "_priorityWas": "mechanistic"
+   "_priorityWas": "mechanistic",
+   "firstAuthor": "Whaling K",
+   "lastAuthor": "Loftin R"
   },
   {
    "id": "pm-42478914",
@@ -13300,7 +14443,9 @@
    "priority": "review",
    "addedBy": "agent-2026-07-29",
    "mesh": [],
-   "journalKey": "autism"
+   "journalKey": "autism",
+   "firstAuthor": "Johnson C",
+   "lastAuthor": "Iao LS"
   },
   {
    "id": "pm-42490156",
@@ -13311,7 +14456,9 @@
    "url": "https://pubmed.ncbi.nlm.nih.gov/42490156/",
    "priority": "other",
    "addedBy": "agent-2026-07-29",
-   "mesh": []
+   "mesh": [],
+   "firstAuthor": "Burte B",
+   "lastAuthor": "Tringali S"
   },
   {
    "id": "pm-42522081",
@@ -13323,7 +14470,9 @@
    "priority": "unclassified",
    "addedBy": "agent-2026-07-29",
    "mesh": [],
-   "_priorityWas": "mechanistic"
+   "_priorityWas": "mechanistic",
+   "firstAuthor": "Hellsten L",
+   "lastAuthor": "Ahlqvist VH"
   },
   {
    "id": "pm-42521637",
@@ -13334,7 +14483,9 @@
    "url": "https://pubmed.ncbi.nlm.nih.gov/42521637/",
    "priority": "mechanistic",
    "addedBy": "agent-2026-07-29",
-   "mesh": []
+   "mesh": [],
+   "firstAuthor": "Chen LC",
+   "lastAuthor": "Chen MH"
   },
   {
    "id": "pm-42515936",
@@ -13345,7 +14496,9 @@
    "url": "https://pubmed.ncbi.nlm.nih.gov/42515936/",
    "priority": "clinical-observation",
    "addedBy": "agent-2026-07-29",
-   "mesh": []
+   "mesh": [],
+   "firstAuthor": "Pecukonis M",
+   "lastAuthor": "Geffin A"
   },
   {
    "id": "pm-42500919",
@@ -13357,7 +14510,9 @@
    "priority": "unclassified",
    "addedBy": "agent-2026-07-29",
    "mesh": [],
-   "_priorityWas": "mechanistic"
+   "_priorityWas": "mechanistic",
+   "firstAuthor": "Maes P",
+   "lastAuthor": "Lord C"
   },
   {
    "id": "pm-42538576",
@@ -13369,7 +14524,9 @@
    "addedBy": "agent-2026-08-04",
    "mesh": [],
    "branchKey": "neuroscience",
-   "journalDisplay": "Autism Research"
+   "journalKey": "autism-res",
+   "firstAuthor": "Seczon DL",
+   "lastAuthor": "Murray SO"
   },
   {
    "id": "pm-42533130",
@@ -13380,7 +14537,9 @@
    "priority": "unclassified",
    "addedBy": "agent-2026-08-04",
    "mesh": [],
-   "journalKey": "nat-neurosci"
+   "journalKey": "nat-neurosci",
+   "firstAuthor": "Cao T",
+   "lastAuthor": "Fornito A"
   },
   {
    "id": "pm-42527541",
@@ -13392,7 +14551,9 @@
    "addedBy": "agent-2026-08-04",
    "mesh": [],
    "branchKey": "neuroscience",
-   "journalDisplay": "Molecular Psychiatry"
+   "journalKey": "mol-psych",
+   "firstAuthor": "Annamneedi A",
+   "lastAuthor": "Stork O"
   },
   {
    "id": "pm-42526678",
@@ -13406,7 +14567,9 @@
    "journalKey": "biol-psych",
    "alsoBranches": [
     "neuroscience"
-   ]
+   ],
+   "firstAuthor": "González-Peñas J",
+   "lastAuthor": "Janssen J"
   },
   {
    "id": "pm-42039560",
@@ -13425,7 +14588,9 @@
    ],
    "journalDisplay": "bioRxiv : the preprint server for biology",
    "isPreprint": true,
-   "viaReason": "3 tracked authors"
+   "viaReason": "3 tracked authors",
+   "firstAuthor": "Cho SS",
+   "lastAuthor": "Elde NC"
   },
   {
    "id": "pm-40199321",
@@ -13456,7 +14621,9 @@
     "huh-jun-r"
    ],
    "journalKey": "cell",
-   "viaReason": "2 tracked authors"
+   "viaReason": "2 tracked authors",
+   "firstAuthor": "Lee B",
+   "lastAuthor": "Choi GB"
   },
   {
    "id": "pm-41297539",
@@ -13487,7 +14654,9 @@
     "huh-jun-r"
    ],
    "journalKey": "cell",
-   "viaReason": "2 tracked authors"
+   "viaReason": "2 tracked authors",
+   "firstAuthor": "Yang L",
+   "lastAuthor": "Choi GB"
   },
   {
    "id": "pm-41506266",
@@ -13517,7 +14686,9 @@
     "huh-jun-r"
    ],
    "journalKey": "cell",
-   "viaReason": "2 tracked authors"
+   "viaReason": "2 tracked authors",
+   "firstAuthor": "Lu G",
+   "lastAuthor": "Huh JR"
   },
   {
    "id": "pm-37489149",
@@ -13533,7 +14704,9 @@
     "quan-ning"
    ],
    "journalDisplay": "Journal of inflammation research",
-   "viaReason": "neurodevelopmental"
+   "viaReason": "neurodevelopmental",
+   "firstAuthor": "Monet MC",
+   "lastAuthor": "Quan N"
   },
   {
    "id": "pm-40483766",
@@ -13558,7 +14731,9 @@
     "huh-jun-r"
    ],
    "journalDisplay": "Current opinion in immunology",
-   "viaReason": "2 tracked authors"
+   "viaReason": "2 tracked authors",
+   "firstAuthor": "Cho DH",
+   "lastAuthor": "Choi GB"
   },
   {
    "id": "pm-42375470",
@@ -13577,7 +14752,9 @@
    "journalDisplay": "Brain behavior and immunity integrative",
    "alsoBranches": [
     "immunology"
-   ]
+   ],
+   "firstAuthor": "Nemeth D",
+   "lastAuthor": "Quan N"
   },
   {
    "id": "pm-35417672",
@@ -13597,7 +14774,9 @@
     "choi-gloria-b"
    ],
    "viaReason": "interleukin, il-17",
-   "journalKey": "immunity"
+   "journalKey": "immunity",
+   "firstAuthor": "Cho DH",
+   "lastAuthor": "Choi GB"
   },
   {
    "id": "pm-35282272",
@@ -13613,7 +14792,9 @@
     "quan-ning"
    ],
    "viaReason": "interleukin, il-1",
-   "journalDisplay": "Journal of inflammation research"
+   "journalDisplay": "Journal of inflammation research",
+   "firstAuthor": "Nemeth DP",
+   "lastAuthor": "Quan N"
   },
   {
    "id": "pm-37884959",
@@ -13645,7 +14826,9 @@
    "journalKey": "j-neuroinfl",
    "alsoBranches": [
     "immunology"
-   ]
+   ],
+   "firstAuthor": "Vincent JC",
+   "lastAuthor": "Bachstetter AD"
   },
   {
    "id": "pm-39563437",
@@ -13672,7 +14855,9 @@
     "quan-ning"
    ],
    "viaReason": "interleukin, il-1",
-   "journalKey": "j-neuroinfl"
+   "journalKey": "j-neuroinfl",
+   "firstAuthor": "Nemeth DP",
+   "lastAuthor": "Quan N"
   },
   {
    "id": "pm-41271191",
@@ -13699,7 +14884,9 @@
     "quan-ning"
    ],
    "viaReason": "interleukin, il-1β",
-   "journalKey": "bbi"
+   "journalKey": "bbi",
+   "firstAuthor": "Nemeth DP",
+   "lastAuthor": "Quan N"
   },
   {
    "id": "pm-34093593",
@@ -13731,7 +14918,9 @@
    "journalDisplay": "Frontiers in immunology",
    "alsoBranches": [
     "immunology"
-   ]
+   ],
+   "firstAuthor": "Bodnar CN",
+   "lastAuthor": "Bachstetter AD"
   },
   {
    "id": "pm-40073106",
@@ -13766,7 +14955,9 @@
    "journalDisplay": "Journal of immunology (Baltimore, Md. : 1950)",
    "alsoBranches": [
     "immunology"
-   ]
+   ],
+   "firstAuthor": "Galan C",
+   "lastAuthor": "Hang S"
   },
   {
    "id": "pm-39839188",
@@ -13782,7 +14973,9 @@
     "quan-ning"
    ],
    "viaReason": "interleukin, il-1β",
-   "journalDisplay": "Journal of inflammation research"
+   "journalDisplay": "Journal of inflammation research",
+   "firstAuthor": "Schrier MS",
+   "lastAuthor": "Quan N"
   },
   {
    "id": "pm-40703575",
@@ -13798,7 +14991,9 @@
     "quan-ning"
    ],
    "viaReason": "interleukin, il-1",
-   "journalDisplay": "Neurobiology of sleep and circadian rhythms"
+   "journalDisplay": "Neurobiology of sleep and circadian rhythms",
+   "firstAuthor": "Smirnova MI",
+   "lastAuthor": "Quan N"
   },
   {
    "id": "pm-34631418",
@@ -13814,7 +15009,9 @@
     "quan-ning"
    ],
    "viaReason": "interleukin, il-1",
-   "journalDisplay": "Brain plasticity (Amsterdam, Netherlands)"
+   "journalDisplay": "Brain plasticity (Amsterdam, Netherlands)",
+   "firstAuthor": "Nemeth DP",
+   "lastAuthor": "Quan N"
   },
   {
    "id": "pm-36216717",
@@ -13837,7 +15034,9 @@
     "huh-jun-r"
    ],
    "viaReason": "interleukin, il-17a",
-   "journalDisplay": "Trends in immunology"
+   "journalDisplay": "Trends in immunology",
+   "firstAuthor": "Ahmed M",
+   "lastAuthor": "Huh JR"
   },
   {
    "id": "pm-36388133",
@@ -13856,7 +15055,9 @@
    "journalDisplay": "Brain, behavior, & immunity - health",
    "alsoBranches": [
     "immunology"
-   ]
+   ],
+   "firstAuthor": "DiSabato DJ",
+   "lastAuthor": "Godbout JP"
   },
   {
    "id": "pm-36917985",
@@ -13883,7 +15084,9 @@
     "huh-jun-r"
    ],
    "viaReason": "il-17, th17",
-   "journalKey": "immunity"
+   "journalKey": "immunity",
+   "firstAuthor": "Duan J",
+   "lastAuthor": "Blumberg RS"
   },
   {
    "id": "pm-35264870",
@@ -13899,7 +15102,9 @@
     "quan-ning"
    ],
    "viaReason": "il-6",
-   "journalDisplay": "Journal of inflammation research"
+   "journalDisplay": "Journal of inflammation research",
+   "firstAuthor": "Jaggers RM",
+   "lastAuthor": "Bailey MT"
   },
   {
    "id": "pm-41780806",
@@ -13933,7 +15138,9 @@
     "quan-ning"
    ],
    "viaReason": "interleukin",
-   "journalKey": "bbi"
+   "journalKey": "bbi",
+   "firstAuthor": "Davis AC",
+   "lastAuthor": "Godbout JP"
   },
   {
    "id": "pm-38459193",
@@ -13968,7 +15175,265 @@
    "journalKey": "mol-psych",
    "alsoBranches": [
     "cytokines"
-   ]
+   ],
+   "firstAuthor": "Goodman EJ",
+   "lastAuthor": "Godbout JP"
+  },
+  {
+   "id": "pm-42532444",
+   "title": "EPA restores neuroimmune homeostasis in Schizophrenia: evidence for the involvement of autophagy.",
+   "date": "2026-07-30",
+   "authors": "Yan L, Wang X, Zhang Y, et al.",
+   "url": "https://pubmed.ncbi.nlm.nih.gov/42532444/",
+   "priority": "mechanistic",
+   "addedBy": "agent-2026-08-05",
+   "mesh": [],
+   "journalKey": "bbi",
+   "firstAuthor": "Yan L",
+   "lastAuthor": "Song C"
+  },
+  {
+   "id": "pm-41275908",
+   "title": "Cross-Setting Replication of the Associations Between Maternal Health and Autism.",
+   "date": "2025-11-21",
+   "authors": "Khachadourian V, Anderson M, Arildskov ES, et al.",
+   "url": "https://pubmed.ncbi.nlm.nih.gov/41275908/",
+   "priority": "clinical-observation",
+   "addedBy": "agent-2026-08-05",
+   "mesh": [
+    "Humans",
+    "Female",
+    "Denmark",
+    "California",
+    "Pregnancy",
+    "Maternal Health",
+    "Autism Spectrum Disorder",
+    "Registries",
+    "Child, Preschool",
+    "Male",
+    "Child",
+    "Adult",
+    "Comorbidity",
+    "Prenatal Exposure Delayed Effects",
+    "Cohort Studies"
+   ],
+   "journalKey": "jaacap",
+   "firstAuthor": "Khachadourian V",
+   "lastAuthor": "Janecka M"
+  },
+  {
+   "id": "pm-42547992",
+   "title": "Navigating Mixed-Neurotype Dialogue: Environmental and Affective Influences on Autistic Speakers.",
+   "date": "2026-08-03",
+   "authors": "Miller ZA, Conner CM, Chang JC, et al.",
+   "url": "https://pubmed.ncbi.nlm.nih.gov/42547992/",
+   "priority": "unclassified",
+   "addedBy": "agent-2026-08-05",
+   "mesh": [],
+   "branchKey": "behavioral",
+   "journalKey": "autism",
+   "firstAuthor": "Miller ZA",
+   "lastAuthor": "Mazefsky CA"
+  },
+  {
+   "id": "pm-42544756",
+   "title": "Intact Visual Correlation Detection in Autistic Adults.",
+   "date": "2026-08-03",
+   "authors": "Vogelsang L, Vogelsang M, Li CE, et al.",
+   "url": "https://pubmed.ncbi.nlm.nih.gov/42544756/",
+   "priority": "mechanistic",
+   "addedBy": "agent-2026-08-05",
+   "mesh": [],
+   "branchKey": "behavioral",
+   "journalKey": "autism-res",
+   "firstAuthor": "Vogelsang L",
+   "lastAuthor": "Sinha P"
+  },
+  {
+   "id": "pm-42544723",
+   "title": "Heterogeneity of Response to Early Start Denver Model: Identifying Developmental Trajectories and Predictors of Cognitive Outcomes.",
+   "date": "2026-08-03",
+   "authors": "Ilaridou I, Kojovic N, Chataing T, et al.",
+   "url": "https://pubmed.ncbi.nlm.nih.gov/42544723/",
+   "priority": "clinical-observation",
+   "addedBy": "agent-2026-08-05",
+   "mesh": [],
+   "branchKey": "intervention",
+   "journalKey": "autism-res",
+   "firstAuthor": "Ilaridou I",
+   "lastAuthor": "Schaer M"
+  },
+  {
+   "id": "pm-42538774",
+   "title": "Sense of Coherence and the Relation to Autistic Traits in Autistic Adults.",
+   "date": "2026-07-31",
+   "authors": "Westerberg B, Bejerot S, Langius-Eklöf A, et al.",
+   "url": "https://pubmed.ncbi.nlm.nih.gov/42538774/",
+   "priority": "clinical-observation",
+   "addedBy": "agent-2026-08-05",
+   "mesh": [],
+   "branchKey": "behavioral",
+   "journalKey": "autism",
+   "firstAuthor": "Westerberg B",
+   "lastAuthor": "Holländare F"
+  },
+  {
+   "id": "pm-42527388",
+   "title": "Adaptive Functioning, Sensory Processing, and Behavioral Problems in Autistic Children: The Moderating Role of Gender.",
+   "date": "2026-07-29",
+   "authors": "Shulman C, Bitton D, Nir Z",
+   "url": "https://pubmed.ncbi.nlm.nih.gov/42527388/",
+   "priority": "unclassified",
+   "addedBy": "agent-2026-08-05",
+   "mesh": [],
+   "branchKey": "behavioral",
+   "journalKey": "autism-res",
+   "firstAuthor": "Shulman C",
+   "lastAuthor": "Nir Z"
+  },
+  {
+   "id": "pm-41344423",
+   "title": "Developmental Trajectories of Autistic Social Traits in Youth Born Extremely Preterm.",
+   "date": "2025-12-02",
+   "authors": "McFayden TC, Harrop C, Roell KR, et al.",
+   "url": "https://pubmed.ncbi.nlm.nih.gov/41344423/",
+   "priority": "clinical-observation",
+   "addedBy": "agent-2026-08-05",
+   "mesh": [
+    "Humans",
+    "Female",
+    "Adolescent",
+    "Male",
+    "Infant, Extremely Premature",
+    "Child",
+    "Quality of Life",
+    "Infant, Newborn",
+    "Adolescent Development",
+    "Autistic Disorder",
+    "Social Behavior",
+    "Sex Factors"
+   ],
+   "journalKey": "jaacap",
+   "alsoBranches": [
+    "intervention"
+   ],
+   "firstAuthor": "McFayden TC",
+   "lastAuthor": "O'Shea TM"
+  },
+  {
+   "id": "pm-42546692",
+   "title": "Cell villages and Dirichlet modeling map human cell fitness genetics.",
+   "date": "2026-08-03",
+   "authors": "Hanson C, Derebenskiy T, Rodriguez Vega A, et al.",
+   "url": "https://pubmed.ncbi.nlm.nih.gov/42546692/",
+   "priority": "mechanistic",
+   "addedBy": "agent-2026-08-05",
+   "mesh": [],
+   "journalKey": "ajhg",
+   "firstAuthor": "Hanson C",
+   "lastAuthor": "Wells MF"
+  },
+  {
+   "id": "pm-42527542",
+   "title": "Fever-like temperatures improve cognitive deficits in the Scn2a autism mouse model via increases in potassium channel activity.",
+   "date": "2026-07-29",
+   "authors": "Shen Y, Awasthi Y, Krishnan BM, et al.",
+   "url": "https://pubmed.ncbi.nlm.nih.gov/42527542/",
+   "priority": "mechanistic",
+   "addedBy": "agent-2026-08-05",
+   "mesh": [],
+   "branchKey": "genetics",
+   "journalKey": "mol-psych",
+   "firstAuthor": "Shen Y",
+   "lastAuthor": "Antoine MW"
+  },
+  {
+   "id": "pm-42552785",
+   "title": "Robots for Autism Therapy.",
+   "date": "2026-08-04",
+   "authors": "Ramnauth R, Shic F, Scassellati B",
+   "url": "https://pubmed.ncbi.nlm.nih.gov/42552785/",
+   "priority": "review",
+   "addedBy": "agent-2026-08-05",
+   "mesh": [],
+   "branchKey": "intervention",
+   "journalKey": "autism-res",
+   "firstAuthor": "Ramnauth R",
+   "lastAuthor": "Scassellati B"
+  },
+  {
+   "id": "pm-42533552",
+   "title": "The Effect of Online Parent Training With and Without Coaching Support on the Well-Being of Families of Children With Neurodisabilities: A Randomized Controlled Trial.",
+   "date": "2026-07-30",
+   "authors": "McCrossin J, Filali-Mouhim A, Ungar M, et al.",
+   "url": "https://pubmed.ncbi.nlm.nih.gov/42533552/",
+   "priority": "clinical-trial",
+   "addedBy": "agent-2026-08-05",
+   "mesh": [],
+   "branchKey": "intervention",
+   "journalKey": "autism-res",
+   "firstAuthor": "McCrossin J",
+   "lastAuthor": "Lach LM"
+  },
+  {
+   "id": "pm-42533285",
+   "title": "A Systematic Review and Quality Appraisal of AI-Augmented Intervention Studies for Autistic Individuals.",
+   "date": "2026-07-30",
+   "authors": "Akemoğlu Y, Roberts EB, Xiong J",
+   "url": "https://pubmed.ncbi.nlm.nih.gov/42533285/",
+   "priority": "review",
+   "addedBy": "agent-2026-08-05",
+   "mesh": [],
+   "branchKey": "intervention",
+   "journalKey": "autism",
+   "firstAuthor": "Akemoğlu Y",
+   "lastAuthor": "Xiong J"
+  },
+  {
+   "id": "pm-41177355",
+   "title": "Editorial: Persistent Challenges in Addressing the Mental Health Needs of Autistic People and a Suggested Way Forward.",
+   "date": "2025-10-31",
+   "authors": "Witwer AN, Wallace JN",
+   "url": "https://pubmed.ncbi.nlm.nih.gov/41177355/",
+   "priority": "unclassified",
+   "addedBy": "agent-2026-08-05",
+   "mesh": [
+    "Humans",
+    "Autistic Disorder",
+    "Health Services Needs and Demand",
+    "Mental Health Services",
+    "Health Services Accessibility",
+    "Child"
+   ],
+   "journalKey": "jaacap",
+   "firstAuthor": "Witwer AN",
+   "lastAuthor": "Wallace JN"
+  },
+  {
+   "id": "pm-40750084",
+   "title": "Efficacy of the Emotion Awareness and Skills Enhancement (EASE) Program in Autism: A Randomized Controlled Trial.",
+   "date": "2025-07-31",
+   "authors": "White SW, Conner CM, Beck K, et al.",
+   "url": "https://pubmed.ncbi.nlm.nih.gov/40750084/",
+   "priority": "clinical-trial",
+   "addedBy": "agent-2026-08-05",
+   "mesh": [
+    "Humans",
+    "Female",
+    "Adolescent",
+    "Male",
+    "Young Adult",
+    "Emotional Regulation",
+    "Mindfulness",
+    "Autistic Disorder",
+    "Affective Symptoms",
+    "Treatment Outcome",
+    "Adult",
+    "Child"
+   ],
+   "journalKey": "jaacap",
+   "firstAuthor": "White SW",
+   "lastAuthor": "Mazefsky CA"
   }
  ]
 }

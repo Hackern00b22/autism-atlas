@@ -1441,6 +1441,55 @@
     padding: 2px 6px; border-radius: 2px;
     font-size: 9px; letter-spacing: 0.12em;
   }
+  /* ---- Export ---- */
+  .exp-open {
+    background: none; border: 1px solid rgba(120,140,200,0.4);
+    color: var(--ink-1); font-family: 'JetBrains Mono', monospace;
+    font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase;
+    padding: 7px 12px; border-radius: 3px; cursor: pointer;
+    align-self: flex-start; margin-right: 10px; white-space: nowrap;
+  }
+  .exp-open:hover { color: var(--ink-0); border-color: var(--neon-immuno); }
+  .exp-controls {
+    display: flex; flex-wrap: wrap; align-items: center; gap: 14px;
+    padding: 14px 26px; border-bottom: 1px solid rgba(120,140,200,0.15);
+  }
+  .exp-field { display: flex; align-items: center; gap: 8px;
+    font-family: 'JetBrains Mono', monospace; font-size: 10px;
+    letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink-2); }
+  .exp-field select {
+    background: rgba(10,13,20,0.85); color: var(--ink-0);
+    border: 1px solid rgba(120,140,200,0.35); border-radius: 3px;
+    padding: 6px 8px; font-family: inherit; font-size: 11px;
+  }
+  .exp-summary { font-family: 'JetBrains Mono', monospace; font-size: 11px;
+    color: var(--ink-1); font-variant-numeric: tabular-nums; }
+  .exp-actions { display: flex; gap: 8px; margin-left: auto; }
+  .exp-btn {
+    background: rgba(0,240,255,0.08); border: 1px solid var(--neon-immuno);
+    color: var(--neon-immuno); font-family: 'JetBrains Mono', monospace;
+    font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase;
+    padding: 8px 14px; border-radius: 3px; cursor: pointer;
+  }
+  .exp-btn:hover { background: var(--neon-immuno); color: #05060a; }
+  .exp-hint { padding: 0 26px 12px; font-size: 11px; color: var(--ink-2); }
+  .exp-tablewrap { overflow-x: auto; }
+  .exp-table { width: 100%; border-collapse: collapse; font-size: 12px; }
+  .exp-table th {
+    text-align: left; font-family: 'JetBrains Mono', monospace;
+    font-size: 9.5px; letter-spacing: 0.16em; text-transform: uppercase;
+    color: var(--ink-2); font-weight: 400; padding: 8px 10px;
+    border-bottom: 1px solid rgba(120,140,200,0.3); white-space: nowrap;
+    position: sticky; top: 0; background: var(--bg-1, #0a0d14);
+  }
+  .exp-table td {
+    padding: 8px 10px; border-bottom: 1px solid rgba(120,140,200,0.1);
+    color: var(--ink-1); vertical-align: top;
+  }
+  .exp-table td.num { font-variant-numeric: tabular-nums; white-space: nowrap; }
+  .exp-table td.ttl { color: var(--ink-0); min-width: 22em; }
+  .exp-table tr:hover td { background: rgba(120,140,200,0.06); }
+
   .article-meta .new-badge {
     background: rgba(0, 240, 255, 0.15);
     color: var(--neon-immuno);
@@ -1678,6 +1727,39 @@
   </div>
 </div>
 
+<!-- EXPORT MODAL -->
+<div class="modal-backdrop" id="exp-backdrop">
+  <div class="def-modal">
+    <div class="modal-header">
+      <div class="modal-title-block">
+        <div class="modal-eyebrow">// EXPORT</div>
+        <div class="modal-title">Export runs as a table</div>
+        <div class="modal-sub">Newest runs first. Seed and manually-added entries are included only if you reach back far enough to cover them.</div>
+      </div>
+      <button class="modal-close" id="exp-close" aria-label="Close">×</button>
+    </div>
+
+    <div class="exp-controls">
+      <label class="exp-field">
+        <span>How many runs</span>
+        <select id="exp-count"></select>
+      </label>
+      <span class="exp-summary" id="exp-summary">&mdash;</span>
+      <span class="exp-actions">
+        <button class="exp-btn" id="exp-csv">CSV</button>
+        <button class="exp-btn" id="exp-xls">Excel</button>
+        <button class="exp-btn" id="exp-pdf">PDF</button>
+        <button class="exp-btn" id="exp-print">Print</button>
+      </span>
+    </div>
+    <div class="exp-hint" id="exp-hint">PDF and Print both open your browser&#8217;s print dialog &mdash; choose &#8220;Save as PDF&#8221; there for a file.</div>
+
+    <div class="def-body">
+      <div class="exp-tablewrap"><table class="exp-table" id="exp-table"></table></div>
+    </div>
+  </div>
+</div>
+
 <!-- WHAT'S NEW MODAL -->
 <div class="modal-backdrop" id="new-backdrop">
   <div class="new-modal">
@@ -1687,6 +1769,7 @@
         <div class="modal-title">What's New</div>
         <div class="modal-sub" id="new-sub">Articles grouped by when they were added — most recent runs first.</div>
       </div>
+      <button class="exp-open" id="exp-open" title="Export these runs as a table">&#8595; Export</button>
       <button class="modal-close" id="new-close" aria-label="Close">×</button>
     </div>
     <div class="new-body" id="new-body">
@@ -2719,13 +2802,27 @@ function labCardHtml(article, opts = {}) {
 
   // Off-catalog papers have no indexed journal to lock to, so you only choose
   // the topic node — the real journal name is still preserved for display.
+  // The agent already worked out where this belongs; preselect it rather than
+  // making you re-derive it from the abstract.
+  const suggested = article.suggested_branch || '';
   const branchOnlyOptions = Object.entries(BRANCHES).map(([bk, b]) =>
-    `<option value="${bk}">${escapeHtml(b.label)}</option>`
+    `<option value="${bk}"${bk === suggested ? ' selected' : ''}>${escapeHtml(b.label)}</option>`
   ).join('');
   const srcName = article.journal_full || article.journal_abbrev || 'journal not indexed';
 
+  // A generalist journal is in the catalogue but publishes across every
+  // subtopic, so its masthead must not decide the node — same rule the
+  // automatic path follows. Keep its key (that is what carries the impact
+  // factor) but let the topic choose the branch.
+  const lockedIsGeneralist = !!(lockedJournal && lockedJournal.generalist);
+
   let addControls = '';
-  if (!inStore && lockedJournal) {
+  if (!inStore && lockedJournal && lockedIsGeneralist) {
+    addControls = `
+      <span class="lab-locked-journal" title="Catalogued but topically broad — the node comes from the paper, not the journal">🔒 ${escapeHtml(lockedJournal.name)} · file under</span>
+      <select class="lab-branch-select" title="Topic node to file this paper under">${branchOnlyOptions}</select>
+      <button class="lab-add-btn" data-journal-key="${escapeHtml(lockedJK)}" data-pick-branch="1">+ Add to store</button>`;
+  } else if (!inStore && lockedJournal) {
     const bLabel = (BRANCHES[lockedJournal.branch] || {}).label || lockedJournal.branch;
     addControls = `
       <span class="lab-locked-journal" title="Filed under this article's verified journal">🔒 ${escapeHtml(lockedJournal.name)} → ${escapeHtml(bLabel)}</span>
@@ -2753,6 +2850,21 @@ function labCardHtml(article, opts = {}) {
         <a class="lab-open-link" href="${article.url}" target="_blank" rel="noopener">↗ PubMed</a>
       </div>
     </div>`;
+}
+
+// Mark every card for this article as saved, not just the one clicked — the
+// same paper can appear under more than one node's results.
+function markSaved(articleId, clickedCard, label) {
+  const cards = articleId
+    ? [...document.querySelectorAll(`.lab-card[data-article-id="${CSS.escape(articleId)}"]`)]
+    : [clickedCard];
+  for (const c of (cards.length ? cards : [clickedCard])) {
+    c.classList.add('in-store');
+    const b = c.querySelector('.lab-add-btn');
+    if (b) { b.textContent = label; b.disabled = true; }
+    const sel = c.querySelector('.lab-branch-select');
+    if (sel) sel.disabled = true;
+  }
 }
 
 function wireUpAddButtons(container) {
@@ -2783,10 +2895,11 @@ function wireUpAddButtons(container) {
       // papers file under that journalKey; off-catalog papers keep their journal
       // name and file under the topic node you picked.
       const lockedJK = addBtn.dataset.journalKey;
-      if (lockedJK) {
-        payload.journalKey = lockedJK;
-      } else {
-        const sel = card.querySelector('.lab-branch-select');
+      const sel = card.querySelector('.lab-branch-select');
+      if (lockedJK) payload.journalKey = lockedJK;
+      // Generalist journals send both: journalKey for the name and impact
+      // factor, branchKey for the node.
+      if (!lockedJK || addBtn.dataset.pickBranch) {
         payload.branchKey = sel ? sel.value : null;
       }
       addBtn.disabled = true;
@@ -2799,13 +2912,11 @@ function wireUpAddButtons(container) {
         });
         const data = await r.json();
         if (data.ok) {
-          addBtn.textContent = '✓ Added';
-          card.classList.add('in-store');
+          markSaved(card.dataset.articleId, card, '✓ Added');
           // Refresh the in-memory store + rebuild network counts
           await reloadStoreSoft();
         } else if (data.duplicate) {
-          addBtn.textContent = '↺ Already in store';
-          card.classList.add('in-store');
+          markSaved(card.dataset.articleId, card, '↺ Already in store');
         } else {
           addBtn.textContent = '✗ ' + (data.error || 'Failed');
           addBtn.disabled = false;
@@ -2877,8 +2988,16 @@ document.getElementById('lab-run-agent').addEventListener('click', async () => {
       ? 'No new articles found across all journals for the last ' + lookback + ' days.'
       : '<strong style="color:var(--ink-0)">' + totalNew + '</strong> new article' + (totalNew === 1 ? '' : 's') + ' found across ' + Object.keys(results).length + ' nodes. Pick which to add.',
       totalNew === 0 ? '' : 'success');
-    // Render each group
+    // Render each group.
+    // `rendered` is appended to by the same expression that emits a card, so
+    // card N always corresponds to rendered[N]. The previous version walked
+    // every group with a flat counter afterwards, while the render loop skipped
+    // errored and empty groups — so one errored group that also had articles
+    // (an efetch failure mid-run does exactly that) shifted every later card's
+    // data by one, and "Add to store" saved a different paper than the one on
+    // screen. Alignment is now structural rather than something to keep in sync.
     let html = '';
+    const rendered = [];
     for (const [journalKey, group] of Object.entries(results)) {
       if (group.error) {
         html += `<div class="lab-result-group">
@@ -2903,19 +3022,16 @@ document.getElementById('lab-run-agent').addEventListener('click', async () => {
           <span class="lab-branch">${escapeHtml((branch && branch.label) || branchKey || '')}</span>
           <span class="lab-count">${group.articles.length} NEW</span>
         </div>
-        ${group.articles.map(a => labCardHtml(a, { defaultJournalKey: a.journalKey || null })).join('')}
+        ${group.articles.map(a => { rendered.push(a); return labCardHtml(a, { defaultJournalKey: a.journalKey || null }); }).join('')}
       </div>`;
     }
     resultsEl.innerHTML = html || '<div class="lab-empty">// NO NEW RESULTS</div>';
-    // Attach article data to each card + wire add buttons
-    let idx = 0;
-    for (const group of Object.values(results)) {
-      for (const a of (group.articles || [])) {
-        const card = resultsEl.querySelectorAll('.lab-card')[idx];
-        if (card) card._articleData = a;
-        idx++;
-      }
-    }
+    resultsEl.querySelectorAll('.lab-card').forEach((card, i) => {
+      card._articleData = rendered[i];
+      // A paper surfaced by two node queries renders under both groups; the id
+      // lets a save mark every copy, not just the one clicked.
+      if (rendered[i]) card.dataset.articleId = rendered[i].id || '';
+    });
     wireUpAddButtons(resultsEl);
   } catch (e) {
     labStatus(status, 'Error: ' + escapeHtml(e.message) + '<br><span style="font-size:10px;">Make sure you launched the site with <code style="color:var(--neon-cyto);">python3 serve.py</code> rather than opening the HTML directly.</span>', 'error');
@@ -3377,6 +3493,162 @@ function resetAllDismissals() {
   renderWhatsNew();
   updateNewIndicator();
 }
+
+// ============ EXPORT ============
+// Runs, newest first, as a flat table. Six columns because that is what a
+// reader needs to find the paper again: when it came out, who led it, who ran
+// the lab, where it appeared, its PubMed id, and what it is called.
+const EXP_COLUMNS = [
+  ['date',        'Published',    a => a.date || ''],
+  ['firstAuthor', 'First author', a => a.firstAuthor || ''],
+  ['lastAuthor',  'Last author',  a => a.lastAuthor || ''],
+  ['journal',     'Journal',      a => a.journalName || ''],
+  ['pmid',        'PMID',         a => pmidOf(a)],
+  ['title',       'Title',        a => a.title || ''],
+];
+
+function pmidOf(a) {
+  return ((a.url || '').match(/pubmed\.ncbi\.nlm\.nih\.gov\/(\d+)/) || [])[1] || '';
+}
+
+function expRuns() {
+  // Same grouping the What's New view uses, so "3 runs" means the same thing
+  // in both places.
+  return buildRunGroups();
+}
+
+function expSelected() {
+  const runs = expRuns();
+  const n = parseInt(document.getElementById('exp-count').value, 10) || runs.length;
+  const chosen = runs.slice(0, n);
+  const rows = chosen.flatMap(g => g.articles)
+    .slice()
+    .sort((a, b) => (b.date || '').localeCompare(a.date || ''));
+  return { chosen, rows };
+}
+
+function expLabel(key) {
+  if (key === 'seed') return 'Initial library';
+  if (key === 'foundational') return 'Foundational references';
+  if (key.startsWith('manual-')) return 'Added by hand ' + key.slice(7);
+  if (key.startsWith('authors-')) return 'Tracked authors ' + key.slice(8);
+  return key.replace('agent-', 'Weekly run ');
+}
+
+function renderExport() {
+  const { chosen, rows } = expSelected();
+  document.getElementById('exp-summary').textContent =
+    `${chosen.length} run${chosen.length === 1 ? '' : 's'} · ${rows.length} article${rows.length === 1 ? '' : 's'}`;
+  const head = '<thead><tr>' + EXP_COLUMNS.map(c => `<th>${escapeHtml(c[1])}</th>`).join('') + '</tr></thead>';
+  const body = '<tbody>' + rows.map(a => '<tr>' + EXP_COLUMNS.map(([k, , get]) => {
+    const cls = (k === 'date' || k === 'pmid') ? ' class="num"' : (k === 'title' ? ' class="ttl"' : '');
+    return `<td${cls}>${escapeHtml(get(a))}</td>`;
+  }).join('') + '</tr>').join('') + '</tbody>';
+  document.getElementById('exp-table').innerHTML = head + body;
+}
+
+function expFilename(ext) {
+  const { chosen } = expSelected();
+  return `atlas-${chosen.length}-runs-${new Date().toISOString().slice(0, 10)}.${ext}`;
+}
+
+function downloadBlob(blob, filename) {
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url; a.download = filename;
+  document.body.appendChild(a); a.click(); a.remove();
+  setTimeout(() => URL.revokeObjectURL(url), 2000);
+}
+
+function exportCSV() {
+  const { rows } = expSelected();
+  const esc = v => {
+    const t = String(v == null ? '' : v);
+    return /[",\n\r]/.test(t) ? '"' + t.replace(/"/g, '""') + '"' : t;
+  };
+  const lines = [EXP_COLUMNS.map(c => esc(c[1])).join(',')];
+  for (const a of rows) lines.push(EXP_COLUMNS.map(([, , get]) => esc(get(a))).join(','));
+  // The BOM is what makes Excel read this as UTF-8 rather than mangling
+  // accented author names.
+  downloadBlob(new Blob(['\uFEFF' + lines.join('\r\n')],
+    { type: 'text/csv;charset=utf-8' }), expFilename('csv'));
+}
+
+function exportExcel() {
+  // An HTML table served as .xls: Excel opens it natively with the columns
+  // intact, and it needs no library — which matters, since this page loads none.
+  const { chosen, rows } = expSelected();
+  const head = EXP_COLUMNS.map(c => `<th>${escapeHtml(c[1])}</th>`).join('');
+  const body = rows.map(a => '<tr>' + EXP_COLUMNS.map(([k, , get]) =>
+    `<td${k === 'pmid' || k === 'date' ? ' style="mso-number-format:\\@"' : ''}>${escapeHtml(get(a))}</td>`
+  ).join('') + '</tr>').join('');
+  const html = `<html xmlns:x="urn:schemas-microsoft-com:office:excel"><head><meta charset="utf-8">
+    <style>th{background:#e8eef7;text-align:left;font-weight:bold}td,th{border:1px solid #ccd}</style>
+    </head><body><table>${'<thead><tr>' + head + '</tr></thead>'}<tbody>${body}</tbody></table>
+    <p>Autism Research Network Atlas — ${chosen.length} run(s), ${rows.length} articles, exported ${new Date().toISOString().slice(0, 10)}</p>
+    </body></html>`;
+  downloadBlob(new Blob([html], { type: 'application/vnd.ms-excel' }), expFilename('xls'));
+}
+
+function exportPrint() {
+  const { chosen, rows } = expSelected();
+  const head = EXP_COLUMNS.map(c => `<th>${escapeHtml(c[1])}</th>`).join('');
+  const body = rows.map(a => '<tr>' + EXP_COLUMNS.map(([k, , get]) =>
+    `<td class="${k}">${escapeHtml(get(a))}</td>`).join('') + '</tr>').join('');
+  const w = window.open('', '_blank');
+  if (!w) {
+    document.getElementById('exp-hint').textContent =
+      'Your browser blocked the print window — allow pop-ups for this page and try again.';
+    return;
+  }
+  w.document.write(`<!doctype html><html><head><meta charset="utf-8">
+    <title>Atlas export — ${chosen.length} run(s)</title><style>
+      @page { size: landscape; margin: 12mm; }
+      body { font: 10pt/1.4 -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+             color: #14202c; margin: 0; }
+      h1 { font-size: 15pt; margin: 0 0 2pt; }
+      .sub { font-size: 9pt; color: #5c6b7c; margin: 0 0 14pt; }
+      table { width: 100%; border-collapse: collapse; }
+      th { text-align: left; font-size: 8pt; letter-spacing: .08em; text-transform: uppercase;
+           color: #4a5768; border-bottom: 1.2pt solid #4a5768; padding: 5pt 6pt; }
+      td { padding: 5pt 6pt; border-bottom: .5pt solid #d5dde5; vertical-align: top; }
+      td.date, td.pmid { white-space: nowrap; font-variant-numeric: tabular-nums; }
+      td.title { width: 42%; }
+      tr { break-inside: avoid; }
+      thead { display: table-header-group; }
+    </style></head><body>
+    <h1>Autism Research Network Atlas</h1>
+    <p class="sub">${chosen.length} run(s) &middot; ${rows.length} articles &middot; exported ${new Date().toISOString().slice(0, 10)}</p>
+    <table><thead><tr>${head}</tr></thead><tbody>${body}</tbody></table>
+    </body></html>`);
+  w.document.close();
+  w.focus();
+  setTimeout(() => w.print(), 350);
+}
+
+function openExport() {
+  const runs = expRuns();
+  const sel = document.getElementById('exp-count');
+  const choices = [1, 2, 3, 5, 10, 20].filter(n => n < runs.length);
+  sel.innerHTML = choices.map(n =>
+      `<option value="${n}">${n} most recent — ${expLabel(runs[n - 1].key)} and newer</option>`).join('')
+    + `<option value="${runs.length}">All ${runs.length} runs</option>`;
+  sel.value = String(choices.includes(3) ? 3 : runs.length);
+  renderExport();
+  document.getElementById('exp-backdrop').classList.add('open');
+}
+
+document.getElementById('exp-open').addEventListener('click', openExport);
+document.getElementById('exp-close').addEventListener('click',
+  () => document.getElementById('exp-backdrop').classList.remove('open'));
+document.getElementById('exp-backdrop').addEventListener('click', e => {
+  if (e.target.id === 'exp-backdrop') e.currentTarget.classList.remove('open');
+});
+document.getElementById('exp-count').addEventListener('change', renderExport);
+document.getElementById('exp-csv').addEventListener('click', exportCSV);
+document.getElementById('exp-xls').addEventListener('click', exportExcel);
+document.getElementById('exp-pdf').addEventListener('click', exportPrint);
+document.getElementById('exp-print').addEventListener('click', exportPrint);
 
 function buildRunGroups() {
   // Group articles by addedBy. "seed" goes last; agent runs sorted newest first.
