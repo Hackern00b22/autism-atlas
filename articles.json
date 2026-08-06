@@ -77,7 +77,8 @@
    "branch": "intervention",
    "pubmedAbbrev": "N Engl J Med",
    "tier": "general-medical",
-   "generalist": true
+   "generalist": true,
+   "hIndex": 1507
   },
   "lancet": {
    "name": "The Lancet",
@@ -85,7 +86,8 @@
    "branch": "intervention",
    "pubmedAbbrev": "Lancet",
    "tier": "general-medical",
-   "generalist": true
+   "generalist": true,
+   "hIndex": 1207
   },
   "jama": {
    "name": "JAMA",
@@ -93,7 +95,8 @@
    "branch": "intervention",
    "pubmedAbbrev": "JAMA",
    "tier": "general-medical",
-   "generalist": true
+   "generalist": true,
+   "hIndex": 1011
   },
   "nat-med": {
    "name": "Nature Medicine",
@@ -101,7 +104,8 @@
    "branch": "intervention",
    "pubmedAbbrev": "Nat Med",
    "tier": "general-medical",
-   "generalist": true
+   "generalist": true,
+   "hIndex": 766
   },
   "nature": {
    "name": "Nature",
@@ -109,7 +113,8 @@
    "branch": "genetics",
    "pubmedAbbrev": "Nature",
    "tier": "general-science",
-   "generalist": true
+   "generalist": true,
+   "hIndex": 1849
   },
   "cell": {
    "name": "Cell",
@@ -117,7 +122,8 @@
    "branch": "genetics",
    "pubmedAbbrev": "Cell",
    "tier": "general-science",
-   "generalist": true
+   "generalist": true,
+   "hIndex": 1230
   },
   "science": {
    "name": "Science",
@@ -125,49 +131,56 @@
    "branch": "genetics",
    "pubmedAbbrev": "Science",
    "tier": "general-science",
-   "generalist": true
+   "generalist": true,
+   "hIndex": 1758
   },
   "lancet-neurol": {
    "name": "Lancet Neurology",
    "if": 46.5,
    "branch": "neuroscience",
    "pubmedAbbrev": "Lancet Neurol",
-   "tier": "specialty"
+   "tier": "specialty",
+   "hIndex": 456
   },
   "lancet-psych": {
    "name": "Lancet Psychiatry",
    "if": 30.8,
    "branch": "intervention",
    "pubmedAbbrev": "Lancet Psychiatry",
-   "tier": "specialty"
+   "tier": "specialty",
+   "hIndex": 216
   },
   "nat-genet": {
    "name": "Nature Genetics",
    "if": 29.0,
    "branch": "genetics",
    "pubmedAbbrev": "Nat Genet",
-   "tier": "specialty"
+   "tier": "specialty",
+   "hIndex": 788
   },
   "mmwr-ss": {
    "name": "MMWR Surveillance Summaries",
    "if": 28.3,
    "branch": "intervention",
    "pubmedAbbrev": "MMWR Surveill Summ",
-   "tier": "surveillance"
+   "tier": "surveillance",
+   "hIndex": 71
   },
   "nat-immunol": {
    "name": "Nature Immunology",
    "if": 27.7,
    "branch": "cytokines",
    "pubmedAbbrev": "Nat Immunol",
-   "tier": "specialty"
+   "tier": "specialty",
+   "hIndex": 525
   },
   "immunity": {
    "name": "Immunity",
    "if": 25.5,
    "branch": "cytokines",
    "pubmedAbbrev": "Immunity",
-   "tier": "specialty"
+   "tier": "specialty",
+   "hIndex": 567
   },
   "jama-psych": {
    "name": "JAMA Psychiatry",
@@ -175,14 +188,16 @@
    "branch": "intervention",
    "pubmedAbbrev": "JAMA Psychiatry",
    "tier": "field-specific",
-   "generalist": true
+   "generalist": true,
+   "hIndex": 255
   },
   "nat-neurosci": {
    "name": "Nature Neuroscience",
    "if": 21.2,
    "branch": "neuroscience",
    "pubmedAbbrev": "Nat Neurosci",
-   "tier": "specialty"
+   "tier": "specialty",
+   "hIndex": 605
   },
   "ajp": {
    "name": "American Journal of Psychiatry",
@@ -190,14 +205,16 @@
    "branch": "intervention",
    "pubmedAbbrev": "Am J Psychiatry",
    "tier": "field-specific",
-   "generalist": true
+   "generalist": true,
+   "hIndex": 554
   },
   "neuron": {
    "name": "Neuron",
    "if": 14.7,
    "branch": "neuroscience",
    "pubmedAbbrev": "Neuron",
-   "tier": "specialty"
+   "tier": "specialty",
+   "hIndex": 700
   },
   "mol-psych": {
    "name": "Molecular Psychiatry",
@@ -205,42 +222,48 @@
    "branch": "cytokines",
    "pubmedAbbrev": "Mol Psychiatry",
    "tier": "specialty",
-   "generalist": true
+   "generalist": true,
+   "hIndex": 320
   },
   "jaacap": {
    "name": "Journal of the American Academy of Child & Adolescent Psychiatry",
    "if": 9.2,
    "branch": "behavioral",
    "pubmedAbbrev": "J Am Acad Child Adolesc Psychiatry",
-   "tier": "field-specific"
+   "tier": "field-specific",
+   "hIndex": 359
   },
   "j-neuroinfl": {
    "name": "Journal of Neuroinflammation",
    "if": 9.3,
    "branch": "immunology",
    "pubmedAbbrev": "J Neuroinflammation",
-   "tier": "specialty"
+   "tier": "specialty",
+   "hIndex": 217
   },
   "biol-psych": {
    "name": "Biological Psychiatry",
    "if": 9.0,
    "branch": "intervention",
    "pubmedAbbrev": "Biol Psychiatry",
-   "tier": "specialty"
+   "tier": "specialty",
+   "hIndex": 431
   },
   "bbi": {
    "name": "Brain, Behavior, and Immunity",
    "if": 8.8,
    "branch": "cytokines",
    "pubmedAbbrev": "Brain Behav Immun",
-   "tier": "specialty"
+   "tier": "specialty",
+   "hIndex": 250
   },
   "ajhg": {
    "name": "American Journal of Human Genetics",
    "if": 8.1,
    "branch": "genetics",
    "pubmedAbbrev": "Am J Hum Genet",
-   "tier": "specialty"
+   "tier": "specialty",
+   "hIndex": 390
   },
   "autism": {
    "name": "Autism",
@@ -248,14 +271,16 @@
    "branch": "behavioral",
    "pubmedAbbrev": "Autism",
    "tier": "field-specific",
-   "generalist": true
+   "generalist": true,
+   "hIndex": 177
   },
   "jcpp": {
    "name": "Journal of Child Psychology and Psychiatry",
    "if": 7.2,
    "branch": "intervention",
    "pubmedAbbrev": "J Child Psychol Psychiatry",
-   "tier": "field-specific"
+   "tier": "field-specific",
+   "hIndex": 345
   },
   "mol-autism": {
    "name": "Molecular Autism",
@@ -263,7 +288,8 @@
    "branch": "behavioral",
    "pubmedAbbrev": "Mol Autism",
    "tier": "field-specific",
-   "generalist": true
+   "generalist": true,
+   "hIndex": 115
   },
   "autism-res": {
    "name": "Autism Research",
@@ -271,7 +297,8 @@
    "branch": "behavioral",
    "pubmedAbbrev": "Autism Res",
    "tier": "field-specific",
-   "generalist": true
+   "generalist": true,
+   "hIndex": 133
   }
  },
  "branches": {

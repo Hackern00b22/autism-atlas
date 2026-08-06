@@ -2015,6 +2015,7 @@
           <button class="sort-btn" data-sort="date-asc">Oldest</button>
           <button class="sort-btn" data-sort="title-asc">A–Z</button>
           <button class="sort-btn" data-sort="if-desc">High IF</button>
+          <button class="sort-btn" data-sort="h-desc">H-index</button>
         </div>
       </div>
       <div id="article-list"></div>
@@ -2059,6 +2060,7 @@ function resolveArticle(a) {
   a.branches = [a.branch, ...a.alsoBranches];
   a.journalName = j ? j.name : (a.journalDisplay || '(unknown)');
   a.if = j ? j.if : (a.if_override || 0);
+  a.hIndex = j ? (j.hIndex || 0) : 0;
   // An unrecognised tier means we don't know, not that we looked and found
   // nothing — 'other' is a verdict and must not absorb missing data.
   if (!a.priority || !TIERS[a.priority]) a.priority = 'unclassified';
@@ -2792,6 +2794,7 @@ function renderArticles() {
     case 'date-asc':  list.sort((a, b) => a.date.localeCompare(b.date)); break;
     case 'title-asc': list.sort((a, b) => a.title.localeCompare(b.title)); break;
     case 'if-desc':   list.sort((a, b) => b.if - a.if || b.date.localeCompare(a.date)); break;
+    case 'h-desc':    list.sort((a, b) => b.hIndex - a.hIndex || b.date.localeCompare(a.date)); break;
   }
 
   countEl.textContent = list.length;
@@ -2918,6 +2921,7 @@ function renderArticleCard(a, showNode) {
         ${homeNode ? `<span class="node-badge also" title="Also relevant here — filed under ${escapeHtml(homeNode)}">◇ ${escapeHtml(homeNode)}</span>` : ''}
         <span class="journal">${escapeHtml(a.journalName)}</span>
         <span class="if-badge">IF ${a.if.toFixed(1)}</span>
+        ${a.hIndex ? `<span class="if-badge" title="Journal h-index (OpenAlex)">H ${a.hIndex}</span>` : ''}
         <span class="date">${formatDate(a.date)}</span>
         ${a.isPreprint ? '<span class="preprint-badge" title="Preprint — not peer reviewed">PREPRINT</span>' : ''}
         ${via ? `<span class="via-badge" title="Imported because a tracked author is on it, not via the usual autism + journal filters">◈ ${escapeHtml(via)}</span>` : ''}
