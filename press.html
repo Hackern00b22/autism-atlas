@@ -1,0 +1,503 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Press Releases · ASD EurekaAlert Database</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;700&family=Space+Grotesk:wght@300;400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --line-rgb: 120, 140, 200;
+    --panel-rgb: 10, 13, 20;
+    --void-rgb: 5, 6, 10;
+    --surface-rgb: 17, 21, 31;
+    --surface-1: rgba(var(--panel-rgb), 0.88);
+    --surface-2: rgba(var(--void-rgb), 0.82);
+    --surface-3: rgba(var(--surface-rgb), 0.5);
+    --blur: blur(12px);
+    --panel-shadow: none;
+    --on-accent: #05060a;
+    --bg-0: #05060a;
+    --bg-1: #0a0d14;
+    --bg-2: #11151f;
+    --ink-0: #e6ecff;
+    --ink-1: #98a4c2;
+    --ink-2: #5d6783;
+    --grid: rgba(var(--line-rgb), 0.06);
+    --line: rgba(var(--line-rgb), 0.12);
+    --neon-immuno:   #00f0ff;
+    --neon-cyto:     #ff2bd6;
+    --neon-behav:    #b6ff3c;
+    --neon-neuro:    #ffb020;
+    --neon-gen:      #7a5cff;
+    --neon-interv:   #ff5757;
+    --up: #2dd4bf;
+    --down: #e0566b;
+  }
+  :root[data-theme="light"] {
+    --line-rgb: 46, 62, 90;
+    --panel-rgb: 246, 248, 252;
+    --void-rgb: 226, 231, 240;
+    --surface-rgb: 226, 231, 240;
+    --surface-1: #F2F5F9;
+    --surface-2: #E8EDF4;
+    --surface-3: #E3E9F2;
+    --blur: none;
+    --panel-shadow: 0 1px 2px rgba(30, 42, 66, 0.06), 0 6px 20px rgba(30, 42, 66, 0.08);
+    --on-accent: #FFFFFF;
+    --bg-0: #DFE5EE;
+    --bg-1: #F2F5F9;
+    --bg-2: #D2DAE6;
+    --ink-0: #0F1720;
+    --ink-1: #414F66;
+    --ink-2: #6A778F;
+    --grid: rgba(46, 62, 90, 0.10);
+    --line: rgba(46, 62, 90, 0.22);
+    --neon-immuno:   #00707F;
+    --neon-cyto:     #B01B8C;
+    --neon-behav:    #446400;
+    --neon-neuro:    #875600;
+    --neon-gen:      #5340C4;
+    --neon-interv:   #AB2C28;
+    --up: #0E7A6E;
+    --down: #AB2C28;
+  }
+  :root[data-theme="light"] .panel,
+  :root[data-theme="light"] .btn,
+  :root[data-theme="light"] .tile,
+  :root[data-theme="light"] .card { box-shadow: var(--panel-shadow); }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body {
+    min-height: 100%;
+    background: var(--bg-0); color: var(--ink-0);
+    font-family: 'Space Grotesk', system-ui, sans-serif;
+    -webkit-font-smoothing: antialiased;
+  }
+  body::before {
+    content: ''; position: fixed; inset: 0;
+    background-image:
+      linear-gradient(var(--grid) 1px, transparent 1px),
+      linear-gradient(90deg, var(--grid) 1px, transparent 1px);
+    background-size: 48px 48px;
+    pointer-events: none; z-index: 0;
+  }
+  .corner { position: fixed; width: 14px; height: 14px; border: 1px solid var(--ink-2); z-index: 30; pointer-events: none; }
+  .corner.tl { top: 16px; left: 16px; border-right: none; border-bottom: none; }
+  .corner.tr { top: 16px; right: 16px; border-left: none; border-bottom: none; }
+  .corner.bl { bottom: 16px; left: 16px; border-right: none; border-top: none; }
+  .corner.br { bottom: 16px; right: 16px; border-left: none; border-top: none; }
+
+  .wrap { position: relative; z-index: 2; max-width: 1280px; margin: 0 auto; padding: 22px 32px 80px; }
+
+  .mono { font-family: 'JetBrains Mono', ui-monospace, 'SF Mono', SFMono-Regular, Menlo, Consolas, monospace; }
+
+  /* ---------- HUD ---------- */
+  .hud { display: flex; justify-content: space-between; align-items: flex-start; gap: 20px; flex-wrap: wrap; }
+  .brand {
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
+    font-size: 12.5px; letter-spacing: 0.28em; color: var(--ink-1); text-transform: uppercase;
+  }
+  .brand .title {
+    display: block; font-family: 'Space Grotesk', system-ui, sans-serif;
+    font-size: 22px; letter-spacing: -0.01em; color: var(--ink-0);
+    text-transform: none; margin-top: 4px; font-weight: 500;
+  }
+  .brand .title em { font-style: normal; color: var(--neon-neuro); }
+  .hud .tiles { display: flex; gap: 10px; flex-wrap: wrap; }
+  .tile {
+    background: var(--surface-1); backdrop-filter: var(--blur); -webkit-backdrop-filter: var(--blur);
+    border: 1px solid var(--line); border-radius: 4px; padding: 8px 14px; min-width: 96px;
+  }
+  .tlabel { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--ink-2); }
+  .tval { font-size: 19px; font-weight: 500; margin-top: 2px; font-variant-numeric: tabular-nums; }
+
+  .navrow { display: flex; gap: 10px; margin: 18px 0 14px; flex-wrap: wrap; align-items: center; }
+  .btn {
+    background: var(--surface-1); backdrop-filter: var(--blur); -webkit-backdrop-filter: var(--blur);
+    border: 1px solid var(--line); color: var(--ink-1); border-radius: 4px;
+    font-family: 'JetBrains Mono', monospace; font-size: 12px; letter-spacing: 0.14em;
+    text-transform: uppercase; padding: 9px 14px; cursor: pointer; text-decoration: none;
+    transition: all 0.18s; display: inline-flex; align-items: center; gap: 7px;
+  }
+  .btn:hover { color: var(--ink-0); border-color: var(--ink-1); }
+  .btn.primary { border-color: var(--neon-neuro); color: var(--neon-neuro); }
+  .btn.primary:hover { background: var(--neon-neuro); color: var(--on-accent); }
+  .btn:disabled { opacity: 0.5; cursor: default; }
+  .spacer { flex: 1; }
+
+  .status { font-family: 'JetBrains Mono', monospace; font-size: 12px; color: var(--ink-2); min-height: 18px; margin: 2px 0 10px; }
+  .status.err { color: var(--neon-interv); }
+  .status.ok { color: var(--up); }
+  .spin { display: inline-block; width: 10px; height: 10px; border: 2px solid var(--ink-2); border-top-color: var(--neon-neuro); border-radius: 50%; margin-right: 7px; animation: sp 0.8s linear infinite; vertical-align: -1px; }
+  @keyframes sp { to { transform: rotate(360deg); } }
+
+  /* ---------- layout ---------- */
+  .cols { display: grid; grid-template-columns: 290px 1fr; gap: 18px; align-items: start; }
+  @media (max-width: 900px) { .cols { grid-template-columns: 1fr; } }
+
+  .panel {
+    background: var(--surface-1); backdrop-filter: var(--blur); -webkit-backdrop-filter: var(--blur);
+    border: 1px solid var(--line); border-radius: 4px; padding: 14px 16px; margin-bottom: 16px;
+  }
+  .panel h3 {
+    font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.2em;
+    text-transform: uppercase; color: var(--ink-2); font-weight: 400; margin-bottom: 10px;
+  }
+  .panel .note { font-size: 12.5px; color: var(--ink-2); line-height: 1.5; }
+
+  .src { display: flex; align-items: center; gap: 9px; padding: 6px 4px; cursor: pointer; user-select: none; border-radius: 3px; }
+  .src:hover { background: var(--surface-3); }
+  .src .swatch { width: 9px; height: 9px; border-radius: 2px; flex: none; }
+  .src.off { opacity: 0.38; }
+  .src .n { margin-left: auto; font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--ink-2); }
+  .src .lbl { font-size: 13.5px; }
+
+  .lterm { display: flex; align-items: baseline; gap: 8px; padding: 3px 2px; font-size: 12.5px; }
+  .lterm .t { color: var(--ink-0); }
+  .lterm .w { margin-left: auto; font-family: 'JetBrains Mono', monospace; font-size: 11px; font-variant-numeric: tabular-nums; }
+  .lterm.inc .w { color: var(--up); }
+  .lterm.exc .w { color: var(--down); }
+  .lterm .ev { font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--ink-2); }
+
+  /* ---------- toolbar ---------- */
+  .toolbar { display: flex; gap: 10px; margin-bottom: 12px; flex-wrap: wrap; align-items: center; }
+  .toolbar input[type=search] {
+    flex: 1; min-width: 200px; background: var(--surface-2); border: 1px solid var(--line);
+    color: var(--ink-0); border-radius: 4px; padding: 9px 12px; font: inherit; font-size: 14px;
+  }
+  .toolbar input[type=search]:focus { outline: none; border-color: var(--neon-neuro); }
+  .seg { display: inline-flex; border: 1px solid var(--line); border-radius: 4px; overflow: hidden; }
+  .seg button {
+    background: var(--surface-1); border: none; color: var(--ink-2); cursor: pointer;
+    font-family: 'JetBrains Mono', monospace; font-size: 11.5px; letter-spacing: 0.1em;
+    text-transform: uppercase; padding: 9px 13px; transition: all 0.15s;
+  }
+  .seg button.on { background: var(--neon-neuro); color: var(--on-accent); }
+  .seg button:not(.on):hover { color: var(--ink-0); }
+
+  /* ---------- cards ---------- */
+  .card {
+    background: var(--surface-1); backdrop-filter: var(--blur); -webkit-backdrop-filter: var(--blur);
+    border: 1px solid var(--line); border-left: 3px solid var(--src-color, var(--line));
+    border-radius: 4px; padding: 13px 16px; margin-bottom: 10px; transition: opacity 0.2s;
+  }
+  .card.demoted { opacity: 0.42; }
+  .card.demoted:hover { opacity: 0.85; }
+  .card .head { display: flex; gap: 10px; align-items: baseline; flex-wrap: wrap; }
+  .card .srcchip {
+    font-family: 'JetBrains Mono', monospace; font-size: 10.5px; letter-spacing: 0.12em;
+    text-transform: uppercase; color: var(--src-color, var(--ink-1));
+  }
+  .card .date { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--ink-2); font-variant-numeric: tabular-nums; }
+  .card .scorechip { font-family: 'JetBrains Mono', monospace; font-size: 11px; border-radius: 3px; padding: 1px 7px; }
+  .card .scorechip.pos { color: var(--up); background: color-mix(in srgb, var(--up) 14%, transparent); }
+  .card .scorechip.neg { color: var(--down); background: color-mix(in srgb, var(--down) 14%, transparent); }
+  .card .fb { margin-left: auto; display: inline-flex; gap: 2px; align-items: center; }
+  .fb-up, .fb-down {
+    cursor: pointer; user-select: none; opacity: 0.4; font-size: 14px; line-height: 1;
+    padding: 2px 5px; border-radius: 3px; transition: all 0.15s; background: none; border: none; color: inherit;
+  }
+  .fb-up:hover, .fb-down:hover { opacity: 1; }
+  .fb-up.on { opacity: 1; background: rgba(45, 212, 191, 0.28); }
+  .fb-down.on { opacity: 1; background: rgba(224, 86, 107, 0.28); }
+  body.public .fb { display: none; }
+  body.public #refresh-btn { display: none; }
+
+  .card .rtitle { font-size: 15.5px; font-weight: 500; line-height: 1.35; margin: 6px 0 5px; }
+  .card .rtitle a { color: var(--ink-0); text-decoration: none; }
+  .card .rtitle a:hover { color: var(--neon-neuro); }
+  .card .summ { font-size: 13px; color: var(--ink-1); line-height: 1.5; }
+  .card .hits { margin-top: 7px; font-family: 'JetBrains Mono', monospace; font-size: 10.5px; color: var(--ink-2); letter-spacing: 0.04em; }
+  .card .hits b { font-weight: 400; }
+  .card .hits b.i { color: var(--up); }
+  .card .hits b.e { color: var(--down); }
+
+  .empty { text-align: center; color: var(--ink-2); padding: 60px 20px; font-family: 'JetBrains Mono', monospace; font-size: 12.5px; letter-spacing: 0.08em; }
+</style>
+</head>
+<body>
+<div class="corner tl"></div><div class="corner tr"></div><div class="corner bl"></div><div class="corner br"></div>
+
+<div class="wrap">
+  <div class="hud">
+    <div class="brand">
+      TMF MALONE / ASD EUREKA ALERT v5.0
+      <span class="title">Press <em>Releases</em></span>
+    </div>
+    <div class="tiles">
+      <div class="tile"><div class="tlabel">Releases</div><div class="tval" id="m-total">—</div></div>
+      <div class="tile"><div class="tlabel">Sources</div><div class="tval" id="m-sources">—</div></div>
+      <div class="tile"><div class="tlabel">Verdicts</div><div class="tval" id="m-votes">—</div></div>
+      <div class="tile"><div class="tlabel">Fetched</div><div class="tval" id="m-fetched" style="font-size:14px">—</div></div>
+    </div>
+  </div>
+
+  <div class="navrow">
+    <a class="btn" href="index.html">← Research Network</a>
+    <a class="btn" href="authors.html">◈ Authors</a>
+    <span class="spacer"></span>
+    <button class="btn" id="theme-toggle">◒ Dark</button>
+    <button class="btn primary" id="refresh-btn">↻ Refresh feeds</button>
+  </div>
+  <div class="status" id="global-status"></div>
+
+  <div class="cols">
+    <div>
+      <div class="panel">
+        <h3>// Sources</h3>
+        <div id="sources"></div>
+      </div>
+      <div class="panel">
+        <h3>// Learned relevance</h3>
+        <div id="learned"></div>
+        <div class="note" style="margin-top:10px">
+          The 👍/👎 verdicts train the same smoothed log-odds overlay the research
+          branches learn from — a release's title/summary terms stand in for an
+          article's MeSH headings. Terms that recur among kept releases rank new
+          arrivals up; terms that recur among rejected ones rank them down and dim
+          strong mismatches. A term needs to appear in at least two verdicts
+          before it is learned.
+        </div>
+      </div>
+    </div>
+
+    <div>
+      <div class="toolbar">
+        <input type="search" id="q" placeholder="Filter releases…" autocomplete="off">
+        <div class="seg" id="sortseg">
+          <button data-sort="new" class="on">Newest</button>
+          <button data-sort="rel">Learned relevance</button>
+        </div>
+      </div>
+      <div id="list"></div>
+    </div>
+  </div>
+</div>
+
+<script>
+const THEME_KEY = 'arn-theme-v1';
+function applyTheme(mode) {
+  document.documentElement.setAttribute('data-theme', mode);
+  const b = document.getElementById('theme-toggle');
+  if (b) b.textContent = mode === 'light' ? '◓ Light' : '◒ Dark';
+  try { localStorage.setItem(THEME_KEY, mode); } catch (e) {}
+}
+(function () {
+  let saved = null;
+  try { saved = localStorage.getItem(THEME_KEY); } catch (e) {}
+  applyTheme(saved || (window.matchMedia &&
+    window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark'));
+})();
+
+const $ = id => document.getElementById(id);
+const esc = s => String(s == null ? '' : s).replace(/[&<>"']/g,
+  c => ({ '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;' }[c]));
+
+const SRC_COLORS = {
+  sciencedaily: 'var(--neon-immuno)',
+  medicalxpress: 'var(--neon-behav)',
+  newsmedical: 'var(--neon-neuro)',
+  transmitter: 'var(--neon-cyto)',
+};
+// A verdict this strongly negative dims the card (unless the user 👍'd it).
+const DEMOTE_AT = -0.7;
+const SORT_KEY = 'press-sort-v1';
+
+let DATA = { releases: [], learned: {}, feedback: {}, sources: [], _meta: {} };
+let PUBLIC = false;
+let SRC_ON = null;            // Set of enabled source keys
+let SORT = 'new';
+try { SORT = localStorage.getItem(SORT_KEY) || 'new'; } catch (e) {}
+
+async function api(path, body) {
+  if (PUBLIC) throw new Error('read-only public site');
+  const res = await fetch(path, {
+    method: 'POST', headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(body || {}),
+  });
+  if (!res.ok) throw new Error(`${res.status} ${res.statusText}`);
+  return res.json();
+}
+
+function setStatus(msg, cls) {
+  const el = $('global-status');
+  el.className = 'status' + (cls === 'err' ? ' err' : cls === 'ok' ? ' ok' : '');
+  el.innerHTML = (cls === 'spin' ? '<span class="spin"></span>' : '') + esc(msg);
+}
+
+async function load({ autoRefresh = true } = {}) {
+  let res;
+  try {
+    res = await fetch('/api/press');
+    if (!res.ok) throw new Error('no api');
+  } catch (e) {
+    res = await fetch('press-data.json', { cache: 'no-store' });
+    PUBLIC = true;
+    document.body.classList.add('public');
+  }
+  DATA = await res.json();
+  DATA.feedback = DATA.feedback || {};
+  if (SRC_ON === null) SRC_ON = new Set(DATA.sources.map(s => s.key));
+  render();
+  // A stale store refreshes itself on open, like the nodes' weekly catch-up.
+  if (autoRefresh && !PUBLIC && DATA.stale) refresh(true);
+}
+
+async function refresh(auto) {
+  const btn = $('refresh-btn');
+  btn.disabled = true;
+  setStatus(auto ? 'Feeds are stale — fetching the latest releases…'
+                 : 'Fetching all four feeds…', 'spin');
+  try {
+    const r = await api('/api/press-refresh');
+    const errs = Object.entries(r.errors || {});
+    await load({ autoRefresh: false });
+    let msg = `${r.new} new release${r.new === 1 ? '' : 's'} (${r.seen} seen across the feeds).`;
+    if (errs.length) msg += ` Failed: ${errs.map(([k, v]) => `${k} — ${v}`).join('; ')}`;
+    setStatus(msg, errs.length ? 'err' : r.new ? 'ok' : '');
+  } catch (e) {
+    setStatus('Refresh failed: ' + e.message, 'err');
+  }
+  btn.disabled = false;
+}
+
+// ---------- render ----------
+function render() {
+  const rels = DATA.releases || [];
+  $('m-total').textContent = rels.length;
+  $('m-sources').textContent = (DATA.sources || []).length;
+  $('m-votes').textContent = Object.keys(DATA.feedback).length;
+  $('m-fetched').textContent = (DATA._meta.last_fetched || '—').slice(0, 10);
+  renderSources(rels);
+  renderLearned();
+  renderList(rels);
+}
+
+function renderSources(rels) {
+  const counts = {};
+  rels.forEach(r => counts[r.source] = (counts[r.source] || 0) + 1);
+  $('sources').innerHTML = (DATA.sources || []).map(s => `
+    <div class="src ${SRC_ON.has(s.key) ? '' : 'off'}" data-src="${esc(s.key)}"
+         title="Click to toggle · ${esc(s.url)}">
+      <span class="swatch" style="background:${SRC_COLORS[s.key] || 'var(--ink-2)'}"></span>
+      <span class="lbl">${esc(s.label)}</span>
+      <span class="n">${counts[s.key] || 0}</span>
+    </div>`).join('');
+  document.querySelectorAll('.src').forEach(el => el.onclick = () => {
+    const k = el.dataset.src;
+    if (SRC_ON.has(k)) SRC_ON.delete(k); else SRC_ON.add(k);
+    render();
+  });
+}
+
+function renderLearned() {
+  const L = DATA.learned || {};
+  const inc = Object.entries(L.include || {});
+  const exc = Object.entries(L.exclude || {});
+  if (!inc.length && !exc.length) {
+    $('learned').innerHTML = `<div class="note">Nothing learned yet — vote 👍 on
+      releases worth seeing more of and 👎 on ones that aren't, and the recurring
+      vocabulary of each pile starts steering the ranking.
+      ${L.pos_events || L.neg_events ? `<br><br>${L.pos_events || 0} kept ·
+      ${L.neg_events || 0} rejected so far — terms surface once they recur.` : ''}</div>`;
+    return;
+  }
+  const row = (t, v, cls, sign) => `
+    <div class="lterm ${cls}">
+      <span class="t">${esc(t)}</span>
+      <span class="ev">${v.pos}/${v.neg}</span>
+      <span class="w">${sign}${Math.abs(v.w).toFixed(2)}</span>
+    </div>`;
+  $('learned').innerHTML =
+    inc.map(([t, v]) => row(t, v, 'inc', '+')).join('') +
+    exc.map(([t, v]) => row(t, v, 'exc', '−')).join('') +
+    `<div class="note" style="margin-top:8px">${L.pos_events || 0} kept ·
+     ${L.neg_events || 0} rejected · counts are kept/rejected appearances.</div>`;
+}
+
+function renderList(rels) {
+  const q = ($('q').value || '').trim().toLowerCase();
+  let view = rels.filter(r => SRC_ON.has(r.source));
+  if (q) view = view.filter(r =>
+    r.title.toLowerCase().includes(q) || (r.summary || '').toLowerCase().includes(q)
+    || (r.sourceLabel || '').toLowerCase().includes(q));
+  view = view.slice();
+  if (SORT === 'rel') {
+    view.sort((a, b) => (b.score - a.score) || (b.date < a.date ? -1 : 1));
+  } else {
+    view.sort((a, b) => (a.date < b.date ? 1 : a.date > b.date ? -1 : 0));
+  }
+  if (!view.length) {
+    $('list').innerHTML = `<div class="empty">// NO RELEASES MATCH</div>`;
+    return;
+  }
+  $('list').innerHTML = view.map(r => {
+    const v = DATA.feedback[r.id] || 0;
+    const demoted = r.score <= DEMOTE_AT && v <= 0;
+    const chip = r.score > 0 ? `<span class="scorechip pos">▲ ${r.score.toFixed(1)}</span>`
+               : r.score < 0 ? `<span class="scorechip neg">▼ ${r.score.toFixed(1)}</span>` : '';
+    const hits = (r.hits || []).length && (DATA.learned.include || DATA.learned.exclude)
+      ? `<div class="hits">matched: ${r.hits.map(t =>
+          `<b class="${(DATA.learned.include || {})[t] ? 'i' : 'e'}">${esc(t)}</b>`).join(' · ')}</div>`
+      : '';
+    return `
+    <div class="card ${demoted ? 'demoted' : ''}" style="--src-color:${SRC_COLORS[r.source] || 'var(--ink-2)'}">
+      <div class="head">
+        <span class="srcchip">${esc(r.sourceLabel)}</span>
+        <span class="date">${esc(r.date)}</span>
+        ${chip}
+        <span class="fb">
+          <button class="fb-up ${v > 0 ? 'on' : ''}" data-id="${esc(r.id)}" data-v="1"
+                  title="Relevant — teach the ranking to surface releases like this">👍</button>
+          <button class="fb-down ${v < 0 ? 'on' : ''}" data-id="${esc(r.id)}" data-v="-1"
+                  title="Not relevant — teach the ranking to bury releases like this">👎</button>
+        </span>
+      </div>
+      <div class="rtitle"><a href="${esc(r.url)}" target="_blank" rel="noopener">${esc(r.title)}</a></div>
+      ${r.summary ? `<div class="summ">${esc(r.summary)}</div>` : ''}
+      ${hits}
+    </div>`;
+  }).join('');
+
+  document.querySelectorAll('.fb-up, .fb-down').forEach(el => el.onclick = async () => {
+    const id = el.dataset.id;
+    const want = +el.dataset.v;
+    const cur = DATA.feedback[id] || 0;
+    const verdict = cur === want ? 0 : want;   // re-click clears, like the nodes
+    try {
+      const r = await api('/api/press-feedback', { id, verdict });
+      if (!r.ok) { setStatus(r.error || 'Vote failed.', 'err'); return; }
+      await load({ autoRefresh: false });
+      const n = (r.include || []).length + (r.exclude || []).length;
+      setStatus(verdict === 0 ? 'Verdict cleared.'
+        : `Recorded. The overlay now holds ${n} learned term${n === 1 ? '' : 's'}.`, 'ok');
+    } catch (e) { setStatus('Vote failed: ' + e.message, 'err'); }
+  });
+}
+
+// ---------- wiring ----------
+$('q').addEventListener('input', () => renderList(DATA.releases || []));
+document.querySelectorAll('#sortseg button').forEach(b => {
+  if (b.dataset.sort === SORT) {
+    document.querySelectorAll('#sortseg button').forEach(x => x.classList.remove('on'));
+    b.classList.add('on');
+  }
+  b.onclick = () => {
+    SORT = b.dataset.sort;
+    try { localStorage.setItem(SORT_KEY, SORT); } catch (e) {}
+    document.querySelectorAll('#sortseg button').forEach(x => x.classList.remove('on'));
+    b.classList.add('on');
+    renderList(DATA.releases || []);
+  };
+});
+$('refresh-btn').onclick = () => refresh(false);
+$('theme-toggle').onclick = () =>
+  applyTheme(document.documentElement.getAttribute('data-theme') === 'light' ? 'dark' : 'light');
+
+load();
+</script>
+</body>
+</html>

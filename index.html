@@ -440,6 +440,24 @@
     .auth-button { right: 32px; top: auto; bottom: 440px; }
   }
 
+  /* PRESS RELEASES — directly under the author tracker (the top row is full
+     at laptop widths); leaves for press.html */
+  .press-button {
+    top: 74px;
+    right: 860px;
+    border-color: var(--neon-neuro);
+    color: var(--neon-neuro);
+    box-shadow: 0 0 12px rgba(255, 176, 32, 0.2);
+  }
+  .press-button:hover {
+    background: var(--neon-neuro); color: var(--on-accent);
+    box-shadow: 0 0 20px rgba(255, 176, 32, 0.5);
+  }
+  .press-button::before { content: '◍'; }
+  @media (max-width: 1100px) {
+    .press-button { right: 32px; top: auto; bottom: 500px; }
+  }
+
   .ni-meta .bm-toggle { cursor: pointer; }
   .ni-meta .bm-toggle.on { background: var(--gold); color: var(--on-accent); }
   /* bookmark toggle on article cards */
@@ -1531,6 +1549,21 @@
     font-size: 11.5px;
     line-height: 1;
   }
+  /* why a card matched when its visible text doesn't say — abstract/MeSH hit */
+  .abs-snip {
+    font-size: 12.5px; color: var(--ink-1); line-height: 1.5;
+    margin: 4px 0 6px; padding-left: 10px;
+    border-left: 2px solid var(--line);
+  }
+  .abs-snip mark {
+    background: color-mix(in srgb, var(--neon-immuno) 22%, transparent);
+    color: var(--ink-0); border-radius: 2px; padding: 0 2px;
+  }
+  .abs-snip .snip-kind {
+    font-family: 'JetBrains Mono', ui-monospace, 'SF Mono', SFMono-Regular, Menlo, Consolas, monospace;
+    font-size: 10px; letter-spacing: 0.14em; color: var(--ink-2); text-transform: uppercase;
+    margin-right: 6px;
+  }
   .article-meta {
     display: flex; gap: 14px; flex-wrap: wrap;
     font-family: 'JetBrains Mono', ui-monospace, 'SF Mono', SFMono-Regular, Menlo, Consolas, monospace;
@@ -1793,6 +1826,7 @@
   <h3>// Click a branch to explore</h3>
 </div>
 
+<a class="press-button auth-button" href="press.html" aria-label="Open press releases">Press</a>
 <a class="auth-button" href="authors.html" aria-label="Open author tracker">Authors</a>
 <button class="bm-button" id="bm-button" aria-label="Open bookmarks">Bookmarks <span class="bm-count" id="bm-count"></span></button>
 <button class="lab-button" id="lab-button" aria-label="Open Agent Lab">Agent Lab</button>
@@ -1995,7 +2029,7 @@
 
     <div class="modal-filters">
       <span class="filter-label">SEARCH</span>
-      <input type="search" id="filter-search" placeholder="Title, author, PMID, or is:preprint · is:via · is:new · is:shared" autocomplete="off">
+      <input type="search" id="filter-search" placeholder="Title, author, abstract, MeSH, PMID, or is:preprint · is:via · is:new · is:shared" autocomplete="off">
       <label class="scope-toggle" id="filter-scope-label" title="Search every node, not just this one">
         <input type="checkbox" id="filter-scope"> All nodes
       </label>
@@ -2614,6 +2648,32 @@ let currentBranch = null;
 let currentSort = 'priority';
 let activeTiers = new Set();
 
+// ---- deep search: abstracts + MeSH ----
+// MeSH descriptors ride along in articles.json, but the full abstracts live in
+// abstracts.json (1.7 MB) and only matter once a search is open — so they load
+// lazily the first time a modal opens. On the public build the file isn't
+// shipped; the fetch 404s once and search degrades to the shallow fields.
+let ABSTRACTS = null;          // id -> {raw, low}
+let abstractsState = 'idle';   // idle | loading | ready | unavailable
+let SNIPS = {};                // id -> snippet for the current query
+function ensureAbstracts() {
+  if (abstractsState !== 'idle') return;
+  abstractsState = 'loading';
+  fetch('abstracts.json', { cache: 'no-store' })
+    .then(r => { if (!r.ok) throw new Error('unavailable'); return r.json(); })
+    .then(data => {
+      ABSTRACTS = {};
+      for (const [id, v] of Object.entries(data)) {
+        const raw = (v && v.abstract) || '';
+        if (raw) ABSTRACTS[id] = { raw, low: raw.toLowerCase() };
+      }
+      abstractsState = 'ready';
+      // A search may already be typed against the shallow fields — deepen it.
+      if (backdrop.classList.contains('open')) renderArticles();
+    })
+    .catch(() => { abstractsState = 'unavailable'; });
+}
+
 function learnedTermsHtml(branchKey) {
   const L = (BRANCHES[branchKey] && BRANCHES[branchKey].learned) || {};
   const inc = Object.keys(L.include || {});
@@ -2660,6 +2720,7 @@ function renderBranchSub(branchKey) {
 }
 function openBranchModal(branchKey) {
   GLOBAL_SEARCH = false;
+  ensureAbstracts();
   scopeLabelEl.style.display = '';   // restore the toggle global search hides
   currentBranch = branchKey;
   const b = BRANCHES[branchKey];
@@ -2686,12 +2747,14 @@ let GLOBAL_SEARCH = false;
 
 function openGlobalSearch(prefill) {
   GLOBAL_SEARCH = true;
+  ensureAbstracts();
   currentBranch = Object.keys(BRANCHES)[0];
   eyebrowEl.textContent = '// SEARCH · ALL NODES';
   eyebrowEl.style.color = 'var(--neon-immuno)';
   titleEl.textContent = 'Search the whole library';
   subEl.innerHTML =
-    ARTICLES.length + ' articles across ' + Object.keys(BRANCHES).length + ' nodes. ' +
+    ARTICLES.length + ' articles across ' + Object.keys(BRANCHES).length + ' nodes — ' +
+    'matched on title, authors, journal, MeSH headings and full abstracts. ' +
     'Filter by provenance with <code>is:preprint</code>, <code>is:via</code>, ' +
     '<code>is:new</code>, <code>is:shared</code> or <code>via:name</code> — terms combine.';
   modal.style.setProperty('--accent', 'var(--neon-immuno)');
@@ -2825,6 +2888,16 @@ function renderArticles() {
     return;
   }
 
+  // Cards that matched only in deep fields get their evidence attached.
+  SNIPS = {};
+  if (q) {
+    const terms = q.split(/\s+/).filter(Boolean);
+    for (const a of list) {
+      const s = deepMatchSnippet(a, terms);
+      if (s) SNIPS[a.id] = s;
+    }
+  }
+
   // When sorting by priority, insert a divider between boosted and non-boosted
   let html = '';
   let dividerInserted = false;
@@ -2880,7 +2953,34 @@ function matchesTerm(a, t) {
       || (a.id || '').toLowerCase().includes(t)
       || (a.viaAuthors || []).some(v => v.toLowerCase().includes(t))
       || (a.viaReason || '').toLowerCase().includes(t)
-      || (pmid && (pmid === t || t.includes(pmid)));
+      || (pmid && (pmid === t || t.includes(pmid)))
+      // Deep fields: the paper about your term rarely has it in the title.
+      || (a.mesh || []).some(m => m.toLowerCase().includes(t))
+      || !!(ABSTRACTS && ABSTRACTS[a.id] && ABSTRACTS[a.id].low.includes(t));
+}
+
+// When a card matched only through its abstract or MeSH, its visible text
+// doesn't explain why it's in the results — show the evidence on the card.
+function deepMatchSnippet(a, terms) {
+  const shallow = (a.title + ' ' + a.authors + ' ' + a.journalName + ' '
+                   + (a.id || '')).toLowerCase();
+  for (const t of terms) {
+    if (t.includes(':') || shallow.includes(t)) continue;
+    const ab = ABSTRACTS && ABSTRACTS[a.id];
+    if (ab) {
+      const i = ab.low.indexOf(t);
+      if (i >= 0) {
+        const start = Math.max(0, i - 70), end = Math.min(ab.raw.length, i + t.length + 110);
+        return { kind: 'abstract',
+                 pre: (start > 0 ? '…' : '') + ab.raw.slice(start, i),
+                 hit: ab.raw.slice(i, i + t.length),
+                 post: ab.raw.slice(i + t.length, end) + (end < ab.raw.length ? '…' : '') };
+      }
+    }
+    const m = (a.mesh || []).find(x => x.toLowerCase().includes(t));
+    if (m) return { kind: 'mesh', pre: '', hit: m, post: '' };
+  }
+  return null;
 }
 
 function matchesQuery(a, q) {
@@ -2913,6 +3013,7 @@ function renderArticleCard(a, showNode) {
     <a class="article tier-${a.priority}${a.isBoosted ? ' boosted' : ''}" href="${a.url}" target="_blank" rel="noopener">
       <div class="priority-badge${a.isBoosted ? ' boosted' : ''}">${escapeHtml(tierLabel)}</div>
       <div class="article-title">${escapeHtml(a.title)}</div>
+      ${SNIPS[a.id] ? `<div class="abs-snip"><span class="snip-kind">${SNIPS[a.id].kind === 'mesh' ? 'MeSH' : 'Abstract'}</span>${escapeHtml(SNIPS[a.id].pre)}<mark>${escapeHtml(SNIPS[a.id].hit)}</mark>${escapeHtml(SNIPS[a.id].post)}</div>` : ''}
       <div class="article-meta">
         <span class="bm-toggle${isBookmarked(a.id) ? ' on' : ''}" role="button" title="Bookmark this article"
               onclick="event.preventDefault();event.stopPropagation();toggleBookmark('${a.id}',this);">${isBookmarked(a.id) ? '★ Saved' : '☆ Save'}</span>

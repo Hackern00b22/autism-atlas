@@ -414,6 +414,67 @@
   }
   .search-row input:focus { border-color: var(--neon-cyto); }
 
+  /* toolbar PubMed author lookup */
+  .pm-q {
+    width: 230px; background: var(--bg-2); color: var(--ink-0);
+    border: 1px solid rgba(var(--line-rgb), 0.18); border-radius: 3px;
+    padding: 9px 12px; font-family: 'Space Grotesk', system-ui, sans-serif;
+    font-size: 13.5px; outline: none; transition: border-color 0.15s;
+  }
+  .pm-q:focus { border-color: var(--neon-cyto); }
+
+  /* preview dossier — a PubMed record browsed before (or instead of) tracking */
+  .prev-head { display: flex; align-items: baseline; gap: 14px; flex-wrap: wrap; }
+  .prev-name { font-size: 22px; font-weight: 500; }
+  .prev-meta {
+    font-family: 'JetBrains Mono', ui-monospace, 'SF Mono', SFMono-Regular, Menlo, Consolas, monospace;
+    font-size: 11.5px; color: var(--ink-2); letter-spacing: 0.08em; line-height: 1.8;
+  }
+  .prev-paper {
+    display: grid; grid-template-columns: 44px 118px 1fr; gap: 4px 14px;
+    padding: 9px 4px; border-top: 1px solid var(--line); align-items: baseline;
+  }
+  .prev-paper .pp-date {
+    font-family: 'JetBrains Mono', ui-monospace, 'SF Mono', SFMono-Regular, Menlo, Consolas, monospace;
+    font-size: 11.5px; color: var(--ink-2); font-variant-numeric: tabular-nums;
+  }
+  .prev-paper .pp-role {
+    font-family: 'JetBrains Mono', ui-monospace, 'SF Mono', SFMono-Regular, Menlo, Consolas, monospace;
+    font-size: 10.5px; letter-spacing: 0.1em; text-transform: uppercase;
+  }
+  .prev-paper .pp-title { color: var(--ink-0); text-decoration: none; font-size: 14.5px; line-height: 1.4; }
+  .prev-paper .pp-title:hover { color: var(--neon-cyto); }
+  .prev-paper .pp-sub {
+    grid-column: 3; font-family: 'JetBrains Mono', ui-monospace, 'SF Mono', SFMono-Regular, Menlo, Consolas, monospace;
+    font-size: 10.5px; color: var(--ink-2); letter-spacing: 0.06em;
+    display: flex; gap: 10px; flex-wrap: wrap;
+  }
+  .pp-flag { color: var(--neon-neuro); }
+  .pp-flag.warn { color: var(--neon-interv); }
+
+  /* roster quick-filter */
+  .roster-q {
+    width: 100%; background: var(--bg-2); color: var(--ink-0);
+    border: 1px solid rgba(var(--line-rgb), 0.18); border-radius: 3px;
+    padding: 8px 11px; margin-bottom: 10px;
+    font-family: 'Space Grotesk', system-ui, sans-serif; font-size: 13.5px;
+    outline: none; transition: border-color 0.15s;
+  }
+  .roster-q:focus { border-color: var(--neon-cyto); }
+
+  /* manual add — the escape hatch when resolve can't find or splits a person */
+  .manual { border-top: 1px solid var(--line); margin-top: 18px; padding-top: 14px; }
+  .manual-head { display: flex; align-items: center; justify-content: space-between; gap: 12px;
+                 font-size: 13.5px; color: var(--ink-2); }
+  .manual-form { margin-top: 12px; }
+  .manual-form .mrow { display: flex; gap: 10px; margin-bottom: 10px; }
+  .manual-form input {
+    flex: 1; background: var(--bg-2); color: var(--ink-0); border: 1px solid rgba(var(--line-rgb), 0.18);
+    border-radius: 3px; padding: 9px 12px; font-family: 'Space Grotesk', system-ui, sans-serif;
+    font-size: 14px; outline: none; transition: border-color 0.15s;
+  }
+  .manual-form input:focus { border-color: var(--neon-cyto); }
+
   .ident {
     border: 1px solid var(--line); border-radius: 5px; padding: 15px 17px; margin-top: 10px;
     background: var(--surface-3); cursor: pointer; transition: all 0.15s;
@@ -496,6 +557,7 @@
 /* Public static build (no serve.py API): hide every control that would
    mutate the tracked-author store — visitors browse read-only. */
 body.public #add-btn, body.public #refresh-all-btn,
+body.public #pm-q, body.public #pm-search,
 body.public #refresh-one, body.public #untrack, body.public #get-recs,
 body.public [data-track-rec], body.public [data-dismiss-rec],
 body.public [data-exclude] { display: none !important; }
@@ -539,7 +601,10 @@ body.public [data-exclude] { display: none !important; }
 
   <div class="toolbar">
     <a class="btn" href="index.html">← Research Network</a>
+    <a class="btn" href="press.html">◍ Press</a>
     <button class="btn primary" id="add-btn">+ Track an Author</button>
+    <input type="search" id="pm-q" class="pm-q" placeholder="Search PubMed authors…" autocomplete="off">
+    <button class="btn" id="pm-search">⌕ Search</button>
     <button class="btn" id="refresh-all-btn">↻ Refresh All</button>
     <button class="btn" id="theme-toggle" aria-label="Switch between light and dark">◒ Dark</button>
     <span class="status" id="global-status"></span>
@@ -549,6 +614,7 @@ body.public [data-exclude] { display: none !important; }
     <aside>
       <div class="panel roster">
         <h3>// Tracked researchers</h3>
+        <input type="search" id="roster-q" class="roster-q" placeholder="Search researchers…" autocomplete="off">
         <div id="roster"></div>
       </div>
     </aside>
@@ -574,6 +640,27 @@ body.public [data-exclude] { display: none !important; }
       </div>
       <div class="status" id="add-status">Enter a researcher's name to see which PubMed identities match it.</div>
       <div id="identities"></div>
+      <div class="manual">
+        <div class="manual-head">
+          <span>Can't find them, or PubMed splits them wrong?</span>
+          <button class="btn sm" id="manual-toggle">✎ Add manually</button>
+        </div>
+        <div class="manual-form" id="manual-form" hidden>
+          <div class="mrow">
+            <input id="man-last" placeholder="Last name *" autocomplete="off">
+            <input id="man-fore" placeholder="Fore name(s) — e.g. Gloria B" autocomplete="off">
+          </div>
+          <div class="mrow">
+            <input id="man-orcid" placeholder="ORCID (optional) — 0000-0000-0000-0000" autocomplete="off">
+            <input id="man-aff" placeholder="Affiliation (optional)" autocomplete="off">
+          </div>
+          <div class="mrow">
+            <input id="man-note" placeholder="Note (optional)" autocomplete="off">
+            <button class="btn primary" id="manual-track">+ Track</button>
+          </div>
+          <div class="status" id="manual-status">The profile is built from these fields exactly as typed; the first PubMed scan runs on save, claiming papers by the name (and ORCID, if given).</div>
+        </div>
+      </div>
     </div>
   </div>
 </div>
@@ -613,6 +700,7 @@ let DATA = { authors: {}, branches: {}, dismissed: [], dismissedUpdates: [] };
 let SHOW_DISMISSED_UPDATES = false;
 let SELECTED = null;
 let ROLE_FILTER = 'all';
+let PREVIEW = null;   // active PubMed author lookup, owning the main pane
 
 const $ = id => document.getElementById(id);
 const esc = s => String(s == null ? '' : s).replace(/[&<>"']/g,
@@ -683,13 +771,25 @@ function renderMeta() {
 }
 
 function renderRoster() {
-  const keys = Object.keys(DATA.authors).sort((a, b) =>
+  let keys = Object.keys(DATA.authors).sort((a, b) =>
     DATA.authors[a].displayName.localeCompare(DATA.authors[b].displayName));
   if (!keys.length) {
     $('roster').innerHTML = `<div class="empty-note">No authors tracked yet.<br><br>
       Start with <strong style="color:var(--ink-0)">Gloria Choi</strong> — her lab's maternal
       immune activation and IL-17a work sits at the centre of this database's neuroimmunology branch.</div>`;
     return;
+  }
+  const q = ($('roster-q').value || '').trim().toLowerCase();
+  if (q) {
+    keys = keys.filter(k => {
+      const p = DATA.authors[k];
+      return [p.displayName, p.note, p.branch, ...(p.orcids || []),
+              ...(p.affiliations || [])].join(' ').toLowerCase().includes(q);
+    });
+    if (!keys.length) {
+      $('roster').innerHTML = `<div class="empty-note">No tracked researcher matches “${esc(q)}”.</div>`;
+      return;
+    }
   }
   $('roster').innerHTML = keys.map(k => {
     const p = DATA.authors[k];
@@ -702,6 +802,7 @@ function renderRoster() {
   }).join('');
   document.querySelectorAll('.roster-item').forEach(el =>
     el.onclick = () => {
+      PREVIEW = null;   // leaving a PubMed lookup for a tracked dossier
       SELECTED = el.dataset.key; ROLE_FILTER = 'all'; UPDATES_EXPANDED = false;
       renderRoster(); renderProfile();
     });
@@ -709,6 +810,7 @@ function renderRoster() {
 
 // ---------- profile ----------
 function renderProfile() {
+  if (PREVIEW) { renderPreview(); return; }   // a lookup owns the main pane
   const main = $('main');
   if (!SELECTED || !DATA.authors[SELECTED]) {
     main.innerHTML = `<div class="panel"><h3>// Getting started</h3>
@@ -1138,6 +1240,197 @@ $('add-backdrop').onclick = e => { if (e.target === $('add-backdrop')) $('add-ba
 document.addEventListener('keydown', e => { if (e.key === 'Escape') $('add-backdrop').classList.remove('open'); });
 $('name-input').addEventListener('keydown', e => { if (e.key === 'Enter') doSearch(); });
 $('name-search').onclick = doSearch;
+$('roster-q').addEventListener('input', renderRoster);
+
+// ---------- manual add ----------
+// The resolve step groups PubMed's author index into people, and sometimes it
+// can't: a hyphenated or transliterated name searches under a different form,
+// or one person is split across clusters. This lane hands the identity fields
+// straight to /api/author-track, which builds the profile and runs the same
+// first scan the picked-identity path runs.
+$('manual-toggle').onclick = () => {
+  const f = $('manual-form');
+  f.hidden = !f.hidden;
+  if (!f.hidden) $('man-last').focus();
+};
+$('manual-track').onclick = async () => {
+  const last = $('man-last').value.trim();
+  const fore = $('man-fore').value.trim();
+  const orcid = $('man-orcid').value.trim();
+  const aff = $('man-aff').value.trim();
+  if (!last) { setStatus('manual-status', 'A last name is required.', 'err'); $('man-last').focus(); return; }
+  if (orcid && !/^\d{4}-\d{4}-\d{4}-\d{3}[\dX]$/.test(orcid)) {
+    setStatus('manual-status', 'That ORCID isn’t the 0000-0000-0000-0000 form.', 'err');
+    $('man-orcid').focus(); return;
+  }
+  const cluster = {
+    lastName: last,
+    foreNames: fore ? [fore] : [],
+    orcids: orcid ? [orcid] : [],
+    affiliations: aff ? [aff] : [],
+    displayName: (fore ? fore + ' ' : '') + last,
+  };
+  $('manual-track').disabled = true;
+  setStatus('manual-status', '', '');
+  await trackIdentity(cluster, $('man-note').value.trim());
+  $('manual-track').disabled = false;
+};
+
+// ---------- PubMed author lookup ----------
+// Search PubMed for a person from the tracker itself and browse their full
+// record — same identity resolution and corroboration as tracking, but nothing
+// is saved until "+ Track this author" is pressed.
+$('pm-search').onclick = doAuthorLookup;
+$('pm-q').addEventListener('keydown', e => { if (e.key === 'Enter') doAuthorLookup(); });
+
+async function doAuthorLookup() {
+  const name = $('pm-q').value.trim();
+  if (!name) { $('pm-q').focus(); return; }
+  PREVIEW = { query: name, identities: null, chosen: null, profile: null, error: null };
+  renderPreview();
+  try {
+    const r = await api('/api/author-resolve', { name });
+    if (!PREVIEW || PREVIEW.query !== name) return;   // superseded
+    if (!r.ok) { PREVIEW.error = r.error; PREVIEW.identities = []; }
+    else PREVIEW.identities = r.identities || [];
+  } catch (e) {
+    if (PREVIEW) { PREVIEW.error = e.message; PREVIEW.identities = []; }
+  }
+  renderPreview();
+}
+
+async function previewIdentity(i) {
+  const c = PREVIEW.identities[i];
+  PREVIEW.chosen = c;
+  PREVIEW.profile = 'loading';
+  renderPreview();
+  try {
+    const r = await api('/api/author-preview', { identity: c });
+    if (!PREVIEW || PREVIEW.chosen !== c) return;
+    PREVIEW.profile = r.ok ? r.profile : null;
+    PREVIEW.error = r.ok ? null : (r.error || 'Preview failed');
+  } catch (e) {
+    if (PREVIEW) { PREVIEW.profile = null; PREVIEW.error = e.message; }
+  }
+  renderPreview();
+}
+
+async function trackFromPreview() {
+  const c = PREVIEW && PREVIEW.chosen;
+  if (!c) return;
+  const branches = Object.entries(DATA.branches);
+  let branch = '';
+  if (branches.length) {
+    const list = branches.map(([k, v], i) => `${i + 1}. ${v.label}`).join('\n');
+    const pick = prompt(`File ${c.displayName} under which research branch?\n\n${list}\n\nEnter a number, or leave blank for none.`);
+    const idx = parseInt(pick, 10);
+    if (idx >= 1 && idx <= branches.length) branch = branches[idx - 1][0];
+  }
+  setStatus('prev-status', `Tracking ${c.displayName}…`, 'spin');
+  try {
+    const r = await api('/api/author-track', { identity: c, branch });
+    if (!r.ok) { setStatus('prev-status', r.error || 'Could not track.', 'err'); return; }
+    PREVIEW = null;
+    SELECTED = r.key;
+    await load();
+    setStatus('global-status', `${r.profile.displayName} is now tracked.`, 'ok');
+  } catch (e) { setStatus('prev-status', 'Failed: ' + e.message, 'err'); }
+}
+
+function closePreview() {
+  PREVIEW = null;
+  renderProfile();
+}
+
+function renderPreview() {
+  const P = PREVIEW;
+  if (!P) return;
+  const main = $('main');
+  let body = '';
+
+  if (P.identities === null) {
+    body = `<div class="status"><span class="spin"></span>Searching PubMed for “${esc(P.query)}” and grouping the results by person…</div>`;
+  } else if (P.chosen === null) {
+    if (!P.identities.length) {
+      body = `<div class="empty-note">${esc(P.error || `No PubMed authors matched “${P.query}”. Try another form of the name, or add them manually from + Track an Author.`)}</div>`;
+    } else {
+      body = `<div class="status">${P.identities.length} distinct ${P.identities.length === 1 ? 'person publishes' : 'people publish'} under that name — click one to browse their record.</div>`
+        + P.identities.map((c, i) => `
+        <div class="ident" data-prev-i="${i}">
+          <div class="ident-name">${esc(c.displayName)}${c.alreadyTracked ? ' — already tracked' : ''}</div>
+          <div class="ident-meta">
+            ${c.papers} PAPER${c.papers === 1 ? '' : 'S'} · ${esc(c.firstYear)}–${esc(c.lastYear)}
+            ${c.orcids.length ? ` · ORCID ${esc(c.orcids[0])}` : ''}<br>
+            ${esc((c.affiliations || [])[0] || 'No affiliation listed')}<br>
+            ${esc((c.topJournals || []).join(' · '))}
+          </div>
+          ${(c.samples || [])[0] ? `<div class="ident-samp">e.g. “${esc(c.samples[0].title)}”</div>` : ''}
+        </div>`).join('');
+    }
+  } else if (P.profile === 'loading') {
+    body = `<div class="status"><span class="spin"></span>Fetching ${esc(P.chosen.displayName)}'s publication record — verifying each paper is actually theirs…</div>`;
+  } else if (!P.profile) {
+    body = `<div class="empty-note">${esc(P.error || 'Preview failed.')}</div>`;
+  } else {
+    const pr = P.profile;
+    const papers = (pr.papers || []).slice()
+      .sort((a, b) => (b.date || '').localeCompare(a.date || ''));
+    const years = Object.keys(pr.stats && pr.stats.byYear || {});
+    const weak = papers.filter(a => a.match && a.match.confidence === 'weak').length;
+    const tracked = pr.alreadyTracked || P.chosen.alreadyTracked;
+    body = `
+      <div class="prev-head">
+        <div class="prev-name">${esc(pr.displayName)}</div>
+        ${tracked
+          ? `<span class="status ok" style="min-height:0">Already tracked</span>`
+          : `<button class="btn primary sm" id="prev-track">+ Track this author</button>`}
+        <button class="btn sm" id="prev-back">← All identities</button>
+      </div>
+      <div class="prev-meta">
+        ${papers.length} VERIFIED PAPER${papers.length === 1 ? '' : 'S'}
+        ${years.length ? ` · ${years[0]}–${years[years.length - 1]}` : ''}
+        · ${pr.asdPaperCount || 0} ASD-RELEVANT
+        ${(pr.orcids || []).length ? ` · ORCID ${esc(pr.orcids[0])}` : ''}<br>
+        ${esc((pr.affiliations || [])[0] || '')}
+        ${weak ? `<br><span style="color:var(--neon-interv)">${weak} match${weak === 1 ? 'es' : ''} on name only — nothing corroborates ${weak === 1 ? 'it' : 'them'}</span>` : ''}
+      </div>
+      <div class="status" id="prev-status"></div>
+      <div style="margin-top:10px">
+        ${papers.map(a => {
+          const role = ROLES.find(r => r.key === a.role);
+          const w = a.match && a.match.confidence === 'weak';
+          return `<div class="prev-paper">
+            <span class="pp-date">${esc((a.date || '').slice(0, 4))}</span>
+            <span class="pp-role" style="color:${role ? role.color : 'var(--ink-2)'}">${esc(role ? role.label : (a.role || ''))}</span>
+            <a class="pp-title" href="${esc(a.url)}" target="_blank" rel="noopener">${esc(a.title)}</a>
+            <span class="pp-sub">
+              <span>${esc(a.journal || '')}</span>
+              ${a.isPreprint ? '<span class="pp-flag">PREPRINT</span>' : ''}
+              ${w ? `<span class="pp-flag warn" title="${esc(a.match.reason)}">NAME ONLY</span>` : ''}
+              ${(a.updates || []).length ? `<span class="pp-flag">${(a.updates || []).length} UPDATE${(a.updates || []).length === 1 ? '' : 'S'}</span>` : ''}
+            </span>
+          </div>`;
+        }).join('') || '<div class="empty-note">No papers survived identity verification for this cluster.</div>'}
+      </div>`;
+  }
+
+  main.innerHTML = `<div class="panel">
+    <h3>// PubMed author search</h3>
+    <div class="prev-head" style="margin-bottom:8px">
+      <div style="font-size:17px">“${esc(P.query)}”</div>
+      <button class="btn sm" id="prev-close">✕ Close</button>
+    </div>
+    ${body}
+  </div>`;
+
+  $('prev-close').onclick = closePreview;
+  const bk = $('prev-back');
+  if (bk) bk.onclick = () => { PREVIEW.chosen = null; PREVIEW.profile = null; PREVIEW.error = null; renderPreview(); };
+  const tr = $('prev-track');
+  if (tr) tr.onclick = trackFromPreview;
+  document.querySelectorAll('[data-prev-i]').forEach(el =>
+    el.onclick = () => previewIdentity(+el.dataset.prevI));
+}
 
 async function doSearch() {
   const name = $('name-input').value.trim();
@@ -1148,7 +1441,7 @@ async function doSearch() {
     const r = await api('/api/author-resolve', { name });
     if (!r.ok) { setStatus('add-status', r.error, 'err'); return; }
     const ids = r.identities || [];
-    if (!ids.length) { setStatus('add-status', 'No PubMed authors matched that name.', 'err'); return; }
+    if (!ids.length) { setStatus('add-status', 'No PubMed authors matched that name — try another form of it, or use “Add manually” below.', 'err'); return; }
     setStatus('add-status', `${ids.length} distinct ${ids.length === 1 ? 'person' : 'people'} match that name — pick the researcher you mean.`, '');
     $('identities').innerHTML = ids.map((c, i) => `
       <div class="ident ${c.alreadyTracked ? 'tracked' : ''}" data-i="${i}">
@@ -1168,7 +1461,7 @@ async function doSearch() {
   } catch (e) { setStatus('add-status', 'Search failed: ' + e.message, 'err'); }
 }
 
-async function trackIdentity(cluster) {
+async function trackIdentity(cluster, note) {
   const branches = Object.entries(DATA.branches);
   let branch = '';
   if (branches.length) {
@@ -1180,7 +1473,7 @@ async function trackIdentity(cluster) {
   $('identities').innerHTML = '';
   setStatus('add-status', `Fetching ${cluster.displayName}'s publication record…`, 'spin');
   try {
-    const r = await api('/api/author-track', { identity: cluster, branch });
+    const r = await api('/api/author-track', { identity: cluster, branch, note: note || '' });
     if (!r.ok) { setStatus('add-status', r.error || 'Could not create profile.', 'err'); return; }
     SELECTED = r.key;
     $('add-backdrop').classList.remove('open');
