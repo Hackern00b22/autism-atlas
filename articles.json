@@ -435,11 +435,17 @@
    "pubmedQuery": "(\"fMRI\"[Title/Abstract] OR \"functional MRI\"[Title/Abstract] OR \"functional connectivity\"[Title/Abstract] OR \"resting-state\"[Title/Abstract] OR \"EEG\"[Title/Abstract] OR \"MEG\"[Title/Abstract] OR \"ERP\"[Title/Abstract] OR \"event-related potential*\"[Title/Abstract] OR \"neuroimaging\"[Title/Abstract] OR \"brain imaging\"[Title/Abstract] OR \"diffusion tensor\"[Title/Abstract] OR \"DTI\"[Title/Abstract] OR \"tractography\"[Title/Abstract] OR \"neural circuit*\"[Title/Abstract] OR \"connectivity\"[Title/Abstract] OR \"cortical\"[Title/Abstract] OR \"cortical thickness\"[Title/Abstract] OR \"gray matter\"[Title/Abstract] OR \"white matter\"[Title/Abstract] OR \"amygdala\"[Title/Abstract] OR \"cerebellum\"[Title/Abstract] OR \"excitation\"[Title/Abstract] OR \"inhibition\"[Title/Abstract] OR \"GABA\"[Title/Abstract] OR \"glutamate\"[Title/Abstract] OR \"synaptic\"[Title/Abstract] OR \"default mode\"[Title/Abstract] OR \"oscillation*\"[Title/Abstract])",
    "minYear": 2021,
    "learned": {
-    "include": {},
+    "include": {
+     "Magnetic Resonance Imaging": {
+      "w": 1.099,
+      "pos": 2,
+      "neg": 0
+     }
+    },
     "exclude": {},
-    "pos_events": 3,
+    "pos_events": 5,
     "neg_events": 0,
-    "updatedAt": "2026-08-06"
+    "updatedAt": "2026-08-25"
    },
    "lastFetched": "2026-08-24"
   },

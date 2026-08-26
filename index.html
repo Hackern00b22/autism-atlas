@@ -260,12 +260,33 @@
   }
   @media (max-width: 1000px) { .hint { display: none; } }
 
+  /* NAV TOOLBAR — one container for every header button. The buttons used to
+     be individually position:fixed with hand-tuned right offsets, and every
+     new page meant re-tuning them all (Press and NIH ended up stacked under
+     Authors when the top row filled). A wrapping flex row can't overlap:
+     buttons that don't fit flow onto the next line, right-aligned. */
+  .nav-toolbar {
+    position: fixed;
+    top: 22px;
+    left: 360px;             /* clears the brand */
+    right: 240px;            /* clears the meta panel */
+    z-index: 20;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    align-content: flex-start;
+    gap: 10px;
+    pointer-events: none;
+  }
+  .nav-toolbar > * { pointer-events: auto; flex: none; }
+  @media (max-width: 1150px) {
+    /* not enough top-bar width for brand + buttons + meta:
+       drop below the brand and use the full width */
+    .nav-toolbar { top: 96px; left: 32px; right: 32px; justify-content: flex-start; }
+  }
+
   /* DEFINITIONS BUTTON */
   .def-button {
-    position: fixed;
-    top: 24px;
-    right: 240px;  /* sits to the LEFT of the meta panel */
-    z-index: 20;
     background: var(--surface-1);
     backdrop-filter: var(--blur);
     -webkit-backdrop-filter: var(--blur);
@@ -291,12 +312,8 @@
     font-size: 14.5px;
   }
 
-  /* WHAT'S NEW BUTTON — sits to the left of Definitions */
+  /* WHAT'S NEW BUTTON */
   .new-button {
-    position: fixed;
-    top: 24px;
-    right: 380px;
-    z-index: 20;
     background: var(--surface-1);
     backdrop-filter: var(--blur);
     -webkit-backdrop-filter: var(--blur);
@@ -334,17 +351,8 @@
     box-shadow: none;
   }
 
-  @media (max-width: 1100px) {
-    .new-button { right: 32px; top: auto; bottom: 260px; }
-    .def-button { right: 32px; top: auto; bottom: 200px; }
-  }
-
   /* AGENT LAB BUTTON */
   .lab-button {
-    position: fixed;
-    top: 24px;
-    right: 540px;
-    z-index: 20;
     background: var(--surface-1);
     backdrop-filter: var(--blur);
     -webkit-backdrop-filter: var(--blur);
@@ -369,16 +377,8 @@
     content: '⬢';
     font-size: 13.5px;
   }
-  @media (max-width: 1100px) {
-    .lab-button { right: 32px; top: auto; bottom: 320px; }
-  }
-
-  /* BOOKMARKS BUTTON — sits to the left of Agent Lab */
+  /* BOOKMARKS BUTTON */
   .bm-button {
-    position: fixed;
-    top: 24px;
-    right: 700px;
-    z-index: 20;
     background: var(--surface-1);
     backdrop-filter: var(--blur);
     -webkit-backdrop-filter: var(--blur);
@@ -405,16 +405,9 @@
   }
   .bm-button:hover .bm-count { background: var(--invert-bg); color: var(--gold); }
   .bm-button .bm-count:empty { display: none; }
-  @media (max-width: 1100px) {
-    .bm-button { right: 32px; top: auto; bottom: 380px; }
-  }
-
-  /* AUTHOR TRACKER — leftmost; leaves the network view for authors.html */
+  /* AUTHOR TRACKER — leaves the network view for authors.html; also the
+     shared base style for the Press and NIH nav links */
   .auth-button {
-    position: fixed;
-    top: 24px;
-    right: 860px;
-    z-index: 20;
     background: var(--surface-1);
     backdrop-filter: var(--blur);
     -webkit-backdrop-filter: var(--blur);
@@ -436,15 +429,8 @@
     box-shadow: 0 0 20px rgba(255, 43, 214, 0.5);
   }
   .auth-button::before { content: '◈'; font-size: 13.5px; }
-  @media (max-width: 1100px) {
-    .auth-button { right: 32px; top: auto; bottom: 440px; }
-  }
-
-  /* PRESS RELEASES — directly under the author tracker (the top row is full
-     at laptop widths); leaves for press.html */
+  /* PRESS RELEASES — leaves for press.html */
   .press-button {
-    top: 74px;
-    right: 860px;
     border-color: var(--neon-neuro);
     color: var(--neon-neuro);
     box-shadow: 0 0 12px rgba(255, 176, 32, 0.2);
@@ -454,9 +440,18 @@
     box-shadow: 0 0 20px rgba(255, 176, 32, 0.5);
   }
   .press-button::before { content: '◍'; }
-  @media (max-width: 1100px) {
-    .press-button { right: 32px; top: auto; bottom: 500px; }
+
+  /* NIH FUNDING — leaves for nih.html */
+  .nih-button {
+    border-color: var(--neon-gen);
+    color: var(--neon-gen);
+    box-shadow: 0 0 12px rgba(122, 92, 255, 0.2);
   }
+  .nih-button:hover {
+    background: var(--neon-gen); color: var(--on-accent);
+    box-shadow: 0 0 20px rgba(122, 92, 255, 0.5);
+  }
+  .nih-button::before { content: '◎'; }
 
   .ni-meta .bm-toggle { cursor: pointer; }
   .ni-meta .bm-toggle.on { background: var(--gold); color: var(--on-accent); }
@@ -1826,12 +1821,15 @@
   <h3>// Click a branch to explore</h3>
 </div>
 
-<a class="press-button auth-button" href="press.html" aria-label="Open press releases">Press</a>
-<a class="auth-button" href="authors.html" aria-label="Open author tracker">Authors</a>
-<button class="bm-button" id="bm-button" aria-label="Open bookmarks">Bookmarks <span class="bm-count" id="bm-count"></span></button>
-<button class="lab-button" id="lab-button" aria-label="Open Agent Lab">Agent Lab</button>
-<button class="new-button" id="new-button" aria-label="See what's new">What's New <span class="pulse-dot"></span></button>
-<button class="def-button" id="def-button" aria-label="Open definitions">Definitions</button>
+<div class="nav-toolbar">
+  <a class="auth-button" href="authors.html" aria-label="Open author tracker">Authors</a>
+  <a class="press-button auth-button" href="press.html" aria-label="Open press releases">Press</a>
+  <a class="nih-button auth-button" href="nih.html" aria-label="Open NIH funding tracker">NIH</a>
+  <button class="bm-button" id="bm-button" aria-label="Open bookmarks">Bookmarks <span class="bm-count" id="bm-count"></span></button>
+  <button class="lab-button" id="lab-button" aria-label="Open Agent Lab">Agent Lab</button>
+  <button class="new-button" id="new-button" aria-label="See what's new">What's New <span class="pulse-dot"></span></button>
+  <button class="def-button" id="def-button" aria-label="Open definitions">Definitions</button>
+</div>
 
 <div class="hint">CLICK A BRANCH NODE · ◈ AUTHORS · ⬢ AGENT LAB · ◆ WHAT'S NEW · ⌕ SEARCH · ⇩ EXPORT · ESC TO CLOSE</div>
 
