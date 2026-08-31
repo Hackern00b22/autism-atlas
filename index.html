@@ -4,11 +4,26 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>TMF Malone ASD EurekaAlert Database</title>
+<meta name="theme-color" content="#05060a">
+<script>
+/* Blocking on purpose: the stylesheet defaults to dark, so setting the saved
+   theme after the body paints gives light-theme users a dark flash. */
+(function () {
+  try {
+    var t = localStorage.getItem('arn-theme-v1');
+    if (!t) t = matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
+    document.documentElement.setAttribute('data-theme', t);
+    var m = document.querySelector('meta[name="theme-color"]');
+    if (m) m.setAttribute('content', t === 'light' ? '#DFE5EE' : '#05060a');
+  } catch (e) {}
+})();
+</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;700&family=Space+Grotesk:wght@300;400;500;700&display=swap" rel="stylesheet">
 <style>
   :root {
+    color-scheme: dark;
     /* Triplets, not colours: every translucent border and panel fill in this
        file is one of these three hues at some alpha, so theming them here is
        what makes a light mode possible at all. */
@@ -99,6 +114,7 @@
      swapped for something else. The ground is a faintly cool white rather than
      pure #fff, which is what keeps the hairline borders visible. */
   :root[data-theme="light"] {
+    color-scheme: light;
     /* A soft slate paper, not a lightbox. Near-white read as glaring against a
        full-screen canvas, so the ground is dropped well below white and the
        panels sit just above it — the lift comes from the step between them
@@ -172,9 +188,13 @@
     position: fixed; top: 0; left: 0; right: 0;
     padding: 22px 32px;
     display: flex; justify-content: space-between; align-items: flex-start;
+    gap: 18px;
     z-index: 10; pointer-events: none;
   }
   .hud > * { pointer-events: auto; }
+  /* The toolbar manages its own children's pointer-events so the wrapping
+     row doesn't block canvas drags in its empty stretches. */
+  .hud > .nav-toolbar { pointer-events: none; }
   .brand {
     font-family: 'JetBrains Mono', ui-monospace, 'SF Mono', SFMono-Regular, Menlo, Consolas, monospace;
     font-size: 12.5px; letter-spacing: 0.28em;
@@ -220,8 +240,9 @@
     margin-bottom: 14px; font-weight: 400;
   }
   .legend-item {
-    display: flex; align-items: center; gap: 10px;
+    display: flex; align-items: center; gap: 10px; width: 100%;
     padding: 5px 0; font-size: 13.5px; color: var(--ink-1);
+    background: transparent; border: 0; font-family: inherit; text-align: left;
     cursor: pointer; transition: color 0.2s; user-select: none;
   }
   .legend-item:hover { color: var(--ink-0); }
@@ -260,17 +281,17 @@
   }
   @media (max-width: 1000px) { .hint { display: none; } }
 
-  /* NAV TOOLBAR — one container for every header button. The buttons used to
-     be individually position:fixed with hand-tuned right offsets, and every
-     new page meant re-tuning them all (Press and NIH ended up stacked under
-     Authors when the top row filled). A wrapping flex row can't overlap:
-     buttons that don't fit flow onto the next line, right-aligned. */
+  /* NAV TOOLBAR — one container for every header button, living INSIDE the
+     .hud flex row between the brand and the meta panel. It used to be a
+     separate position:fixed layer with hand-tuned left/right clearances
+     (360px/240px), which painted over the meta's UPDATED line whenever the
+     buttons wrapped — fixed offsets can reserve space but can't yield it. As
+     a flex sibling it can never overlap either neighbour: buttons that don't
+     fit wrap onto a new right-aligned line below, growing the row instead of
+     covering it. */
   .nav-toolbar {
-    position: fixed;
-    top: 22px;
-    left: 360px;             /* clears the brand */
-    right: 240px;            /* clears the meta panel */
-    z-index: 20;
+    flex: 1 1 auto;
+    min-width: 0;
     display: flex;
     flex-wrap: wrap;
     justify-content: flex-end;
@@ -279,10 +300,24 @@
     pointer-events: none;
   }
   .nav-toolbar > * { pointer-events: auto; flex: none; }
-  @media (max-width: 1150px) {
-    /* not enough top-bar width for brand + buttons + meta:
-       drop below the brand and use the full width */
-    .nav-toolbar { top: 96px; left: 32px; right: 32px; justify-content: flex-start; }
+  .hud .brand, .hud .meta { flex: 0 0 auto; }
+  /* Below ~1720px the full button row can't share a line with the brand and
+     the meta (their combined min widths exceed the viewport), so the toolbar
+     takes its own full-width second row instead of stacking a ragged column
+     in the middle. The buttons also slim down (tracking + padding) so all
+     seven still fit on ONE line at laptop widths — two rows of chrome eat
+     into the canvas and sit on top of the node circles. */
+  @media (max-width: 1720px) {
+    .hud { flex-wrap: wrap; row-gap: 8px; }
+    .hud .meta { order: 2; }
+    .nav-toolbar { order: 3; flex-basis: 100%; }
+    .hud .nav-toolbar > * {
+      font-size: 12px; letter-spacing: 0.12em; padding: 8px 12px; gap: 6px;
+    }
+  }
+  @media (max-width: 1240px) {
+    /* Genuinely too narrow for one row — allow the wrap again. */
+    .hud .nav-toolbar { justify-content: flex-start; }
   }
 
   /* DEFINITIONS BUTTON */
@@ -299,7 +334,7 @@
     border-radius: 4px;
     cursor: pointer;
     display: flex; align-items: center; gap: 8px;
-    transition: all 0.18s;
+    transition: color 0.18s, background-color 0.18s, border-color 0.18s, box-shadow 0.18s, transform 0.18s, opacity 0.18s;
     box-shadow: 0 0 12px rgba(0, 240, 255, 0.25);
   }
   .def-button:hover {
@@ -326,7 +361,7 @@
     border-radius: 4px;
     cursor: pointer;
     display: flex; align-items: center; gap: 8px;
-    transition: all 0.18s;
+    transition: color 0.18s, background-color 0.18s, border-color 0.18s, box-shadow 0.18s, transform 0.18s, opacity 0.18s;
     box-shadow: 0 0 12px rgba(182, 255, 60, 0.2);
   }
   .new-button:hover {
@@ -365,7 +400,7 @@
     border-radius: 4px;
     cursor: pointer;
     display: flex; align-items: center; gap: 8px;
-    transition: all 0.18s;
+    transition: color 0.18s, background-color 0.18s, border-color 0.18s, box-shadow 0.18s, transform 0.18s, opacity 0.18s;
     box-shadow: 0 0 12px rgba(255, 43, 214, 0.2);
   }
   .lab-button:hover {
@@ -391,7 +426,7 @@
     border-radius: 4px;
     cursor: pointer;
     display: flex; align-items: center; gap: 8px;
-    transition: all 0.18s;
+    transition: color 0.18s, background-color 0.18s, border-color 0.18s, box-shadow 0.18s, transform 0.18s, opacity 0.18s;
     box-shadow: 0 0 12px rgba(255, 217, 122, 0.2);
   }
   .bm-button:hover {
@@ -420,7 +455,7 @@
     border-radius: 4px;
     cursor: pointer;
     display: flex; align-items: center; gap: 8px;
-    transition: all 0.18s;
+    transition: color 0.18s, background-color 0.18s, border-color 0.18s, box-shadow 0.18s, transform 0.18s, opacity 0.18s;
     text-decoration: none;
     box-shadow: 0 0 12px rgba(255, 43, 214, 0.2);
   }
@@ -460,7 +495,7 @@
     cursor: pointer; user-select: none; color: var(--gold);
     border: 1px solid rgba(255, 217, 122, 0.4); border-radius: 4px;
     padding: 1px 7px; font-size: 11.5px; letter-spacing: 0.08em;
-    transition: all 0.15s; white-space: nowrap;
+    transition: color 0.15s, background-color 0.15s, border-color 0.15s, box-shadow 0.15s, transform 0.15s, opacity 0.15s; white-space: nowrap;
   }
   .bm-toggle:hover { background: rgba(255, 217, 122, 0.15); }
   .bm-toggle.on { background: var(--gold); color: var(--on-accent); border-color: var(--gold); }
@@ -470,7 +505,7 @@
   .fb-up, .fb-down {
     cursor: pointer; user-select: none; opacity: 0.4;
     font-size: 13.5px; line-height: 1; padding: 1px 4px; border-radius: 3px;
-    transition: all 0.15s;
+    transition: color 0.15s, background-color 0.15s, border-color 0.15s, box-shadow 0.15s, transform 0.15s, opacity 0.15s;
   }
   .fb-up:hover, .fb-down:hover { opacity: 1; }
   .fb-up.on { opacity: 1; background: rgba(45, 212, 191, 0.28); }
@@ -533,7 +568,7 @@
     padding: 14px 18px;
     cursor: pointer;
     border-bottom: 2px solid transparent;
-    transition: all 0.15s;
+    transition: color 0.15s, background-color 0.15s, border-color 0.15s, box-shadow 0.15s, transform 0.15s, opacity 0.15s;
     margin-bottom: -1px;
   }
   .lab-tab:hover { color: var(--ink-0); }
@@ -598,7 +633,7 @@
     padding: 5px 10px;
     border-radius: 3px;
     cursor: pointer;
-    transition: all 0.15s;
+    transition: color 0.15s, background-color 0.15s, border-color 0.15s, box-shadow 0.15s, transform 0.15s, opacity 0.15s;
     white-space: nowrap;
   }
   .lab-ssl-toggle:hover {
@@ -663,7 +698,7 @@
     text-transform: uppercase;
     font-weight: 600;
     cursor: pointer;
-    transition: all 0.15s;
+    transition: color 0.15s, background-color 0.15s, border-color 0.15s, box-shadow 0.15s, transform 0.15s, opacity 0.15s;
   }
   .lab-btn:hover { box-shadow: 0 0 16px rgba(255, 43, 214, 0.5); }
   .lab-btn:disabled {
@@ -801,7 +836,7 @@
     text-transform: uppercase;
     font-weight: 600;
     cursor: pointer;
-    transition: all 0.15s;
+    transition: color 0.15s, background-color 0.15s, border-color 0.15s, box-shadow 0.15s, transform 0.15s, opacity 0.15s;
   }
   .lab-card .lab-add-btn:hover { box-shadow: 0 0 12px rgba(182, 255, 60, 0.45); }
   .lab-card .lab-add-btn:disabled {
@@ -875,7 +910,7 @@
     border: 1px solid rgba(var(--line-rgb), 0.2);
     color: var(--ink-1); padding: 6px 11px; border-radius: 3px;
     font-family: 'JetBrains Mono', ui-monospace, 'SF Mono', SFMono-Regular, Menlo, Consolas, monospace; font-size: 11.5px;
-    cursor: pointer; transition: all 0.15s;
+    cursor: pointer; transition: color 0.15s, background-color 0.15s, border-color 0.15s, box-shadow 0.15s, transform 0.15s, opacity 0.15s;
   }
   .ask-chip:hover { border-color: var(--neon-immuno); color: var(--neon-immuno); }
   .ask-q {
@@ -901,7 +936,7 @@
     border: 1px solid rgba(var(--line-rgb), 0.14);
     border-left: 2px solid var(--hit-color, #5d6783);
     border-radius: 3px; padding: 10px 13px; margin-bottom: 8px;
-    transition: all 0.15s;
+    transition: color 0.15s, background-color 0.15s, border-color 0.15s, box-shadow 0.15s, transform 0.15s, opacity 0.15s;
   }
   .ask-hit:hover { border-color: rgba(var(--line-rgb), 0.4); background: rgba(var(--line-rgb), 0.04); }
   .ask-hit-title { color: var(--ink-0); font-size: 14.5px; line-height: 1.45; margin-bottom: 6px; }
@@ -924,7 +959,7 @@
     color: var(--ink-2); padding: 5px 10px; border-radius: 3px;
     font-family: 'JetBrains Mono', ui-monospace, 'SF Mono', SFMono-Regular, Menlo, Consolas, monospace; font-size: 11px;
     letter-spacing: 0.1em; text-transform: uppercase; cursor: pointer;
-    transition: all 0.15s;
+    transition: color 0.15s, background-color 0.15s, border-color 0.15s, box-shadow 0.15s, transform 0.15s, opacity 0.15s;
   }
   .ask-act:hover { border-color: var(--neon-immuno); color: var(--neon-immuno); }
   .ask-act.on { border-color: var(--neon-cyto); color: var(--neon-cyto); }
@@ -1087,7 +1122,7 @@
     border-left: 2px solid var(--priority-color, var(--ink-2));
     border-radius: 3px;
     text-decoration: none; color: inherit;
-    transition: all 0.15s;
+    transition: color 0.15s, background-color 0.15s, border-color 0.15s, box-shadow 0.15s, transform 0.15s, opacity 0.15s;
   }
   .new-item:hover {
     background: rgba(var(--line-rgb), 0.05);
@@ -1156,7 +1191,7 @@
     padding: 0 10px;
     border-radius: 3px;
     cursor: pointer;
-    transition: all 0.15s;
+    transition: color 0.15s, background-color 0.15s, border-color 0.15s, box-shadow 0.15s, transform 0.15s, opacity 0.15s;
   }
   .ni-dismiss:hover, .run-dismiss:hover {
     border-color: var(--neon-interv);
@@ -1285,7 +1320,7 @@
     border-radius: 4px;
     font-family: 'JetBrains Mono', ui-monospace, 'SF Mono', SFMono-Regular, Menlo, Consolas, monospace;
     font-size: 17px; cursor: pointer;
-    transition: all 0.15s;
+    transition: color 0.15s, background-color 0.15s, border-color 0.15s, box-shadow 0.15s, transform 0.15s, opacity 0.15s;
     display: flex; align-items: center; justify-content: center;
     flex-shrink: 0; margin-left: 16px;
   }
@@ -1338,7 +1373,7 @@
     font-family: 'JetBrains Mono', ui-monospace, 'SF Mono', SFMono-Regular, Menlo, Consolas, monospace;
     font-size: 11.5px; letter-spacing: 0.1em;
     text-transform: uppercase; cursor: pointer;
-    transition: all 0.15s;
+    transition: color 0.15s, background-color 0.15s, border-color 0.15s, box-shadow 0.15s, transform 0.15s, opacity 0.15s;
     display: flex; align-items: center; gap: 6px;
   }
   .pf-chip:hover { color: var(--ink-0); border-color: rgba(var(--line-rgb), 0.4); }
@@ -1392,7 +1427,7 @@
     font-family: 'JetBrains Mono', ui-monospace, 'SF Mono', SFMono-Regular, Menlo, Consolas, monospace;
     font-size: 11.5px; letter-spacing: 0.1em;
     text-transform: uppercase; cursor: pointer;
-    transition: all 0.15s;
+    transition: color 0.15s, background-color 0.15s, border-color 0.15s, box-shadow 0.15s, transform 0.15s, opacity 0.15s;
   }
   /* Scope toggle: this node vs the whole library. The filter has always been
      node-scoped, which silently returns nothing when you search for a paper
@@ -1405,7 +1440,7 @@
     cursor: pointer; user-select: none;
     padding: 7px 10px; border-radius: 3px;
     border: 1px solid rgba(var(--line-rgb), 0.18);
-    transition: all 0.15s;
+    transition: color 0.15s, background-color 0.15s, border-color 0.15s, box-shadow 0.15s, transform 0.15s, opacity 0.15s;
   }
   .scope-toggle:hover { border-color: rgba(var(--line-rgb), 0.4); color: var(--ink-1); }
   .scope-toggle input { accent-color: var(--neon-immuno); cursor: pointer; margin: 0; }
@@ -1472,7 +1507,7 @@
     font-family: 'JetBrains Mono', ui-monospace, 'SF Mono', SFMono-Regular, Menlo, Consolas, monospace;
     font-size: 11px; letter-spacing: 0.15em;
     text-transform: uppercase; cursor: pointer;
-    transition: all 0.15s;
+    transition: color 0.15s, background-color 0.15s, border-color 0.15s, box-shadow 0.15s, transform 0.15s, opacity 0.15s;
   }
   .sort-btn:hover { color: var(--ink-0); }
   .sort-btn.active {
@@ -1489,7 +1524,7 @@
     border-left: 3px solid var(--priority-color, var(--accent, var(--neon-immuno)));
     border-radius: 3px;
     text-decoration: none; color: inherit;
-    transition: all 0.15s; cursor: pointer;
+    transition: color 0.15s, background-color 0.15s, border-color 0.15s, box-shadow 0.15s, transform 0.15s, opacity 0.15s; cursor: pointer;
     position: relative;
   }
   .article:hover {
@@ -1743,7 +1778,7 @@
     position: fixed; z-index: 300; pointer-events: none; display: none;
     border: 1px solid rgba(255,43,214,0.6); border-radius: 8px;
     box-shadow: 0 0 0 9999px var(--scrim), 0 0 34px rgba(255,43,214,0.25);
-    transition: all 0.45s cubic-bezier(0.25, 0.8, 0.3, 1);
+    transition: left 0.45s cubic-bezier(0.25, 0.8, 0.3, 1), top 0.45s cubic-bezier(0.25, 0.8, 0.3, 1), width 0.45s cubic-bezier(0.25, 0.8, 0.3, 1), height 0.45s cubic-bezier(0.25, 0.8, 0.3, 1);
   }
   body.demo-on .demo-spot { display: block; }
   .demo-spot.bare { border-color: transparent; }
@@ -1767,7 +1802,7 @@
   .demo-nav button {
     background: transparent; border: 1px solid rgba(var(--line-rgb), 0.2); color: var(--ink-2);
     font-family: 'JetBrains Mono', ui-monospace, 'SF Mono', SFMono-Regular, Menlo, Consolas, monospace; font-size: 11px; letter-spacing: 0.18em;
-    text-transform: uppercase; padding: 6px 11px; border-radius: 2px; cursor: pointer; transition: all 0.15s;
+    text-transform: uppercase; padding: 6px 11px; border-radius: 2px; cursor: pointer; transition: color 0.15s, background-color 0.15s, border-color 0.15s, box-shadow 0.15s, transform 0.15s, opacity 0.15s;
   }
   .demo-nav button:hover { color: var(--ink-0); border-color: rgba(var(--line-rgb), 0.45); }
   .demo-nav .demo-exit { margin-left: auto; }
@@ -1781,13 +1816,29 @@
   .tier-review               { --priority-color: var(--tier-review); }
   .tier-unclassified         { --priority-color: var(--tier-uncl); }
   .tier-other                { --priority-color: var(--tier-other); }
+
+  /* ---- polish pass: numeric alignment, focus, touch, motion ---- */
+  .legend-count, .meta, .pf-chip .count, .bm-count, .lab-count,
+  .run-count, .result-count, .if-badge { font-variant-numeric: tabular-nums; }
+  :focus-visible { outline: 2px solid var(--neon-immuno); outline-offset: 2px; }
+  html { -webkit-tap-highlight-color: transparent; }
+  #network { touch-action: none; }
+  .modal-body, .lab-body, .def-body, .new-body, .ask-log { overscroll-behavior: contain; }
+  .nav-toolbar > *:active, .search-fab:active, .export-fab:active,
+  .theme-fab:active, .demo-fab:active, .legend-item:active { transform: translateY(1px); }
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      animation-duration: 0.01ms !important; animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
 </style>
 </head>
 <body>
 
 <div id="boot">
   <div class="spinner"></div>
-  <div class="msg" id="boot-msg">LOADING DATABASE...</div>
+  <div class="msg" id="boot-msg">LOADING DATABASE…</div>
   <div class="err" id="boot-err">
     <strong>Couldn't load articles.json.</strong><br><br>
     This file needs to be served from a web server (not opened directly as <code>file://</code>) because browsers block local <code>fetch()</code> for security.<br><br>
@@ -1809,6 +1860,15 @@
     TMF MALONE / ASD EUREKA ALERT v5.0
     <span class="title">ASD <em>EurekaAlert</em> Database</span>
   </div>
+  <div class="nav-toolbar">
+    <a class="auth-button" href="authors.html" aria-label="Open author tracker">Authors</a>
+    <a class="press-button auth-button" href="press.html" aria-label="Open press releases">Press</a>
+    <a class="nih-button auth-button" href="nih.html" aria-label="Open NIH funding tracker">NIH</a>
+    <button class="bm-button" id="bm-button" aria-label="Open bookmarks">Bookmarks <span class="bm-count" id="bm-count"></span></button>
+    <button class="lab-button" id="lab-button" aria-label="Open Agent Lab">Agent Lab</button>
+    <button class="new-button" id="new-button" aria-label="See what's new">What's New <span class="pulse-dot"></span></button>
+    <button class="def-button" id="def-button" aria-label="Open definitions">Definitions</button>
+  </div>
   <div class="meta">
     <span class="dot"></span>BRANCHES: <span id="branch-count">—</span><br>
     JOURNALS: <span id="journal-count">—</span><br>
@@ -1819,16 +1879,6 @@
 
 <div class="legend" id="legend">
   <h3>// Click a branch to explore</h3>
-</div>
-
-<div class="nav-toolbar">
-  <a class="auth-button" href="authors.html" aria-label="Open author tracker">Authors</a>
-  <a class="press-button auth-button" href="press.html" aria-label="Open press releases">Press</a>
-  <a class="nih-button auth-button" href="nih.html" aria-label="Open NIH funding tracker">NIH</a>
-  <button class="bm-button" id="bm-button" aria-label="Open bookmarks">Bookmarks <span class="bm-count" id="bm-count"></span></button>
-  <button class="lab-button" id="lab-button" aria-label="Open Agent Lab">Agent Lab</button>
-  <button class="new-button" id="new-button" aria-label="See what's new">What's New <span class="pulse-dot"></span></button>
-  <button class="def-button" id="def-button" aria-label="Open definitions">Definitions</button>
 </div>
 
 <div class="hint">CLICK A BRANCH NODE · ◈ AUTHORS · ⬢ AGENT LAB · ◆ WHAT'S NEW · ⌕ SEARCH · ⇩ EXPORT · ESC TO CLOSE</div>
@@ -2110,7 +2160,7 @@ async function boot() {
   const msgEl = document.getElementById('boot-msg');
   const errEl = document.getElementById('boot-err');
   try {
-    msgEl.textContent = 'FETCHING ARTICLES.JSON...';
+    msgEl.textContent = 'FETCHING ARTICLES.JSON…';
     const resp = await fetch('articles.json', { cache: 'no-store' });
     if (!resp.ok) throw new Error('HTTP ' + resp.status);
     const data = await resp.json();
@@ -2132,7 +2182,7 @@ async function boot() {
     ARTICLES.forEach(resolveArticle);
     const askSize = document.getElementById('ask-lib-size');
     if (askSize) askSize.textContent = ARTICLES.length + ' articles';
-    msgEl.textContent = 'INITIALIZING NETWORK...';
+    msgEl.textContent = 'INITIALIZING NETWORK…';
     initApp();
     syncUIState();   // pull cross-device UI state (bookmarks/dismissals/feedback)
     setTimeout(() => bootEl.classList.add('hidden'), 250);
@@ -2158,7 +2208,8 @@ function initApp() {
     const n = ARTICLES.filter(a => a.branch === key).length;
     const alsoN = ARTICLES.filter(a => a.branch !== key && a.branches.includes(key)).length;
     const boostedN = ARTICLES.filter(a => a.branch === key && a.isBoosted).length;
-    const div = document.createElement('div');
+    const div = document.createElement('button');
+    div.type = 'button';
     div.className = 'legend-item';
     div.dataset.branch = key;
     div.innerHTML = `
@@ -2174,6 +2225,8 @@ function initApp() {
   buildNetwork();
   tick();
   updateNewIndicator();
+  // The legend only has its real footprint once it's populated.
+  cacheReservedRects();
 }
 
 const canvas = document.getElementById('network');
@@ -2185,8 +2238,23 @@ function resize() {
   canvas.width = W * DPR; canvas.height = H * DPR;
   canvas.style.width = W + 'px'; canvas.style.height = H + 'px';
   ctx.setTransform(DPR, 0, 0, DPR, 0, 0);
+  cacheReservedRects();
 }
 window.addEventListener('resize', resize);
+
+// Fixed chrome the node layout must flow around. The simulation only ever
+// knew about the viewport edges (a uniform pad), so the legend sat on top of
+// whichever node the radial layout dropped in the bottom-left corner.
+let RESERVED_RECTS = [];
+function cacheReservedRects() {
+  RESERVED_RECTS = [];
+  for (const sel of ['#legend', '.search-fab', '.export-fab', '.theme-fab', '.demo-fab']) {
+    const el = document.querySelector(sel);
+    if (!el) continue;
+    const r = el.getBoundingClientRect();
+    if (r.width && r.height) RESERVED_RECTS.push({ x0: r.left, y0: r.top, x1: r.right, y1: r.bottom });
+  }
+}
 
 const nodes = [];
 const links = [];
@@ -2303,6 +2371,24 @@ function simulate() {
     if (n.x > W - pad) n.vx -= (n.x - (W - pad)) * 0.05;
     if (n.y < pad) n.vy += (pad - n.y) * 0.05;
     if (n.y > H - pad) n.vy -= (n.y - (H - pad)) * 0.05;
+    // Soft push out of the legend / FAB footprints. The clearance covers the
+    // circle plus the label plate drawn below it (r + ~46px).
+    for (const rect of RESERVED_RECTS) {
+      const px = Math.max(rect.x0, Math.min(n.x, rect.x1));
+      const py = Math.max(rect.y0, Math.min(n.y, rect.y1));
+      let dx = n.x - px, dy = n.y - py;
+      let d = Math.sqrt(dx * dx + dy * dy);
+      const clear = n.r + 46;
+      if (d === 0) {
+        // Centre landed inside the rect — push toward the viewport centre.
+        dx = (W / 2) - n.x; dy = (H / 2) - n.y;
+        d = Math.sqrt(dx * dx + dy * dy) || 1;
+        n.vx += (dx / d) * 2; n.vy += (dy / d) * 2;
+      } else if (d < clear) {
+        const f = (clear - d) * 0.04;
+        n.vx += (dx / d) * f; n.vy += (dy / d) * f;
+      }
+    }
   }
 }
 
@@ -2345,6 +2431,8 @@ function refreshThemeColors() {
   });
 }
 
+const REDUCED_MOTION = window.matchMedia
+  && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 const THEME_KEY = 'arn-theme-v1';
 function applyTheme(mode) {
   document.documentElement.setAttribute('data-theme', mode);
@@ -2354,7 +2442,10 @@ function applyTheme(mode) {
   if (btn) {
     btn.textContent = mode === 'light' ? '\u25D3' : '\u25D2';
     btn.title = mode === 'light' ? 'Switch to dark' : 'Switch to light';
+    btn.setAttribute('aria-label', btn.title);
   }
+  const tm = document.querySelector('meta[name="theme-color"]');
+  if (tm) tm.setAttribute('content', mode === 'light' ? '#DFE5EE' : '#05060a');
   try { localStorage.setItem(THEME_KEY, mode); } catch (e) {}
 }
 function initTheme() {
@@ -2419,16 +2510,18 @@ function draw() {
     ctx.lineTo(bx, by);
     ctx.stroke();
 
-    const phase = ((t * 0.6) % 120) / 120;
-    const px = ax + (bx - ax) * phase;
-    const py = ay + (by - ay) * phase;
-    ctx.fillStyle = b.color;
-    ctx.shadowColor = b.color;
-    ctx.shadowBlur = 10;
-    ctx.beginPath();
-    ctx.arc(px, py, 2.2, 0, Math.PI * 2);
-    ctx.fill();
-    ctx.shadowBlur = 0;
+    if (!REDUCED_MOTION) {
+      const phase = ((t * 0.6) % 120) / 120;
+      const px = ax + (bx - ax) * phase;
+      const py = ay + (by - ay) * phase;
+      ctx.fillStyle = b.color;
+      ctx.shadowColor = b.color;
+      ctx.shadowBlur = 10;
+      ctx.beginPath();
+      ctx.arc(px, py, 2.2, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.shadowBlur = 0;
+    }
   }
 
   const order = nodes.slice().sort((a, b) => (a.type === 'core' ? 1 : 0) - (b.type === 'core' ? 1 : 0));
@@ -2485,13 +2578,13 @@ function draw() {
         ctx.beginPath();
         ctx.arc(n.x - n.r * 0.65, n.y - n.r * 0.65, 14, 0, Math.PI * 2);
         ctx.fill();
-        ctx.strokeStyle = '#ffd97a';
-        ctx.shadowColor = '#ffd97a';
+        ctx.strokeStyle = themeVar('--gold');
+        ctx.shadowColor = themeVar('--gold');
         ctx.shadowBlur = 8;
         ctx.lineWidth = 1;
         ctx.stroke();
         ctx.shadowBlur = 0;
-        ctx.fillStyle = '#ffd97a';
+        ctx.fillStyle = themeVar('--gold');
         ctx.font = '600 11px "JetBrains Mono", monospace';
         ctx.textAlign = 'center';
         ctx.textBaseline = 'middle';
@@ -2782,7 +2875,7 @@ function buildPriorityChips() {
 
   const allBtn = document.createElement('button');
   allBtn.className = 'pf-chip' + (activeTiers.size === 0 ? ' active' : '');
-  allBtn.style.setProperty('--chip-color', '#e6ecff');
+  allBtn.style.setProperty('--chip-color', 'var(--ink-0)');
   allBtn.innerHTML = `All <span class="count">${branchArticles.length}</span>`;
   allBtn.addEventListener('click', () => {
     activeTiers.clear();
@@ -2798,7 +2891,7 @@ function buildPriorityChips() {
     const allBoosted = [...boostedSet].every(t => activeTiers.has(t)) && activeTiers.size === 3;
     const boostBtn = document.createElement('button');
     boostBtn.className = 'pf-chip boosted' + (allBoosted ? ' active' : '');
-    boostBtn.style.setProperty('--chip-color', '#ffd97a');
+    boostBtn.style.setProperty('--chip-color', 'var(--gold)');
     boostBtn.innerHTML = `Boosted <span class="count">${boostedTotal}</span>`;
     boostBtn.title = 'Show only clinical trials, observations, and translational research';
     boostBtn.addEventListener('click', () => {
@@ -3008,17 +3101,17 @@ function renderArticleCard(a, showNode) {
   const visiting = !showNode && currentBranch && a.branch !== currentBranch;
   const homeNode = visiting && BRANCHES[a.branch] ? BRANCHES[a.branch].label : null;
   return `
-    <a class="article tier-${a.priority}${a.isBoosted ? ' boosted' : ''}" href="${a.url}" target="_blank" rel="noopener">
+    <a class="article tier-${a.priority}${a.isBoosted ? ' boosted' : ''}" href="${escapeHtml(a.url)}" target="_blank" rel="noopener">
       <div class="priority-badge${a.isBoosted ? ' boosted' : ''}">${escapeHtml(tierLabel)}</div>
       <div class="article-title">${escapeHtml(a.title)}</div>
       ${SNIPS[a.id] ? `<div class="abs-snip"><span class="snip-kind">${SNIPS[a.id].kind === 'mesh' ? 'MeSH' : 'Abstract'}</span>${escapeHtml(SNIPS[a.id].pre)}<mark>${escapeHtml(SNIPS[a.id].hit)}</mark>${escapeHtml(SNIPS[a.id].post)}</div>` : ''}
       <div class="article-meta">
-        <span class="bm-toggle${isBookmarked(a.id) ? ' on' : ''}" role="button" title="Bookmark this article"
+        <span class="bm-toggle${isBookmarked(a.id) ? ' on' : ''}" role="button" aria-label="Bookmark this article" tabindex="0" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();event.stopPropagation();this.click();}" title="Bookmark this article"
               onclick="event.preventDefault();event.stopPropagation();toggleBookmark('${a.id}',this);">${isBookmarked(a.id) ? '★ Saved' : '☆ Save'}</span>
         <span class="fb-ctl">
-          <span class="fb-up${fbState(a.id) === 1 ? ' on' : ''}" title="Relevant — teach this node to find more like it"
+          <span class="fb-up${fbState(a.id) === 1 ? ' on' : ''}" role="button" aria-label="Mark relevant" tabindex="0" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();event.stopPropagation();this.click();}" title="Relevant — teach this node to find more like it"
                 onclick="event.preventDefault();event.stopPropagation();nodeFeedback('${a.id}',1,this);">👍</span>
-          <span class="fb-down${fbState(a.id) === -1 ? ' on' : ''}" title="Not relevant — teach this node to avoid these"
+          <span class="fb-down${fbState(a.id) === -1 ? ' on' : ''}" role="button" aria-label="Mark not relevant" tabindex="0" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();event.stopPropagation();this.click();}" title="Not relevant — teach this node to avoid these"
                 onclick="event.preventDefault();event.stopPropagation();nodeFeedback('${a.id}',-1,this);">👎</span>
         </span>
         ${node ? `<span class="node-badge">${escapeHtml(node)}</span>` : ''}
@@ -3210,7 +3303,7 @@ function labCardHtml(article, opts = {}) {
       ${abstract}
       <div class="lab-card-actions">
         ${addControls}
-        <a class="lab-open-link" href="${article.url}" target="_blank" rel="noopener">↗ PubMed</a>
+        <a class="lab-open-link" href="${escapeHtml(article.url)}" target="_blank" rel="noopener">↗ PubMed</a>
       </div>
     </div>`;
 }
@@ -3499,7 +3592,7 @@ function askHitHtml(r) {
     : 'related by topic';
   return `
     <div class="ask-hit" style="--hit-color:${color};">
-      <a class="ask-hit-title" href="${a.url}" target="_blank" rel="noopener">${escapeHtml(a.title)}</a>
+      <a class="ask-hit-title" href="${escapeHtml(a.url)}" target="_blank" rel="noopener">${escapeHtml(a.title)}</a>
       <div class="ask-hit-meta">
         <span class="ask-rel" title="relevance ${Math.round(r.relevance * 100)}%"><i style="width:${Math.round(r.relevance * 100)}%"></i></span>
         <span class="ask-node">${escapeHtml((b && b.label) || r.branch || 'unfiled')}</span>
@@ -3511,7 +3604,7 @@ function askHitHtml(r) {
       <div class="ask-actions">
         <button class="ask-act ask-bm${isBookmarked(a.id) ? ' on' : ''}" data-id="${a.id}">${isBookmarked(a.id) ? '★ Saved' : '☆ Save'}</button>
         <button class="ask-act ask-more" data-id="${a.id}">More like this</button>
-        <a class="ask-act" href="${a.url}" target="_blank" rel="noopener">↗ PubMed</a>
+        <a class="ask-act" href="${escapeHtml(a.url)}" target="_blank" rel="noopener">↗ PubMed</a>
       </div>
     </div>`;
 }
@@ -4243,16 +4336,16 @@ function renderNewItem(a, dismissable) {
   const tier = TIERS[a.priority] || TIERS.other;
   const item = `
     <a class="new-item tier-${a.priority} ${a.isBoosted ? 'is-boosted' : ''}"
-       href="${a.url}" target="_blank" rel="noopener"
+       href="${escapeHtml(a.url)}" target="_blank" rel="noopener"
        style="--branch-color:${branchCol};">
       <div class="ni-title">${escapeHtml(a.title)}</div>
       <div class="ni-meta">
-        <span class="bm-toggle${isBookmarked(a.id) ? ' on' : ''}" role="button" title="Bookmark this article"
+        <span class="bm-toggle${isBookmarked(a.id) ? ' on' : ''}" role="button" aria-label="Bookmark this article" tabindex="0" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();event.stopPropagation();this.click();}" title="Bookmark this article"
               onclick="event.preventDefault();event.stopPropagation();toggleBookmark('${a.id}',this);">${isBookmarked(a.id) ? '★ Saved' : '☆ Save'}</span>
         <span class="fb-ctl">
-          <span class="fb-up${fbState(a.id) === 1 ? ' on' : ''}" title="Relevant — teach this node to find more like it"
+          <span class="fb-up${fbState(a.id) === 1 ? ' on' : ''}" role="button" aria-label="Mark relevant" tabindex="0" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();event.stopPropagation();this.click();}" title="Relevant — teach this node to find more like it"
                 onclick="event.preventDefault();event.stopPropagation();nodeFeedback('${a.id}',1,this);">👍</span>
-          <span class="fb-down${fbState(a.id) === -1 ? ' on' : ''}" title="Not relevant — teach this node to avoid these"
+          <span class="fb-down${fbState(a.id) === -1 ? ' on' : ''}" role="button" aria-label="Mark not relevant" tabindex="0" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();event.stopPropagation();this.click();}" title="Not relevant — teach this node to avoid these"
                 onclick="event.preventDefault();event.stopPropagation();nodeFeedback('${a.id}',-1,this);">👎</span>
         </span>
         <span class="ni-branch">${escapeHtml(branch ? branch.label : 'Unknown')}</span>
@@ -4266,7 +4359,7 @@ function renderNewItem(a, dismissable) {
   return `
     <div class="ni-row">
       ${item}
-      <button class="ni-dismiss" data-article="${escapeHtml(a.id)}" title="Dismiss this article">×</button>
+      <button class="ni-dismiss" data-article="${escapeHtml(a.id)}" aria-label="Dismiss this article" title="Dismiss this article">×</button>
     </div>
   `;
 }

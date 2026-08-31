@@ -4,11 +4,27 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Author Tracker · ASD EurekaAlert Database</title>
+<meta name="theme-color" content="#05060a">
+<script>
+/* Blocking on purpose: the stylesheet defaults to dark, so setting the saved
+   theme after the body paints gives light-theme users a dark flash on every
+   load. */
+(function () {
+  try {
+    var t = localStorage.getItem('arn-theme-v1');
+    if (!t) t = matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
+    document.documentElement.setAttribute('data-theme', t);
+    var m = document.querySelector('meta[name="theme-color"]');
+    if (m) m.setAttribute('content', t === 'light' ? '#DFE5EE' : '#05060a');
+  } catch (e) {}
+})();
+</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;700&family=Space+Grotesk:wght@300;400;500;700&display=swap" rel="stylesheet">
 <style>
   :root {
+    color-scheme: dark;
     --line-rgb: 120, 140, 200;
     --panel-rgb: 10, 13, 20;
     --void-rgb: 5, 6, 10;
@@ -52,6 +68,7 @@
   :root[data-theme="light"] .tile { box-shadow: var(--panel-shadow); }
 
   :root[data-theme="light"] {
+    color-scheme: light;
     --line-rgb: 46, 62, 90;
     --panel-rgb: 246, 248, 252;
     --void-rgb: 226, 231, 240;
@@ -137,7 +154,7 @@
     background: var(--surface-1); border: 1px solid var(--line); color: var(--ink-1);
     font-family: 'JetBrains Mono', ui-monospace, 'SF Mono', SFMono-Regular, Menlo, Consolas, monospace; font-size: 12.5px; letter-spacing: 0.2em;
     text-transform: uppercase; padding: 9px 15px; border-radius: 4px; cursor: pointer;
-    transition: all 0.18s; text-decoration: none; display: inline-flex; align-items: center; gap: 8px;
+    transition: color 0.18s, border-color 0.18s, background-color 0.18s, box-shadow 0.18s; text-decoration: none; display: inline-flex; align-items: center; gap: 8px;
   }
   .btn:hover { color: var(--ink-0); border-color: var(--ink-2); }
   .btn.primary { border-color: var(--neon-cyto); color: var(--neon-cyto); box-shadow: 0 0 12px rgba(255,43,214,0.2); }
@@ -165,19 +182,35 @@
   }
 
   /* ---------- ROSTER ---------- */
-  .roster { position: sticky; top: 22px; }
+  .roster { position: sticky; top: 22px; max-height: calc(100vh - 44px); overflow-y: auto; }
   .roster-item {
-    display: block; width: 100%; text-align: left; background: transparent;
+    display: flex; align-items: center; justify-content: space-between; gap: 10px;
+    width: 100%; text-align: left; background: transparent;
     border: 1px solid transparent; border-left: 2px solid transparent;
     color: var(--ink-1); padding: 10px 12px; border-radius: 3px; cursor: pointer;
-    font-family: inherit; font-size: 15px; transition: all 0.15s; margin-bottom: 4px;
+    font-family: inherit; font-size: 15px; margin-bottom: 4px;
+    transition: color 0.15s, background-color 0.15s, border-color 0.15s;
   }
   .roster-item:hover { background: rgba(var(--line-rgb), 0.06); color: var(--ink-0); }
   .roster-item.active { background: rgba(255,43,214,0.08); border-left-color: var(--neon-cyto); color: var(--ink-0); }
-  .roster-item .rname { display: block; font-weight: 500; }
+  .roster-item .rmain { display: block; min-width: 0; }
+  .roster-item .rname {
+    display: block; font-weight: 500;
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  }
+  .roster-item .rdot {
+    display: inline-block; width: 7px; height: 7px; border-radius: 50%;
+    margin-right: 7px; vertical-align: 1px;
+  }
   .roster-item .rmeta {
     display: block; font-family: 'JetBrains Mono', ui-monospace, 'SF Mono', SFMono-Regular, Menlo, Consolas, monospace; font-size: 11.5px;
     color: var(--ink-2); letter-spacing: 0.08em; margin-top: 3px;
+    font-variant-numeric: tabular-nums;
+  }
+  .roster-item .ryr {
+    flex: none; font-family: 'JetBrains Mono', ui-monospace, 'SF Mono', SFMono-Regular, Menlo, Consolas, monospace;
+    font-size: 11px; color: var(--ink-2); letter-spacing: 0.08em;
+    font-variant-numeric: tabular-nums;
   }
   .roster-item .rflag { color: var(--neon-neuro); }
   .empty-note { color: var(--ink-2); font-size: 14.5px; line-height: 1.7; }
@@ -203,7 +236,7 @@
     font-family: 'JetBrains Mono', ui-monospace, 'SF Mono', SFMono-Regular, Menlo, Consolas, monospace; font-size: 11px; letter-spacing: 0.22em;
     color: var(--ink-2); text-transform: uppercase;
   }
-  .tile .tval { font-size: 26px; font-weight: 500; margin-top: 6px; letter-spacing: -0.02em; }
+  .tile .tval { font-size: 26px; font-weight: 500; margin-top: 6px; letter-spacing: -0.02em; font-variant-numeric: tabular-nums; }
   .tile .tnote { font-size: 12.5px; color: var(--ink-2); margin-top: 3px; }
 
   /* ---------- CHARTS ---------- */
@@ -250,7 +283,7 @@
      erratum should not look like a primary action. */
   .alert .upd-x {
     float: right; background: none; border: none; cursor: pointer;
-    color: var(--ink-2); font-size: 16px; line-height: 1; padding: 0 2px;
+    color: var(--ink-2); font-size: 16px; line-height: 1; padding: 4px 6px; min-width: 24px; min-height: 24px;
   }
   .alert .upd-x:hover { color: var(--ink-0); }
   .alert.dismissed { opacity: 0.45; }
@@ -290,7 +323,7 @@
   .fbtn {
     background: transparent; border: 1px solid var(--line); color: var(--ink-2);
     font-family: 'JetBrains Mono', ui-monospace, 'SF Mono', SFMono-Regular, Menlo, Consolas, monospace; font-size: 11px; letter-spacing: 0.18em;
-    text-transform: uppercase; padding: 5px 10px; border-radius: 2px; cursor: pointer; transition: all 0.15s;
+    text-transform: uppercase; padding: 5px 10px; border-radius: 2px; cursor: pointer; transition: color 0.15s, border-color 0.15s, background-color 0.15s;
   }
   .fbtn:hover { color: var(--ink-0); }
   .fbtn.active { border-color: var(--neon-cyto); color: var(--neon-cyto); background: rgba(255,43,214,0.08); }
@@ -324,11 +357,11 @@
   .upd-tip {
     display: none; position: absolute; left: 0; bottom: calc(100% + 7px); z-index: 40;
     width: 300px; padding: 10px 12px; border: 1px solid var(--line); border-radius: 4px;
-    background: #11151f; box-shadow: 0 6px 22px rgba(0,0,0,0.55);
+    background: var(--bg-2); box-shadow: 0 6px 22px rgba(5, 6, 10, 0.45);
     font-family: 'Space Grotesk', system-ui, sans-serif; font-size: 12.5px; line-height: 1.5; color: var(--ink-1);
     letter-spacing: normal; text-transform: none; white-space: normal;
   }
-  .upd-wrap:hover .upd-tip { display: block; }
+  .upd-wrap:hover .upd-tip, .upd-wrap:focus-within .upd-tip { display: block; }
   .upd-tip-row { display: block; }
   .upd-tip-row + .upd-tip-row { margin-top: 8px; padding-top: 8px; border-top: 1px solid rgba(var(--line-rgb), 0.12); }
   .upd-tip-label {
@@ -345,7 +378,7 @@
     border: 1px solid rgba(182,255,60,0.4); color: var(--neon-behav); background: rgba(182,255,60,0.08);
   }
   .paper-act { opacity: 0; transition: opacity 0.15s; }
-  .paper:hover .paper-act { opacity: 1; }
+  .paper:hover .paper-act, .paper:focus-within .paper-act { opacity: 1; }
 
   /* ---------- RECOMMENDATIONS ---------- */
   .rec {
@@ -399,7 +432,7 @@
   .modal-close {
     background: transparent; border: 1px solid var(--line); color: var(--ink-2);
     width: 30px; height: 30px; border-radius: 3px; cursor: pointer; font-size: 17px;
-    line-height: 1; transition: all 0.15s; flex-shrink: 0;
+    line-height: 1; transition: color 0.15s, border-color 0.15s; flex-shrink: 0;
   }
   .modal-close:hover { border-color: var(--neon-cyto); color: var(--neon-cyto); }
   .modal-body { flex: 1; overflow-y: auto; padding: 18px 26px 26px; }
@@ -422,6 +455,13 @@
     font-size: 13.5px; outline: none; transition: border-color 0.15s;
   }
   .pm-q:focus { border-color: var(--neon-cyto); }
+  :focus-visible { outline: 2px solid var(--neon-cyto); outline-offset: 2px; }
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      animation-duration: 0.01ms !important; animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
 
   /* preview dossier — a PubMed record browsed before (or instead of) tracking */
   .prev-head { display: flex; align-items: baseline; gap: 14px; flex-wrap: wrap; }
@@ -477,7 +517,7 @@
 
   .ident {
     border: 1px solid var(--line); border-radius: 5px; padding: 15px 17px; margin-top: 10px;
-    background: var(--surface-3); cursor: pointer; transition: all 0.15s;
+    background: var(--surface-3); cursor: pointer; transition: border-color 0.15s, background-color 0.15s;
   }
   .ident:hover { border-color: var(--neon-cyto); background: rgba(255,43,214,0.05); }
   .ident.tracked { opacity: 0.5; cursor: not-allowed; }
@@ -528,7 +568,7 @@
     position: fixed; z-index: 300; pointer-events: none; display: none;
     border: 1px solid rgba(255,43,214,0.6); border-radius: 8px;
     box-shadow: 0 0 0 9999px var(--surface-2), 0 0 34px rgba(255,43,214,0.25);
-    transition: all 0.45s cubic-bezier(0.25, 0.8, 0.3, 1);
+    transition: left 0.45s cubic-bezier(0.25, 0.8, 0.3, 1), top 0.45s cubic-bezier(0.25, 0.8, 0.3, 1), width 0.45s cubic-bezier(0.25, 0.8, 0.3, 1), height 0.45s cubic-bezier(0.25, 0.8, 0.3, 1);
   }
   body.demo-on .demo-spot { display: block; }
   .demo-spot.bare { border-color: transparent; }
@@ -604,7 +644,7 @@ body.public [data-exclude] { display: none !important; }
     <a class="btn" href="press.html">◍ Press</a>
     <a class="btn" href="nih.html">◎ NIH Funding</a>
     <button class="btn primary" id="add-btn">+ Track an Author</button>
-    <input type="search" id="pm-q" class="pm-q" placeholder="Search PubMed authors…" autocomplete="off">
+    <input type="search" id="pm-q" class="pm-q" aria-label="Search PubMed authors" spellcheck="false" placeholder="Search PubMed authors…" autocomplete="off">
     <button class="btn" id="pm-search">⌕ Search</button>
     <button class="btn" id="refresh-all-btn">↻ Refresh All</button>
     <button class="btn" id="theme-toggle" aria-label="Switch between light and dark">◒ Dark</button>
@@ -615,7 +655,7 @@ body.public [data-exclude] { display: none !important; }
     <aside>
       <div class="panel roster">
         <h3>// Tracked researchers</h3>
-        <input type="search" id="roster-q" class="roster-q" placeholder="Search researchers…" autocomplete="off">
+        <input type="search" id="roster-q" class="roster-q" aria-label="Search tracked researchers" spellcheck="false" placeholder="Search researchers…" autocomplete="off">
         <div id="roster"></div>
       </div>
     </aside>
@@ -636,7 +676,7 @@ body.public [data-exclude] { display: none !important; }
     </div>
     <div class="modal-body">
       <div class="search-row">
-        <input type="search" id="name-input" placeholder="e.g. Gloria Choi" autocomplete="off">
+        <input type="search" id="name-input" aria-label="Author name to search" spellcheck="false" placeholder="e.g. Gloria Choi" autocomplete="off">
         <button class="btn primary" id="name-search">Search</button>
       </div>
       <div class="status" id="add-status">Enter a researcher's name to see which PubMed identities match it.</div>
@@ -648,15 +688,15 @@ body.public [data-exclude] { display: none !important; }
         </div>
         <div class="manual-form" id="manual-form" hidden>
           <div class="mrow">
-            <input id="man-last" placeholder="Last name *" autocomplete="off">
-            <input id="man-fore" placeholder="Fore name(s) — e.g. Gloria B" autocomplete="off">
+            <input id="man-last" aria-label="Last name (required)" required spellcheck="false" placeholder="Last name *" autocomplete="off">
+            <input id="man-fore" aria-label="Fore names" spellcheck="false" placeholder="Fore name(s) — e.g. Gloria B" autocomplete="off">
           </div>
           <div class="mrow">
-            <input id="man-orcid" placeholder="ORCID (optional) — 0000-0000-0000-0000" autocomplete="off">
-            <input id="man-aff" placeholder="Affiliation (optional)" autocomplete="off">
+            <input id="man-orcid" aria-label="ORCID (optional)" spellcheck="false" inputmode="numeric" placeholder="ORCID (optional) — 0000-0000-0000-0000" autocomplete="off">
+            <input id="man-aff" aria-label="Affiliation (optional)" placeholder="Affiliation (optional)" autocomplete="off">
           </div>
           <div class="mrow">
-            <input id="man-note" placeholder="Note (optional)" autocomplete="off">
+            <input id="man-note" aria-label="Note (optional)" placeholder="Note (optional)" autocomplete="off">
             <button class="btn primary" id="manual-track">+ Track</button>
           </div>
           <div class="status" id="manual-status">The profile is built from these fields exactly as typed; the first PubMed scan runs on save, claiming papers by the name (and ORCID, if given).</div>
@@ -672,6 +712,8 @@ function applyTheme(mode) {
   document.documentElement.setAttribute('data-theme', mode);
   const b = document.getElementById('theme-toggle');
   if (b) { b.textContent = mode === 'light' ? '\u25D3 Light' : '\u25D2 Dark'; }
+  const m = document.querySelector('meta[name="theme-color"]');
+  if (m) m.setAttribute('content', mode === 'light' ? '#DFE5EE' : '#05060a');
   try { localStorage.setItem(THEME_KEY, mode); } catch (e) {}
 }
 (function () {
@@ -796,9 +838,14 @@ function renderRoster() {
     const p = DATA.authors[k];
     const n = (p.papers || []).length;
     const ups = (p.papers || []).reduce((m, a) => m + (a.updates || []).length, 0);
+    const br = DATA.branches && DATA.branches[p.branch];
+    const yr = p.stats && p.stats.latestPaper ? p.stats.latestPaper.slice(0, 4) : '';
     return `<button class="roster-item ${k === SELECTED ? 'active' : ''}" data-key="${esc(k)}">
-      <span class="rname">${esc(p.displayName)}</span>
-      <span class="rmeta">${n} PAPER${n === 1 ? '' : 'S'}${ups ? ` · <span class="rflag">${ups} UPDATE${ups === 1 ? '' : 'S'}</span>` : ''}</span>
+      <span class="rmain">
+        <span class="rname">${br ? `<span class="rdot" style="background:${esc(br.color)}"></span>` : ''}${esc(p.displayName)}</span>
+        <span class="rmeta">${n} PAPER${n === 1 ? '' : 'S'}${ups ? ` · <span class="rflag">${ups} UPDATE${ups === 1 ? '' : 'S'}</span>` : ''}</span>
+      </span>
+      ${yr ? `<span class="ryr" title="Most recent paper">${esc(yr)}</span>` : ''}
     </button>`;
   }).join('');
   document.querySelectorAll('.roster-item').forEach(el =>
@@ -917,6 +964,7 @@ function updatesHTML(p, papers) {
       <div class="alert-icon">${UPDATE_ICONS[u.kind] || '•'}</div>
       <div>
         <button class="upd-x" data-upd="${esc(u.pmid)}" data-undo="${hidden.has(String(u.pmid)) ? '1' : ''}"
+          aria-label="${hidden.has(String(u.pmid)) ? 'Restore this update' : 'Dismiss this update'}"
           title="${hidden.has(String(u.pmid)) ? 'Restore this update' : 'Dismiss — hides it until you show dismissed'}"
           >${hidden.has(String(u.pmid)) ? '↺' : '×'}</button>
         <div class="alert-label">${esc(u.label)}</div>
@@ -1357,7 +1405,7 @@ function renderPreview() {
     } else {
       body = `<div class="status">${P.identities.length} distinct ${P.identities.length === 1 ? 'person publishes' : 'people publish'} under that name — click one to browse their record.</div>`
         + P.identities.map((c, i) => `
-        <div class="ident" data-prev-i="${i}">
+        <div class="ident" data-prev-i="${i}" role="button" tabindex="0">
           <div class="ident-name">${esc(c.displayName)}${c.alreadyTracked ? ' — already tracked' : ''}</div>
           <div class="ident-meta">
             ${c.papers} PAPER${c.papers === 1 ? '' : 'S'} · ${esc(c.firstYear)}–${esc(c.lastYear)}
@@ -1429,8 +1477,12 @@ function renderPreview() {
   if (bk) bk.onclick = () => { PREVIEW.chosen = null; PREVIEW.profile = null; PREVIEW.error = null; renderPreview(); };
   const tr = $('prev-track');
   if (tr) tr.onclick = trackFromPreview;
-  document.querySelectorAll('[data-prev-i]').forEach(el =>
-    el.onclick = () => previewIdentity(+el.dataset.prevI));
+  document.querySelectorAll('[data-prev-i]').forEach(el => {
+    el.onclick = () => previewIdentity(+el.dataset.prevI);
+    el.onkeydown = e => {
+      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); previewIdentity(+el.dataset.prevI); }
+    };
+  });
 }
 
 async function doSearch() {
@@ -1445,7 +1497,7 @@ async function doSearch() {
     if (!ids.length) { setStatus('add-status', 'No PubMed authors matched that name — try another form of it, or use “Add manually” below.', 'err'); return; }
     setStatus('add-status', `${ids.length} distinct ${ids.length === 1 ? 'person' : 'people'} match that name — pick the researcher you mean.`, '');
     $('identities').innerHTML = ids.map((c, i) => `
-      <div class="ident ${c.alreadyTracked ? 'tracked' : ''}" data-i="${i}">
+      <div class="ident ${c.alreadyTracked ? 'tracked' : ''}" data-i="${i}" role="button" tabindex="${c.alreadyTracked ? -1 : 0}" ${c.alreadyTracked ? 'aria-disabled="true"' : ''}>
         <div class="ident-name">${esc(c.displayName)}${c.alreadyTracked ? ' — already tracked' : ''}</div>
         <div class="ident-meta">
           ${c.papers} PAPER${c.papers === 1 ? '' : 'S'} · ${esc(c.firstYear)}–${esc(c.lastYear)}
@@ -1455,9 +1507,15 @@ async function doSearch() {
         </div>
         ${(c.samples || [])[0] ? `<div class="ident-samp">e.g. “${esc(c.samples[0].title)}”</div>` : ''}
       </div>`).join('');
-    document.querySelectorAll('.ident').forEach(el => el.onclick = () => {
-      const c = ids[+el.dataset.i];
-      if (!c.alreadyTracked) trackIdentity(c);
+    document.querySelectorAll('.ident').forEach(el => {
+      const pick = () => {
+        const c = ids[+el.dataset.i];
+        if (!c.alreadyTracked) trackIdentity(c);
+      };
+      el.onclick = pick;
+      el.onkeydown = e => {
+        if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); pick(); }
+      };
     });
   } catch (e) { setStatus('add-status', 'Search failed: ' + e.message, 'err'); }
 }
