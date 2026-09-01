@@ -7,11 +7,11 @@
 <meta name="theme-color" content="#05060a">
 <script>
 /* Blocking on purpose: the stylesheet defaults to dark, so setting the saved
-   theme after the body paints gives light-theme users a dark flash. */
+   theme after the body paints gives users who chose light a dark flash. */
 (function () {
   try {
     var t = localStorage.getItem('arn-theme-v1');
-    if (!t) t = matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
+    if (!t) t = 'dark';   // dark HUD is the default; the toggle's saved choice wins
     document.documentElement.setAttribute('data-theme', t);
     var m = document.querySelector('meta[name="theme-color"]');
     if (m) m.setAttribute('content', t === 'light' ? '#DFE5EE' : '#05060a');
@@ -2450,8 +2450,7 @@ function initTheme() {
   let saved = null;
   try { saved = localStorage.getItem(THEME_KEY); } catch (e) {}
   // Your explicit choice wins; otherwise follow the operating system.
-  applyTheme(saved || (window.matchMedia &&
-    window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark'));
+  applyTheme(saved || 'dark');   // default dark; OS preference deliberately ignored
 }
 initTheme();
 
