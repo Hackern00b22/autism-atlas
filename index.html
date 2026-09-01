@@ -301,23 +301,21 @@
   }
   .nav-toolbar > * { pointer-events: auto; flex: none; }
   .hud .brand, .hud .meta { flex: 0 0 auto; }
-  /* Below ~1720px the full button row can't share a line with the brand and
-     the meta (their combined min widths exceed the viewport), so the toolbar
-     takes its own full-width second row instead of stacking a ragged column
-     in the middle. The buttons also slim down (tracking + padding) so all
-     seven still fit on ONE line at laptop widths — two rows of chrome eat
-     into the canvas and sit on top of the node circles. */
-  @media (max-width: 1720px) {
+  /* The buttons live on the TOP row, between the brand and the meta panel,
+     at every desktop width. Slimmed tracking/padding keeps all seven on one
+     line down to ~1450px (full-size buttons needed 1061px — exactly the room
+     left on a 1710px MacBook screen, so any extra digit in the bookmark
+     count wrapped them). Should they still not fit, they wrap right-aligned
+     inside the toolbar's own region, never under the brand or over the meta. */
+  .hud .nav-toolbar > * {
+    font-size: 12px; letter-spacing: 0.12em; padding: 8px 12px; gap: 6px;
+  }
+  @media (max-width: 1150px) {
+    /* Genuinely too narrow for brand + buttons + meta on one line: the
+       toolbar takes its own full-width row below the brand, left-aligned. */
     .hud { flex-wrap: wrap; row-gap: 8px; }
     .hud .meta { order: 2; }
-    .nav-toolbar { order: 3; flex-basis: 100%; }
-    .hud .nav-toolbar > * {
-      font-size: 12px; letter-spacing: 0.12em; padding: 8px 12px; gap: 6px;
-    }
-  }
-  @media (max-width: 1240px) {
-    /* Genuinely too narrow for one row — allow the wrap again. */
-    .hud .nav-toolbar { justify-content: flex-start; }
+    .nav-toolbar { order: 3; flex-basis: 100%; justify-content: flex-start; }
   }
 
   /* DEFINITIONS BUTTON */
