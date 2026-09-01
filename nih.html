@@ -51,6 +51,7 @@
     --neon-interv:   #ff5757;
     --up: #2dd4bf;
     --down: #e0566b;
+    --gold: #ffd97a;
   }
   :root[data-theme="light"] {
     color-scheme: light;
@@ -80,6 +81,7 @@
     --neon-interv:   #AB2C28;
     --up: #0E7A6E;
     --down: #AB2C28;
+    --gold: #8A5A00;
   }
   :root[data-theme="light"] .panel,
   :root[data-theme="light"] .btn,
@@ -225,6 +227,18 @@
   .card .num, .card .date { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--ink-2); font-variant-numeric: tabular-nums; }
   .card .amt { margin-left: auto; font-family: 'JetBrains Mono', monospace; font-size: 12px; color: var(--up); font-variant-numeric: tabular-nums; }
   .card .newchip { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.1em; color: var(--on-accent); background: var(--up); border-radius: 3px; padding: 1px 6px; }
+  /* save toggle on cards + the toolbar's saved-only filter (bookmark gold,
+     matching the network page's bm-toggle) */
+  .bm-toggle {
+    cursor: pointer; user-select: none; color: var(--gold); background: none;
+    border: 1px solid color-mix(in srgb, var(--gold) 40%, transparent); border-radius: 4px;
+    padding: 1px 7px; font: inherit; font-size: 11.5px; letter-spacing: 0.08em; white-space: nowrap;
+    transition: color 0.15s, background-color 0.15s, border-color 0.15s;
+  }
+  .bm-toggle:hover { background: color-mix(in srgb, var(--gold) 15%, transparent); }
+  .bm-toggle.on { background: var(--gold); color: var(--on-accent); border-color: var(--gold); }
+  #saved-btn.on { border-color: var(--gold); color: var(--gold); }
+  #saved-btn.on:hover { background: var(--gold); color: var(--on-accent); }
   .card .rtitle { font-size: 15px; font-weight: 500; line-height: 1.35; margin: 6px 0 5px; }
   .card .rtitle a { color: var(--ink-0); text-decoration: none; }
   .card .rtitle a:hover { color: var(--neon-gen); text-decoration: underline; text-underline-offset: 3px; }
@@ -295,6 +309,8 @@
           <button data-sort="new" class="on">Newest award</button>
           <button data-sort="amt">Largest award</button>
         </div>
+        <button class="btn" id="saved-btn" aria-pressed="false"
+                title="Show only saved projects">☆ Saved</button>
       </div>
       <div id="list"></div>
       <div class="morebar"><button class="btn" id="more-btn" style="display:none">Show more</button></div>
@@ -340,7 +356,110 @@ let FY_SEL = null;            // selected fiscal year (browsable) or null = all 
 let IC_ON = null;             // Set of enabled IC abbreviations
 let SHOWN = PAGE_SIZE;
 let SORT = 'new';
+let SAVED_ONLY = false;
 try { SORT = localStorage.getItem(SORT_KEY) || 'new'; } catch (e) {}
+
+// ---------- saved projects ----------
+// Same scheme as the network page's bookmarks: localStorage is the warm-start
+// cache, uistate.json on the server is authoritative so saves follow the user
+// across devices; deliberate un-saves are tombstoned so a stale server copy
+// can never resurrect (or erase) one. On the public site there is no API, so
+// saves simply stay per-visitor in localStorage.
+const BM_KEY = 'nih-bookmarks-v1';
+const BM_REMOVED_KEY = 'nih-bookmarks-removed-v1';
+// The same project number is re-awarded each fiscal year, so a saved row is
+// identified by fy + number — you save this year's award, not the grant line.
+const projId = r => r.fy + ':' + r.num;
+const readIdList = k => {
+  try { const p = JSON.parse(localStorage.getItem(k)); return Array.isArray(p) ? p : []; }
+  catch (e) { return []; }
+};
+let BOOKMARKS = readIdList(BM_KEY);
+let BM_REMOVED = readIdList(BM_REMOVED_KEY);
+let UISTATE_READY = false;   // gate pushes until the first pull, so a slow load can't clobber the server
+let PUSH_INFLIGHT = false, PUSH_QUEUED = false;   // serialized pushes — last write carries newest state
+
+const isBookmarked = id => BOOKMARKS.includes(id);
+
+function persistBookmarks() {
+  try { localStorage.setItem(BM_KEY, JSON.stringify(BOOKMARKS)); } catch (e) {}
+  try { localStorage.setItem(BM_REMOVED_KEY, JSON.stringify(BM_REMOVED)); } catch (e) {}
+  pushUIState();
+}
+
+function pushUIState() {
+  if (PUBLIC || !UISTATE_READY) return;
+  if (PUSH_INFLIGHT) { PUSH_QUEUED = true; return; }
+  PUSH_INFLIGHT = true;
+  fetch('/api/ui-state', {
+    method: 'POST', headers: { 'Content-Type': 'application/json' },
+    // Only this page's keys — the server merges, leaving the other pages'
+    // bookmarks and dismissals untouched.
+    body: JSON.stringify({ nihBookmarks: BOOKMARKS, nihBookmarksRemoved: BM_REMOVED }),
+  }).catch(() => {})
+    .finally(() => {
+      PUSH_INFLIGHT = false;
+      if (PUSH_QUEUED) { PUSH_QUEUED = false; pushUIState(); }
+    });
+}
+
+async function syncUIState() {
+  if (PUBLIC) return;
+  let s;
+  try {
+    const r = await fetch('/api/ui-state', { cache: 'no-store' });
+    if (!r.ok) return;
+    s = await r.json();
+  } catch (e) { return; }
+  if (s.exists) {
+    // Union of both sides, minus everything either side says was deleted.
+    const removed = new Set([...(Array.isArray(s.nihBookmarksRemoved) ? s.nihBookmarksRemoved : []),
+                             ...BM_REMOVED]);
+    const seen = new Set();
+    BOOKMARKS = [...(Array.isArray(s.nihBookmarks) ? s.nihBookmarks : []), ...BOOKMARKS]
+      .filter(id => !removed.has(id) && !seen.has(id) && seen.add(id));
+    BM_REMOVED = [...removed];
+    try { localStorage.setItem(BM_KEY, JSON.stringify(BOOKMARKS)); } catch (e) {}
+    try { localStorage.setItem(BM_REMOVED_KEY, JSON.stringify(BM_REMOVED)); } catch (e) {}
+  }
+  UISTATE_READY = true;
+  pushUIState();   // the merge may hold saves the server hasn't seen yet
+  updateSavedBtn();
+  renderList();
+}
+
+// Coming back to the tab (e.g. after saving on the phone) re-pulls.
+document.addEventListener('visibilitychange', () => {
+  if (document.visibilityState === 'visible' && UISTATE_READY) syncUIState();
+});
+
+function toggleBookmark(id, el) {
+  const i = BOOKMARKS.indexOf(id);
+  if (i >= 0) {
+    BOOKMARKS.splice(i, 1);
+    if (!BM_REMOVED.includes(id)) BM_REMOVED.push(id);   // tombstone: deliberate
+  } else {
+    BOOKMARKS.unshift(id);
+    const r = BM_REMOVED.indexOf(id);
+    if (r >= 0) BM_REMOVED.splice(r, 1);                  // re-saved, clear it
+  }
+  persistBookmarks();
+  const on = isBookmarked(id);
+  if (el) {
+    el.classList.toggle('on', on);
+    el.textContent = on ? '★ Saved' : '☆ Save';
+    el.setAttribute('aria-pressed', on);
+  }
+  updateSavedBtn();
+  if (SAVED_ONLY && !on) renderList();   // un-saving removes it from the saved view
+}
+
+function updateSavedBtn() {
+  const b = $('saved-btn');
+  b.classList.toggle('on', SAVED_ONLY);
+  b.setAttribute('aria-pressed', SAVED_ONLY);
+  b.textContent = `${SAVED_ONLY ? '★' : '☆'} Saved${BOOKMARKS.length ? ` (${BOOKMARKS.length})` : ''}`;
+}
 
 function icColor(ic) {
   if (IC_COLORS[ic]) return IC_COLORS[ic];
@@ -488,8 +607,12 @@ function renderList() {
   const q = ($('q').value || '').trim().toLowerCase();
   const cutoff = new Date(Date.now() - NEW_AWARD_DAYS * 864e5).toISOString().slice(0, 10);
   const browsable = new Set(browsableFys());
-  let view = (DATA.projects || []).filter(r =>
-    (FY_SEL === null ? browsable.has(r.fy) : r.fy === FY_SEL) && IC_ON.has(r.ic));
+  // The saved view is a shelf, not a filter — it shows every saved award
+  // regardless of which fiscal year or institutes are selected.
+  let view = SAVED_ONLY
+    ? (DATA.projects || []).filter(r => isBookmarked(projId(r)))
+    : (DATA.projects || []).filter(r =>
+        (FY_SEL === null ? browsable.has(r.fy) : r.fy === FY_SEL) && IC_ON.has(r.ic));
   if (q) view = view.filter(r =>
     r.title.toLowerCase().includes(q) || r.org.toLowerCase().includes(q)
     || r.num.toLowerCase().includes(q)
@@ -498,7 +621,7 @@ function renderList() {
   if (SORT === 'amt') view.sort((a, b) => (b.award - a.award));
   else view.sort((a, b) => (a.notice < b.notice ? 1 : a.notice > b.notice ? -1 : 0));
 
-  if (FY_SEL !== null && !browsable.has(FY_SEL)) {
+  if (!SAVED_ONLY && FY_SEL !== null && !browsable.has(FY_SEL)) {
     $('list').innerHTML = `<div class="empty">// FY${FY_SEL} IS AGGREGATE-ONLY —
       PROJECT ROWS ARE KEPT FOR THE LAST ${DATA.rowsFys} FISCAL YEARS.<br><br>
       THE PANELS ON THE LEFT STILL SHOW ITS TOTALS.</div>`;
@@ -506,7 +629,9 @@ function renderList() {
     return;
   }
   if (!view.length) {
-    $('list').innerHTML = `<div class="empty">// NO PROJECTS MATCH</div>`;
+    $('list').innerHTML = SAVED_ONLY
+      ? `<div class="empty">// NOTHING SAVED YET — HIT ☆ SAVE ON A PROJECT</div>`
+      : `<div class="empty">// NO PROJECTS MATCH</div>`;
     $('more-btn').style.display = 'none';
     return;
   }
@@ -521,6 +646,9 @@ function renderList() {
         <span class="date" title="Award notice date">${esc(r.notice || '')}</span>
         ${isNew ? '<span class="newchip">NEW AWARD</span>' : ''}
         <span class="amt" title="${fmtFull(r.award)} awarded FY${r.fy}">${r.award ? fmtM(r.award) : '—'}</span>
+        <button class="bm-toggle ${isBookmarked(projId(r)) ? 'on' : ''}" data-id="${esc(projId(r))}"
+                aria-label="Save this project" aria-pressed="${isBookmarked(projId(r))}"
+                title="Save this project">${isBookmarked(projId(r)) ? '★ Saved' : '☆ Save'}</button>
       </div>
       <div class="rtitle"><a href="${esc(r.url)}" target="_blank" rel="noopener">${esc(r.title)}</a></div>
       <div class="meta">
@@ -530,6 +658,8 @@ function renderList() {
       </div>
     </div>`;
   }).join('');
+  document.querySelectorAll('.bm-toggle').forEach(el =>
+    el.onclick = () => toggleBookmark(el.dataset.id, el));
   $('more-btn').style.display = view.length > SHOWN ? '' : 'none';
   $('more-btn').textContent = `Show more (${view.length - SHOWN} remaining)`;
 }
@@ -550,11 +680,18 @@ document.querySelectorAll('#sortseg button').forEach(b => {
   };
 });
 $('more-btn').onclick = () => { SHOWN += PAGE_SIZE; renderList(); };
+$('saved-btn').onclick = () => {
+  SAVED_ONLY = !SAVED_ONLY;
+  SHOWN = PAGE_SIZE;
+  updateSavedBtn();
+  renderList();
+};
 $('refresh-btn').onclick = () => refresh(false);
 $('theme-toggle').onclick = () =>
   applyTheme(document.documentElement.getAttribute('data-theme') === 'light' ? 'dark' : 'light');
 
-load();
+updateSavedBtn();
+load().then(syncUIState);   // sync after load — it needs to know PUBLIC first
 </script>
 </body>
 </html>
