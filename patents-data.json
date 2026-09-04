@@ -1,0 +1,1 @@
+{"patents": [], "modalities": {"gene": "Gene therapy", "viral": "Viral vector", "ab": "Antibody", "pep": "Peptide", "sm": "Small molecule", "dev": "Device / stimulation", "beh": "Behavioral"}, "needsKey": true, "query": "autism OR autistic", "lastError": "", "stale": true, "_meta": {"schema_version": 1, "last_fetched": "", "query": "autism OR autistic"}}

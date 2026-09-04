@@ -318,6 +318,9 @@
     .nav-toolbar { order: 3; flex-basis: 100%; justify-content: flex-start; }
   }
 
+  .pipe-button.auth-button { border-color: var(--neon-immuno); color: var(--neon-immuno); }
+  .pipe-button.auth-button:hover { background: var(--neon-immuno); color: var(--on-accent); }
+
   /* DEFINITIONS BUTTON */
   .def-button {
     background: var(--surface-1);
@@ -1417,6 +1420,13 @@
   }
   .modal-filters input[type="search"] { flex: 1; min-width: 180px; }
   .modal-filters input[type="date"] { color-scheme: light dark; }
+  /* therapeutic-modality tag on article cards */
+  .mod-badge {
+    font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.06em;
+    color: var(--ink-2); border: 1px solid rgba(var(--line-rgb), 0.3);
+    border-radius: 999px; padding: 0 7px; white-space: nowrap;
+  }
+
   .filter-clear {
     background: transparent;
     border: 1px solid rgba(var(--line-rgb), 0.18);
@@ -1862,6 +1872,7 @@
     <a class="auth-button" href="authors.html" aria-label="Open author tracker">Authors</a>
     <a class="press-button auth-button" href="press.html" aria-label="Open press releases">Press</a>
     <a class="nih-button auth-button" href="nih.html" aria-label="Open NIH funding tracker">NIH</a>
+    <a class="pipe-button auth-button" href="pipeline.html" aria-label="Open clinical trials and patents">Trials + Patents</a>
     <button class="bm-button" id="bm-button" aria-label="Open bookmarks">Bookmarks <span class="bm-count" id="bm-count"></span></button>
     <button class="lab-button" id="lab-button" aria-label="Open Agent Lab">Agent Lab</button>
     <button class="new-button" id="new-button" aria-label="See what's new">What's New <span class="pulse-dot"></span></button>
@@ -2073,6 +2084,10 @@
       <span class="pf-label">PRIORITY</span>
     </div>
 
+    <div class="priority-filters" id="modality-filters">
+      <span class="pf-label">MODALITY</span>
+    </div>
+
     <div class="modal-filters">
       <span class="filter-label">SEARCH</span>
       <input type="search" id="filter-search" placeholder="Title, author, abstract, MeSH, PMID, or is:preprint · is:via · is:new · is:shared" autocomplete="off">
@@ -2123,6 +2138,31 @@ function tierColor(key) {
 }
 const TIER_COLORS = new Proxy({}, { get: (_, k) => tierColor(k) });
 
+// ---- therapeutic modalities ----
+// The same seven-lane vocabulary nih.py bakes into the funding rows, here
+// run client-side over title + MeSH (which every article carries at boot;
+// abstracts load lazily and are deliberately not part of the tag, so an
+// article's chips never change under the reader mid-session). Patterns lean
+// inclusive: a filter that over-tags shows one odd paper, one that
+// under-tags silently hides a relevant one. Extend nih.py's copy in step.
+const MODALITIES = {
+  gene: 'Gene therapy', viral: 'Viral vector', ab: 'Antibody', pep: 'Peptide',
+  sm: 'Small molecule', dev: 'Device / stimulation', beh: 'Behavioral',
+};
+const MOD_PATTERNS = {
+  gene: /gene (?:therapy|transfer|editing|replacement|delivery|correction)|genome editing|genetic therapy|CRISPR|base editing|prime editing|antisense|\bASOs?\b|oligonucleotide|\bsiRNA\b|RNA interference|\bRNAi\b|mRNA therap|exon skipping/i,
+  viral: /\bAAV\d*\b|adeno-associated|dependovirus|lentivir|adenovir|retrovir|viral vector|virus[- ]mediated|genetic vectors/i,
+  ab: /antibod|monoclonal|\bmAbs?\b|immunoglobulin|\bIVIG\b|nanobod/i,
+  pep: /peptide|oxytocin|vasopressin|insulin-like growth factor|\bIGF-?1\b|secretin|\bGLP-?1\b/i,
+  sm: /small[- ]molecule|pharmacotherap|pharmacologic(?:al)? (?:treatment|intervention|therap|rescue)|drug (?:repurpos|discovery|screen|candidate|treatment|therapy)|medication|antipsychotic|serotonin uptake inhibitors|bumetanide|arbaclofen|risperidone|aripiprazole|cannabidiol|\bCBD\b|balovaptan|metformin|rapamycin|mTOR inhibitor|\bSSRIs?\b|fluoxetine|sertraline|suramin|memantine|\bketamine\b|psilocybin|psychedelic/i,
+  dev: /\bdevices?\b|neurostimulat|brain stimulation|neuromodulat|transcranial|\bTMS\b|\btDCS\b|\btACS\b|deep brain stimulation|\bDBS\b|vagus nerve|neurofeedback|wearable|implant|brain-computer|\bBCI\b|robot(?:ic)?[- ]assisted/i,
+  beh: /behaviou?ral (?:intervention|therapy|treatment|training)|behavior therapy|applied behavior analysis|\bABA\b|early intervention|parent[- ]mediated|parent training|caregiver-mediated|social skills|cognitive[- ]behaviou?r|\bCBT\b|Early Start Denver|\bESDM\b|naturalistic developmental|speech(?:-language)? therapy|occupational therapy|music therapy|mindfulness|psychosocial (?:intervention|treatment)|play-based|peer-mediated|pivotal response/i,
+};
+function classifyMods(a) {
+  const text = a.title + ' ' + (a.mesh || []).join(' ');
+  return Object.keys(MOD_PATTERNS).filter(k => MOD_PATTERNS[k].test(text));
+}
+
 // Which node an article belongs to and which journal it came from are two
 // separate questions. A branchKey means the topic query placed it, so it wins
 // the node; the journal catalog still supplies the display name and impact
@@ -2148,6 +2188,7 @@ function resolveArticle(a) {
   a.hIndex = j ? (j.hIndex || 0) : 0;
   // An unrecognised tier means we don't know, not that we looked and found
   // nothing — 'other' is a verdict and must not absorb missing data.
+  a.mods = classifyMods(a);
   if (!a.priority || !TIERS[a.priority]) a.priority = 'unclassified';
   a.priorityRank = TIERS[a.priority].rank;
   a.isBoosted = !!TIERS[a.priority].boosted;
@@ -2731,10 +2772,12 @@ const fromEl = document.getElementById('filter-from');
 const toEl = document.getElementById('filter-to');
 const clearEl = document.getElementById('filter-clear');
 const pfEl = document.getElementById('priority-filters');
+const modEl = document.getElementById('modality-filters');
 
 let currentBranch = null;
 let currentSort = 'priority';
 let activeTiers = new Set();
+let activeMods = new Set();   // therapeutic-modality filter, OR semantics
 
 // ---- deep search: abstracts + MeSH ----
 // MeSH descriptors ride along in articles.json, but the full abstracts live in
@@ -2822,6 +2865,7 @@ function openBranchModal(branchKey) {
   scopeLabelEl.classList.remove('on');
   activeTiers.clear();
   buildPriorityChips();
+  buildModalityChips();
   renderArticles();
   backdrop.classList.add('open');
 }
@@ -2853,6 +2897,7 @@ function openGlobalSearch(prefill) {
   scopeLabelEl.style.display = 'none';
   activeTiers.clear();
   buildPriorityChips();
+  buildModalityChips();
   renderArticles();
   backdrop.classList.add('open');
   setTimeout(() => searchEl.focus(), 60);
@@ -2877,6 +2922,7 @@ function buildPriorityChips() {
   allBtn.addEventListener('click', () => {
     activeTiers.clear();
     buildPriorityChips();
+    buildModalityChips();
     renderArticles();
   });
   pfEl.appendChild(allBtn);
@@ -2898,6 +2944,7 @@ function buildPriorityChips() {
         activeTiers = new Set(boostedSet);
       }
       buildPriorityChips();
+      buildModalityChips();
       renderArticles();
     });
     pfEl.appendChild(boostBtn);
@@ -2916,9 +2963,51 @@ function buildPriorityChips() {
       if (activeTiers.has(key)) activeTiers.delete(key);
       else activeTiers.add(key);
       buildPriorityChips();
+      buildModalityChips();
       renderArticles();
     });
     pfEl.appendChild(btn);
+  }
+}
+
+function buildModalityChips() {
+  // Same counting contract as the priority chips: counts follow the search
+  // scope, other filters don't shrink them.
+  const branchArticles = scopeEl.checked
+    ? ARTICLES.slice()
+    : ARTICLES.filter(a => a.branches.includes(currentBranch));
+  const counts = {};
+  branchArticles.forEach(a => (a.mods || []).forEach(m => counts[m] = (counts[m] || 0) + 1));
+
+  while (modEl.children.length > 1) modEl.removeChild(modEl.lastChild);
+
+  const allBtn = document.createElement('button');
+  allBtn.className = 'pf-chip' + (activeMods.size === 0 ? ' active' : '');
+  allBtn.style.setProperty('--chip-color', 'var(--ink-0)');
+  allBtn.innerHTML = 'All';
+  allBtn.title = 'No modality filter';
+  allBtn.addEventListener('click', () => {
+    activeMods.clear();
+    buildModalityChips();
+    renderArticles();
+  });
+  modEl.appendChild(allBtn);
+
+  for (const [key, label] of Object.entries(MODALITIES)) {
+    const count = counts[key] || 0;
+    if (count === 0) continue;
+    const btn = document.createElement('button');
+    btn.className = 'pf-chip' + (activeMods.has(key) ? ' active' : '');
+    btn.style.setProperty('--chip-color', 'var(--ink-1)');
+    btn.innerHTML = `${escapeHtml(label)} <span class="count">${count}</span>`;
+    btn.title = `${label} — tagged from title + MeSH`;
+    btn.addEventListener('click', () => {
+      if (activeMods.has(key)) activeMods.delete(key);
+      else activeMods.add(key);
+      buildModalityChips();
+      renderArticles();
+    });
+    modEl.appendChild(btn);
   }
 }
 
@@ -2940,6 +3029,7 @@ function renderArticles() {
   const allNodes = scopeEl.checked;
   let list = allNodes ? ARTICLES.slice() : ARTICLES.filter(a => a.branches.includes(currentBranch));
   if (activeTiers.size > 0) list = list.filter(a => activeTiers.has(a.priority));
+  if (activeMods.size > 0) list = list.filter(a => (a.mods || []).some(m => activeMods.has(m)));
   if (q) list = list.filter(a => matchesQuery(a, q));
   if (fromD) list = list.filter(a => new Date(a.date) >= fromD);
   if (toD)   list = list.filter(a => new Date(a.date) <= toD);
@@ -3080,6 +3170,7 @@ function setSearchScope(on) {
   scopeEl.checked = on;
   scopeLabelEl.classList.toggle('on', on);
   buildPriorityChips();
+  buildModalityChips();
   renderArticles();
 }
 
@@ -3116,6 +3207,7 @@ function renderArticleCard(a, showNode) {
         <span class="journal">${escapeHtml(a.journalName)}</span>
         <span class="if-badge"${a.ifKnown ? '' : ' title="Journal is not in the catalogue — impact factor and h-index unknown"'}>IF ${a.ifKnown ? a.if.toFixed(1) : '—'}</span>
         ${a.hIndex ? `<span class="if-badge" title="Journal h-index (OpenAlex)">H ${a.hIndex}</span>` : ''}
+        ${(a.mods || []).map(m => `<span class="mod-badge" title="Therapeutic modality (from title + MeSH)">${escapeHtml(MODALITIES[m])}</span>`).join('')}
         ${a.viaOpenVenue && !a.journalKey ? '<span class="via-badge" title="Found by topical match in a journal outside the catalogue — admitted on topic score rather than on its journal">◎ OPEN VENUE</span>' : ''}
         <span class="date">${formatDate(a.date)}</span>
         ${a.isPreprint ? '<span class="preprint-badge" title="Preprint — not peer reviewed">PREPRINT</span>' : ''}
@@ -3139,9 +3231,12 @@ function formatDate(iso) {
 [searchEl, fromEl, toEl].forEach(el => el.addEventListener('input', renderArticles));
 scopeEl.addEventListener('change', () => setSearchScope(scopeEl.checked));
 clearEl.addEventListener('click', () => {
+  activeMods.clear();
+  buildModalityChips();
   searchEl.value = ''; fromEl.value = ''; toEl.value = '';
   activeTiers.clear();
   buildPriorityChips();
+  buildModalityChips();
   // In library-wide search the scope toggle is hidden, so turning it off here
   // would strand you inside one node with no visible control to get back out.
   if (GLOBAL_SEARCH) { renderArticles(); return; }

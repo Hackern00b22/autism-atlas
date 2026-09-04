@@ -1,0 +1,808 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Trials &amp; Patents · ASD EurekaAlert Database</title>
+<meta name="theme-color" content="#05060a">
+<script>
+/* Blocking on purpose: the stylesheet defaults to dark, so setting the saved
+   theme after the body paints gives users who chose light a dark flash on every
+   load. */
+(function () {
+  try {
+    var t = localStorage.getItem('arn-theme-v1');
+    if (!t) t = 'dark';   // dark HUD is the default; the toggle's saved choice wins
+    document.documentElement.setAttribute('data-theme', t);
+    var m = document.querySelector('meta[name="theme-color"]');
+    if (m) m.setAttribute('content', t === 'light' ? '#DFE5EE' : '#05060a');
+  } catch (e) {}
+})();
+</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;700&family=Space+Grotesk:wght@300;400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    color-scheme: dark;
+    --line-rgb: 120, 140, 200;
+    --panel-rgb: 10, 13, 20;
+    --void-rgb: 5, 6, 10;
+    --surface-rgb: 17, 21, 31;
+    --surface-1: rgba(var(--panel-rgb), 0.88);
+    --surface-2: rgba(var(--void-rgb), 0.82);
+    --surface-3: rgba(var(--surface-rgb), 0.5);
+    --blur: blur(12px);
+    --panel-shadow: none;
+    --on-accent: #05060a;
+    --bg-0: #05060a;
+    --bg-1: #0a0d14;
+    --bg-2: #11151f;
+    --ink-0: #e6ecff;
+    --ink-1: #98a4c2;
+    --ink-2: #5d6783;
+    --grid: rgba(var(--line-rgb), 0.06);
+    --line: rgba(var(--line-rgb), 0.12);
+    --neon-immuno:   #00f0ff;
+    --neon-cyto:     #ff2bd6;
+    --neon-behav:    #b6ff3c;
+    --neon-neuro:    #ffb020;
+    --neon-gen:      #7a5cff;
+    --neon-interv:   #ff5757;
+    --up: #2dd4bf;
+    --down: #e0566b;
+    --gold: #ffd97a;
+    --accent: var(--neon-immuno);
+  }
+  :root[data-theme="light"] {
+    color-scheme: light;
+    --line-rgb: 46, 62, 90;
+    --panel-rgb: 246, 248, 252;
+    --void-rgb: 226, 231, 240;
+    --surface-rgb: 226, 231, 240;
+    --surface-1: #F2F5F9;
+    --surface-2: #E8EDF4;
+    --surface-3: #E3E9F2;
+    --blur: none;
+    --panel-shadow: 0 1px 2px rgba(30, 42, 66, 0.06), 0 6px 20px rgba(30, 42, 66, 0.08);
+    --on-accent: #FFFFFF;
+    --bg-0: #DFE5EE;
+    --bg-1: #F2F5F9;
+    --bg-2: #D2DAE6;
+    --ink-0: #0F1720;
+    --ink-1: #414F66;
+    --ink-2: #6A778F;
+    --grid: rgba(46, 62, 90, 0.10);
+    --line: rgba(46, 62, 90, 0.22);
+    --neon-immuno:   #00707F;
+    --neon-cyto:     #B01B8C;
+    --neon-behav:    #446400;
+    --neon-neuro:    #875600;
+    --neon-gen:      #5340C4;
+    --neon-interv:   #AB2C28;
+    --up: #0E7A6E;
+    --down: #AB2C28;
+    --gold: #8A5A00;
+  }
+  :root[data-theme="light"] .panel,
+  :root[data-theme="light"] .btn,
+  :root[data-theme="light"] .tile,
+  :root[data-theme="light"] .card { box-shadow: var(--panel-shadow); }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body {
+    min-height: 100%;
+    background: var(--bg-0); color: var(--ink-0);
+    font-family: 'Space Grotesk', system-ui, sans-serif;
+    -webkit-font-smoothing: antialiased;
+  }
+  body::before {
+    content: ''; position: fixed; inset: 0;
+    background-image:
+      linear-gradient(var(--grid) 1px, transparent 1px),
+      linear-gradient(90deg, var(--grid) 1px, transparent 1px);
+    background-size: 48px 48px;
+    pointer-events: none; z-index: 0;
+  }
+  .corner { position: fixed; width: 14px; height: 14px; border: 1px solid var(--ink-2); z-index: 30; pointer-events: none; }
+  .corner.tl { top: 16px; left: 16px; border-right: none; border-bottom: none; }
+  .corner.tr { top: 16px; right: 16px; border-left: none; border-bottom: none; }
+  .corner.bl { bottom: 16px; left: 16px; border-right: none; border-top: none; }
+  .corner.br { bottom: 16px; right: 16px; border-left: none; border-top: none; }
+
+  .wrap { position: relative; z-index: 2; max-width: 1280px; margin: 0 auto; padding: 22px 32px 80px; }
+
+  .hud { display: flex; justify-content: space-between; align-items: flex-start; gap: 20px; flex-wrap: wrap; }
+  .brand {
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
+    font-size: 12.5px; letter-spacing: 0.28em; color: var(--ink-1); text-transform: uppercase;
+  }
+  .brand .title {
+    display: block; font-family: 'Space Grotesk', system-ui, sans-serif;
+    font-size: 22px; letter-spacing: -0.01em; color: var(--ink-0);
+    text-transform: none; margin-top: 4px; font-weight: 500;
+  }
+  .brand .title em { font-style: normal; color: var(--accent); }
+  .hud .tiles { display: flex; gap: 10px; flex-wrap: wrap; }
+  .tile {
+    background: var(--surface-1); backdrop-filter: var(--blur); -webkit-backdrop-filter: var(--blur);
+    border: 1px solid var(--line); border-radius: 4px; padding: 8px 14px; min-width: 96px;
+  }
+  .tlabel { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--ink-2); }
+  .tval { font-size: 19px; font-weight: 500; margin-top: 2px; font-variant-numeric: tabular-nums; }
+
+  .navrow { display: flex; gap: 10px; margin: 18px 0 14px; flex-wrap: wrap; align-items: center; }
+  .btn {
+    background: var(--surface-1); backdrop-filter: var(--blur); -webkit-backdrop-filter: var(--blur);
+    border: 1px solid var(--line); color: var(--ink-1); border-radius: 4px;
+    font-family: 'JetBrains Mono', monospace; font-size: 12px; letter-spacing: 0.14em;
+    text-transform: uppercase; padding: 9px 14px; cursor: pointer; text-decoration: none;
+    transition: color 0.18s, border-color 0.18s, background-color 0.18s; display: inline-flex; align-items: center; gap: 7px;
+  }
+  .btn:hover { color: var(--ink-0); border-color: var(--ink-1); }
+  .btn.primary { border-color: var(--accent); color: var(--accent); }
+  .btn.primary:hover { background: var(--accent); color: var(--on-accent); }
+  .btn:disabled { opacity: 0.5; cursor: default; }
+  .spacer { flex: 1; }
+
+  .status { font-family: 'JetBrains Mono', monospace; font-size: 12px; color: var(--ink-2); min-height: 18px; margin: 2px 0 10px; }
+  .status.err { color: var(--neon-interv); }
+  .status.ok { color: var(--up); }
+  .spin { display: inline-block; width: 10px; height: 10px; border: 2px solid var(--ink-2); border-top-color: var(--accent); border-radius: 50%; margin-right: 7px; animation: sp 0.8s linear infinite; vertical-align: -1px; }
+  @keyframes sp { to { transform: rotate(360deg); } }
+
+  .cols { display: grid; grid-template-columns: 310px 1fr; gap: 18px; align-items: start; }
+  @media (max-width: 900px) { .cols { grid-template-columns: 1fr; } }
+
+  .panel {
+    background: var(--surface-1); backdrop-filter: var(--blur); -webkit-backdrop-filter: var(--blur);
+    border: 1px solid var(--line); border-radius: 4px; padding: 14px 16px; margin-bottom: 16px;
+  }
+  .panel h3 {
+    font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.2em;
+    text-transform: uppercase; color: var(--ink-2); font-weight: 400; margin-bottom: 10px;
+  }
+  .panel .note { font-size: 12.5px; color: var(--ink-2); line-height: 1.5; }
+  .panel .note code { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--ink-1); }
+
+  /* toggleable breakdown rows (status, phase, patent years) */
+  .frow { display: flex; align-items: center; gap: 9px; padding: 5px 4px; min-height: 24px; cursor: pointer; user-select: none; border-radius: 3px; border: 0; background: transparent; width: 100%; font: inherit; color: inherit; text-align: left; }
+  .frow:hover { background: var(--surface-3); }
+  .frow .swatch { width: 9px; height: 9px; border-radius: 2px; flex: none; }
+  .frow.off { opacity: 0.38; }
+  .frow .lbl { font-size: 13px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .frow .n { margin-left: auto; font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--ink-2); font-variant-numeric: tabular-nums; }
+  .yr { display: grid; grid-template-columns: 46px 1fr 54px; gap: 8px; align-items: center; padding: 5px 0; min-height: 24px; }
+  .yr .fyl { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--ink-1); font-variant-numeric: tabular-nums; }
+  .yr .barwrap { display: block; height: 12px; background: rgba(var(--line-rgb), 0.14); border-radius: 2px; overflow: hidden; }
+  .yr .bar { display: block; height: 100%; background: var(--accent); opacity: 0.9; border-radius: 2px; }
+  .yr .amt { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--ink-1); text-align: right; font-variant-numeric: tabular-nums; }
+
+  .toolbar { display: flex; gap: 10px; margin-bottom: 12px; flex-wrap: wrap; align-items: center; }
+  .toolbar input[type=search] {
+    flex: 1; min-width: 200px; background: var(--surface-2); border: 1px solid var(--line);
+    color: var(--ink-0); border-radius: 4px; padding: 9px 12px; font: inherit; font-size: 14px;
+  }
+  .toolbar input[type=search]:focus { outline: none; border-color: var(--accent); }
+  :focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      animation-duration: 0.01ms !important; animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+  .seg { display: inline-flex; border: 1px solid var(--line); border-radius: 4px; overflow: hidden; }
+  .seg button {
+    background: var(--surface-1); border: none; color: var(--ink-2); cursor: pointer;
+    font-family: 'JetBrains Mono', monospace; font-size: 11.5px; letter-spacing: 0.1em;
+    text-transform: uppercase; padding: 9px 13px; transition: color 0.15s, background-color 0.15s;
+  }
+  .seg button.on { background: var(--accent); color: var(--on-accent); }
+  .seg button:not(.on):hover { color: var(--ink-0); }
+  .seg.lane button.on { background: var(--accent); }
+
+  .card {
+    background: var(--surface-1); backdrop-filter: var(--blur); -webkit-backdrop-filter: var(--blur);
+    border: 1px solid var(--line); border-left: 3px solid var(--st-color, var(--line));
+    border-radius: 4px; padding: 13px 16px; margin-bottom: 10px;
+    transition: border-color 0.15s;
+  }
+  .card:hover { border-color: rgba(var(--line-rgb), 0.3); }
+  .card .head { display: flex; gap: 10px; align-items: baseline; flex-wrap: wrap; }
+  .card .stchip {
+    font-family: 'JetBrains Mono', monospace; font-size: 10.5px; letter-spacing: 0.12em;
+    text-transform: uppercase; color: var(--st-color, var(--ink-1));
+  }
+  .card .num, .card .date { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--ink-2); font-variant-numeric: tabular-nums; }
+  .card .enr { margin-left: auto; font-family: 'JetBrains Mono', monospace; font-size: 12px; color: var(--up); font-variant-numeric: tabular-nums; }
+  .card .newchip { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.1em; color: var(--on-accent); background: var(--up); border-radius: 3px; padding: 1px 6px; }
+  .bm-toggle {
+    cursor: pointer; user-select: none; color: var(--gold); background: none;
+    border: 1px solid color-mix(in srgb, var(--gold) 40%, transparent); border-radius: 4px;
+    padding: 1px 7px; font: inherit; font-size: 11.5px; letter-spacing: 0.08em; white-space: nowrap;
+    transition: color 0.15s, background-color 0.15s, border-color 0.15s;
+  }
+  .bm-toggle:hover { background: color-mix(in srgb, var(--gold) 15%, transparent); }
+  .bm-toggle.on { background: var(--gold); color: var(--on-accent); border-color: var(--gold); }
+  #saved-btn.on { border-color: var(--gold); color: var(--gold); }
+  #saved-btn.on:hover { background: var(--gold); color: var(--on-accent); }
+  .modchips { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; margin: 0 0 12px; }
+  .modchips .lbl {
+    font-family: 'JetBrains Mono', monospace; font-size: 10.5px; letter-spacing: 0.22em;
+    color: var(--ink-2); text-transform: uppercase; margin-right: 2px;
+  }
+  .modchip {
+    cursor: pointer; font: inherit; font-size: 11.5px; letter-spacing: 0.06em;
+    color: var(--ink-1); background: none; white-space: nowrap;
+    border: 1px solid rgba(var(--line-rgb), 0.35); border-radius: 999px; padding: 3px 11px;
+    transition: color 0.15s, background-color 0.15s, border-color 0.15s;
+  }
+  .modchip .n { color: var(--ink-2); font-family: 'JetBrains Mono', monospace; font-size: 10.5px; margin-left: 4px; }
+  .modchip:hover { color: var(--ink-0); border-color: rgba(var(--line-rgb), 0.6); }
+  .modchip.on { color: var(--on-accent); background: var(--accent); border-color: var(--accent); }
+  .modchip.on .n { color: var(--on-accent); }
+  .modchip:disabled { opacity: 0.4; cursor: default; }
+  .card .modtag {
+    font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.06em;
+    color: var(--ink-2); border: 1px solid rgba(var(--line-rgb), 0.3);
+    border-radius: 999px; padding: 0 7px; white-space: nowrap;
+  }
+  .card .grantchip {
+    font-family: 'JetBrains Mono', monospace; font-size: 10.5px; letter-spacing: 0.06em;
+    color: var(--neon-gen); border: 1px solid color-mix(in srgb, var(--neon-gen) 45%, transparent);
+    border-radius: 3px; padding: 0 6px; white-space: nowrap; text-decoration: none;
+  }
+  .card .grantchip:hover { background: var(--neon-gen); color: var(--on-accent); }
+  .card .rtitle { font-size: 15px; font-weight: 500; line-height: 1.35; margin: 6px 0 5px; }
+  .card .rtitle a { color: var(--ink-0); text-decoration: none; }
+  .card .rtitle a:hover { color: var(--accent); text-decoration: underline; text-underline-offset: 3px; }
+  .card .meta { font-size: 12.5px; color: var(--ink-1); line-height: 1.5; }
+  .card .meta .sep { color: var(--ink-2); margin: 0 4px; }
+
+  body.public #refresh-btn { display: none; }
+
+  .empty { text-align: center; color: var(--ink-2); padding: 60px 20px; font-family: 'JetBrains Mono', monospace; font-size: 12.5px; letter-spacing: 0.08em; line-height: 2; }
+  .morebar { text-align: center; margin: 6px 0 20px; }
+</style>
+</head>
+<body>
+<div class="corner tl"></div><div class="corner tr"></div><div class="corner bl"></div><div class="corner br"></div>
+
+<div class="wrap">
+  <div class="hud">
+    <div class="brand">
+      TMF MALONE / ASD EUREKA ALERT v5.0
+      <span class="title">Trials <em>&amp; Patents</em></span>
+    </div>
+    <div class="tiles">
+      <div class="tile"><div class="tlabel">Studies</div><div class="tval" id="m-studies">—</div></div>
+      <div class="tile"><div class="tlabel">Recruiting</div><div class="tval" id="m-recruiting">—</div></div>
+      <div class="tile"><div class="tlabel">NIH-linked</div><div class="tval" id="m-nih">—</div></div>
+      <div class="tile"><div class="tlabel">Patents</div><div class="tval" id="m-patents">—</div></div>
+    </div>
+  </div>
+
+  <div class="navrow">
+    <a class="btn" href="index.html">← Research Network</a>
+    <a class="btn" href="authors.html">◈ Authors</a>
+    <a class="btn" href="press.html">◍ Press</a>
+    <a class="btn" href="nih.html">◎ NIH Funding</a>
+    <span class="spacer"></span>
+    <button class="btn" id="theme-toggle" aria-label="Toggle color theme">◒ Dark</button>
+    <button class="btn primary" id="refresh-btn">↻ Refresh</button>
+  </div>
+  <div class="status" id="global-status"></div>
+
+  <div class="cols">
+    <div>
+      <div class="panel">
+        <h3>// Lane</h3>
+        <div class="seg lane" id="laneseg" role="group" aria-label="Choose lane" style="display:flex">
+          <button data-lane="trials" style="flex:1">⚕ Trials</button>
+          <button data-lane="patents" style="flex:1">⚙ Patents</button>
+        </div>
+        <div class="note" style="margin-top:10px" id="lane-note"></div>
+      </div>
+      <div class="panel" id="p-status" hidden>
+        <h3>// Studies by status</h3>
+        <div id="statuses"></div>
+      </div>
+      <div class="panel" id="p-phase" hidden>
+        <h3>// By phase</h3>
+        <div id="phases"></div>
+        <div class="note" style="margin-top:8px">Phases apply to interventional
+          drug/biologic studies; behavioral and observational studies carry none.</div>
+      </div>
+      <div class="panel" id="p-patyears" hidden>
+        <h3>// Patents by year</h3>
+        <div id="patyears"></div>
+      </div>
+    </div>
+
+    <div>
+      <div class="toolbar">
+        <input type="search" id="q" aria-label="Filter" spellcheck="false" placeholder="Filter — title, sponsor, NCT, intervention…" autocomplete="off">
+        <div class="seg" id="sortseg" role="group" aria-label="Sort">
+          <button data-sort="upd" class="on">Latest update</button>
+          <button data-sort="enroll">Enrollment</button>
+        </div>
+        <button class="btn" id="saved-btn" aria-pressed="false" title="Show only saved items">☆ Saved</button>
+      </div>
+      <div class="modchips" id="modchips" role="group" aria-label="Filter by therapeutic modality"></div>
+      <div id="list"></div>
+      <div class="morebar"><button class="btn" id="more-btn" style="display:none">Show more</button></div>
+    </div>
+  </div>
+</div>
+
+<script>
+const THEME_KEY = 'arn-theme-v1';
+function applyTheme(mode) {
+  document.documentElement.setAttribute('data-theme', mode);
+  const b = document.getElementById('theme-toggle');
+  if (b) b.textContent = mode === 'light' ? '◓ Light' : '◒ Dark';
+  const m = document.querySelector('meta[name="theme-color"]');
+  if (m) m.setAttribute('content', mode === 'light' ? '#DFE5EE' : '#05060a');
+  try { localStorage.setItem(THEME_KEY, mode); } catch (e) {}
+}
+(function () {
+  let saved = null;
+  try { saved = localStorage.getItem(THEME_KEY); } catch (e) {}
+  applyTheme(saved || 'dark');   // default dark; OS preference deliberately ignored
+})();
+
+const $ = id => document.getElementById(id);
+const esc = s => String(s == null ? '' : s).replace(/[&<>"']/g,
+  c => ({ '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;' }[c]));
+
+const ST_COLORS = {
+  RECRUITING: 'var(--up)', ENROLLING_BY_INVITATION: 'var(--up)',
+  ACTIVE_NOT_RECRUITING: 'var(--neon-immuno)', NOT_YET_RECRUITING: 'var(--neon-neuro)',
+  COMPLETED: 'var(--neon-gen)', TERMINATED: 'var(--down)', WITHDRAWN: 'var(--down)',
+  SUSPENDED: 'var(--down)', UNKNOWN: 'var(--ink-2)',
+};
+const stColor = s => ST_COLORS[s] || 'var(--ink-2)';
+const stLabel = s => (s || '').replace(/_/g, ' ').toLowerCase()
+  .replace(/\b\w/g, c => c.toUpperCase());
+const phaseLabel = arr => arr && arr.length
+  ? arr.map(p => p.replace('EARLY_PHASE', 'Early P').replace('PHASE', 'P')).join('/')
+  : 'No phase';
+const phaseKey = arr => (arr && arr.length) ? arr.join('+') : 'NA';
+
+const NEW_DAYS = 14;
+const PAGE_SIZE = 60;
+const SORT_KEY = 'pipe-sort-v1';
+const LANE_KEY = 'pipe-lane-v1';
+
+let TD = { studies: [], modalities: {}, _meta: {} };   // trials payload
+let PD = { patents: [], needsKey: true, _meta: {} };   // patents payload
+let PUBLIC = false;
+let LANE = 'trials';
+let ST_ON = null;             // Set of enabled statuses (null until data)
+let PH_ON = null;             // Set of enabled phase buckets
+let MOD_ON = new Set();
+let SHOWN = PAGE_SIZE;
+let SORT = 'upd';
+let SAVED_ONLY = false;
+try { SORT = localStorage.getItem(SORT_KEY) || 'upd'; } catch (e) {}
+try { LANE = localStorage.getItem(LANE_KEY) || 'trials'; } catch (e) {}
+
+// ---------- saved items ----------
+// Same contract as the NIH page: localStorage warm-start, uistate.json
+// authoritative in owner mode, tombstoned removals. Two id namespaces, one
+// per lane; both push together.
+const KEYS = {
+  trials:  { bm: 'trials-bookmarks-v1',  rm: 'trials-bookmarks-removed-v1',  api: 'trialsBookmarks',  apiRm: 'trialsBookmarksRemoved' },
+  patents: { bm: 'patents-bookmarks-v1', rm: 'patents-bookmarks-removed-v1', api: 'patentsBookmarks', apiRm: 'patentsBookmarksRemoved' },
+};
+const readIdList = k => {
+  try { const p = JSON.parse(localStorage.getItem(k)); return Array.isArray(p) ? p : []; }
+  catch (e) { return []; }
+};
+const BM = {}, RM = {};
+for (const lane of ['trials', 'patents']) {
+  BM[lane] = readIdList(KEYS[lane].bm);
+  RM[lane] = readIdList(KEYS[lane].rm);
+}
+let UISTATE_READY = false;
+let PUSH_INFLIGHT = false, PUSH_QUEUED = false;
+
+const isBookmarked = id => BM[LANE].includes(id);
+
+function persistBookmarks() {
+  for (const lane of ['trials', 'patents']) {
+    try { localStorage.setItem(KEYS[lane].bm, JSON.stringify(BM[lane])); } catch (e) {}
+    try { localStorage.setItem(KEYS[lane].rm, JSON.stringify(RM[lane])); } catch (e) {}
+  }
+  pushUIState();
+}
+
+function pushUIState() {
+  if (PUBLIC || !UISTATE_READY) return;
+  if (PUSH_INFLIGHT) { PUSH_QUEUED = true; return; }
+  PUSH_INFLIGHT = true;
+  const body = {};
+  for (const lane of ['trials', 'patents']) {
+    body[KEYS[lane].api] = BM[lane];
+    body[KEYS[lane].apiRm] = RM[lane];
+  }
+  fetch('/api/ui-state', {
+    method: 'POST', headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(body),
+  }).catch(() => {})
+    .finally(() => {
+      PUSH_INFLIGHT = false;
+      if (PUSH_QUEUED) { PUSH_QUEUED = false; pushUIState(); }
+    });
+}
+
+async function syncUIState() {
+  if (PUBLIC) return;
+  let s;
+  try {
+    const r = await fetch('/api/ui-state', { cache: 'no-store' });
+    if (!r.ok) return;
+    s = await r.json();
+  } catch (e) { return; }
+  if (s.exists) {
+    for (const lane of ['trials', 'patents']) {
+      const srvBm = Array.isArray(s[KEYS[lane].api]) ? s[KEYS[lane].api] : [];
+      const srvRm = Array.isArray(s[KEYS[lane].apiRm]) ? s[KEYS[lane].apiRm] : [];
+      const removed = new Set([...srvRm, ...RM[lane]]);
+      const seen = new Set();
+      BM[lane] = [...srvBm, ...BM[lane]]
+        .filter(id => !removed.has(id) && !seen.has(id) && seen.add(id));
+      RM[lane] = [...removed];
+      try { localStorage.setItem(KEYS[lane].bm, JSON.stringify(BM[lane])); } catch (e) {}
+      try { localStorage.setItem(KEYS[lane].rm, JSON.stringify(RM[lane])); } catch (e) {}
+    }
+  }
+  UISTATE_READY = true;
+  pushUIState();
+  updateSavedBtn();
+  renderList();
+}
+
+document.addEventListener('visibilitychange', () => {
+  if (document.visibilityState === 'visible' && UISTATE_READY) syncUIState();
+});
+
+function toggleBookmark(id, el) {
+  const bm = BM[LANE], rm = RM[LANE];
+  const i = bm.indexOf(id);
+  if (i >= 0) {
+    bm.splice(i, 1);
+    if (!rm.includes(id)) rm.push(id);
+  } else {
+    bm.unshift(id);
+    const r = rm.indexOf(id);
+    if (r >= 0) rm.splice(r, 1);
+  }
+  persistBookmarks();
+  const on = isBookmarked(id);
+  if (el) {
+    el.classList.toggle('on', on);
+    el.textContent = on ? '★ Saved' : '☆ Save';
+    el.setAttribute('aria-pressed', on);
+  }
+  updateSavedBtn();
+  if (SAVED_ONLY && !on) renderList();
+}
+
+function updateSavedBtn() {
+  const b = $('saved-btn');
+  b.classList.toggle('on', SAVED_ONLY);
+  b.setAttribute('aria-pressed', SAVED_ONLY);
+  b.textContent = `${SAVED_ONLY ? '★' : '☆'} Saved${BM[LANE].length ? ` (${BM[LANE].length})` : ''}`;
+}
+
+async function api(path, body) {
+  if (PUBLIC) throw new Error('read-only public site');
+  const res = await fetch(path, {
+    method: 'POST', headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(body || {}),
+  });
+  if (!res.ok) throw new Error(`${res.status} ${res.statusText}`);
+  return res.json();
+}
+
+function setStatus(msg, cls) {
+  const el = $('global-status');
+  el.className = 'status' + (cls === 'err' ? ' err' : cls === 'ok' ? ' ok' : '');
+  el.innerHTML = (cls === 'spin' ? '<span class="spin"></span>' : '') + esc(msg);
+}
+
+async function loadOne(apiPath, staticPath) {
+  try {
+    const r = await fetch(apiPath);
+    if (!r.ok) throw new Error('no api');
+    return await r.json();
+  } catch (e) {
+    const r = await fetch(staticPath, { cache: 'no-store' });
+    PUBLIC = true;
+    document.body.classList.add('public');
+    return await r.json();
+  }
+}
+
+async function load({ autoRefresh = true } = {}) {
+  [TD, PD] = await Promise.all([
+    loadOne('/api/trials', 'trials-data.json'),
+    loadOne('/api/patents', 'patents-data.json').catch(() => PD),
+  ]);
+  if (ST_ON === null) ST_ON = new Set(TD.studies.map(s => s.status));
+  if (PH_ON === null) PH_ON = new Set(TD.studies.map(s => phaseKey(s.phase)));
+  render();
+  if (autoRefresh && !PUBLIC && TD.stale) refresh(true);
+}
+
+async function refresh(auto) {
+  const btn = $('refresh-btn');
+  btn.disabled = true;
+  setStatus(auto ? 'ClinicalTrials.gov data is stale — refreshing…'
+                 : 'Querying ClinicalTrials.gov (full sweep, ~3 pages)…', 'spin');
+  try {
+    const r = await api('/api/trials-refresh');
+    let msg = `Refreshed — ${r.studies} studies.`;
+    if (!PD.needsKey) {
+      setStatus('Refreshing USPTO patents…', 'spin');
+      try {
+        const p = await api('/api/patents-refresh');
+        msg += p.ok ? ` Patents: ${p.patents}.` : ` Patents: ${p.error || 'failed'}.`;
+      } catch (e) { msg += ` Patents: ${e.message}.`; }
+    }
+    await load({ autoRefresh: false });
+    setStatus(msg, 'ok');
+  } catch (e) {
+    setStatus(`Refresh failed — ${e.message}`, 'err');
+  } finally {
+    btn.disabled = false;
+  }
+}
+
+// ---------- render ----------
+function render() {
+  const st = TD.studies || [];
+  $('m-studies').textContent = st.length || '—';
+  $('m-recruiting').textContent = st.filter(s => s.status === 'RECRUITING').length || '—';
+  $('m-nih').textContent = st.filter(s => (s.grants || []).length).length || '—';
+  $('m-patents').textContent = PD.needsKey ? '—' : (PD.patents || []).length;
+  document.querySelectorAll('#laneseg button').forEach(b =>
+    b.classList.toggle('on', b.dataset.lane === LANE));
+  $('p-status').hidden = LANE !== 'trials';
+  $('p-phase').hidden = LANE !== 'trials';
+  $('p-patyears').hidden = LANE !== 'patents';
+  $('q').placeholder = LANE === 'trials'
+    ? 'Filter — title, sponsor, NCT, intervention…'
+    : 'Filter — title, assignee, inventor, number…';
+  $('sortseg').style.visibility = LANE === 'trials' ? 'visible' : 'hidden';
+  $('lane-note').innerHTML = LANE === 'trials'
+    ? `Every ClinicalTrials.gov study matching <code>${esc(TD.searchCond || '"autism" OR "autistic"')}</code> as a condition — refreshed weekly. Studies carrying an NIH grant number link to the grant on the NIH Funding tab.`
+    : (PD.needsKey
+      ? `Dormant — needs a free USPTO API key. Create a MyUSPTO account at <code>data.uspto.gov</code>, then <code>export USPTO_API_KEY=…</code> or write it to <code>~/atlas/.uspto_api_key</code> and refresh.`
+      : `US patents matching <code>${esc(PD.query || 'autism OR autistic')}</code> from the USPTO Open Data Portal (the PatentsView successor) — refreshed weekly.`);
+  renderStatuses();
+  renderPhases();
+  renderPatYears();
+  renderMods();
+  renderList();
+  updateSavedBtn();
+}
+
+function renderStatuses() {
+  if (LANE !== 'trials') return;
+  const counts = {};
+  (TD.studies || []).forEach(s => counts[s.status] = (counts[s.status] || 0) + 1);
+  $('statuses').innerHTML = Object.entries(counts).sort((a, b) => b[1] - a[1]).map(([k, n]) => `
+    <button type="button" class="frow ${ST_ON.has(k) ? '' : 'off'}" data-st="${esc(k)}"
+      aria-pressed="${ST_ON.has(k)}" title="${esc(stLabel(k))} — click to toggle">
+      <span class="swatch" style="background:${stColor(k)}"></span>
+      <span class="lbl">${esc(stLabel(k))}</span>
+      <span class="n">${n}</span>
+    </button>`).join('') || '<div class="note">No data yet — refresh.</div>';
+  document.querySelectorAll('[data-st]').forEach(el => el.onclick = () => {
+    const k = el.dataset.st;
+    if (ST_ON.has(k)) ST_ON.delete(k); else ST_ON.add(k);
+    SHOWN = PAGE_SIZE;
+    renderStatuses(); renderMods(); renderList();
+  });
+}
+
+function renderPhases() {
+  if (LANE !== 'trials') return;
+  const counts = {};
+  (TD.studies || []).forEach(s => { const k = phaseKey(s.phase); counts[k] = (counts[k] || 0) + 1; });
+  const order = Object.keys(counts).sort((a, b) => (a === 'NA') - (b === 'NA') || a.localeCompare(b));
+  $('phases').innerHTML = order.map(k => `
+    <button type="button" class="frow ${PH_ON.has(k) ? '' : 'off'}" data-ph="${esc(k)}"
+      aria-pressed="${PH_ON.has(k)}">
+      <span class="swatch" style="background:${k === 'NA' ? 'var(--ink-2)' : 'var(--accent)'}"></span>
+      <span class="lbl">${esc(phaseLabel(k === 'NA' ? [] : k.split('+')))}</span>
+      <span class="n">${counts[k]}</span>
+    </button>`).join('');
+  document.querySelectorAll('[data-ph]').forEach(el => el.onclick = () => {
+    const k = el.dataset.ph;
+    if (PH_ON.has(k)) PH_ON.delete(k); else PH_ON.add(k);
+    SHOWN = PAGE_SIZE;
+    renderPhases(); renderMods(); renderList();
+  });
+}
+
+function renderPatYears() {
+  if (LANE !== 'patents') return;
+  const counts = {};
+  (PD.patents || []).forEach(p => { const y = (p.date || '').slice(0, 4); if (y) counts[y] = (counts[y] || 0) + 1; });
+  const years = Object.keys(counts).sort().reverse().slice(0, 12);
+  const max = Math.max(1, ...years.map(y => counts[y]));
+  $('patyears').innerHTML = years.map(y => `
+    <div class="yr"><span class="fyl">${esc(y)}</span>
+      <span class="barwrap"><span class="bar" style="width:${Math.round(counts[y] / max * 100)}%"></span></span>
+      <span class="amt">${counts[y]}</span></div>`).join('')
+    || `<div class="note">${PD.needsKey ? 'Lane dormant — no API key yet.' : 'No data yet — refresh.'}</div>`;
+}
+
+function laneBase() {
+  if (LANE === 'patents') return (PD.patents || []);
+  return (TD.studies || []).filter(s => ST_ON.has(s.status) && PH_ON.has(phaseKey(s.phase)));
+}
+
+function renderMods() {
+  const labels = (LANE === 'trials' ? TD.modalities : PD.modalities) || {};
+  const counts = {};
+  laneBase().forEach(r => (r.mods || []).forEach(m => counts[m] = (counts[m] || 0) + 1));
+  $('modchips').innerHTML = '<span class="lbl">Modality</span>' +
+    Object.entries(labels).map(([k, lbl]) => `
+      <button type="button" class="modchip ${MOD_ON.has(k) ? 'on' : ''}" data-mod="${esc(k)}"
+        aria-pressed="${MOD_ON.has(k)}" ${counts[k] ? '' : 'disabled'}
+        title="${esc(lbl)} — ${counts[k] || 0} in view">
+        ${esc(lbl)}<span class="n">${counts[k] || 0}</span>
+      </button>`).join('');
+  document.querySelectorAll('.modchip').forEach(el => el.onclick = () => {
+    const k = el.dataset.mod;
+    if (MOD_ON.has(k)) MOD_ON.delete(k); else MOD_ON.add(k);
+    SHOWN = PAGE_SIZE;
+    renderMods(); renderList();
+  });
+}
+
+function trialCard(s, cutoff) {
+  const isNew = s.updated && s.updated >= cutoff;
+  const url = 'https://clinicaltrials.gov/study/' + encodeURIComponent(s.id);
+  return `
+    <div class="card" style="--st-color:${stColor(s.status)}">
+      <div class="head">
+        <span class="stchip">${esc(stLabel(s.status))}</span>
+        <span class="num">${esc(s.id)}</span>
+        <span class="date" title="Last update posted">${esc(s.updated || '')}</span>
+        ${isNew ? '<span class="newchip">UPDATED</span>' : ''}
+        ${s.results ? '<span class="date" title="Study has posted results">▤ RESULTS</span>' : ''}
+        <span class="enr" title="Enrollment">${s.enroll ? 'n=' + s.enroll : ''}</span>
+        <button class="bm-toggle ${isBookmarked(s.id) ? 'on' : ''}" data-id="${esc(s.id)}"
+                aria-label="Save this study" aria-pressed="${isBookmarked(s.id)}"
+                title="Save this study">${isBookmarked(s.id) ? '★ Saved' : '☆ Save'}</button>
+      </div>
+      <div class="rtitle"><a href="${esc(url)}" target="_blank" rel="noopener">${esc(s.title)}</a></div>
+      <div class="meta">
+        ${esc(s.sponsor)}
+        <span class="sep">·</span>${esc(s.type)}${s.phase && s.phase.length ? `<span class="sep">·</span>${esc(phaseLabel(s.phase))}` : ''}
+        ${s.start ? `<span class="sep">·</span>${esc(s.start.slice(0, 4))}–${esc((s.done || '').slice(0, 4))}` : ''}
+        ${(s.grants || []).map(g => `<a class="grantchip" href="nih.html?q=${encodeURIComponent(g)}" title="NIH grant ${esc(g)} — view on the NIH Funding tab">◎ ${esc(g)}</a>`).join(' ')}
+        ${(s.mods || []).map(m => `<span class="modtag" title="Therapeutic modality (title + conditions + interventions)">${esc((TD.modalities || {})[m] || m)}</span>`).join('')}
+      </div>
+    </div>`;
+}
+
+function patentCard(p) {
+  const num = p.patNum || p.id;
+  const url = p.patNum
+    ? 'https://patents.google.com/patent/US' + encodeURIComponent(String(p.patNum).replace(/[^0-9A-Za-z]/g, ''))
+    : 'https://patents.google.com/?q=' + encodeURIComponent(p.title || p.id);
+  return `
+    <div class="card" style="--st-color:var(--neon-neuro)">
+      <div class="head">
+        <span class="stchip" style="--st-color:var(--neon-neuro)">${esc(p.patNum ? 'Patent' : 'Application')}</span>
+        <span class="num">${esc(num)}</span>
+        <span class="date">${esc(p.date || '')}</span>
+        <span class="enr"></span>
+        <button class="bm-toggle ${isBookmarked(p.id) ? 'on' : ''}" data-id="${esc(p.id)}"
+                aria-label="Save this patent" aria-pressed="${isBookmarked(p.id)}"
+                title="Save this patent">${isBookmarked(p.id) ? '★ Saved' : '☆ Save'}</button>
+      </div>
+      <div class="rtitle"><a href="${esc(url)}" target="_blank" rel="noopener">${esc(p.title)}</a></div>
+      <div class="meta">
+        ${esc((p.assignees || []).join(', ') || (p.inventors || []).join(', '))}
+        ${p.status ? `<span class="sep">·</span>${esc(p.status)}` : ''}
+        ${(p.mods || []).map(m => `<span class="modtag" title="Therapeutic modality (title + abstract)">${esc((PD.modalities || {})[m] || m)}</span>`).join('')}
+      </div>
+    </div>`;
+}
+
+function renderList() {
+  const q = ($('q').value || '').trim().toLowerCase();
+  let view;
+  if (LANE === 'patents' && PD.needsKey) {
+    $('list').innerHTML = `<div class="empty">// PATENT LANE IS DORMANT<br>
+      GET A FREE USPTO API KEY (MYUSPTO ACCOUNT AT DATA.USPTO.GOV),<br>
+      SET USPTO_API_KEY OR WRITE ~/atlas/.uspto_api_key, THEN REFRESH.</div>`;
+    $('more-btn').style.display = 'none';
+    return;
+  }
+  view = SAVED_ONLY
+    ? (LANE === 'trials' ? (TD.studies || []) : (PD.patents || [])).filter(r => isBookmarked(r.id))
+    : laneBase();
+  if (MOD_ON.size) view = view.filter(r => (r.mods || []).some(m => MOD_ON.has(m)));
+  if (q) {
+    view = view.filter(r => LANE === 'trials'
+      ? (r.title.toLowerCase().includes(q) || r.sponsor.toLowerCase().includes(q)
+         || r.id.toLowerCase().includes(q)
+         || (r.ivs || []).some(v => v.toLowerCase().includes(q))
+         || (r.grants || []).some(g => g.toLowerCase().includes(q)))
+      : ((r.title || '').toLowerCase().includes(q) || String(r.id).toLowerCase().includes(q)
+         || String(r.patNum || '').toLowerCase().includes(q)
+         || (r.assignees || []).some(a => a.toLowerCase().includes(q))
+         || (r.inventors || []).some(a => a.toLowerCase().includes(q))));
+  }
+  view = view.slice();
+  if (LANE === 'trials') {
+    if (SORT === 'enroll') view.sort((a, b) => (b.enroll || 0) - (a.enroll || 0));
+    else view.sort((a, b) => (a.updated < b.updated ? 1 : a.updated > b.updated ? -1 : 0));
+  } else {
+    view.sort((a, b) => ((a.date || '') < (b.date || '') ? 1 : -1));
+  }
+  if (!view.length) {
+    $('list').innerHTML = SAVED_ONLY
+      ? `<div class="empty">// NOTHING SAVED YET — HIT ☆ SAVE ON A ${LANE === 'trials' ? 'STUDY' : 'PATENT'}</div>`
+      : `<div class="empty">// NOTHING MATCHES</div>`;
+    $('more-btn').style.display = 'none';
+    return;
+  }
+  const cutoff = new Date(Date.now() - NEW_DAYS * 864e5).toISOString().slice(0, 10);
+  const shown = view.slice(0, SHOWN);
+  $('list').innerHTML = shown.map(r => LANE === 'trials' ? trialCard(r, cutoff) : patentCard(r)).join('');
+  document.querySelectorAll('.bm-toggle').forEach(el =>
+    el.onclick = () => toggleBookmark(el.dataset.id, el));
+  $('more-btn').style.display = view.length > SHOWN ? '' : 'none';
+  $('more-btn').textContent = `Show more (${view.length - SHOWN} remaining)`;
+}
+
+// ---------- wiring ----------
+$('q').addEventListener('input', () => { SHOWN = PAGE_SIZE; renderList(); });
+document.querySelectorAll('#laneseg button').forEach(b => {
+  b.onclick = () => {
+    LANE = b.dataset.lane;
+    try { localStorage.setItem(LANE_KEY, LANE); } catch (e) {}
+    SHOWN = PAGE_SIZE;
+    MOD_ON.clear();
+    SAVED_ONLY = false;
+    render();
+  };
+});
+document.querySelectorAll('#sortseg button').forEach(b => {
+  if (b.dataset.sort === SORT) {
+    document.querySelectorAll('#sortseg button').forEach(x => x.classList.remove('on'));
+    b.classList.add('on');
+  }
+  b.onclick = () => {
+    SORT = b.dataset.sort;
+    try { localStorage.setItem(SORT_KEY, SORT); } catch (e) {}
+    document.querySelectorAll('#sortseg button').forEach(x => x.classList.remove('on'));
+    b.classList.add('on');
+    renderList();
+  };
+});
+$('more-btn').onclick = () => { SHOWN += PAGE_SIZE; renderList(); };
+$('saved-btn').onclick = () => {
+  SAVED_ONLY = !SAVED_ONLY;
+  SHOWN = PAGE_SIZE;
+  updateSavedBtn();
+  renderList();
+};
+$('refresh-btn').onclick = () => refresh(false);
+$('theme-toggle').onclick = () =>
+  applyTheme(document.documentElement.getAttribute('data-theme') === 'light' ? 'dark' : 'light');
+
+updateSavedBtn();
+load().then(syncUIState);   // sync after load — it needs to know PUBLIC first
+</script>
+</body>
+</html>
