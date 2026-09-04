@@ -318,8 +318,63 @@
     .nav-toolbar { order: 3; flex-basis: 100%; justify-content: flex-start; }
   }
 
-  .pipe-button.auth-button { border-color: var(--neon-immuno); color: var(--neon-immuno); }
-  .pipe-button.auth-button:hover { background: var(--neon-immuno); color: var(--on-accent); }
+  /* TRIALS + PATENTS BUBBLE — the link to pipeline.html used to be one more
+     toolbar tab; it now floats as its own small satellite under the brand,
+     styled like a branch node (gradient disc, inner ring, label plate) but
+     deliberately unattached: no spoke to the core, no physics, and the
+     simulation reserves its footprint so real nodes never drift under it. */
+  .pipe-bubble {
+    position: fixed; left: 40px; top: 132px; z-index: 10;
+    display: flex; flex-direction: column; align-items: center; gap: 12px;
+    width: 148px; text-decoration: none; cursor: pointer;
+    color: var(--neon-immuno); border-radius: 8px;
+  }
+  .pipe-bubble-disc {
+    position: relative; width: 68px; height: 68px; border-radius: 50%;
+    display: grid; place-items: center;
+    font-size: 30px; line-height: 1;
+    border: 1.4px solid var(--neon-immuno);
+    background: radial-gradient(circle at center,
+      color-mix(in srgb, var(--neon-immuno) 60%, transparent) 0%,
+      color-mix(in srgb, var(--neon-immuno) 24%, transparent) 55%,
+      color-mix(in srgb, var(--neon-immuno) 4%, transparent) 100%);
+    box-shadow: 0 0 22px color-mix(in srgb, var(--neon-immuno) 40%, transparent);
+    transition: box-shadow 0.2s, transform 0.2s;
+    animation: bubble-drift 7s ease-in-out infinite;
+  }
+  .pipe-bubble-disc::after {
+    content: ''; position: absolute; inset: 7px; border-radius: 50%;
+    border: 0.5px solid color-mix(in srgb, var(--neon-immuno) 27%, transparent);
+  }
+  .pipe-bubble-label {
+    font-family: 'JetBrains Mono', ui-monospace, 'SF Mono', SFMono-Regular, Menlo, Consolas, monospace;
+    font-size: 12px; font-weight: 500; letter-spacing: 0.08em;
+    text-transform: uppercase; text-align: center; white-space: nowrap;
+    padding: 4px 8px;
+    background: rgba(var(--void-rgb), 0.85);
+    border: 1px solid color-mix(in srgb, var(--neon-immuno) 40%, transparent);
+  }
+  .pipe-bubble-hint {
+    font-family: 'JetBrains Mono', ui-monospace, 'SF Mono', SFMono-Regular, Menlo, Consolas, monospace;
+    font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase;
+    margin-top: -6px; opacity: 0; transition: opacity 0.2s;
+  }
+  .pipe-bubble:hover .pipe-bubble-disc,
+  .pipe-bubble:focus-visible .pipe-bubble-disc {
+    transform: scale(1.05);
+    box-shadow: 0 0 36px color-mix(in srgb, var(--neon-immuno) 60%, transparent);
+    animation-play-state: paused;
+  }
+  .pipe-bubble:hover .pipe-bubble-hint,
+  .pipe-bubble:focus-visible .pipe-bubble-hint { opacity: 1; }
+  @keyframes bubble-drift {
+    0%, 100% { translate: 0 0; }
+    50%      { translate: 0 -6px; }
+  }
+  @media (max-width: 1150px) {
+    /* The toolbar takes its own row under the brand here; sit below it. */
+    .pipe-bubble { top: 196px; }
+  }
 
   /* DEFINITIONS BUTTON */
   .def-button {
@@ -1872,7 +1927,6 @@
     <a class="auth-button" href="authors.html" aria-label="Open author tracker">Authors</a>
     <a class="press-button auth-button" href="press.html" aria-label="Open press releases">Press</a>
     <a class="nih-button auth-button" href="nih.html" aria-label="Open NIH funding tracker">NIH</a>
-    <a class="pipe-button auth-button" href="pipeline.html" aria-label="Open clinical trials and patents">Trials + Patents</a>
     <button class="bm-button" id="bm-button" aria-label="Open bookmarks">Bookmarks <span class="bm-count" id="bm-count"></span></button>
     <button class="lab-button" id="lab-button" aria-label="Open Agent Lab">Agent Lab</button>
     <button class="new-button" id="new-button" aria-label="See what's new">What's New <span class="pulse-dot"></span></button>
@@ -1890,7 +1944,13 @@
   <h3>// Click a branch to explore</h3>
 </div>
 
-<div class="hint">CLICK A BRANCH NODE · ◈ AUTHORS · ⬢ AGENT LAB · ◆ WHAT'S NEW · ⌕ SEARCH · ⇩ EXPORT · ESC TO CLOSE</div>
+<a class="pipe-bubble" id="pipe-bubble" href="pipeline.html" aria-label="Open clinical trials and patents" title="Clinical trials and patents">
+  <span class="pipe-bubble-disc" aria-hidden="true">&#9877;</span>
+  <span class="pipe-bubble-label">Trials + Patents</span>
+  <span class="pipe-bubble-hint" aria-hidden="true">&#9656; Click to open</span>
+</a>
+
+<div class="hint">CLICK A BRANCH NODE · ◈ AUTHORS · ⚕ TRIALS + PATENTS · ⬢ AGENT LAB · ◆ WHAT'S NEW · ⌕ SEARCH · ⇩ EXPORT · ESC TO CLOSE</div>
 
 <button class="search-fab" id="search-fab" aria-label="Search every node" title="Search the whole library  ( / )">⌕</button>
 <button class="export-fab" id="export-fab" aria-label="Export runs as a table" title="Export runs as CSV, Excel or PDF">&#8615;</button>
@@ -2287,7 +2347,7 @@ window.addEventListener('resize', resize);
 let RESERVED_RECTS = [];
 function cacheReservedRects() {
   RESERVED_RECTS = [];
-  for (const sel of ['#legend', '.search-fab', '.export-fab', '.theme-fab', '.demo-fab']) {
+  for (const sel of ['#legend', '#pipe-bubble', '.search-fab', '.export-fab', '.theme-fab', '.demo-fab']) {
     const el = document.querySelector(sel);
     if (!el) continue;
     const r = el.getBoundingClientRect();
