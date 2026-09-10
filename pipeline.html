@@ -545,7 +545,7 @@ async function refresh(auto) {
     const r = await api('/api/trials-refresh');
     let msg = `Refreshed — ${r.studies} studies.`;
     if (!PD.needsKey) {
-      setStatus('Refreshing USPTO patents…', 'spin');
+      setStatus('Refreshing patents (EPO Open Patent Services)…', 'spin');
       try {
         const p = await api('/api/patents-refresh');
         msg += p.ok ? ` Patents: ${p.patents}.` : ` Patents: ${p.error || 'failed'}.`;
@@ -579,8 +579,8 @@ function render() {
   $('lane-note').innerHTML = LANE === 'trials'
     ? `Every ClinicalTrials.gov study matching <code>${esc(TD.searchCond || '"autism" OR "autistic"')}</code> as a condition — refreshed weekly. Studies carrying an NIH grant number link to the grant on the NIH Funding tab.`
     : (PD.needsKey
-      ? `Dormant — needs a free USPTO API key. Create a MyUSPTO account at <code>data.uspto.gov</code>, then <code>export USPTO_API_KEY=…</code> or write it to <code>~/atlas/.uspto_api_key</code> and refresh.`
-      : `US patents matching <code>${esc(PD.query || 'autism OR autistic')}</code> from the USPTO Open Data Portal (the PatentsView successor) — refreshed weekly.`);
+      ? `Dormant — needs free EPO Open Patent Services credentials. Register at <code>developers.epo.org</code> (e-mail confirmation only), create an app for a consumer key + secret, then write <code>key:secret</code> to <code>~/atlas/.epo_ops_key</code> and refresh.`
+      : `US patents and applications whose title or abstract mentions <code>autism</code> or <code>autistic</code> (OPS query <code>${esc(PD.query || 'ta=autism or ta=autistic')}</code>), via the EPO Open Patent Services mirror of USPTO data — refreshed weekly. One row per application; the grant supersedes its own published application.`);
   renderStatuses();
   renderPhases();
   renderPatYears();
@@ -694,8 +694,10 @@ function trialCard(s, cutoff) {
 
 function patentCard(p) {
   const num = p.patNum || p.id;
-  const url = p.patNum
-    ? 'https://patents.google.com/patent/US' + encodeURIComponent(String(p.patNum).replace(/[^0-9A-Za-z]/g, ''))
+  // OPS ids are full publication numbers (US10655178B2, US20260027166A1),
+  // which Google Patents resolves directly for grants and applications alike.
+  const url = /^[A-Z]{2}[0-9A-Z]+$/.test(p.id || '')
+    ? 'https://patents.google.com/patent/' + encodeURIComponent(p.id)
     : 'https://patents.google.com/?q=' + encodeURIComponent(p.title || p.id);
   return `
     <div class="card" style="--st-color:var(--neon-neuro)">
@@ -722,8 +724,8 @@ function renderList() {
   let view;
   if (LANE === 'patents' && PD.needsKey) {
     $('list').innerHTML = `<div class="empty">// PATENT LANE IS DORMANT<br>
-      GET A FREE USPTO API KEY (MYUSPTO ACCOUNT AT DATA.USPTO.GOV),<br>
-      SET USPTO_API_KEY OR WRITE ~/atlas/.uspto_api_key, THEN REFRESH.</div>`;
+      REGISTER FREE AT DEVELOPERS.EPO.ORG (E-MAIL ONLY, NO ID CHECK), CREATE AN APP,<br>
+      WRITE KEY:SECRET TO ~/atlas/.epo_ops_key, THEN REFRESH.</div>`;
     $('more-btn').style.display = 'none';
     return;
   }
