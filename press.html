@@ -203,6 +203,30 @@
   }
   .seg button.on { background: var(--neon-neuro); color: var(--on-accent); }
   .seg button:not(.on):hover { color: var(--ink-0); }
+  /* therapeutic-modality strip + the tags echoing it on cards — the same
+     component nih.html and pipeline.html draw, in this page's accent */
+  .modchips { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; margin: 0 0 12px; }
+  .modchips .lbl {
+    font-family: 'JetBrains Mono', monospace; font-size: 10.5px; letter-spacing: 0.22em;
+    color: var(--ink-2); text-transform: uppercase; margin-right: 2px;
+  }
+  .modchip {
+    cursor: pointer; font: inherit; font-size: 11.5px; letter-spacing: 0.06em;
+    color: var(--ink-1); background: none; white-space: nowrap;
+    border: 1px solid rgba(var(--line-rgb), 0.35); border-radius: 999px; padding: 3px 11px;
+    transition: color 0.15s, background-color 0.15s, border-color 0.15s;
+  }
+  .modchip .n { color: var(--ink-2); font-family: 'JetBrains Mono', monospace; font-size: 10.5px; margin-left: 4px; }
+  .modchip:hover { color: var(--ink-0); border-color: rgba(var(--line-rgb), 0.6); }
+  .modchip.on { color: var(--on-accent); background: var(--neon-neuro); border-color: var(--neon-neuro); }
+  .modchip.on .n { color: var(--on-accent); }
+  .modchip:disabled { opacity: 0.4; cursor: default; }
+  .modchip:disabled:hover { color: var(--ink-1); border-color: rgba(var(--line-rgb), 0.35); }
+  .card .modtag {
+    font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.06em;
+    color: var(--ink-2); border: 1px solid rgba(var(--line-rgb), 0.3);
+    border-radius: 999px; padding: 0 7px; white-space: nowrap; align-self: center;
+  }
 
   /* ---------- cards ---------- */
   .card {
@@ -327,6 +351,7 @@
         <button class="btn" id="saved-btn" aria-pressed="false"
                 title="Show only saved releases">☆ Saved</button>
       </div>
+      <div class="modchips" id="modchips" role="group" aria-label="Filter by therapeutic modality"></div>
       <div id="list"></div>
     </div>
   </div>
@@ -367,6 +392,7 @@ let PUBLIC = false;
 let SRC_ON = null;            // Set of enabled source keys
 let SORT = 'new';
 let SAVED_ONLY = false;
+let MOD_ON = new Set();       // therapeutic-modality filter, OR semantics (as on every other page)
 try { SORT = localStorage.getItem(SORT_KEY) || 'new'; } catch (e) {}
 
 // ---------- saved releases ----------
@@ -574,12 +600,38 @@ function renderLearned() {
      ${L.neg_events || 0} rejected · counts are kept/rejected appearances.</div>`;
 }
 
+// Therapeutic-modality strip. Every lane renders every time, in the shared
+// order, so the strip reads the same here as on the nodes, the funding page
+// and the pipeline; a lane with nothing in view is disabled, not dropped.
+// Counts follow the source/saved scope but not the text query, so a chip
+// never claims a total the list below contradicts.
+function renderMods(base) {
+  const labels = DATA.modalities || {};
+  const counts = {};
+  base.forEach(r => (r.mods || []).forEach(m => counts[m] = (counts[m] || 0) + 1));
+  Object.keys(labels).forEach(k => { if (!counts[k]) MOD_ON.delete(k); });   // a disabled chip can't be un-toggled
+  $('modchips').innerHTML = '<span class="lbl">Modality</span>' +
+    Object.entries(labels).map(([k, lbl]) => `
+      <button type="button" class="modchip ${MOD_ON.has(k) ? 'on' : ''}" data-mod="${esc(k)}"
+        aria-pressed="${MOD_ON.has(k)}" ${counts[k] ? '' : 'disabled'}
+        title="${esc(lbl)} — ${counts[k] || 0} release${counts[k] === 1 ? '' : 's'} in view (tagged from title + summary)">
+        ${esc(lbl)}<span class="n">${counts[k] || 0}</span>
+      </button>`).join('');
+  document.querySelectorAll('.modchip').forEach(el => el.onclick = () => {
+    const k = el.dataset.mod;
+    if (MOD_ON.has(k)) MOD_ON.delete(k); else MOD_ON.add(k);
+    renderList(DATA.releases || []);
+  });
+}
+
 function renderList(rels) {
   const q = ($('q').value || '').trim().toLowerCase();
   // The saved view is a shelf, not a filter — it shows everything saved,
   // regardless of which sources are toggled on.
   let view = SAVED_ONLY ? rels.filter(r => isBookmarked(r.id))
                         : rels.filter(r => SRC_ON.has(r.source));
+  renderMods(view);
+  if (MOD_ON.size) view = view.filter(r => (r.mods || []).some(m => MOD_ON.has(m)));
   if (q) view = view.filter(r =>
     r.title.toLowerCase().includes(q) || (r.summary || '').toLowerCase().includes(q)
     || (r.sourceLabel || '').toLowerCase().includes(q));
@@ -610,6 +662,7 @@ function renderList(rels) {
         <span class="srcchip">${esc(r.sourceLabel)}</span>
         <span class="date">${esc(r.date)}</span>
         ${chip}
+        ${(r.mods || []).map(m => `<span class="modtag" title="Therapeutic modality (from title + summary)">${esc((DATA.modalities || {})[m] || m)}</span>`).join('')}
         <span class="fb">
           <button class="fb-up ${v > 0 ? 'on' : ''}" data-id="${esc(r.id)}" data-v="1"
                   aria-label="Mark relevant" aria-pressed="${v > 0}"

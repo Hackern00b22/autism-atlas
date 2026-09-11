@@ -1443,6 +1443,10 @@
     font-size: 11px;
     opacity: 0.7;
   }
+  /* a lane with nothing in view stays in the strip, greyed, so every node
+     shows the same tabs in the same order */
+  .pf-chip:disabled { opacity: 0.38; cursor: default; }
+  .pf-chip:disabled:hover { color: var(--ink-1); border-color: rgba(var(--line-rgb), 0.18); }
   .pf-chip.boosted::before {
     content: '★';
     font-size: 11.5px;
@@ -2086,6 +2090,9 @@
       <button class="exp-open" id="exp-open" title="Export these runs as a table">&#8595; Export</button>
       <button class="modal-close" id="new-close" aria-label="Close">×</button>
     </div>
+    <div class="priority-filters" id="new-modality-filters">
+      <span class="pf-label">MODALITY</span>
+    </div>
     <div class="new-body" id="new-body">
       <!-- runs injected by JS -->
     </div>
@@ -2198,29 +2205,81 @@ function tierColor(key) {
 }
 const TIER_COLORS = new Proxy({}, { get: (_, k) => tierColor(k) });
 
-// ---- therapeutic modalities ----
-// The same seven-lane vocabulary nih.py bakes into the funding rows, here
-// run client-side over title + MeSH (which every article carries at boot;
-// abstracts load lazily and are deliberately not part of the tag, so an
-// article's chips never change under the reader mid-session). Patterns lean
-// inclusive: a filter that over-tags shows one odd paper, one that
-// under-tags silently hides a relevant one. Extend nih.py's copy in step.
-const MODALITIES = {
-  gene: 'Gene therapy', viral: 'Viral vector', ab: 'Antibody', pep: 'Peptide',
-  sm: 'Small molecule', dev: 'Device / stimulation', beh: 'Behavioral',
+// ---- article tags ----
+// One catalogue of tags, scored client-side over title + MeSH (every article
+// carries both at boot; abstracts load lazily and are deliberately not part of
+// the tag, so a paper's chips never change under the reader mid-session).
+// Each node shows the tabs that fit its topic (NODE_TAGS) — sets overlap
+// where the science does, e.g. microglia sits under both immune nodes and
+// Neuroscience. The eight THERAPEUTIC keys are the cross-node set: they are
+// what What's New, the library search and Bookmarks draw, and they mirror
+// modality.py, which tags the funding / trials / press lanes server-side —
+// extend those eight in both places in step. Patterns lean inclusive: an
+// over-tag shows one odd paper, an under-tag silently hides a relevant one.
+const TAGS = {
+  gene: { label: 'Gene therapy', re: /gene (?:therapy|transfer|editing|replacement|delivery|correction|augmentation)|genetic therapy|genome editing|genome engineering|epigenome editing|CRISPR|\bCas9\b|base editing|prime editing|gene-based (?:therap|treatment)/i },
+  nat: { label: 'Nucleic acid therapeutics', re: /nucleic[- ]acid(?:-based)? (?:therap|drug|medicine)|antisense(?![ -](?:transcript|RNA|lncRNA|strand))|\bASOs?\b|oligonucleotides?\b(?![ -]?(?:array|probe|microarray))|\b(?:si|sh)RNA[- ](?:therap|drug|treatment|deliver|based)|(?:therapeutic|systemic) (?:si|sh)RNA|RNAi[- ](?:therap|based|drug)|mRNA[- ](?:therap|based|deliver)|(?:miRNA|microRNA) (?:mimic|therap|replacement)|antagomir|anti-?miRs?\b|exon skipping|splice[- ](?:switching|modulat)|splicing modulat|aptamers?\b|morpholinos?\b|gapmers?\b|locked nucleic acid|RNA(?:-based)? therap|small activating RNA|\bsaRNA\b/i },
+  viral: { label: 'Viral vector', re: /\bAAV\d*\b|adeno-associated|dependovirus|lentivir|adenovir|retrovir|viral vector|virus[- ]mediated|genetic vectors/i },
+  ab: { label: 'Antibody', re: /antibod|monoclonal|\bmAbs?\b|immunoglobulin|\bIVIG\b|nanobod/i },
+  pep: { label: 'Peptide', re: /peptide|oxytocin|vasopressin|insulin-like growth factor|\bIGF-?1\b|secretin|\bGLP-?1\b/i },
+  sm: { label: 'Small molecule', re: /small[- ]molecule|pharmacotherap|pharmacologic(?:al)? (?:treatment|intervention|therap|rescue)|drug (?:repurpos|discovery|screen|candidate|treatment|therapy)|medication|antipsychotic|serotonin uptake inhibitors|bumetanide|arbaclofen|risperidone|aripiprazole|cannabidiol|\bCBD\b|balovaptan|metformin|rapamycin|mTOR inhibitor|\bSSRIs?\b|fluoxetine|sertraline|suramin|memantine|\bketamine\b|psilocybin|psychedelic/i },
+  dev: { label: 'Device / stimulation', re: /\bdevices?\b|neurostimulat|brain stimulation|neuromodulat|transcranial|\bTMS\b|\btDCS\b|\btACS\b|deep brain stimulation|\bDBS\b|vagus nerve|neurofeedback|wearable|implant|brain-computer|\bBCI\b|robot(?:ic)?[- ]assisted/i },
+  supports: { label: 'Interventions & supports', re: /intervention|therap|treatment|training|support|program|service|curriculum|coaching/i },
+  beh: { label: 'Behavioral', re: /behaviou?ral (?:intervention|therapy|treatment|training)|behavior therapy|applied behavior analysis|\bABA\b|early intervention|parent[- ]mediated|parent training|caregiver-mediated|social skills|cognitive[- ]behaviou?r|\bCBT\b|Early Start Denver|\bESDM\b|naturalistic developmental|speech(?:-language)? therapy|occupational therapy|music therapy|mindfulness|psychosocial (?:intervention|treatment)|play-based|peer-mediated|pivotal response/i },
+  trial: { label: 'Trials & outcomes', re: /randomi[sz]ed|double-blind|placebo|clinical trial|\bRCTs?\b|Treatment Outcome|feasibility|pilot (?:study|trial|project)|open-label|efficacy/i },
+  assess: { label: 'Screening & diagnosis', re: /screening|diagnos|psychometric|questionnaire|Reproducibility of Results|validat|\bADOS\b|\bADI-R\b|\bM-CHAT|\bSRS-?2?\b|assessment|rating scale|Psychiatric Status Rating Scales|Self Report|Factor Analysis|Sensitivity and Specificity|instrument/i },
+  epi: { label: 'Epidemiology & prevalence', re: /prevalence|incidence|epidemiolog|population-based|registry|register|nationwide|birth cohort|Risk Factors|Comorbidity|mortality/i },
+  mental: { label: 'Anxiety, mood & comorbidity', re: /anxiety|depress|mood|suicid|\bADHD\b|Attention Deficit|comorbid|sleep|irritability|self-injur|aggress|catatoni|obsessive|psychiatric|epilep|seizure/i },
+  social: { label: 'Social & communication', re: /social (?:behavior|behaviour|interaction|communication|skills|cognition|motivation|function)|theory of mind|empathy|joint attention|communication|language|speech|Interpersonal Relations|pragmatic|Social Behavior/i },
+  cogn: { label: 'Cognition & executive function', re: /executive function|cogniti|\battention\b(?! deficit)|working memory|inhibition|intelligence|\bIQ\b|Neuropsychological Tests|learning|memory/i },
+  sensory: { label: 'Sensory & perception', re: /sensory|perception|perceptual|auditory|visual|eye[- ]tracking|gaze|tactile|proprioc|Evoked Potentials|habituation|multisensory|Acoustic Stimulation/i },
+  family: { label: 'Parents, caregivers & family', re: /parent|caregiver|famil|mothers?\b|fathers?\b|sibling/i },
+  lived: { label: 'Lived experience & qualitative', re: /qualitative|lived experience|interview|focus group|stakeholder|perspectives|narrative|neurodiversity|stigma|identity|camouflag|masking|well-being|wellbeing/i },
+  school: { label: 'School, work & adult life', re: /school|student|teacher|classroom|education|employment|vocational|transition|adulthood|adult outcomes|quality of life|independent living|services/i },
+  mri: { label: 'MRI & DTI', re: /magnetic resonance|\bMRI\b|diffusion tensor|\bDTI\b|white matter|gray matter|grey matter|cortical thickness|voxel|volumetr|morphometr|tractograph/i },
+  fmri: { label: 'fMRI & connectivity', re: /functional (?:magnetic|MRI|connectivity)|\bfMRI\b|resting[- ]state|connectom|Nerve Net|Neural Pathways|network|Brain Mapping/i },
+  eeg: { label: 'EEG / MEG / ERP', re: /electroencephalogr|\bEEG\b|magnetoencephalogr|\bMEG\b|event-related|\bERPs?\b|Evoked Potentials|oscillat|gamma[- ]band|alpha (?:power|band)|mismatch negativity/i },
+  pet: { label: 'PET, MRS & optical', re: /spectroscop|\bMRS\b|positron|\bPET\b|fNIRS|near-infrared|optical imaging|radioligand/i },
+  regions: { label: 'Brain regions & circuits', re: /cerebell|amygdala|prefrontal|hippocamp|striat|thalam|cortex|cortical|basal ganglia|brainstem|circuit/i },
+  cellular: { label: 'Neurons, synapses & signaling', re: /synap|dendrit|neurons?\b|neuronal|interneuron|GABA|glutamat|excitat|inhibitory|E\/I balance|plasticity|electrophysiolog|patch[- ]clamp|Signal Transduction|signal(?:ing|ling) pathway|mTOR|PI3K|\bWnt\b|MAPK|\bERK\b/i },
+  animal: { label: 'Animal models', re: /Behavior, Animal|mouse model|mice\b|\brats?\b|knockout|transgenic|zebrafish|Macaca|macaque|rodent|Drosophila|Disease Models, Animal/i },
+  syndromic: { label: 'Syndromic & single-gene', re: /fragile X|FMR1|Rett|MECP2|tuberous sclerosis|\bTSC[12]?\b|SHANK3|Phelan|SCN2A|CHD8|SYNGAP1|Angelman|UBE3A|Dup15q|22q11|16p11|Timothy syndrome|\bPTEN\b|\bNF1\b|neurofibromatosis|monogenic|single-gene|haploinsufficien|Chromosome Disorders/i },
+  common: { label: 'Common variants & polygenic', re: /genome-wide association|\bGWAS\b|polygenic|Multifactorial Inheritance|Polymorphism, Single Nucleotide|\bSNPs?\b|heritab|genetic risk score|Genetic Predisposition|liability|Mendelian randomi/i },
+  cnv: { label: 'CNV & structural variants', re: /copy number|\bCNVs?\b|Chromosome Deletion|chromosome (?:deletion|duplication)|microdeletion|microduplication|structural variant|deletion syndrome|duplication syndrome/i },
+  seq: { label: 'Sequencing & rare variants', re: /exome|whole[- ]genome sequencing|\bWES\b|\bWGS\b|rare variant|loss-of-function|missense|de novo|mutation|Genetic Variation|variants? in/i },
+  epig: { label: 'Epigenetics', re: /epigen|DNA methylation|methylom|histone|chromatin|imprinting|non-?coding RNA|microRNA|lncRNA/i },
+  omics: { label: 'Transcriptomics & proteomics', re: /transcriptom|RNA[- ]seq|single-cell|proteom|metabolom|gene expression|expression profil|spatial transcript|multi-?omic/i },
+  ipsc: { label: 'iPSC, organoids & stem cells', re: /pluripotent|\biPSCs?\b|organoid|neural stem|neural progenitor|stem cells?/i },
+  prenatal: { label: 'Prenatal & maternal factors', re: /prenatal|perinatal|pregnan|gestation|maternal|in utero|preterm|Prenatal Exposure|valpro|air pollution|pesticide|folate|folic|gene-environment/i },
+  mia: { label: 'Maternal immune activation', re: /maternal immune activation|\bMIA\b|poly ?\(?I:C\)?|poly I-C|prenatal (?:infection|inflammation|immune)|maternal (?:infection|inflammation|autoantibod|immune)|chorioamnionitis|Pregnancy Complications, Infectious|lipopolysaccharide|\bLPS\b/i },
+  microglia: { label: 'Microglia & glia', re: /microglia|astrocyt|astroglia|neuroglia|\bglial?\b|oligodendrocyt|phagocytos/i },
+  tcell: { label: 'T cells & adaptive immunity', re: /T[- ]lymphocyte|T[- ]cells?\b|Th17|\bTh1\b|\bTh2\b|regulatory T|\bTregs?\b|B[- ]cells?\b|B[- ]lymphocyte|adaptive immun|lymphocyt/i },
+  innate: { label: 'Innate immunity & myeloid', re: /innate immun|Immunity, Innate|monocyt|macrophag|neutrophil|mast cells?|natural killer|\bNK cells?|toll-like|\bTLR\d?\b|complement|inflammasome/i },
+  autoab: { label: 'Autoantibodies & autoimmunity', re: /autoantibod|maternal antibod|anti-brain|autoimmun/i },
+  cytokine: { label: 'Cytokines & chemokines', re: /cytokine|chemokine|interleukin|\bIL-?\d+|\bTNF|tumor necrosis|interferon|\bIFN|\bCCL\d+|\bCXCL\d+/i },
+  il6: { label: 'IL-6 / IL-17 axis', re: /interleukin-?6\b|\bIL-?6\b|interleukin-?17|\bIL-?17|Th17/i },
+  il1tnf: { label: 'IL-1 / TNF', re: /interleukin-?1\b|interleukin-1beta|\bIL-?1(?:beta|β|b|ra)?\b|Interleukin-1 Type I|tumor necrosis|\bTNF/i },
+  ifn: { label: 'Interferons & antiviral', re: /interferon|\bIFN|poly ?\(?I:C\)?|poly I-C|antiviral|viral infection/i },
+  neuroinfl: { label: 'Neuroinflammation', re: /neuroinflammat|Neuroinflammatory|brain inflammation|inflammation/i },
+  microbiome: { label: 'Gut microbiome', re: /microbio|gut[- ]brain|gastrointestinal|probiotic|short-chain fatty|dysbiosis|fecal|faecal/i },
+  biomarker: { label: 'Biomarkers & blood markers', re: /biomarker|C-reactive|\bCRP\b|plasma|serum|blood levels|peripheral blood|cerebrospinal/i },
+  immunother: { label: 'Immunomodulatory treatment', re: /\bIVIG\b|immunoglobulin|immunomodulat|anti-inflammatory|corticosteroid|prednis|minocycline|\bNSAIDs?\b|celecoxib|pentoxifylline|anti-TNF|tocilizumab|infliximab|omega-3|vitamin D|probiotic/i },
 };
-const MOD_PATTERNS = {
-  gene: /gene (?:therapy|transfer|editing|replacement|delivery|correction)|genome editing|genetic therapy|CRISPR|base editing|prime editing|antisense|\bASOs?\b|oligonucleotide|\bsiRNA\b|RNA interference|\bRNAi\b|mRNA therap|exon skipping/i,
-  viral: /\bAAV\d*\b|adeno-associated|dependovirus|lentivir|adenovir|retrovir|viral vector|virus[- ]mediated|genetic vectors/i,
-  ab: /antibod|monoclonal|\bmAbs?\b|immunoglobulin|\bIVIG\b|nanobod/i,
-  pep: /peptide|oxytocin|vasopressin|insulin-like growth factor|\bIGF-?1\b|secretin|\bGLP-?1\b/i,
-  sm: /small[- ]molecule|pharmacotherap|pharmacologic(?:al)? (?:treatment|intervention|therap|rescue)|drug (?:repurpos|discovery|screen|candidate|treatment|therapy)|medication|antipsychotic|serotonin uptake inhibitors|bumetanide|arbaclofen|risperidone|aripiprazole|cannabidiol|\bCBD\b|balovaptan|metformin|rapamycin|mTOR inhibitor|\bSSRIs?\b|fluoxetine|sertraline|suramin|memantine|\bketamine\b|psilocybin|psychedelic/i,
-  dev: /\bdevices?\b|neurostimulat|brain stimulation|neuromodulat|transcranial|\bTMS\b|\btDCS\b|\btACS\b|deep brain stimulation|\bDBS\b|vagus nerve|neurofeedback|wearable|implant|brain-computer|\bBCI\b|robot(?:ic)?[- ]assisted/i,
-  beh: /behaviou?ral (?:intervention|therapy|treatment|training)|behavior therapy|applied behavior analysis|\bABA\b|early intervention|parent[- ]mediated|parent training|caregiver-mediated|social skills|cognitive[- ]behaviou?r|\bCBT\b|Early Start Denver|\bESDM\b|naturalistic developmental|speech(?:-language)? therapy|occupational therapy|music therapy|mindfulness|psychosocial (?:intervention|treatment)|play-based|peer-mediated|pivotal response/i,
+const THERAPEUTIC = ['gene', 'nat', 'viral', 'ab', 'pep', 'sm', 'dev', 'beh'];
+// label lookup for the therapeutic set — the shape press.html/nih.html get from the server
+const MODALITIES = Object.fromEntries(THERAPEUTIC.map(k => [k, TAGS[k].label]));
+const NODE_TAGS = {
+  intervention: ['gene', 'nat', 'viral', 'ab', 'pep', 'sm', 'dev', 'beh', 'trial', 'assess', 'epi', 'mental'],
+  behavioral: ['supports', 'social', 'cogn', 'sensory', 'mental', 'family', 'assess', 'lived', 'school', 'animal'],
+  neuroscience: ['mri', 'fmri', 'eeg', 'pet', 'sensory', 'regions', 'cellular', 'microglia', 'animal', 'dev'],
+  genetics: ['syndromic', 'common', 'cnv', 'seq', 'epig', 'omics', 'ipsc', 'cellular', 'prenatal', 'animal', 'gene', 'nat'],
+  immunology: ['mia', 'microglia', 'tcell', 'innate', 'autoab', 'cytokine', 'microbiome', 'cellular', 'immunother', 'animal'],
+  cytokines: ['mia', 'il6', 'il1tnf', 'ifn', 'cytokine', 'microglia', 'tcell', 'neuroinfl', 'microbiome', 'biomarker', 'immunother', 'animal'],
 };
-function classifyMods(a) {
+function tagSetFor(branchKey) { return NODE_TAGS[branchKey] || THERAPEUTIC; }
+function classifyTags(a) {
   const text = a.title + ' ' + (a.mesh || []).join(' ');
-  return Object.keys(MOD_PATTERNS).filter(k => MOD_PATTERNS[k].test(text));
+  return Object.keys(TAGS).filter(k => TAGS[k].re.test(text));
 }
 
 // Which node an article belongs to and which journal it came from are two
@@ -2248,7 +2307,8 @@ function resolveArticle(a) {
   a.hIndex = j ? (j.hIndex || 0) : 0;
   // An unrecognised tier means we don't know, not that we looked and found
   // nothing — 'other' is a verdict and must not absorb missing data.
-  a.mods = classifyMods(a);
+  a.tags = classifyTags(a);
+  a.mods = a.tags.filter(k => THERAPEUTIC.includes(k));   // cross-node subset
   if (!a.priority || !TIERS[a.priority]) a.priority = 'unclassified';
   a.priorityRank = TIERS[a.priority].rank;
   a.isBoosted = !!TIERS[a.priority].boosted;
@@ -3030,6 +3090,45 @@ function buildPriorityChips() {
   }
 }
 
+// One strip component for every view (node modals, library search, What's
+// New). `keys` is the view's tab set, drawn in full and in order — a tab with
+// nothing in view is disabled, not dropped, which is how nih.html and
+// pipeline.html already draw theirs. `active` is the Set the caller filters
+// with; `onChange` is its re-render.
+function renderModalityStrip(el, keys, counts, active, onChange) {
+  while (el.children.length > 1) el.removeChild(el.lastChild);
+
+  const allBtn = document.createElement('button');
+  allBtn.className = 'pf-chip' + (active.size === 0 ? ' active' : '');
+  allBtn.style.setProperty('--chip-color', 'var(--ink-0)');
+  allBtn.textContent = 'All';
+  allBtn.title = 'No modality filter';
+  allBtn.addEventListener('click', () => { active.clear(); onChange(); });
+  el.appendChild(allBtn);
+
+  for (const key of keys) {
+    const label = TAGS[key].label;
+    const count = counts[key] || 0;
+    if (!count) active.delete(key);   // a disabled chip can't be un-toggled, so never leave one stuck on
+    const btn = document.createElement('button');
+    btn.className = 'pf-chip' + (active.has(key) ? ' active' : '');
+    btn.style.setProperty('--chip-color', 'var(--ink-1)');
+    btn.innerHTML = `${escapeHtml(label)} <span class="count">${count}</span>`;
+    btn.title = count ? `${label} — tagged from title + MeSH` : `${label} — nothing in view`;
+    btn.disabled = count === 0;
+    btn.addEventListener('click', () => {
+      if (active.has(key)) active.delete(key);
+      else active.add(key);
+      onChange();
+    });
+    el.appendChild(btn);
+  }
+}
+
+// The node's own tabs; the library-wide search has no node, so it gets the
+// cross-node therapeutic set.
+function viewTagSet() { return GLOBAL_SEARCH ? THERAPEUTIC : tagSetFor(currentBranch); }
+
 function buildModalityChips() {
   // Same counting contract as the priority chips: counts follow the search
   // scope, other filters don't shrink them.
@@ -3037,38 +3136,8 @@ function buildModalityChips() {
     ? ARTICLES.slice()
     : ARTICLES.filter(a => a.branches.includes(currentBranch));
   const counts = {};
-  branchArticles.forEach(a => (a.mods || []).forEach(m => counts[m] = (counts[m] || 0) + 1));
-
-  while (modEl.children.length > 1) modEl.removeChild(modEl.lastChild);
-
-  const allBtn = document.createElement('button');
-  allBtn.className = 'pf-chip' + (activeMods.size === 0 ? ' active' : '');
-  allBtn.style.setProperty('--chip-color', 'var(--ink-0)');
-  allBtn.innerHTML = 'All';
-  allBtn.title = 'No modality filter';
-  allBtn.addEventListener('click', () => {
-    activeMods.clear();
-    buildModalityChips();
-    renderArticles();
-  });
-  modEl.appendChild(allBtn);
-
-  for (const [key, label] of Object.entries(MODALITIES)) {
-    const count = counts[key] || 0;
-    if (count === 0) continue;
-    const btn = document.createElement('button');
-    btn.className = 'pf-chip' + (activeMods.has(key) ? ' active' : '');
-    btn.style.setProperty('--chip-color', 'var(--ink-1)');
-    btn.innerHTML = `${escapeHtml(label)} <span class="count">${count}</span>`;
-    btn.title = `${label} — tagged from title + MeSH`;
-    btn.addEventListener('click', () => {
-      if (activeMods.has(key)) activeMods.delete(key);
-      else activeMods.add(key);
-      buildModalityChips();
-      renderArticles();
-    });
-    modEl.appendChild(btn);
-  }
+  branchArticles.forEach(a => (a.tags || []).forEach(m => counts[m] = (counts[m] || 0) + 1));
+  renderModalityStrip(modEl, viewTagSet(), counts, activeMods, () => { buildModalityChips(); renderArticles(); });
 }
 
 function closeModal() {
@@ -3089,7 +3158,7 @@ function renderArticles() {
   const allNodes = scopeEl.checked;
   let list = allNodes ? ARTICLES.slice() : ARTICLES.filter(a => a.branches.includes(currentBranch));
   if (activeTiers.size > 0) list = list.filter(a => activeTiers.has(a.priority));
-  if (activeMods.size > 0) list = list.filter(a => (a.mods || []).some(m => activeMods.has(m)));
+  if (activeMods.size > 0) list = list.filter(a => (a.tags || []).some(m => activeMods.has(m)));
   if (q) list = list.filter(a => matchesQuery(a, q));
   if (fromD) list = list.filter(a => new Date(a.date) >= fromD);
   if (toD)   list = list.filter(a => new Date(a.date) <= toD);
@@ -3153,7 +3222,7 @@ function renderArticles() {
     if (showDivider && !dividerInserted && a.isBoosted && html.length === 0) {
       html += '<div class="boosted-separator" style="padding-top:6px;">★ BOOSTED ·  CLINICAL & TRANSLATIONAL</div>';
     }
-    html += renderArticleCard(a, allNodes);
+    html += renderArticleCard(a, allNodes, viewTagSet());
   }
   listEl.innerHTML = html;
 }
@@ -3234,7 +3303,10 @@ function setSearchScope(on) {
   renderArticles();
 }
 
-function renderArticleCard(a, showNode) {
+// `tagSet` picks which of the article's tags are worth a badge here: a node
+// shows its own tabs' tags, cross-node views (Bookmarks) the therapeutic set.
+function renderArticleCard(a, showNode, tagSet) {
+  const badgeKeys = (a.tags || []).filter(k => (tagSet || THERAPEUTIC).includes(k)).slice(0, 3);
   const isNew = a.addedBy && a.addedBy.startsWith('agent-');
   const tier = TIERS[a.priority] || TIERS.other;
   const tierLabel = tier.shortLabel || tier.label;
@@ -3267,7 +3339,7 @@ function renderArticleCard(a, showNode) {
         <span class="journal">${escapeHtml(a.journalName)}</span>
         <span class="if-badge"${a.ifKnown ? '' : ' title="Journal is not in the catalogue — impact factor and h-index unknown"'}>IF ${a.ifKnown ? a.if.toFixed(1) : '—'}</span>
         ${a.hIndex ? `<span class="if-badge" title="Journal h-index (OpenAlex)">H ${a.hIndex}</span>` : ''}
-        ${(a.mods || []).map(m => `<span class="mod-badge" title="Therapeutic modality (from title + MeSH)">${escapeHtml(MODALITIES[m])}</span>`).join('')}
+        ${badgeKeys.map(k => `<span class="mod-badge" title="Tagged from title + MeSH">${escapeHtml(TAGS[k].label)}</span>`).join('')}
         ${a.viaOpenVenue && !a.journalKey ? '<span class="via-badge" title="Found by topical match in a journal outside the catalogue — admitted on topic score rather than on its journal">◎ OPEN VENUE</span>' : ''}
         <span class="date">${formatDate(a.date)}</span>
         ${a.isPreprint ? '<span class="preprint-badge" title="Preprint — not peer reviewed">PREPRINT</span>' : ''}
@@ -4412,10 +4484,20 @@ function updateNewIndicator() {
   dot.style.display = countUndismissedAgentArticles() > 0 ? '' : 'none';
 }
 
+// Modality filter for the changelog — its own Set, so a lane picked here never
+// leaks into the node you open next. Export ignores it: the export panel picks
+// whole runs, and "3 runs" must mean the same thing in both places.
+let wnMods = new Set();
+
 function renderWhatsNew() {
   const body = document.getElementById('new-body');
   const sub = document.getElementById('new-sub');
   const groups = buildRunGroups();
+  // Counted over every undismissed article, before the filter, so the chips
+  // always show what the changelog holds.
+  const wnCounts = {};
+  groups.forEach(g => g.articles.forEach(a => (a.mods || []).forEach(m => wnCounts[m] = (wnCounts[m] || 0) + 1)));
+  renderModalityStrip(document.getElementById('new-modality-filters'), THERAPEUTIC, wnCounts, wnMods, renderWhatsNew);
   const totalDismissed = DISMISSED.articles.length + DISMISSED.runs.length;
   const undoBar = (LAST_DISMISS || totalDismissed > 0) ? `
     <div class="undo-bar">
@@ -4439,7 +4521,16 @@ function renderWhatsNew() {
     ? `${totalAgentAdded} undismissed article${totalAgentAdded === 1 ? '' : 's'} across ${agentRuns} weekly run${agentRuns === 1 ? '' : 's'}. Dismiss to clear.`
     : 'No agent runs yet — initial seed library shown. Weekly fetches populate this view.';
 
-  body.innerHTML = undoBar + groups.map(g => {
+  const shown = wnMods.size
+    ? groups.map(g => ({ ...g, articles: g.articles.filter(a => (a.mods || []).some(m => wnMods.has(m))) }))
+            .filter(g => g.articles.length)
+    : groups;
+  if (shown.length === 0) {
+    body.innerHTML = undoBar + '<div class="new-empty">// NOTHING NEW IN THAT MODALITY</div>';
+    return;
+  }
+
+  body.innerHTML = undoBar + shown.map(g => {
     const isSeed = g.key === 'seed';
     const isManual = g.key.startsWith('manual-');
     const isFoundational = g.key === 'foundational';
@@ -4453,7 +4544,10 @@ function renderWhatsNew() {
       if (a.isBoosted !== b.isBoosted) return a.isBoosted ? -1 : 1;
       return b.date.localeCompare(a.date);
     });
-    const dismissBtn = isSeed
+    // With a modality filter on, the run is only partly visible — "Dismiss
+    // all" would still clear the whole run, so it steps aside until the
+    // filter is off (per-article dismiss stays).
+    const dismissBtn = (isSeed || wnMods.size)
       ? ''
       : `<button class="run-dismiss" data-run="${escapeHtml(g.key)}">Dismiss all</button>`;
     return `
@@ -4502,6 +4596,7 @@ function renderNewItem(a, dismissable) {
         </span>
         <span class="ni-branch">${escapeHtml(branch ? branch.label : 'Unknown')}</span>
         <span class="ni-tier">${a.isBoosted ? '★ ' : ''}${escapeHtml(tier.shortLabel || tier.label)}</span>
+        ${(a.mods || []).map(m => `<span class="mod-badge" title="Therapeutic modality (from title + MeSH)">${escapeHtml(MODALITIES[m])}</span>`).join('')}
         <span class="ni-journal">${escapeHtml(a.journalName)}</span>
         <span>${formatDate(a.date)}</span>
       </div>
