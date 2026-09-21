@@ -1,7 +1,7 @@
 {
  "_meta": {
   "schema_version": 5,
-  "last_updated": "2026-09-14",
+  "last_updated": "2026-09-21",
   "description": "Article store for the Autism Research Network Atlas.",
   "schema": {
    "id": "unique string id",
@@ -65,8 +65,8 @@
    "alpha": 1.0
   },
   "last_run": {
-   "at": "2026-09-14T09:40:00",
-   "added": 67,
+   "at": "2026-09-21T10:01:01",
+   "added": 31,
    "mode": "weekly"
   }
  },
@@ -354,7 +354,7 @@
     "neg_events": 0,
     "updatedAt": "2026-08-05"
    },
-   "lastFetched": "2026-09-14"
+   "lastFetched": "2026-09-21"
   },
   "cytokines": {
    "color": "#ff2bd6",
@@ -363,7 +363,7 @@
    "pubmedQuery": "(\"IL-17\"[Title/Abstract] OR \"IL17\"[Title/Abstract] OR \"interleukin-17\"[Title/Abstract] OR \"interleukin 17\"[Title/Abstract] OR \"IL-17A\"[Title/Abstract] OR \"IL-17a\"[Title/Abstract] OR \"IL-17E\"[Title/Abstract] OR \"interleukin\"[Title/Abstract] OR \"interleukins\"[Title/Abstract] OR \"cytokine\"[Title/Abstract] OR \"cytokines\"[Title/Abstract] OR \"Th17\"[Title/Abstract] OR \"T helper 17\"[Title/Abstract] OR \"TNF-alpha\"[Title/Abstract] OR \"tumor necrosis factor\"[Title/Abstract] OR \"IL-6\"[Title/Abstract] OR \"IL-1\"[Title/Abstract] OR \"IL-1beta\"[Title/Abstract] OR \"IL-1β\"[Title/Abstract] OR \"IL-8\"[Title/Abstract] OR \"IL-10\"[Title/Abstract] OR \"IL-22\"[Title/Abstract] OR \"IL-33\"[Title/Abstract] OR \"neuroinflammation\"[Title/Abstract] OR \"neuroimmune\"[Title/Abstract] OR \"maternal immune activation\"[Title/Abstract] OR \"MIA\"[Title/Abstract] OR \"pro-inflammatory\"[Title/Abstract] OR \"proinflammatory\"[Title/Abstract] OR \"inflammatory\"[Title/Abstract] OR \"inflammation\"[Title/Abstract])",
    "minYear": 2021,
    "broadAutism": true,
-   "lastFetched": "2026-09-14",
+   "lastFetched": "2026-09-21",
    "learned": {
     "include": {
      "Oxytocin": {
@@ -376,7 +376,7 @@
       "pos": 3,
       "neg": 0
      },
-     "Administration, Intranasal": {
+     "Inflammation": {
       "w": 1.099,
       "pos": 2,
       "neg": 0
@@ -386,7 +386,17 @@
       "pos": 2,
       "neg": 0
      },
+     "Prenatal Exposure Delayed Effects": {
+      "w": 1.099,
+      "pos": 2,
+      "neg": 0
+     },
      "Cytokines": {
+      "w": 1.099,
+      "pos": 2,
+      "neg": 0
+     },
+     "Administration, Intranasal": {
       "w": 1.099,
       "pos": 2,
       "neg": 0
@@ -395,22 +405,12 @@
       "w": 1.099,
       "pos": 2,
       "neg": 0
-     },
-     "Inflammation": {
-      "w": 1.099,
-      "pos": 2,
-      "neg": 0
-     },
-     "Prenatal Exposure Delayed Effects": {
-      "w": 1.099,
-      "pos": 2,
-      "neg": 0
      }
     },
     "exclude": {},
-    "pos_events": 15,
+    "pos_events": 16,
     "neg_events": 0,
-    "updatedAt": "2026-08-06"
+    "updatedAt": "2026-09-18"
    }
   },
   "behavioral": {
@@ -422,11 +422,11 @@
    "learned": {
     "include": {},
     "exclude": {},
-    "pos_events": 4,
-    "neg_events": 1,
-    "updatedAt": "2026-08-05"
+    "pos_events": 5,
+    "neg_events": 2,
+    "updatedAt": "2026-09-18"
    },
-   "lastFetched": "2026-09-14"
+   "lastFetched": "2026-09-21"
   },
   "neuroscience": {
    "color": "#ffb020",
@@ -443,11 +443,11 @@
      }
     },
     "exclude": {},
-    "pos_events": 5,
+    "pos_events": 9,
     "neg_events": 0,
-    "updatedAt": "2026-08-25"
+    "updatedAt": "2026-09-18"
    },
-   "lastFetched": "2026-09-14"
+   "lastFetched": "2026-09-21"
   },
   "genetics": {
    "color": "#7a5cff",
@@ -456,13 +456,29 @@
    "pubmedQuery": "(\"GWAS\"[Title/Abstract] OR \"genome-wide association\"[Title/Abstract] OR \"de novo\"[Title/Abstract] OR \"rare variant*\"[Title/Abstract] OR \"copy number variant*\"[Title/Abstract] OR \"CNV\"[Title/Abstract] OR \"risk gene*\"[Title/Abstract] OR \"polygenic\"[Title/Abstract] OR \"SFARI\"[Title/Abstract] OR \"exome\"[Title/Abstract] OR \"whole-genome sequencing\"[Title/Abstract] OR \"single nucleotide\"[Title/Abstract] OR \"heritability\"[Title/Abstract] OR \"twin study\"[Title/Abstract] OR \"gene expression\"[Title/Abstract] OR \"transcriptom*\"[Title/Abstract] OR \"methylation\"[Title/Abstract] OR \"epigenetic*\"[Title/Abstract] OR \"loss-of-function\"[Title/Abstract] OR \"missense\"[Title/Abstract] OR \"SHANK3\"[Title/Abstract] OR \"CHD8\"[Title/Abstract] OR \"SCN2A\"[Title/Abstract] OR \"FMR1\"[Title/Abstract] OR \"MECP2\"[Title/Abstract] OR \"PTEN\"[Title/Abstract] OR \"NRXN1\"[Title/Abstract] OR \"NLGN\"[Title/Abstract] OR \"16p11.2\"[Title/Abstract] OR \"ARID1B\"[Title/Abstract] OR \"ADNP\"[Title/Abstract] OR \"SYNGAP1\"[Title/Abstract] OR \"DYRK1A\"[Title/Abstract] OR \"fragile X\"[Title/Abstract] OR \"tuberous sclerosis\"[Title/Abstract])",
    "minYear": 2021,
    "learned": {
-    "include": {},
+    "include": {
+     "Neural Stem Cells": {
+      "w": 1.099,
+      "pos": 2,
+      "neg": 0
+     },
+     "Neurons": {
+      "w": 1.099,
+      "pos": 2,
+      "neg": 0
+     },
+     "Mutation": {
+      "w": 1.099,
+      "pos": 2,
+      "neg": 0
+     }
+    },
     "exclude": {},
-    "pos_events": 4,
+    "pos_events": 8,
     "neg_events": 0,
-    "updatedAt": "2026-08-06"
+    "updatedAt": "2026-09-18"
    },
-   "lastFetched": "2026-09-14"
+   "lastFetched": "2026-09-21"
   },
   "intervention": {
    "color": "#ff5757",
@@ -483,7 +499,7 @@
     "neg_events": 1,
     "updatedAt": "2026-08-06"
    },
-   "lastFetched": "2026-09-14"
+   "lastFetched": "2026-09-21"
   }
  },
  "articles": [
@@ -26016,6 +26032,468 @@
    "url": "https://pubmed.ncbi.nlm.nih.gov/42726181/",
    "priority": "unclassified",
    "addedBy": "agent-2026-09-14",
+   "mesh": []
+  },
+  {
+   "id": "pm-42752124",
+   "title": "Transcriptome-based classification in mice with ASD-risk mutations.",
+   "date": "2026-09-17",
+   "authors": "Roh JD, Jun Y, Jeon H, et al.",
+   "url": "https://pubmed.ncbi.nlm.nih.gov/42752124/",
+   "priority": "mechanistic",
+   "addedBy": "agent-2026-09-21",
+   "mesh": [
+    "Animals",
+    "Autism Spectrum Disorder",
+    "Mice",
+    "Transcriptome",
+    "Mutation",
+    "Female",
+    "Male",
+    "Prefrontal Cortex",
+    "Fluoxetine",
+    "RNA-Seq",
+    "Genetic Predisposition to Disease",
+    "Disease Models, Animal",
+    "Single-Cell Gene Expression Analysis",
+    "Gene Expression Profiling"
+   ],
+   "journalKey": "science",
+   "branchKey": "genetics"
+  },
+  {
+   "id": "pm-42755379",
+   "title": "Do Autistic Adolescents Talk Differently in Same-Sex Versus Mixed-Sex Conversations?",
+   "date": "2026-09-18",
+   "authors": "Cho S, Fulop L, Mulqueen A, et al.",
+   "url": "https://pubmed.ncbi.nlm.nih.gov/42755379/",
+   "priority": "clinical-trial",
+   "addedBy": "agent-2026-09-21",
+   "mesh": [],
+   "journalKey": "autism",
+   "branchKey": "intervention"
+  },
+  {
+   "id": "pm-42755352",
+   "title": "'Joining the Dots Across Time': A Temporal Conceptual Model of Self-Concept Reconstruction Following Late Recognition of Autism.",
+   "date": "2026-09-18",
+   "authors": "Quinlan E, Emery H",
+   "url": "https://pubmed.ncbi.nlm.nih.gov/42755352/",
+   "priority": "unclassified",
+   "addedBy": "agent-2026-09-21",
+   "mesh": [],
+   "journalKey": "autism",
+   "branchKey": "behavioral"
+  },
+  {
+   "id": "pm-42747846",
+   "title": "Mapping Clinical Diagnoses Associated With Neurodiversity and Neurodivergence in Mental Health Research: A Scoping Review.",
+   "date": "2026-09-16",
+   "authors": "Bellato A, Long MRP, Barilà M, et al.",
+   "url": "https://pubmed.ncbi.nlm.nih.gov/42747846/",
+   "priority": "review",
+   "addedBy": "agent-2026-09-21",
+   "mesh": [],
+   "journalKey": "jama-psych",
+   "branchKey": "behavioral"
+  },
+  {
+   "id": "pm-42747663",
+   "title": "Increasing Joint Attention in Children With Autism Using Contingent Social Stimuli as Reinforcers.",
+   "date": "2026-09-16",
+   "authors": "Pelaez M, Crysdale C, Monlux K",
+   "url": "https://pubmed.ncbi.nlm.nih.gov/42747663/",
+   "priority": "unclassified",
+   "addedBy": "agent-2026-09-21",
+   "mesh": [],
+   "journalKey": "j-autism-dev-disord",
+   "branchKey": "behavioral"
+  },
+  {
+   "id": "pm-42747661",
+   "title": "Anxiety as a Moderator Between Autistic/ADHD Traits and Quality of Life in Autistic Children and Adolescents.",
+   "date": "2026-09-16",
+   "authors": "Osten S, Susko M, Botha C, et al.",
+   "url": "https://pubmed.ncbi.nlm.nih.gov/42747661/",
+   "priority": "unclassified",
+   "addedBy": "agent-2026-09-21",
+   "mesh": [],
+   "journalKey": "j-autism-dev-disord",
+   "branchKey": "behavioral"
+  },
+  {
+   "id": "pm-42744011",
+   "title": "Leveraging Scalable Non-Mammalian Systems for Large-Scale Studies of Autism Risk Gene Function.",
+   "date": "2026-09-15",
+   "authors": "Davidson E, Khan S, Rhee C, et al.",
+   "url": "https://pubmed.ncbi.nlm.nih.gov/42744011/",
+   "priority": "review",
+   "addedBy": "agent-2026-09-21",
+   "mesh": [],
+   "journalKey": "biol-psych",
+   "alsoBranches": [
+    "genetics"
+   ]
+  },
+  {
+   "id": "pm-42749810",
+   "title": "A retinoic acid autoregulatory loop governing prefrontal-motor arealization.",
+   "date": "2026-09-16",
+   "authors": "Yang L, Shibata M, Park S, et al.",
+   "url": "https://pubmed.ncbi.nlm.nih.gov/42749810/",
+   "priority": "mechanistic",
+   "addedBy": "agent-2026-09-21",
+   "mesh": [],
+   "journalKey": "nature",
+   "branchKey": "neuroscience"
+  },
+  {
+   "id": "pm-42752156",
+   "title": "Parsing heterogeneity in autism spectrum disorder.",
+   "date": "2026-09-17",
+   "authors": "Martín JM, Geschwind DH",
+   "url": "https://pubmed.ncbi.nlm.nih.gov/42752156/",
+   "priority": "unclassified",
+   "addedBy": "agent-2026-09-21",
+   "mesh": [
+    "Humans",
+    "Autism Spectrum Disorder",
+    "Mutation",
+    "Genetic Heterogeneity"
+   ],
+   "journalKey": "science",
+   "branchKey": "genetics"
+  },
+  {
+   "id": "pm-42749777",
+   "title": "De novo variants in the poly(rC)-binding protein gene PCBP1 cause a neurodevelopmental disorder.",
+   "date": "2026-09-16",
+   "authors": "Deb W, Besnard T, Desprez F, et al.",
+   "url": "https://pubmed.ncbi.nlm.nih.gov/42749777/",
+   "priority": "unclassified",
+   "addedBy": "agent-2026-09-21",
+   "mesh": [],
+   "journalKey": "mol-psych",
+   "branchKey": "genetics"
+  },
+  {
+   "id": "pm-42755238",
+   "title": "Bridging Evidence and Practice: A Community-Engaged Adaptation of Cognitive Behavioral Therapy for Autistic Youth With Anxiety Receiving Services in Community-Based Organizations.",
+   "date": "2026-09-17",
+   "authors": "Tschida JE, Moore L, Powell AC, et al.",
+   "url": "https://pubmed.ncbi.nlm.nih.gov/42755238/",
+   "priority": "unclassified",
+   "addedBy": "agent-2026-09-21",
+   "mesh": [],
+   "journalKey": "autism",
+   "branchKey": "intervention"
+  },
+  {
+   "id": "pm-42747660",
+   "title": "Evaluating Partnership Quality and Outcomes Within an Autism Community Collaborative.",
+   "date": "2026-09-16",
+   "authors": "Hendrix N, Ransom L, Chatson E, et al.",
+   "url": "https://pubmed.ncbi.nlm.nih.gov/42747660/",
+   "priority": "unclassified",
+   "addedBy": "agent-2026-09-21",
+   "mesh": [],
+   "journalKey": "j-autism-dev-disord",
+   "branchKey": "intervention"
+  },
+  {
+   "id": "pm-42739309",
+   "title": "ADNP-Related Neurodevelopmental Disorder: The First Turkish Case Series with Novel Variants and Reduced Intrafamilial Penetrance.",
+   "date": "2026-09-07",
+   "authors": "Kablan A, Sezer A, Deniz A, et al.",
+   "url": "https://pubmed.ncbi.nlm.nih.gov/42739309/",
+   "priority": "clinical-observation",
+   "addedBy": "agent-2026-09-21",
+   "mesh": [],
+   "branchKey": "genetics",
+   "viaOpenVenue": true,
+   "journalDisplay": "Diagnostics (Basel, Switzerland)"
+  },
+  {
+   "id": "pm-42746363",
+   "title": "Identification of Novel Co-Occurring ZNF711 and SRCAP Variants in a Child with Neurodevelopmental Disorders Through Exome Sequencing.",
+   "date": "2026-09-11",
+   "authors": "Liu T, Huang M, Dai M, et al.",
+   "url": "https://pubmed.ncbi.nlm.nih.gov/42746363/",
+   "priority": "clinical-observation",
+   "addedBy": "agent-2026-09-21",
+   "mesh": [],
+   "branchKey": "genetics",
+   "viaOpenVenue": true,
+   "journalDisplay": "The application of clinical genetics"
+  },
+  {
+   "id": "pm-42716728",
+   "title": "Phenotypic manifestations and variant reclassification of germline PTEN variants: a nationwide Danish study.",
+   "date": "2026-09-09",
+   "authors": "Sandsdalen AL, Jelsig AM, Bertelsen B, et al.",
+   "url": "https://pubmed.ncbi.nlm.nih.gov/42716728/",
+   "priority": "clinical-observation",
+   "addedBy": "agent-2026-09-21",
+   "mesh": [],
+   "branchKey": "genetics",
+   "viaOpenVenue": true,
+   "journalDisplay": "Journal of medical genetics"
+  },
+  {
+   "id": "pm-42747551",
+   "title": "CRISPR-Enabled functional genomics in hPSCs-derived neural models for autism spectrum disorder.",
+   "date": "2026-09-16",
+   "authors": "Gopukumar ST, Saha M, Soni TK, et al.",
+   "url": "https://pubmed.ncbi.nlm.nih.gov/42747551/",
+   "priority": "review",
+   "addedBy": "agent-2026-09-21",
+   "mesh": [
+    "Humans",
+    "Genomics",
+    "Autism Spectrum Disorder",
+    "Pluripotent Stem Cells",
+    "Clustered Regularly Interspaced Short Palindromic Repeats",
+    "Neurons",
+    "Neural Stem Cells",
+    "CRISPR-Cas Systems"
+   ],
+   "branchKey": "genetics",
+   "viaOpenVenue": true,
+   "journalDisplay": "Metabolic brain disease"
+  },
+  {
+   "id": "pm-42759891",
+   "title": "Therapeutic Potential of Mesenchymal Stem Cell-Derived Extracellular Vesicles as a Cell-Free Approach in Autism Spectrum Disorder: A Systematic Review and Meta-Analysis of Preclinical Studies.",
+   "date": "2026-09-18",
+   "authors": "Mohtashami T, Aghayan AH, Masoudi A, et al.",
+   "url": "https://pubmed.ncbi.nlm.nih.gov/42759891/",
+   "priority": "review",
+   "addedBy": "agent-2026-09-21",
+   "mesh": [],
+   "branchKey": "cytokines",
+   "viaOpenVenue": true,
+   "journalDisplay": "Behavioural brain research"
+  },
+  {
+   "id": "pm-42748249",
+   "title": "Maternal-fetal immune conflict contributes to male-specific impairments in a mouse model of neurodevelopmental disorders.",
+   "date": "2026-09-16",
+   "authors": "Sanchez-Martin I, Kukreja B, Henderson P, et al.",
+   "url": "https://pubmed.ncbi.nlm.nih.gov/42748249/",
+   "priority": "mechanistic",
+   "addedBy": "agent-2026-09-21",
+   "mesh": [
+    "Animals",
+    "Male",
+    "Female",
+    "Mice",
+    "Pregnancy",
+    "Disease Models, Animal",
+    "Neurodevelopmental Disorders",
+    "Poly I-C",
+    "Placenta",
+    "Maternal-Fetal Exchange"
+   ],
+   "branchKey": "cytokines",
+   "viaOpenVenue": true,
+   "journalDisplay": "Science advances"
+  },
+  {
+   "id": "pm-42763072",
+   "title": "Prenatal origins of neurodegeneration: The role of maternal immune activation in Alzheimer's and Parkinson's pathobiology.",
+   "date": "2026-09-19",
+   "authors": "Shehu K, Onimisi OB, Bunza HA, et al.",
+   "url": "https://pubmed.ncbi.nlm.nih.gov/42763072/",
+   "priority": "review",
+   "addedBy": "agent-2026-09-21",
+   "mesh": [],
+   "branchKey": "cytokines",
+   "viaOpenVenue": true,
+   "journalDisplay": "Experimental neurology"
+  },
+  {
+   "id": "pm-42749248",
+   "title": "Serum vitamin D status is associated with prefrontal excitation-inhibition balance and functional connectivity in preschool children with autism spectrum disorder.",
+   "date": "2026-09-16",
+   "authors": "Zhu X, Tian P, Lin L, et al.",
+   "url": "https://pubmed.ncbi.nlm.nih.gov/42749248/",
+   "priority": "clinical-observation",
+   "addedBy": "agent-2026-09-21",
+   "mesh": [],
+   "branchKey": "neuroscience",
+   "viaOpenVenue": true,
+   "journalDisplay": "Progress in neuro-psychopharmacology & biological psychiatry"
+  },
+  {
+   "id": "pm-42756825",
+   "title": "Associations between chronic placental inflammation, fetal brain development and later autism traits.",
+   "date": "2026-09-10",
+   "authors": "Menu I, Ji L, Chen B, et al.",
+   "url": "https://pubmed.ncbi.nlm.nih.gov/42756825/",
+   "priority": "clinical-observation",
+   "addedBy": "agent-2026-09-21",
+   "mesh": [],
+   "branchKey": "neuroscience",
+   "viaOpenVenue": true,
+   "journalDisplay": "Brain, behavior, & immunity - health"
+  },
+  {
+   "id": "pm-42751252",
+   "title": "Parcellation of functional subregions using an improved affinity propagation clustering algorithm based on structure-function coupling.",
+   "date": "2026-09-16",
+   "authors": "Li Y, He J, Li S, et al.",
+   "url": "https://pubmed.ncbi.nlm.nih.gov/42751252/",
+   "priority": "translational",
+   "addedBy": "agent-2026-09-21",
+   "mesh": [],
+   "branchKey": "neuroscience",
+   "viaOpenVenue": true,
+   "journalDisplay": "General psychiatry"
+  },
+  {
+   "id": "pm-42742790",
+   "title": "A Neuroinformatics Framework for Evaluating Functional Connectivity Metrics in Small-Sample Resting-State fMRI: An Age-Stratified Autism Study.",
+   "date": "2026-09-15",
+   "authors": "Haghighat H",
+   "url": "https://pubmed.ncbi.nlm.nih.gov/42742790/",
+   "priority": "unclassified",
+   "addedBy": "agent-2026-09-21",
+   "mesh": [
+    "Humans",
+    "Magnetic Resonance Imaging",
+    "Child",
+    "Adolescent",
+    "Brain",
+    "Female",
+    "Male",
+    "Adult",
+    "Rest",
+    "Machine Learning",
+    "Young Adult",
+    "Autistic Disorder",
+    "Neural Pathways",
+    "Brain Mapping",
+    "Age Factors",
+    "Autism Spectrum Disorder",
+    "Image Processing, Computer-Assisted"
+   ],
+   "branchKey": "neuroscience",
+   "viaOpenVenue": true,
+   "journalDisplay": "Neuroinformatics"
+  },
+  {
+   "id": "pm-42763398",
+   "title": "Evaluating the therapeutic efficacy of a modified ketogenic diet in children with autism spectrum disorder: a randomized controlled trial.",
+   "date": "2026-09-11",
+   "authors": "Liu L, Zhao Q, Zhou J, et al.",
+   "url": "https://pubmed.ncbi.nlm.nih.gov/42763398/",
+   "priority": "clinical-trial",
+   "addedBy": "agent-2026-09-21",
+   "mesh": [
+    "Humans",
+    "Diet, Ketogenic",
+    "Male",
+    "Female",
+    "Autism Spectrum Disorder",
+    "Child, Preschool",
+    "Treatment Outcome",
+    "Prospective Studies"
+   ],
+   "branchKey": "intervention",
+   "viaOpenVenue": true,
+   "journalDisplay": "BMC pediatrics",
+   "alsoBranches": [
+    "behavioral"
+   ]
+  },
+  {
+   "id": "pm-42762246",
+   "title": "Short-term outcomes and six-month follow-up of BEAR: a blended, pre-emptive intervention for infants and toddlers at elevated likelihood for autism.",
+   "date": "2026-09-19",
+   "authors": "Snijder MIJ, Grieve C, Pieters S, et al.",
+   "url": "https://pubmed.ncbi.nlm.nih.gov/42762246/",
+   "priority": "clinical-trial",
+   "addedBy": "agent-2026-09-21",
+   "mesh": [],
+   "branchKey": "intervention",
+   "viaOpenVenue": true,
+   "journalDisplay": "European child & adolescent psychiatry"
+  },
+  {
+   "id": "pm-42734950",
+   "title": "Cumulative Incidence and Prevalence of Autism Spectrum Disorder.",
+   "date": "2026-09-14",
+   "authors": "Kim YS, Liu X, Chang J, et al.",
+   "url": "https://pubmed.ncbi.nlm.nih.gov/42734950/",
+   "priority": "clinical-observation",
+   "addedBy": "agent-2026-09-21",
+   "mesh": [],
+   "branchKey": "intervention",
+   "viaOpenVenue": true,
+   "journalDisplay": "JAMA pediatrics"
+  },
+  {
+   "id": "pm-42759400",
+   "title": "Efficacy and neural mechanisms of transcranial direct current stimulation for social function in children and adolescents with autism spectrum disorder: A systematic review and meta-analysis.",
+   "date": "2026-09-12",
+   "authors": "Zhao H, Niu H, Jiang Y, et al.",
+   "url": "https://pubmed.ncbi.nlm.nih.gov/42759400/",
+   "priority": "review",
+   "addedBy": "agent-2026-09-21",
+   "mesh": [],
+   "branchKey": "intervention",
+   "viaOpenVenue": true,
+   "journalDisplay": "Journal of psychiatric research",
+   "alsoBranches": [
+    "neuroscience"
+   ]
+  },
+  {
+   "id": "pm-42750373",
+   "title": "From medical school to foundation training: supporting autistic doctors in early medical careers.",
+   "date": "2026-09-17",
+   "authors": "Groenewald C",
+   "url": "https://pubmed.ncbi.nlm.nih.gov/42750373/",
+   "priority": "review",
+   "addedBy": "agent-2026-09-21",
+   "mesh": [],
+   "branchKey": "behavioral",
+   "viaOpenVenue": true,
+   "journalDisplay": "BJPsych bulletin"
+  },
+  {
+   "id": "pm-42742391",
+   "title": "Reward processing differences in autism: Current understandings and future directions.",
+   "date": "2026-09-15",
+   "authors": "Unruh KE, Mosconi MW",
+   "url": "https://pubmed.ncbi.nlm.nih.gov/42742391/",
+   "priority": "unclassified",
+   "addedBy": "agent-2026-09-21",
+   "mesh": [],
+   "branchKey": "behavioral",
+   "viaOpenVenue": true,
+   "journalDisplay": "Social cognitive and affective neuroscience"
+  },
+  {
+   "id": "pm-42751927",
+   "title": "The Pubertal and Menstrual Experiences of Autistic Females: What are the Implications for Education and Support?",
+   "journalKey": "autism",
+   "date": "2026-09-17",
+   "authors": "Salmon LJ, Wood-Downie H",
+   "url": "https://pubmed.ncbi.nlm.nih.gov/42751927/",
+   "priority": "review",
+   "addedBy": "agent-2026-09-21",
+   "mesh": []
+  },
+  {
+   "id": "pm-42736039",
+   "title": "Risks of neurodevelopmental disorders after prenatal exposure to antiepileptic drugs.",
+   "journalKey": "jcpp",
+   "date": "2026-09-14",
+   "authors": "Lu ML, Hung TH, Chen VC, et al.",
+   "url": "https://pubmed.ncbi.nlm.nih.gov/42736039/",
+   "priority": "clinical-observation",
+   "addedBy": "agent-2026-09-21",
    "mesh": []
   }
  ]
