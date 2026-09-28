@@ -1,7 +1,7 @@
 {
  "_meta": {
   "schema_version": 5,
-  "last_updated": "2026-09-21",
+  "last_updated": "2026-09-28",
   "description": "Article store for the Autism Research Network Atlas.",
   "schema": {
    "id": "unique string id",
@@ -65,8 +65,8 @@
    "alpha": 1.0
   },
   "last_run": {
-   "at": "2026-09-21T10:01:01",
-   "added": 31,
+   "at": "2026-09-28T11:36:16",
+   "added": 44,
    "mode": "weekly"
   }
  },
@@ -426,7 +426,7 @@
     "neg_events": 2,
     "updatedAt": "2026-09-18"
    },
-   "lastFetched": "2026-09-21"
+   "lastFetched": "2026-09-28"
   },
   "neuroscience": {
    "color": "#ffb020",
@@ -447,7 +447,7 @@
     "neg_events": 0,
     "updatedAt": "2026-09-18"
    },
-   "lastFetched": "2026-09-21"
+   "lastFetched": "2026-09-28"
   },
   "genetics": {
    "color": "#7a5cff",
@@ -478,7 +478,7 @@
     "neg_events": 0,
     "updatedAt": "2026-09-18"
    },
-   "lastFetched": "2026-09-21"
+   "lastFetched": "2026-09-28"
   },
   "intervention": {
    "color": "#ff5757",
@@ -499,7 +499,7 @@
     "neg_events": 1,
     "updatedAt": "2026-08-06"
    },
-   "lastFetched": "2026-09-21"
+   "lastFetched": "2026-09-28"
   }
  },
  "articles": [
@@ -26494,6 +26494,629 @@
    "url": "https://pubmed.ncbi.nlm.nih.gov/42736039/",
    "priority": "clinical-observation",
    "addedBy": "agent-2026-09-21",
+   "mesh": []
+  },
+  {
+   "id": "pm-42802217",
+   "title": "Exploring the Potential of Parent Report for Autism/Developmental Screening at the 18-Month Visit.",
+   "date": "2026-09-28",
+   "authors": "Sturner R, Bergmann P, Howard B, et al.",
+   "url": "https://pubmed.ncbi.nlm.nih.gov/42802217/",
+   "priority": "unclassified",
+   "addedBy": "agent-2026-09-28",
+   "mesh": [],
+   "journalKey": "j-autism-dev-disord",
+   "branchKey": "behavioral",
+   "alsoBranches": [
+    "intervention"
+   ]
+  },
+  {
+   "id": "pm-42801470",
+   "title": "Divergent Patterns of Speaker-Intention Discrimination and Emotional Valence Ratings in Self-Reported Autistic and Non-Autistic Adults.",
+   "date": "2026-09-27",
+   "authors": "Rothermich K, Rountree M, Ahn S, et al.",
+   "url": "https://pubmed.ncbi.nlm.nih.gov/42801470/",
+   "priority": "clinical-observation",
+   "addedBy": "agent-2026-09-28",
+   "mesh": [],
+   "journalKey": "autism",
+   "branchKey": "behavioral"
+  },
+  {
+   "id": "pm-42801405",
+   "title": "Clinical Features in Children With Loss of Autism Diagnosis and Persistent Autism: A Comparative Study.",
+   "date": "2026-09-27",
+   "authors": "Ayaslan Z, Ermiş Ç, Cevher Binici N, et al.",
+   "url": "https://pubmed.ncbi.nlm.nih.gov/42801405/",
+   "priority": "clinical-observation",
+   "addedBy": "agent-2026-09-28",
+   "mesh": [],
+   "journalKey": "j-autism-dev-disord",
+   "branchKey": "behavioral"
+  },
+  {
+   "id": "pm-42799971",
+   "title": "Multimodal Human-Computer Interaction Interventions for Children and Adolescents With Autism Spectrum Disorder: A Scoping Review.",
+   "date": "2026-09-26",
+   "authors": "Liu X, Zhao H, Zhang W, et al.",
+   "url": "https://pubmed.ncbi.nlm.nih.gov/42799971/",
+   "priority": "clinical-trial",
+   "addedBy": "agent-2026-09-28",
+   "mesh": [],
+   "journalKey": "j-autism-dev-disord",
+   "branchKey": "behavioral"
+  },
+  {
+   "id": "pm-42785627",
+   "title": "Diagnostic Accuracy of the Autism Diagnostic Interview-Revised and the Autism Diagnostic Observation Schedule, Second Edition, in a Naturalistic High-Risk Autism Spectrum Disorder Sample Aged 6-25 Years.",
+   "date": "2026-09-24",
+   "authors": "Cartigny A, Gosling CJ, Chatzis G, et al.",
+   "url": "https://pubmed.ncbi.nlm.nih.gov/42785627/",
+   "priority": "clinical-observation",
+   "addedBy": "agent-2026-09-28",
+   "mesh": [],
+   "journalKey": "jaacap",
+   "alsoBranches": [
+    "intervention"
+   ]
+  },
+  {
+   "id": "pm-42781827",
+   "title": "A Qualitative Investigation of Therapist and Diagnostician Perspectives on Visual Disorders in Autism Spectrum Disorder.",
+   "date": "2026-09-24",
+   "authors": "Baisa A, Gantz L, Naamati-Schneider L",
+   "url": "https://pubmed.ncbi.nlm.nih.gov/42781827/",
+   "priority": "unclassified",
+   "addedBy": "agent-2026-09-28",
+   "mesh": [],
+   "journalKey": "autism",
+   "branchKey": "behavioral"
+  },
+  {
+   "id": "pm-42776461",
+   "title": "Communication Efficiency in Autism is Unaffected by Neurotype Match: Findings From a Collaborative Referencing Task.",
+   "date": "2026-09-23",
+   "authors": "De Laet H, Nijhof AD, Wiersema JR",
+   "url": "https://pubmed.ncbi.nlm.nih.gov/42776461/",
+   "priority": "unclassified",
+   "addedBy": "agent-2026-09-28",
+   "mesh": [],
+   "journalKey": "j-autism-dev-disord",
+   "branchKey": "behavioral"
+  },
+  {
+   "id": "pm-42773560",
+   "title": "Rapid Review of the Brief Observation of Social Communication Change (BOSCC) Shows It Can Detect Behavioural Changes in Social Communication in Autism.",
+   "date": "2026-09-22",
+   "authors": "Howlin C, Kovalova A, Jaschke A, et al.",
+   "url": "https://pubmed.ncbi.nlm.nih.gov/42773560/",
+   "priority": "review",
+   "addedBy": "agent-2026-09-28",
+   "mesh": [],
+   "journalKey": "autism",
+   "branchKey": "behavioral"
+  },
+  {
+   "id": "pm-42772961",
+   "title": "Experienced Autism: Contributions of Childhood Adversity and Internal Distress in Adult Autism Assessments.",
+   "date": "2026-09-22",
+   "authors": "Childs H, Mukherjee R, Riese T, et al.",
+   "url": "https://pubmed.ncbi.nlm.nih.gov/42772961/",
+   "priority": "clinical-observation",
+   "addedBy": "agent-2026-09-28",
+   "mesh": [],
+   "journalKey": "autism",
+   "branchKey": "behavioral"
+  },
+  {
+   "id": "pm-42771128",
+   "title": "Cognitive Aging Patterns in Autism: Parallel, Accelerated, or Safeguarded?",
+   "date": "2026-09-22",
+   "authors": "Bessé M, Gomot M, Capdeville J, et al.",
+   "url": "https://pubmed.ncbi.nlm.nih.gov/42771128/",
+   "priority": "clinical-observation",
+   "addedBy": "agent-2026-09-28",
+   "mesh": [],
+   "journalKey": "j-autism-dev-disord",
+   "branchKey": "behavioral"
+  },
+  {
+   "id": "pm-42771127",
+   "title": "Longitudinal Measurement Invariance of the Autism Impact Measure (AIM) in Children and Adolescents With Autism.",
+   "date": "2026-09-22",
+   "authors": "Zhong NH, Mazurek MO",
+   "url": "https://pubmed.ncbi.nlm.nih.gov/42771127/",
+   "priority": "clinical-observation",
+   "addedBy": "agent-2026-09-28",
+   "mesh": [],
+   "journalKey": "j-autism-dev-disord",
+   "branchKey": "behavioral"
+  },
+  {
+   "id": "pm-42767294",
+   "title": "A cell type-specific switch in GluN2D NMDA receptors drives cortical circuit hyperexcitability and sensory-driven cortical synchronization deficits in a Fragile X Syndrome model.",
+   "date": "2026-09-21",
+   "authors": "Shedd A, Jonak C, Chan L, et al.",
+   "url": "https://pubmed.ncbi.nlm.nih.gov/42767294/",
+   "priority": "mechanistic",
+   "addedBy": "agent-2026-09-28",
+   "mesh": [],
+   "journalKey": "biol-psych",
+   "alsoBranches": [
+    "neuroscience",
+    "genetics"
+   ]
+  },
+  {
+   "id": "pm-42765423",
+   "title": "Recent Non-Suicidal Self-Injury in Autistic Adolescents and Adults: Characteristics, Clinical Correlates and Suicidal Thoughts and Behaviors.",
+   "date": "2026-09-21",
+   "authors": "Eldeeb S, Antezana L, Conner CM, et al.",
+   "url": "https://pubmed.ncbi.nlm.nih.gov/42765423/",
+   "priority": "clinical-observation",
+   "addedBy": "agent-2026-09-28",
+   "mesh": [],
+   "journalKey": "autism-res",
+   "branchKey": "behavioral"
+  },
+  {
+   "id": "pm-42768145",
+   "title": "Single cell RNA-sequencing reveals neuron type-specific vulnerabilities in a model of STXBP1-related disorder.",
+   "date": "2026-09-21",
+   "authors": "Roig Adam A, van Berkel AA, Vanheusden M, et al.",
+   "url": "https://pubmed.ncbi.nlm.nih.gov/42768145/",
+   "priority": "mechanistic",
+   "addedBy": "agent-2026-09-28",
+   "mesh": [],
+   "journalKey": "mol-psych",
+   "branchKey": "neuroscience"
+  },
+  {
+   "id": "pm-42800802",
+   "title": "Lithium chloride in vitro treatment shows potential to rescue the neuronal phenotype caused by WDFY3 haploinsufficiency.",
+   "date": "2026-09-27",
+   "authors": "Paha MJ, Mustafa A, Tat L, et al.",
+   "url": "https://pubmed.ncbi.nlm.nih.gov/42800802/",
+   "priority": "clinical-observation",
+   "addedBy": "agent-2026-09-28",
+   "mesh": [],
+   "journalKey": "mol-psych",
+   "branchKey": "genetics"
+  },
+  {
+   "id": "pm-42767215",
+   "title": "A rare recurring gain-of-function variant in BMPR2 causes neurodevelopmental phenotypes in humans and flies.",
+   "date": "2026-09-21",
+   "authors": "Mok JW, Welch CL, Dostalik HA, et al.",
+   "url": "https://pubmed.ncbi.nlm.nih.gov/42767215/",
+   "priority": "unclassified",
+   "addedBy": "agent-2026-09-28",
+   "mesh": [],
+   "journalKey": "ajhg"
+  },
+  {
+   "id": "pm-42799972",
+   "title": "School Exclusion as a Partial Mediator Between Autism and Adolescent Mental Health.",
+   "date": "2026-09-26",
+   "authors": "Yeoman M, Cieplinska V, Lye V, et al.",
+   "url": "https://pubmed.ncbi.nlm.nih.gov/42799972/",
+   "priority": "clinical-trial",
+   "addedBy": "agent-2026-09-28",
+   "mesh": [],
+   "journalKey": "j-autism-dev-disord",
+   "branchKey": "intervention"
+  },
+  {
+   "id": "pm-42788998",
+   "title": "Effects of Physical Exercise Interventions on Social Skills in Children With Autism Spectrum Disorder: A Systematic Review and Meta-Analysis.",
+   "date": "2026-09-25",
+   "authors": "Tan Q, Lei Z, Chang J, et al.",
+   "url": "https://pubmed.ncbi.nlm.nih.gov/42788998/",
+   "priority": "clinical-trial",
+   "addedBy": "agent-2026-09-28",
+   "mesh": [],
+   "journalKey": "j-autism-dev-disord",
+   "branchKey": "intervention"
+  },
+  {
+   "id": "pm-42771129",
+   "title": "Compassion-Focused Therapy for Mothers of Children With Autism Spectrum Disorder: Impact on Parental Burnout, Self-Criticism, and Psychological Distress.",
+   "date": "2026-09-22",
+   "authors": "Ghilav R, Talebzadeh Shoushtari M",
+   "url": "https://pubmed.ncbi.nlm.nih.gov/42771129/",
+   "priority": "unclassified",
+   "addedBy": "agent-2026-09-28",
+   "mesh": [],
+   "journalKey": "j-autism-dev-disord",
+   "branchKey": "intervention"
+  },
+  {
+   "id": "pm-42771561",
+   "title": "Peripheral biomarkers of anxiety in autism and attention deficit/hyperactivity disorder.",
+   "date": "2026-09-22",
+   "authors": "Cleary S, Matthews C, Teskey G, et al.",
+   "url": "https://pubmed.ncbi.nlm.nih.gov/42771561/",
+   "priority": "translational",
+   "addedBy": "agent-2026-09-28",
+   "mesh": [],
+   "branchKey": "cytokines",
+   "viaOpenVenue": true,
+   "journalDisplay": "Developmental neuroscience"
+  },
+  {
+   "id": "pm-42794651",
+   "title": "Maternal Immune Activation Leads to Lasting Sex-Specific Changes in Behavior and Hippocampal Morphological and Molecular Features in 12-Month-Old Rat Offspring.",
+   "date": "2026-09-15",
+   "authors": "Sentyabreva AV, Lyamtsev AS, Melnikova EA, et al.",
+   "url": "https://pubmed.ncbi.nlm.nih.gov/42794651/",
+   "priority": "translational",
+   "addedBy": "agent-2026-09-28",
+   "mesh": [
+    "Animals",
+    "Female",
+    "Pregnancy",
+    "Male",
+    "Hippocampus",
+    "Rats",
+    "Prenatal Exposure Delayed Effects",
+    "Rats, Wistar",
+    "Lipopolysaccharides",
+    "Behavior, Animal",
+    "Microglia",
+    "Oxidative Stress",
+    "Maze Learning",
+    "Sex Characteristics"
+   ],
+   "branchKey": "cytokines",
+   "viaOpenVenue": true,
+   "journalDisplay": "International journal of molecular sciences"
+  },
+  {
+   "id": "pm-42799832",
+   "title": "Mast Cells in Neuroimmune Interactions: Mechanisms, Pathophysiological Roles, and Therapeutic Implications.",
+   "date": "2026-09-26",
+   "authors": "Hasan A, Asfour AAR, Qaba H, et al.",
+   "url": "https://pubmed.ncbi.nlm.nih.gov/42799832/",
+   "priority": "review",
+   "addedBy": "agent-2026-09-28",
+   "mesh": [
+    "Mast Cells",
+    "Humans",
+    "Animals",
+    "Neuroimmunomodulation"
+   ],
+   "branchKey": "cytokines",
+   "viaOpenVenue": true,
+   "journalDisplay": "Molecular neurobiology",
+   "alsoBranches": [
+    "immunology"
+   ]
+  },
+  {
+   "id": "pm-42786851",
+   "title": "The Interaction Between Gut Microbiota and Neuroinflammation in the Gut-Brain Axis of Autism Spectrum Disorder.",
+   "date": "2026-09-22",
+   "authors": "Hu C, Li H, Li Y, et al.",
+   "url": "https://pubmed.ncbi.nlm.nih.gov/42786851/",
+   "priority": "mechanistic",
+   "addedBy": "agent-2026-09-28",
+   "mesh": [],
+   "branchKey": "cytokines",
+   "viaOpenVenue": true,
+   "journalDisplay": "Current neuropharmacology",
+   "alsoBranches": [
+    "neuroscience"
+   ]
+  },
+  {
+   "id": "pm-42794832",
+   "title": "Immune and Autoimmune Mechanisms in Autism Spectrum Disorder: Linking Molecular Pathways to Neuropsychological Trajectories Across the Lifespan.",
+   "date": "2026-09-21",
+   "authors": "Viterbo RG, Tritto R, Sardella D, et al.",
+   "url": "https://pubmed.ncbi.nlm.nih.gov/42794832/",
+   "priority": "review",
+   "addedBy": "agent-2026-09-28",
+   "mesh": [
+    "Humans",
+    "Autism Spectrum Disorder",
+    "Autoimmunity",
+    "Autoantibodies",
+    "Animals",
+    "Cytokines",
+    "Female",
+    "Brain",
+    "Signal Transduction"
+   ],
+   "branchKey": "immunology",
+   "viaOpenVenue": true,
+   "journalDisplay": "International journal of molecular sciences"
+  },
+  {
+   "id": "pm-42788166",
+   "title": "The Expanding Multisystem Research Landscape of Hypermobile Ehlers-Danlos Syndrome: An Analysis of Orthopedic, Autonomic, Immunologic, and Neuropsychiatric Comorbidities.",
+   "date": "2026-09-16",
+   "authors": "Tanuku S, Baer T, Viswanath O, et al.",
+   "url": "https://pubmed.ncbi.nlm.nih.gov/42788166/",
+   "priority": "unclassified",
+   "addedBy": "agent-2026-09-28",
+   "mesh": [],
+   "branchKey": "immunology",
+   "viaOpenVenue": true,
+   "journalDisplay": "Orthopedic reviews"
+  },
+  {
+   "id": "pm-42476349",
+   "title": "Multimodal neuroimaging fusion with hierarchical structure-function coupling for autism spectrum disorder diagnosis.",
+   "date": "2026-07-20",
+   "authors": "Qiao J, Zhou Z, Zhu H, et al.",
+   "url": "https://pubmed.ncbi.nlm.nih.gov/42476349/",
+   "priority": "translational",
+   "addedBy": "agent-2026-09-28",
+   "mesh": [
+    "Humans",
+    "Autism Spectrum Disorder",
+    "Magnetic Resonance Imaging",
+    "Multimodal Imaging",
+    "Diffusion Tensor Imaging",
+    "Neuroimaging",
+    "Brain",
+    "White Matter"
+   ],
+   "branchKey": "neuroscience",
+   "viaOpenVenue": true,
+   "journalDisplay": "Neuroscience"
+  },
+  {
+   "id": "pm-42776348",
+   "title": "Case Report: Sustained Cognitive Improvement and Reversible Brain Hypoperfusion in the Context of Posterior Fossa Arachnoid Cyst Shunting Procedure in KBG Syndrome.",
+   "date": "2026-09-23",
+   "authors": "Fabre A, Cuny ML, Fillon L, et al.",
+   "url": "https://pubmed.ncbi.nlm.nih.gov/42776348/",
+   "priority": "clinical-observation",
+   "addedBy": "agent-2026-09-28",
+   "mesh": [
+    "Humans",
+    "Arachnoid Cysts",
+    "Male",
+    "Intellectual Disability",
+    "Magnetic Resonance Imaging",
+    "Neuropsychological Tests",
+    "Cognition Disorders",
+    "Brain",
+    "Cranial Fossa, Posterior"
+   ],
+   "branchKey": "neuroscience",
+   "viaOpenVenue": true,
+   "journalDisplay": "Cerebellum (London, England)",
+   "alsoBranches": [
+    "behavioral"
+   ]
+  },
+  {
+   "id": "pm-42790404",
+   "title": "FL-SEHGT: Federated Learning-Based Heterogeneous Graph Transformer with Squeeze-and-Excitation for ASD Identification.",
+   "date": "2026-09-19",
+   "authors": "Zhang Y, Chen Y, Sun H, et al.",
+   "url": "https://pubmed.ncbi.nlm.nih.gov/42790404/",
+   "priority": "mechanistic",
+   "addedBy": "agent-2026-09-28",
+   "mesh": [],
+   "branchKey": "neuroscience",
+   "viaOpenVenue": true,
+   "journalDisplay": "Neural networks : the official journal of the International Neural Network Society"
+  },
+  {
+   "id": "pm-42740315",
+   "title": "Developmental milestones and resting-state functional connectivity: Shared and distinct associations with neurodevelopmental traits.",
+   "date": "2026-09-15",
+   "authors": "Ganai UJ, Bhushan B",
+   "url": "https://pubmed.ncbi.nlm.nih.gov/42740315/",
+   "priority": "mechanistic",
+   "addedBy": "agent-2026-09-28",
+   "mesh": [
+    "Humans",
+    "Female",
+    "Attention Deficit Disorder with Hyperactivity",
+    "Child",
+    "Neurodevelopment",
+    "Magnetic Resonance Imaging",
+    "Male",
+    "Child Development",
+    "Developmental Disabilities",
+    "Autistic Disorder",
+    "Brain",
+    "Connectome"
+   ],
+   "branchKey": "neuroscience",
+   "viaOpenVenue": true,
+   "journalDisplay": "Psychological medicine"
+  },
+  {
+   "id": "pm-42773860",
+   "title": "Associations Between Autism-Related Characteristics and Tonic Versus Phasic Irritability Across Parent and Teacher Report.",
+   "date": "2026-09-23",
+   "authors": "Silver J, Reicher D, Klein DN, et al.",
+   "url": "https://pubmed.ncbi.nlm.nih.gov/42773860/",
+   "priority": "unclassified",
+   "addedBy": "agent-2026-09-28",
+   "mesh": [],
+   "branchKey": "behavioral",
+   "viaOpenVenue": true,
+   "journalDisplay": "Journal of child and adolescent psychopharmacology"
+  },
+  {
+   "id": "pm-42771106",
+   "title": "[From clinical high risk for psychosis to autism spectrum disorder: navigating the challenges of differential diagnosis-A case report].",
+   "date": "2026-09-22",
+   "authors": "Hoppstock P, Foerster E, Schauer N, et al.",
+   "url": "https://pubmed.ncbi.nlm.nih.gov/42771106/",
+   "priority": "unclassified",
+   "addedBy": "agent-2026-09-28",
+   "mesh": [],
+   "branchKey": "behavioral",
+   "viaOpenVenue": true,
+   "journalDisplay": "Neuropsychiatrie : Klinik, Diagnostik, Therapie und Rehabilitation : Organ der Gesellschaft Osterreichischer Nervenarzte und Psychiater",
+   "alsoBranches": [
+    "intervention"
+   ]
+  },
+  {
+   "id": "pm-42733661",
+   "title": "Altered striatal long-term potentiation in the eIF4E-TG mouse model of autism spectrum disorder.",
+   "date": "2026-09-03",
+   "authors": "Aaltonen A, Razquin J, Garton DR, et al.",
+   "url": "https://pubmed.ncbi.nlm.nih.gov/42733661/",
+   "priority": "mechanistic",
+   "addedBy": "agent-2026-09-28",
+   "mesh": [],
+   "branchKey": "genetics",
+   "viaOpenVenue": true,
+   "journalDisplay": "iScience"
+  },
+  {
+   "id": "pm-42768401",
+   "title": "Response to Electroconvulsive Therapy in a Patient With SCN2A-Variant Catatonia Is Associated With Postictal Spreading Depolarization.",
+   "date": "2026-09-22",
+   "authors": "Rosenthal Z, Lad K, Li R, et al.",
+   "url": "https://pubmed.ncbi.nlm.nih.gov/42768401/",
+   "priority": "unclassified",
+   "addedBy": "agent-2026-09-28",
+   "mesh": [],
+   "branchKey": "genetics",
+   "viaOpenVenue": true,
+   "journalDisplay": "The journal of ECT",
+   "alsoBranches": [
+    "neuroscience"
+   ]
+  },
+  {
+   "id": "pm-42801973",
+   "title": "Protocol for a randomized controlled trial of an app-based intervention to improve toothbrushing skills and habits in autistic children and adolescents.",
+   "date": "2026-09-27",
+   "authors": "Kim AS, Collett B, Stobbe G, et al.",
+   "url": "https://pubmed.ncbi.nlm.nih.gov/42801973/",
+   "priority": "clinical-trial",
+   "addedBy": "agent-2026-09-28",
+   "mesh": [],
+   "branchKey": "intervention",
+   "viaOpenVenue": true,
+   "journalDisplay": "Contemporary clinical trials"
+  },
+  {
+   "id": "pm-42757931",
+   "title": "Utilization, Accessibility and Outcomes of Parent-Mediated Therapies for Neurodivergent Children in India: A Systematic Review.",
+   "date": "2026-09-18",
+   "authors": "Suggarangaiah S, Girish D, Duriasamy P",
+   "url": "https://pubmed.ncbi.nlm.nih.gov/42757931/",
+   "priority": "review",
+   "addedBy": "agent-2026-09-28",
+   "mesh": [],
+   "branchKey": "intervention",
+   "viaOpenVenue": true,
+   "journalDisplay": "Clinical child psychology and psychiatry"
+  },
+  {
+   "id": "pm-42757222",
+   "title": "A case of tic improvement following tipepidine administration in a boy with Tourette syndrome comorbid with attention-deficit/hyperactivity disorder and autism spectrum disorder.",
+   "date": "2026-09-17",
+   "authors": "Tachibana M, Sasaki T",
+   "url": "https://pubmed.ncbi.nlm.nih.gov/42757222/",
+   "priority": "unclassified",
+   "addedBy": "agent-2026-09-28",
+   "mesh": [],
+   "branchKey": "intervention",
+   "viaOpenVenue": true,
+   "journalDisplay": "PCN reports : psychiatry and clinical neurosciences"
+  },
+  {
+   "id": "pm-42782206",
+   "title": "[Not Available].",
+   "date": "2026-09-24",
+   "authors": "Munz M",
+   "url": "https://pubmed.ncbi.nlm.nih.gov/42782206/",
+   "priority": "review",
+   "addedBy": "agent-2026-09-28",
+   "mesh": [],
+   "branchKey": "intervention",
+   "viaOpenVenue": true,
+   "journalDisplay": "Zeitschrift fur Kinder- und Jugendpsychiatrie und Psychotherapie"
+  },
+  {
+   "id": "pm-42781824",
+   "title": "Trauma and PTSD Symptoms: Exploring the Experiences of Autistic and Non-Autistic Adults in Midlife and Old Age.",
+   "journalKey": "autism",
+   "date": "2026-09-24",
+   "authors": "McAdams E, Quinton AMG, Charlton RA, et al.",
+   "url": "https://pubmed.ncbi.nlm.nih.gov/42781824/",
+   "priority": "clinical-observation",
+   "addedBy": "agent-2026-09-28",
+   "mesh": []
+  },
+  {
+   "id": "pm-42781823",
+   "title": "Short Report: Autism in Popular Media: A Google Trends Analysis of Public Interest.",
+   "journalKey": "autism",
+   "date": "2026-09-24",
+   "authors": "Rebecchi K, Nordahl-Hansen A",
+   "url": "https://pubmed.ncbi.nlm.nih.gov/42781823/",
+   "priority": "unclassified",
+   "addedBy": "agent-2026-09-28",
+   "mesh": []
+  },
+  {
+   "id": "pm-42767668",
+   "title": "Objective and subjective sleep characteristics across severity subgroups in children with autism spectrum disorder.",
+   "journalKey": "jcpp",
+   "date": "2026-09-21",
+   "authors": "Jiao J, Long J, Yang X, et al.",
+   "url": "https://pubmed.ncbi.nlm.nih.gov/42767668/",
+   "priority": "clinical-observation",
+   "addedBy": "agent-2026-09-28",
+   "mesh": []
+  },
+  {
+   "id": "pm-42802218",
+   "title": "Comprehensive Psychometric Evaluation of the Child/Adult and Family Quality of Life Scale : Third Edition.",
+   "journalKey": "j-autism-dev-disord",
+   "date": "2026-09-28",
+   "authors": "Frazier TW, Van Etten N, Kubina RM, et al.",
+   "url": "https://pubmed.ncbi.nlm.nih.gov/42802218/",
+   "priority": "unclassified",
+   "addedBy": "agent-2026-09-28",
+   "mesh": []
+  },
+  {
+   "id": "pm-42799970",
+   "title": "Factor Structure and Validity of the Burnout Assessment for Developmental Disability Settings (BADDS).",
+   "journalKey": "j-autism-dev-disord",
+   "date": "2026-09-26",
+   "authors": "Bottini S, Johnson L, Gillespie S, et al.",
+   "url": "https://pubmed.ncbi.nlm.nih.gov/42799970/",
+   "priority": "clinical-observation",
+   "addedBy": "agent-2026-09-28",
+   "mesh": []
+  },
+  {
+   "id": "pm-42789000",
+   "title": "Exploring the Perspectives of Siblings of Autistic Adults With Distressing Behavior: Perceptions of Positive and Negative Impacts.",
+   "journalKey": "j-autism-dev-disord",
+   "date": "2026-09-25",
+   "authors": "Burke MM, Humphries R, Burakov I, et al.",
+   "url": "https://pubmed.ncbi.nlm.nih.gov/42789000/",
+   "priority": "unclassified",
+   "addedBy": "agent-2026-09-28",
+   "mesh": []
+  },
+  {
+   "id": "pm-42788999",
+   "title": "The Contribution of Emergent Literacy Skills to the Development of Character Recognition and Oral Vocabulary Knowledge Among Children With Autism Spectrum Disorder: The Case of Kindergarteners in China.",
+   "journalKey": "j-autism-dev-disord",
+   "date": "2026-09-25",
+   "authors": "Chen Z, Kuo LJ, Dixon LQ, et al.",
+   "url": "https://pubmed.ncbi.nlm.nih.gov/42788999/",
+   "priority": "unclassified",
+   "addedBy": "agent-2026-09-28",
    "mesh": []
   }
  ]
