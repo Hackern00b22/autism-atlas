@@ -1,7 +1,7 @@
 {
  "_meta": {
   "schema_version": 5,
-  "last_updated": "2026-09-28",
+  "last_updated": "2026-09-30",
   "description": "Article store for the Autism Research Network Atlas.",
   "schema": {
    "id": "unique string id",
@@ -376,17 +376,7 @@
       "pos": 3,
       "neg": 0
      },
-     "Inflammation": {
-      "w": 1.099,
-      "pos": 2,
-      "neg": 0
-     },
-     "Receptors, Oxytocin": {
-      "w": 1.099,
-      "pos": 2,
-      "neg": 0
-     },
-     "Prenatal Exposure Delayed Effects": {
+     "Biomarkers": {
       "w": 1.099,
       "pos": 2,
       "neg": 0
@@ -396,21 +386,31 @@
       "pos": 2,
       "neg": 0
      },
+     "Receptors, Oxytocin": {
+      "w": 1.099,
+      "pos": 2,
+      "neg": 0
+     },
      "Administration, Intranasal": {
       "w": 1.099,
       "pos": 2,
       "neg": 0
      },
-     "Biomarkers": {
+     "Inflammation": {
+      "w": 1.099,
+      "pos": 2,
+      "neg": 0
+     },
+     "Prenatal Exposure Delayed Effects": {
       "w": 1.099,
       "pos": 2,
       "neg": 0
      }
     },
     "exclude": {},
-    "pos_events": 16,
+    "pos_events": 17,
     "neg_events": 0,
-    "updatedAt": "2026-09-18"
+    "updatedAt": "2026-09-29"
    }
   },
   "behavioral": {
@@ -423,8 +423,8 @@
     "include": {},
     "exclude": {},
     "pos_events": 5,
-    "neg_events": 2,
-    "updatedAt": "2026-09-18"
+    "neg_events": 4,
+    "updatedAt": "2026-09-29"
    },
    "lastFetched": "2026-09-28"
   },
@@ -457,12 +457,12 @@
    "minYear": 2021,
    "learned": {
     "include": {
-     "Neural Stem Cells": {
+     "Neurons": {
       "w": 1.099,
       "pos": 2,
       "neg": 0
      },
-     "Neurons": {
+     "Neural Stem Cells": {
       "w": 1.099,
       "pos": 2,
       "neg": 0
@@ -474,9 +474,9 @@
      }
     },
     "exclude": {},
-    "pos_events": 8,
+    "pos_events": 9,
     "neg_events": 0,
-    "updatedAt": "2026-09-18"
+    "updatedAt": "2026-09-29"
    },
    "lastFetched": "2026-09-28"
   },
@@ -489,15 +489,15 @@
    "learned": {
     "include": {
      "Double-Blind Method": {
-      "w": 1.099,
-      "pos": 2,
+      "w": 1.386,
+      "pos": 3,
       "neg": 0
      }
     },
     "exclude": {},
-    "pos_events": 11,
+    "pos_events": 13,
     "neg_events": 1,
-    "updatedAt": "2026-08-06"
+    "updatedAt": "2026-09-30"
    },
    "lastFetched": "2026-09-28"
   }
@@ -22780,7 +22780,19 @@
    "url": "https://pubmed.ncbi.nlm.nih.gov/42561512/",
    "priority": "clinical-trial",
    "addedBy": "agent-2026-08-17",
-   "mesh": [],
+   "mesh": [
+    "Humans",
+    "Double-Blind Method",
+    "Autism Spectrum Disorder",
+    "Child",
+    "Female",
+    "Plant Extracts",
+    "Male",
+    "Medical Marijuana",
+    "Adolescent",
+    "Treatment Outcome",
+    "Child, Preschool"
+   ],
    "branchKey": "intervention",
    "viaOpenVenue": true,
    "journalDisplay": "Neurotherapeutics : the journal of the American Society for Experimental NeuroTherapeutics",
@@ -27118,6 +27130,52 @@
    "priority": "unclassified",
    "addedBy": "agent-2026-09-28",
    "mesh": []
+  },
+  {
+   "id": "pm-33790466",
+   "title": "An amygdala circuit that suppresses social engagement.",
+   "date": "2021-03-31",
+   "authors": "Kwon JT, Ryu C, Lee H, et al.",
+   "url": "https://pubmed.ncbi.nlm.nih.gov/33790466/",
+   "priority": "mechanistic",
+   "addedBy": "authors-manual-2026-09-30",
+   "mesh": [
+    "Amygdala",
+    "Animals",
+    "Copulation",
+    "Corticomedial Nuclear Complex",
+    "Female",
+    "Glutamic Acid",
+    "Health",
+    "Ligands",
+    "Lipopolysaccharides",
+    "Male",
+    "Mating Preference, Animal",
+    "Mice",
+    "Neural Pathways",
+    "Neurons",
+    "Receptors, Thyrotropin-Releasing Hormone",
+    "Social Behavior",
+    "Thyrotropin-Releasing Hormone"
+   ],
+   "branchKey": "immunology",
+   "viaAuthors": [
+    "choi-gloria-b"
+   ],
+   "viaReason": "filed by hand from Gloria B Choi's tracker page",
+   "journalKey": "nature"
+  },
+  {
+   "id": "pm-42808220",
+   "title": "Depression Screening Tools for Non- and Minimally Speaking Autistic Adults: Feasibility, Psychometrics, and Wider Validity.",
+   "date": "2026-09-29",
+   "authors": "Wilkinson E, Pai K, Jahoda A, et al.",
+   "url": "https://pubmed.ncbi.nlm.nih.gov/42808220/",
+   "priority": "clinical-observation",
+   "addedBy": "manual-2026-09-30",
+   "mesh": [],
+   "journalKey": "autism",
+   "branchKey": "intervention"
   }
  ]
 }

@@ -955,11 +955,10 @@
     max-height: 46vh; overflow-y: auto;
     padding: 4px 2px 14px; display: flex; flex-direction: column; gap: 16px;
   }
-  .ask-intro, .ask-note {
+  .ask-intro {
     font-family: 'JetBrains Mono', ui-monospace, 'SF Mono', SFMono-Regular, Menlo, Consolas, monospace;
     font-size: 12.5px; line-height: 1.75; color: var(--ink-2);
   }
-  .ask-note { margin-top: 12px; font-size: 11.5px; opacity: 0.75; }
   .ask-examples { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 14px; }
   .ask-chip {
     background: rgba(var(--line-rgb), 0.08);
@@ -2031,13 +2030,10 @@
               <button class="ask-chip" data-q="oxytocin randomized trial">oxytocin randomized trial</button>
               <button class="ask-chip" data-q="eye tracking in toddlers">eye tracking in toddlers</button>
             </div>
-            <div class="ask-note">Runs entirely on this machine — no API, no key, no cost per question.
-            Tick <em>also check PubMed</em> to look for papers you don't have yet.</div>
           </div>
         </div>
         <div class="lab-controls ask-controls">
           <input type="search" id="ask-query" placeholder="What do we have on…?" autocomplete="off">
-          <label><input type="checkbox" id="ask-pubmed"> ALSO CHECK PUBMED</label>
           <button class="lab-btn" id="ask-send">▶ Ask</button>
         </div>
       </div>
@@ -3768,7 +3764,6 @@ document.getElementById('lab-query').addEventListener('keydown', (e) => {
 // here that isn't actually in the library.
 const askLog = document.getElementById('ask-log');
 const askInput = document.getElementById('ask-query');
-const askPubmed = document.getElementById('ask-pubmed');
 
 function askAppend(html, cls) {
   const div = document.createElement('div');
@@ -3785,7 +3780,7 @@ function askSummary(data) {
   const n = data.total;
   if (!n) {
     return `Nothing in the library matches <span class="ask-terms">${data.terms.map(escapeHtml).join(', ') || '—'}</span>. ` +
-           `Try fewer or more common words${askPubmed.checked ? '' : ', or tick <em>also check PubMed</em> to look outside the library'}.`;
+           `Try fewer or more common words.`;
   }
   const byBranch = Object.entries(data.facets.branch)
     .filter(([k]) => k).sort((a, b) => b[1] - a[1]).slice(0, 3);
@@ -3877,8 +3872,6 @@ async function askRun(question, opts = {}) {
     html += hits.map(askHitHtml).join('');
     answer.innerHTML = html;
     askWire(answer);
-
-    if (askPubmed.checked && !opts.moreLike) await askPubmedSection(q, answer);
   } catch (e) {
     answer.innerHTML = `<div class="ask-a-text">Error: ${escapeHtml(e.message)}<br>
       <span style="font-size: 11.5px;">Make sure you launched the site with
@@ -3887,42 +3880,6 @@ async function askRun(question, opts = {}) {
   askLog.scrollTop = askLog.scrollHeight;
 }
 
-// Optional second pass: papers NOT already in the library, rendered with the
-// same card the Manual Search tab uses so "Add to store" behaves identically.
-// PubMed's API is free, so this stays within the no-cost constraint.
-async function askPubmedSection(q, answer) {
-  const note = document.createElement('div');
-  note.className = 'ask-a-text';
-  note.innerHTML = '<span class="lab-loader"></span> checking PubMed for papers you don\'t have…';
-  answer.appendChild(note);
-  try {
-    const r = await fetch('/api/search-pubmed', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ query: q, autism_filter: true, max_results: 10 }),
-    });
-    if (!r.ok) throw new Error('HTTP ' + r.status);
-    const data = await r.json();
-    if (data.error) throw new Error(data.error);
-    const fresh = (data.results || []).filter(a => !a.already_in_store);
-    if (!fresh.length) {
-      note.innerHTML = '<span class="ask-dim">PubMed returned nothing you don\'t already have.</span>';
-      return;
-    }
-    note.innerHTML = `<b>${fresh.length}</b> more on PubMed that aren't in the library yet — add any that belong:`;
-    const wrap = document.createElement('div');
-    wrap.innerHTML = fresh.map(a => labCardHtml(a, { alreadyInStore: false })).join('');
-    fresh.forEach((a, i) => {
-      const card = wrap.querySelectorAll('.lab-card')[i];
-      if (card) card._articleData = a;
-    });
-    answer.appendChild(wrap);
-    wireUpAddButtons(wrap);
-  } catch (e) {
-    note.innerHTML = `<span class="ask-dim">PubMed check failed: ${escapeHtml(e.message)}</span>`;
-  }
-  askLog.scrollTop = askLog.scrollHeight;
-}
 
 document.getElementById('ask-send').addEventListener('click', () => {
   const q = askInput.value; askInput.value = ''; askRun(q);
@@ -4064,6 +4021,13 @@ async function syncUIState() {
   // bookmarks this browser made while the server was unreachable, and those
   // only reach the server here.
   pushUIState();
+
+  // A paper starred from the Authors page is filed into articles.json as it is
+  // saved, so this page's copy of the store may not hold it yet. Re-pull the
+  // store whenever a bookmark points at an article we don't have.
+  if (BOOKMARKS.some(id => !ARTICLES.some(a => a.id === id))) {
+    try { await reloadStoreSoft(); } catch (e) { /* the modal just skips what it can't find */ }
+  }
 
   // Refresh whatever is on screen with the synced state.
   updateBookmarkCount();
@@ -4698,12 +4662,15 @@ function renderBookmarks() {
   const body = document.getElementById('bm-body');
   const items = BOOKMARKS.map(id => ARTICLES.find(a => a.id === id)).filter(Boolean);
   if (!items.length) {
-    body.innerHTML = '<div class="bm-empty">No bookmarks yet.<br>Open a branch node and click <b>☆ Save</b> on any article to star it here.</div>';
+    body.innerHTML = '<div class="bm-empty">No bookmarks yet.<br>Open a branch node and click <b>☆ Save</b> on any article — or <b>☆ Save</b> a paper on the Authors page — to star it here.</div>';
     return;
   }
   body.innerHTML = items.map(a => renderArticleCard(a, true)).join('');
 }
-document.getElementById('bm-button').addEventListener('click', () => {
+document.getElementById('bm-button').addEventListener('click', async () => {
+  if (BOOKMARKS.some(id => !ARTICLES.some(a => a.id === id))) {
+    try { await reloadStoreSoft(); } catch (e) {}
+  }
   renderBookmarks();
   bmBackdrop.classList.add('open');
 });

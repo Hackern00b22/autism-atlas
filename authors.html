@@ -35,6 +35,7 @@
     --blur: blur(12px);
     --panel-shadow: none;
     --on-accent: #05060a;
+    --gold: #ffd97a;          /* bookmark star — same value as the network page */
     --bg-0: #05060a;
     --bg-1: #0a0d14;
     --bg-2: #11151f;
@@ -79,6 +80,7 @@
     --blur: none;
     --panel-shadow: 0 1px 2px rgba(30, 42, 66, 0.06), 0 6px 20px rgba(30, 42, 66, 0.08);
     --on-accent: #FFFFFF;
+    --gold: #8A5A00;
     --bg-0: #DFE5EE;
     --bg-1: #F2F5F9;
     --bg-2: #D2DAE6;
@@ -379,6 +381,18 @@
   }
   .paper-act { opacity: 0; transition: opacity 0.15s; }
   .paper:hover .paper-act, .paper:focus-within .paper-act { opacity: 1; }
+  /* A starred or filed paper keeps its state visible without hovering. */
+  .paper-act.lit { opacity: 1; }
+  .bm-btn { color: var(--gold); border-color: rgba(255, 217, 122, 0.4); }
+  .bm-btn:hover { color: var(--gold); background: rgba(255, 217, 122, 0.12); }
+  .bm-btn.on { background: var(--gold); color: var(--on-accent); border-color: var(--gold); }
+  .node-chip {
+    font-family: 'JetBrains Mono', ui-monospace, 'SF Mono', SFMono-Regular, Menlo, Consolas, monospace; font-size: 11px; letter-spacing: 0.18em;
+    text-transform: uppercase; padding: 5px 10px; border: 1px solid var(--line); border-radius: 2px; color: var(--ink-1); white-space: nowrap;
+  }
+  .node-menu { display: none; gap: 6px; flex-wrap: wrap; margin-top: 8px; }
+  .node-menu.open { display: flex; }
+  .node-menu .fbtn:hover { background: rgba(var(--line-rgb), 0.12); }
 
   /* ---------- RECOMMENDATIONS ---------- */
   .rec {
@@ -750,6 +764,34 @@ const esc = s => String(s == null ? '' : s).replace(/[&<>"']/g,
   c => ({ '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;' }[c]));
 
 let PUBLIC = false;   // set when we fall back to the static data snapshot
+// Article ids starred on the network page. Bookmarks live server-side
+// (uistate.json) and are keyed by atlas article id, so a paper here is "saved"
+// when it has been filed into articles.json AND that id is on the list.
+let SAVED = new Set();
+async function loadSaved() {
+  if (PUBLIC) return;
+  try {
+    const r = await fetch('/api/ui-state', { cache: 'no-store' });
+    if (!r.ok) return;
+    const s = await r.json();
+    SAVED = new Set(Array.isArray(s.bookmarks) ? s.bookmarks : []);
+  } catch (e) { /* offline: stars just won't light */ }
+}
+function findPaper(p, pmid) {
+  return (p.papers || []).concat(p.review || []).find(a => String(a.pmid) === String(pmid));
+}
+function branchLabel(key) {
+  const b = DATA && DATA.branches && DATA.branches[key];
+  return b ? b.label : (key || 'the atlas');
+}
+// Coming back to the tab re-pulls the star list, so a save or un-save made
+// on the network page shows here without a reload.
+document.addEventListener('visibilitychange', async () => {
+  if (document.visibilityState !== 'visible' || PUBLIC || !DATA) return;
+  const before = JSON.stringify([...SAVED].sort());
+  await loadSaved();
+  if (JSON.stringify([...SAVED].sort()) !== before && !PREVIEW) renderProfile();
+});
 
 async function api(path, body) {
   if (PUBLIC) throw new Error('read-only public site');
@@ -792,6 +834,7 @@ async function load() {
     document.body.classList.add('public');
   }
   DATA = await res.json();
+  await loadSaved();
   renderRoster();
   renderMeta();
   const keys = Object.keys(DATA.authors);
@@ -1103,6 +1146,8 @@ function updTipHTML(ups) {
 
 function paperHTML(a) {
   const role = ROLES.find(r => r.key === a.role) || ROLES[3];
+  const saved = !!(a.articleId && SAVED.has(a.articleId));
+  const filed = a.articleId ? (DATA.branches || {})[a.articleBranch] : null;
   const crit = (a.updates || []).some(u => u.severity === 'critical');
   const warn = (a.updates || []).some(u => u.severity === 'warning');
   const badges = [];
@@ -1121,10 +1166,17 @@ function paperHTML(a) {
         <span>${esc(a.date)}</span>
         <span>position ${a.position}/${a.authorCount}</span>
         ${badges.join('')}
-        <span class="paper-act">
+        <span class="paper-act${saved || a.articleId ? ' lit' : ''}">
+          ${PUBLIC ? '' : `<button class="fbtn bm-btn${saved ? ' on' : ''}" data-bm="${esc(a.pmid)}"
+            title="${saved ? 'Remove from Bookmarks' : 'Star into Bookmarks — the same list the branch nodes save to'}">${saved ? '★ Saved' : '☆ Save'}</button>`}
+          ${PUBLIC ? '' : a.articleId
+            ? `<span class="node-chip" title="Filed in the atlas under this node">◆ ${esc(filed ? filed.label : 'In atlas')}</span>`
+            : `<button class="fbtn" data-node-menu="${esc(a.pmid)}" title="File this paper into a branch node of the atlas">+ Node ▾</button>`}
           <button class="fbtn" data-exclude="${esc(a.pmid)}" title="Not this researcher — remove and remember">Not them</button>
         </span>
       </div>
+      ${!PUBLIC && !a.articleId ? `<div class="node-menu" data-menu-for="${esc(a.pmid)}">${Object.entries(DATA.branches || {}).map(([k, b]) =>
+        `<button class="fbtn" data-file="${esc(a.pmid)}" data-branch="${esc(k)}" style="border-color:${esc(b.color)}55;color:${esc(b.color)}">${esc(b.label)}</button>`).join('')}</div>` : ''}
     </div></div>`;
 }
 
@@ -1233,6 +1285,59 @@ function wireProfile(p) {
   document.querySelectorAll('[data-exclude]').forEach(el => el.onclick = async () => {
     await api('/api/author-exclude', { key: p.key, pmid: el.dataset.exclude });
     await load();
+  });
+
+  // ☆ Save — star into the shared Bookmarks list (the server files the paper
+  // into articles.json first if it isn't there, so the network page can show it).
+  document.querySelectorAll('[data-bm]').forEach(el => el.onclick = async () => {
+    const pmid = el.dataset.bm;
+    const paper = findPaper(p, pmid);
+    if (!paper) return;
+    const on = !(paper.articleId && SAVED.has(paper.articleId));
+    el.disabled = true;
+    el.textContent = on ? '★ Saving…' : '☆ Removing…';
+    try {
+      const r = await api('/api/paper-bookmark', { key: p.key, pmid, on });
+      if (!r.ok) throw new Error(r.error || 'failed');
+      if (r.id) {
+        paper.articleId = r.id;
+        if (r.branch) paper.articleBranch = r.branch;
+        if (on) SAVED.add(r.id); else SAVED.delete(r.id);
+      }
+      renderProfile();
+      setStatus('global-status', on
+        ? `Saved to Bookmarks${r.added ? ' and filed under ' + branchLabel(r.branch) : ''}.`
+        : 'Removed from Bookmarks.', 'ok');
+    } catch (e) {
+      renderProfile();
+      setStatus('global-status', 'Bookmark failed: ' + e.message, 'err');
+    }
+  });
+
+  // + Node — open the branch picker for a paper not yet in the atlas.
+  document.querySelectorAll('[data-node-menu]').forEach(el => el.onclick = () => {
+    const m = document.querySelector(`.node-menu[data-menu-for="${CSS.escape(el.dataset.nodeMenu)}"]`);
+    if (m) m.classList.toggle('open');
+  });
+  document.querySelectorAll('[data-file]').forEach(el => el.onclick = async () => {
+    const pmid = el.dataset.file, branch = el.dataset.branch;
+    const paper = findPaper(p, pmid);
+    if (!paper) return;
+    el.disabled = true;
+    el.textContent = 'Filing…';
+    try {
+      const r = await api('/api/paper-file', { key: p.key, pmid, branch });
+      if (!r.ok && !r.duplicate) throw new Error(r.error || 'failed');
+      paper.articleId = r.id;
+      paper.articleBranch = r.branch || branch;
+      renderProfile();
+      setStatus('global-status', r.duplicate
+        ? `Already in the atlas under ${branchLabel(r.branch)}.`
+        : `Filed under ${branchLabel(r.branch || branch)}.`, 'ok');
+    } catch (e) {
+      renderProfile();
+      setStatus('global-status', 'Filing failed: ' + e.message, 'err');
+    }
   });
 
   const gr = $('get-recs');
