@@ -422,9 +422,9 @@
    "learned": {
     "include": {},
     "exclude": {},
-    "pos_events": 5,
+    "pos_events": 6,
     "neg_events": 4,
-    "updatedAt": "2026-09-29"
+    "updatedAt": "2026-09-30"
    },
    "lastFetched": "2026-09-28"
   },
