@@ -324,27 +324,28 @@
      deliberately unattached: no spoke to the core, no physics, and the
      simulation reserves its footprint so real nodes never drift under it. */
   .pipe-bubble {
+    --bub: var(--neon-immuno);
     position: fixed; left: 40px; top: 132px; z-index: 10;
     display: flex; flex-direction: column; align-items: center; gap: 12px;
     width: 148px; text-decoration: none; cursor: pointer;
-    color: var(--neon-immuno); border-radius: 8px;
+    color: var(--bub); border-radius: 8px;
   }
   .pipe-bubble-disc {
     position: relative; width: 68px; height: 68px; border-radius: 50%;
     display: grid; place-items: center;
     font-size: 30px; line-height: 1;
-    border: 1.4px solid var(--neon-immuno);
+    border: 1.4px solid var(--bub);
     background: radial-gradient(circle at center,
-      color-mix(in srgb, var(--neon-immuno) 60%, transparent) 0%,
-      color-mix(in srgb, var(--neon-immuno) 24%, transparent) 55%,
-      color-mix(in srgb, var(--neon-immuno) 4%, transparent) 100%);
-    box-shadow: 0 0 22px color-mix(in srgb, var(--neon-immuno) 40%, transparent);
+      color-mix(in srgb, var(--bub) 60%, transparent) 0%,
+      color-mix(in srgb, var(--bub) 24%, transparent) 55%,
+      color-mix(in srgb, var(--bub) 4%, transparent) 100%);
+    box-shadow: 0 0 22px color-mix(in srgb, var(--bub) 40%, transparent);
     transition: box-shadow 0.2s, transform 0.2s;
     animation: bubble-drift 7s ease-in-out infinite;
   }
   .pipe-bubble-disc::after {
     content: ''; position: absolute; inset: 7px; border-radius: 50%;
-    border: 0.5px solid color-mix(in srgb, var(--neon-immuno) 27%, transparent);
+    border: 0.5px solid color-mix(in srgb, var(--bub) 27%, transparent);
   }
   .pipe-bubble-label {
     font-family: 'JetBrains Mono', ui-monospace, 'SF Mono', SFMono-Regular, Menlo, Consolas, monospace;
@@ -352,7 +353,7 @@
     text-transform: uppercase; text-align: center; white-space: nowrap;
     padding: 4px 8px;
     background: rgba(var(--void-rgb), 0.85);
-    border: 1px solid color-mix(in srgb, var(--neon-immuno) 40%, transparent);
+    border: 1px solid color-mix(in srgb, var(--bub) 40%, transparent);
   }
   .pipe-bubble-hint {
     font-family: 'JetBrains Mono', ui-monospace, 'SF Mono', SFMono-Regular, Menlo, Consolas, monospace;
@@ -362,7 +363,7 @@
   .pipe-bubble:hover .pipe-bubble-disc,
   .pipe-bubble:focus-visible .pipe-bubble-disc {
     transform: scale(1.05);
-    box-shadow: 0 0 36px color-mix(in srgb, var(--neon-immuno) 60%, transparent);
+    box-shadow: 0 0 36px color-mix(in srgb, var(--bub) 60%, transparent);
     animation-play-state: paused;
   }
   .pipe-bubble:hover .pipe-bubble-hint,
@@ -374,7 +375,19 @@
   @media (max-width: 1150px) {
     /* The toolbar takes its own row under the brand here; sit below it. */
     .pipe-bubble { top: 196px; }
+    .pipe-bubble.geo { top: 374px; }
   }
+  /* US MAP BUBBLE — second satellite under Trials + Patents; the disc carries
+     the country silhouette with the top states lit, a miniature of geo.html. */
+  .pipe-bubble.geo { --bub: #ffffff; top: 310px; }
+  :root[data-theme="light"] .pipe-bubble.geo { --bub: var(--ink-0); }   /* white vanishes on the light page */
+  .pipe-bubble.geo .pipe-bubble-disc { padding: 0; overflow: hidden; }
+  .geo-icon { width: 50px; height: 32px; display: block; }
+  .geo-icon .land { fill: color-mix(in srgb, var(--bub) 28%, transparent); stroke: var(--bub); stroke-width: 0.9; stroke-linejoin: round; }
+  .geo-icon .hot { fill: var(--bub); opacity: 0.95; }
+  .pipe-bubble.geo:hover .geo-icon .hot { animation: hot-pulse 1.6s ease-in-out infinite; }
+  @keyframes hot-pulse { 0%, 100% { opacity: 0.95; } 50% { opacity: 0.45; } }
+
 
   /* DEFINITIONS BUTTON */
   .def-button {
@@ -1753,6 +1766,7 @@
   }
   .exp-table td.num { font-variant-numeric: tabular-nums; white-space: nowrap; }
   .exp-table td.ttl { color: var(--ink-0); min-width: 22em; }
+  .exp-table td.abs { color: var(--ink-1); min-width: 26em; font-size: 12px; line-height: 1.4; }
   .exp-table tr:hover td { background: rgba(var(--line-rgb), 0.06); }
 
   .article-meta .new-badge {
@@ -1788,7 +1802,7 @@
 
   /* GUIDED DEMO — ▶ button bottom right; spotlight + caption card */
   .demo-fab {
-    position: fixed; right: 26px; bottom: 26px; z-index: 90;
+    position: fixed; right: 282px; bottom: 26px; z-index: 90;
     width: 52px; height: 52px; border-radius: 50%; cursor: pointer;
     background: var(--surface-1); border: 1px solid var(--neon-cyto);
     color: var(--neon-cyto); font-size: 17px; line-height: 1;
@@ -1839,6 +1853,43 @@
   .demo-fab span { margin-left: 3px; }  /* optically centre the ▶ glyph */
   @keyframes fabglow { 0%,100% { box-shadow: 0 0 10px rgba(255,43,214,0.18); } 50% { box-shadow: 0 0 24px rgba(255,43,214,0.45); } }
   body.demo-on .demo-fab { display: none; }
+  /* 14-DAY REPORT — one click, everything new across papers, press, NIH grants,
+     trials and patents. Requested by the Marcus team (2026-10-08) as the
+     default action in the bottom-right corner. */
+  .rep-fab {
+    position: fixed; right: 26px; bottom: 26px; z-index: 90;
+    width: 52px; height: 52px; border-radius: 50%; cursor: pointer;
+    background: var(--surface-1); border: 1px solid var(--neon-behav);
+    color: var(--neon-behav); font-size: 19px; line-height: 1;
+    display: flex; align-items: center; justify-content: center;
+    box-shadow: 0 0 14px rgba(182, 255, 60, 0.25);
+    transition: background 0.18s, color 0.18s, box-shadow 0.18s;
+  }
+  .rep-fab:hover { background: var(--neon-behav); color: var(--on-accent); box-shadow: 0 0 24px rgba(182,255,60,0.5); }
+  body.demo-on .rep-fab { display: none; }
+  .rep-ctl { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; margin: 0 0 14px; }
+  .rep-ctl .seg { display: inline-flex; border: 1px solid var(--line); border-radius: 4px; overflow: hidden; }
+  .rep-ctl .seg button {
+    background: var(--surface-1); border: none; color: var(--ink-2); cursor: pointer;
+    font-family: 'JetBrains Mono', monospace; font-size: 11.5px; letter-spacing: 0.1em;
+    text-transform: uppercase; padding: 8px 12px;
+  }
+  .rep-ctl .seg button.on { background: var(--neon-behav); color: var(--on-accent); }
+  .rep-ctl .note { font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.08em; color: var(--ink-2); text-transform: uppercase; }
+  .rep-sec { margin: 0 0 18px; }
+  .rep-sec h4 {
+    font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase;
+    color: var(--rep-color, var(--ink-1)); font-weight: 500; margin: 0 0 8px;
+    display: flex; align-items: center; gap: 8px; border-bottom: 1px solid var(--line); padding-bottom: 6px;
+  }
+  .rep-sec h4 .n { margin-left: auto; color: var(--ink-2); font-weight: 400; }
+  .rep-item { display: grid; grid-template-columns: 86px 1fr; gap: 10px; padding: 6px 4px; border-left: 2px solid var(--rep-color, var(--line)); margin: 0 0 4px; }
+  .rep-item .d { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--ink-2); font-variant-numeric: tabular-nums; padding-top: 2px; }
+  .rep-item .t a { color: var(--ink-0); text-decoration: none; font-size: 14px; line-height: 1.35; }
+  .rep-item .t a:hover { color: var(--neon-behav); text-decoration: underline; text-underline-offset: 3px; }
+  .rep-item .m { font-size: 12px; color: var(--ink-2); margin-top: 2px; }
+  .rep-empty { font-family: 'JetBrains Mono', monospace; font-size: 11.5px; color: var(--ink-2); letter-spacing: 0.06em; padding: 4px; }
+  .rep-more { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--ink-2); padding: 4px; }
 
   .demo-spot {
     position: fixed; z-index: 300; pointer-events: none; display: none;
@@ -1953,12 +2004,19 @@
   <span class="pipe-bubble-hint" aria-hidden="true">&#9656; Click to open</span>
 </a>
 
-<div class="hint">CLICK A BRANCH NODE · ◈ AUTHORS · ⚕ TRIALS + PATENTS · ⬢ AGENT LAB · ◆ WHAT'S NEW · ⌕ SEARCH · ⇩ EXPORT · ESC TO CLOSE</div>
+<a class="pipe-bubble geo" id="geo-bubble" href="geo.html" aria-label="Open the US map of publications, grants and trials" title="US map — where the publications, NIH grants and trials come from">
+  <span class="pipe-bubble-disc" aria-hidden="true"><svg class="geo-icon" viewBox="0 0 64 40" aria-hidden="true" focusable="false"><path class="land" d="M51.9,30.9L54.8,36.6L54.9,38.6L54.4,39.6L54.6,39.1L53.7,39.3L53.3,38.5L52.0,37.5L51.9,36.8L51.7,37.2L50.9,36.0L51.3,35.4L50.9,35.3L50.9,35.9L50.7,35.6L50.7,33.9L49.2,32.6L48.3,32.4L47.4,33.3L45.6,32.3L43.4,32.7L43.7,32.6L43.3,32.0L43.2,32.6L41.6,32.6L40.9,33.2L41.8,33.2L41.2,33.8L42.1,34.4L41.6,34.8L41.8,34.4L41.0,34.3L40.5,34.7L40.0,34.4L39.6,34.8L38.3,33.6L37.7,34.1L36.1,33.8L34.4,34.5L34.7,34.2L34.1,34.0L34.2,34.6L33.8,34.9L34.4,34.5L31.7,36.3L31.0,37.2L30.8,38.0L31.1,39.5L30.8,37.6L32.1,36.0L31.1,36.4L31.1,36.8L30.6,36.8L31.0,37.0L30.4,37.7L30.7,37.7L31.1,39.6L30.8,39.9L28.4,39.0L27.8,37.2L25.4,33.7L24.2,33.4L23.0,34.7L22.6,34.6L21.3,33.5L20.8,32.0L19.0,30.0L16.7,29.7L16.6,30.4L12.9,29.9L8.4,27.2L8.6,26.9L5.5,26.5L5.3,25.2L4.3,24.3L4.3,23.8L1.9,22.4L2.1,21.5L1.1,19.4L1.4,18.4L0.9,17.8L1.0,16.9L1.4,17.6L1.4,16.5L1.0,16.9L0.5,16.4L0.1,14.7L0.4,13.4L0.0,12.3L0.8,10.9L0.9,8.7L1.9,7.2L3.1,3.8L3.5,3.9L3.0,3.7L3.5,3.2L3.2,2.8L3.5,2.8L3.2,2.7L3.3,0.4L5.2,1.4L5.2,1.8L4.4,2.4L5.3,1.8L4.8,2.9L5.6,1.8L5.5,0.1L13.1,2.0L20.9,3.3L31.7,4.0L33.6,4.0L33.8,3.4L34.1,4.3L35.0,4.7L35.8,4.5L37.3,5.3L38.0,5.0L39.5,5.2L38.1,6.0L37.0,7.4L38.1,6.9L38.1,7.5L38.6,7.5L41.1,5.9L41.4,6.0L40.7,7.1L41.0,6.7L40.9,7.0L41.4,6.8L42.5,7.4L44.2,6.7L44.4,7.1L45.3,7.0L45.3,7.5L46.1,7.8L44.9,7.8L44.8,8.1L43.9,7.8L42.8,8.7L42.9,8.2L42.4,8.6L42.4,8.4L41.5,10.2L41.6,10.5L42.5,9.2L41.7,12.5L42.0,13.9L42.6,14.9L43.3,14.5L43.7,13.7L43.2,11.1L43.6,9.7L44.1,9.2L44.2,9.9L44.2,9.1L44.7,8.8L44.5,8.3L46.4,8.8L46.6,10.2L46.1,11.2L46.4,11.4L47.1,10.6L47.5,10.9L47.9,12.8L47.6,12.7L47.0,14.2L48.2,14.6L51.7,12.2L51.9,11.8L51.6,11.1L53.9,10.7L54.6,10.1L54.3,9.1L55.5,7.6L59.2,6.7L59.3,6.2L59.8,6.2L60.5,2.4L61.0,2.7L61.6,2.2L62.1,2.5L62.7,4.6L63.1,4.6L64.0,5.6L63.0,6.8L62.6,6.6L62.7,7.3L62.3,6.6L62.1,6.8L62.2,7.5L60.9,8.9L60.8,9.7L61.1,9.9L60.8,10.6L61.7,11.3L62.1,11.1L62.0,10.7L62.2,11.4L61.2,11.9L61.3,11.4L60.8,12.0L60.6,11.5L60.6,12.1L58.4,13.3L58.3,13.7L60.3,12.7L59.0,13.8L58.0,13.9L58.3,15.3L57.7,16.8L56.7,15.8L57.6,17.6L57.0,19.9L57.1,18.5L56.8,18.6L56.7,17.9L56.3,18.1L56.1,17.6L56.4,17.6L55.9,17.3L56.2,16.1L55.6,16.7L56.3,18.5L55.1,18.2L55.1,17.8L55.0,18.2L56.4,18.7L56.4,19.2L55.6,18.8L56.5,19.2L56.6,20.1L55.8,19.9L56.4,20.3L57.0,20.1L58.0,21.8L57.2,20.7L57.5,21.4L57.0,21.1L57.2,21.3L56.6,21.7L56.4,21.3L56.5,21.8L57.2,21.6L57.4,22.1L57.6,21.6L57.8,22.1L57.4,22.6L56.2,22.6L57.0,22.8L56.4,23.3L57.3,23.1L57.1,23.7L57.6,23.0L57.1,23.8L55.9,24.4L55.6,25.3L54.5,25.7L54.0,27.0L52.4,28.3Z"/><circle class="hot" cx="4.3" cy="18.8" r="3.2"/><circle class="hot" cx="55.6" cy="10.8" r="2.6"/><circle class="hot" cx="59.9" cy="10.9" r="2.2"/><circle class="hot" cx="28.3" cy="31.1" r="2.2"/><circle class="hot" cx="53.7" cy="14.5" r="1.9"/><circle class="hot" cx="48.1" cy="16.4" r="1.7"/><circle class="hot" cx="53.3" cy="23.0" r="1.6"/><circle class="hot" cx="7.2" cy="3.2" r="1.4"/><circle class="hot" cx="40.7" cy="17.6" r="1.4"/><circle class="hot" cx="51.1" cy="34.3" r="1.4"/></svg></span>
+  <span class="pipe-bubble-label">US Map</span>
+  <span class="pipe-bubble-hint" aria-hidden="true">&#9656; Click to open</span>
+</a>
+
+<div class="hint">CLICK A BRANCH NODE · ◈ AUTHORS · ⚕ TRIALS + PATENTS · ◫ US MAP · ⬢ AGENT LAB · ◆ WHAT'S NEW · ⌕ SEARCH · ⇩ EXPORT · ESC TO CLOSE</div>
 
 <button class="search-fab" id="search-fab" aria-label="Search every node" title="Search the whole library  ( / )">⌕</button>
 <button class="export-fab" id="export-fab" aria-label="Export runs as a table" title="Export runs as CSV, Excel or PDF">&#8615;</button>
 <button class="theme-fab" id="theme-fab" aria-label="Switch between light and dark">&#9682;</button>
 <button class="demo-fab" id="demo-fab" aria-label="Play a guided demo of this page"><span>▶</span></button>
+<button class="rep-fab" id="rep-fab" aria-label="Open the 14-day report" title="14-day report — everything new across papers, press, NIH grants, trials and patents">▦</button>
 <div class="demo-spot" id="demo-spot"></div>
 <div class="demo-shield" id="demo-shield"></div>
 <div class="demo-card" id="demo-card" role="dialog" aria-label="Guided demo">
@@ -2091,6 +2149,32 @@
     </div>
     <div class="new-body" id="new-body">
       <!-- runs injected by JS -->
+    </div>
+  </div>
+</div>
+
+<!-- 14-DAY REPORT MODAL -->
+<div class="modal-backdrop" id="rep-backdrop">
+  <div class="def-modal">
+    <div class="modal-header">
+      <div class="modal-title-block">
+        <div class="modal-eyebrow">// DIGEST</div>
+        <div class="modal-title">Last 14 days</div>
+        <div class="modal-sub" id="rep-sub">New papers, press coverage, NIH awards, trial activity and patents, newest first.</div>
+      </div>
+      <button class="exp-open" id="rep-csv" title="Papers in this window as CSV — same columns as the Export tab">&#8595; CSV</button>
+      <button class="exp-open" id="rep-xlsx" title="Papers in this window as Excel — same columns as the Export tab">&#8595; Excel</button>
+      <button class="exp-open" id="rep-print" title="Open a print view — choose Save as PDF for a file">&#8595; Print / PDF</button>
+      <button class="modal-close" id="rep-close" aria-label="Close">×</button>
+    </div>
+    <div class="def-body">
+      <div class="rep-ctl">
+        <div class="seg" id="rep-days" role="group" aria-label="Window">
+          <button data-days="7">7 days</button><button data-days="14" class="on">14 days</button><button data-days="30">30 days</button>
+        </div>
+        <span class="note" id="rep-note"></span>
+      </div>
+      <div id="rep-body"><div class="rep-empty">// LOADING…</div></div>
     </div>
   </div>
 </div>
@@ -2403,7 +2487,7 @@ window.addEventListener('resize', resize);
 let RESERVED_RECTS = [];
 function cacheReservedRects() {
   RESERVED_RECTS = [];
-  for (const sel of ['#legend', '#pipe-bubble', '.search-fab', '.export-fab', '.theme-fab', '.demo-fab']) {
+  for (const sel of ['#legend', '#pipe-bubble', '#geo-bubble', '.search-fab', '.export-fab', '.theme-fab', '.demo-fab']) {
     const el = document.querySelector(sel);
     if (!el) continue;
     const r = el.getBoundingClientRect();
@@ -2912,13 +2996,33 @@ function ensureAbstracts() {
       ABSTRACTS = {};
       for (const [id, v] of Object.entries(data)) {
         const raw = (v && v.abstract) || '';
-        if (raw) ABSTRACTS[id] = { raw, low: raw.toLowerCase() };
+        const authorsRaw = (v && v.authors) || '';   // every author — the card shows only three
+        if (raw || authorsRaw) ABSTRACTS[id] = { raw, low: raw.toLowerCase(), authorsRaw, authors: authorsRaw.toLowerCase() };
       }
       abstractsState = 'ready';
       // A search may already be typed against the shallow fields — deepen it.
       if (backdrop.classList.contains('open')) renderArticles();
+      // The export preview may be waiting on the abstract column.
+      const exp = document.getElementById('exp-backdrop');
+      if (exp && exp.classList.contains('open')) renderExport();
     })
-    .catch(() => { abstractsState = 'unavailable'; });
+    .catch(() => {
+      // Public build: no abstracts, but the author lists ship on their own so a
+      // search still finds a paper by any of its authors.
+      fetch('authors-index.json', { cache: 'no-store' })
+        .then(r => { if (!r.ok) throw new Error('unavailable'); return r.json(); })
+        .then(data => {
+          ABSTRACTS = {};
+          for (const [id, authorsRaw] of Object.entries(data)) {
+            if (authorsRaw) ABSTRACTS[id] = { raw: '', low: '', authorsRaw, authors: authorsRaw.toLowerCase() };
+          }
+          abstractsState = 'ready';
+          if (backdrop.classList.contains('open')) renderArticles();
+          const exp = document.getElementById('exp-backdrop');
+          if (exp && exp.classList.contains('open')) renderExport();
+        })
+        .catch(() => { abstractsState = 'unavailable'; });
+    });
 }
 
 function learnedTermsHtml(branchKey) {
@@ -3259,7 +3363,9 @@ function matchesTerm(a, t) {
       || (pmid && (pmid === t || t.includes(pmid)))
       // Deep fields: the paper about your term rarely has it in the title.
       || (a.mesh || []).some(m => m.toLowerCase().includes(t))
-      || !!(ABSTRACTS && ABSTRACTS[a.id] && ABSTRACTS[a.id].low.includes(t));
+      || !!(ABSTRACTS && ABSTRACTS[a.id] && ABSTRACTS[a.id].low.includes(t))
+      // Full author list (sidecar): the 20th author is invisible on the card.
+      || !!(ABSTRACTS && ABSTRACTS[a.id] && ABSTRACTS[a.id].authors && ABSTRACTS[a.id].authors.includes(t));
 }
 
 // When a card matched only through its abstract or MeSH, its visible text
@@ -3270,6 +3376,14 @@ function deepMatchSnippet(a, terms) {
   for (const t of terms) {
     if (t.includes(':') || shallow.includes(t)) continue;
     const ab = ABSTRACTS && ABSTRACTS[a.id];
+    if (ab && ab.authors && ab.authors.includes(t)) {
+      const i = ab.authors.indexOf(t);
+      const start = Math.max(0, i - 60), end = Math.min(ab.authorsRaw.length, i + t.length + 60);
+      return { kind: 'authors',
+               pre: (start > 0 ? '…' : '') + ab.authorsRaw.slice(start, i),
+               hit: ab.authorsRaw.slice(i, i + t.length),
+               post: ab.authorsRaw.slice(i + t.length, end) + (end < ab.authorsRaw.length ? '…' : '') };
+    }
     if (ab) {
       const i = ab.low.indexOf(t);
       if (i >= 0) {
@@ -3320,7 +3434,7 @@ function renderArticleCard(a, showNode, tagSet) {
     <a class="article tier-${a.priority}${a.isBoosted ? ' boosted' : ''}" href="${escapeHtml(a.url)}" target="_blank" rel="noopener">
       <div class="priority-badge${a.isBoosted ? ' boosted' : ''}">${escapeHtml(tierLabel)}</div>
       <div class="article-title">${escapeHtml(a.title)}</div>
-      ${SNIPS[a.id] ? `<div class="abs-snip"><span class="snip-kind">${SNIPS[a.id].kind === 'mesh' ? 'MeSH' : 'Abstract'}</span>${escapeHtml(SNIPS[a.id].pre)}<mark>${escapeHtml(SNIPS[a.id].hit)}</mark>${escapeHtml(SNIPS[a.id].post)}</div>` : ''}
+      ${SNIPS[a.id] ? `<div class="abs-snip"><span class="snip-kind">${SNIPS[a.id].kind === 'mesh' ? 'MeSH' : SNIPS[a.id].kind === 'authors' ? 'Authors' : 'Abstract'}</span>${escapeHtml(SNIPS[a.id].pre)}<mark>${escapeHtml(SNIPS[a.id].hit)}</mark>${escapeHtml(SNIPS[a.id].post)}</div>` : ''}
       <div class="article-meta">
         <span class="bm-toggle${isBookmarked(a.id) ? ' on' : ''}" role="button" aria-label="Bookmark this article" tabindex="0" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();event.stopPropagation();this.click();}" title="Bookmark this article"
               onclick="event.preventDefault();event.stopPropagation();toggleBookmark('${a.id}',this);">${isBookmarked(a.id) ? '★ Saved' : '☆ Save'}</span>
@@ -4141,16 +4255,41 @@ function resetAllDismissals() {
 }
 
 // ============ EXPORT ============
-// Runs, newest first, as a flat table. Six columns because that is what a
-// reader needs to find the paper again: when it came out, who led it, who ran
-// the lab, where it appeared, its PubMed id, and what it is called.
+// Runs, newest first, as a flat table: when it came out, who led it, who ran
+// the lab, where it appeared and how that venue ranks (impact factor and
+// OpenAlex h-index from the journal catalogue), its PubMed id, what it is
+// called, and the abstract (from abstracts.json — loaded on demand, and not
+// shipped on the public build, where the column stays empty).
+//
+// Author fallbacks: articles ingested before the first/last-author fields
+// existed only carry the display string ("Grove J, Ripke S, Als TD, et al."),
+// so the first name is read from that, and the last name too when the string
+// is not truncated. backfill_authors.py fills the real fields from PubMed.
+function expFirstAuthor(a) {
+  if (a.firstAuthor) return a.firstAuthor;
+  const first = (a.authors || '').split(',')[0].trim();
+  return /^n\/a$/i.test(first) ? '' : first;
+}
+function expLastAuthor(a) {
+  if (a.lastAuthor) return a.lastAuthor;
+  const names = (a.authors || '').split(',').map(x => x.trim()).filter(Boolean);
+  if (!names.length || /et al/i.test(names[names.length - 1]) || names.length < 2) return '';
+  return names[names.length - 1];
+}
+function expAbstract(a) {
+  const ab = ABSTRACTS && ABSTRACTS[a.id];
+  return ab ? ab.raw : '';
+}
 const EXP_COLUMNS = [
-  ['date',        'Published',    a => a.date || ''],
-  ['firstAuthor', 'First author', a => a.firstAuthor || ''],
-  ['lastAuthor',  'Last author',  a => a.lastAuthor || ''],
-  ['journal',     'Journal',      a => a.journalName || ''],
-  ['pmid',        'PMID',         a => pmidOf(a)],
-  ['title',       'Title',        a => a.title || ''],
+  ['date',        'Published',        a => a.date || ''],
+  ['firstAuthor', 'First author',     expFirstAuthor],
+  ['lastAuthor',  'Last author',      expLastAuthor],
+  ['journal',     'Journal',          a => a.journalName || ''],
+  ['if',          'Impact factor',    a => a.ifKnown ? a.if.toFixed(1) : ''],
+  ['hIndex',      'Journal h-index',  a => a.hIndex ? String(a.hIndex) : ''],
+  ['pmid',        'PMID',             a => pmidOf(a)],
+  ['title',       'Title',            a => a.title || ''],
+  ['abstract',    'Abstract',         expAbstract],
 ];
 
 function pmidOf(a) {
@@ -4187,8 +4326,11 @@ function renderExport() {
     `${chosen.length} run${chosen.length === 1 ? '' : 's'} · ${rows.length} article${rows.length === 1 ? '' : 's'}`;
   const head = '<thead><tr>' + EXP_COLUMNS.map(c => `<th>${escapeHtml(c[1])}</th>`).join('') + '</tr></thead>';
   const body = '<tbody>' + rows.map(a => '<tr>' + EXP_COLUMNS.map(([k, , get]) => {
-    const cls = (k === 'date' || k === 'pmid') ? ' class="num"' : (k === 'title' ? ' class="ttl"' : '');
-    return `<td${cls}>${escapeHtml(get(a))}</td>`;
+    const cls = (k === 'date' || k === 'pmid' || k === 'if' || k === 'hIndex') ? ' class="num"'
+      : (k === 'title' ? ' class="ttl"' : (k === 'abstract' ? ' class="abs"' : ''));
+    let v = get(a);
+    if (k === 'abstract' && v.length > 160) v = v.slice(0, 160).replace(/\s+\S*$/, '') + '…';   // preview only; files carry the full text
+    return `<td${cls}>${escapeHtml(v)}</td>`;
   }).join('') + '</tr>').join('') + '</tbody>';
   document.getElementById('exp-table').innerHTML = head + body;
 }
@@ -4244,8 +4386,10 @@ function expStatus(msg, blob, filename) {
   }
 }
 
-function exportCSV() {
-  const { rows } = expSelected();
+function exportCSV(rowsOpt, fileOpt) {
+  // Called from the Export tab (as a click handler — rowsOpt is then an Event)
+  // and from the digest with an explicit row list.
+  const rows = Array.isArray(rowsOpt) ? rowsOpt : expSelected().rows;
   const esc = v => {
     const t = String(v == null ? '' : v);
     return /[",\n\r]/.test(t) ? '"' + t.replace(/"/g, '""') + '"' : t;
@@ -4255,7 +4399,7 @@ function exportCSV() {
   // The BOM is what makes Excel read this as UTF-8 rather than mangling
   // accented author names.
   downloadBlob(new Blob(['\uFEFF' + lines.join('\r\n')],
-    { type: 'text/csv;charset=utf-8' }), expFilename('csv'));
+    { type: 'text/csv;charset=utf-8' }), typeof fileOpt === 'string' ? fileOpt : expFilename('csv'));
 }
 
 // A real .xlsx, built here rather than pulled from a library — the page loads
@@ -4319,8 +4463,8 @@ function xmlEsc(v) {
     .replace(/[\x00-\x08\x0B\x0C\x0E-\x1F]/g, '');   // control chars are invalid in XML
 }
 
-function exportExcel() {
-  const { rows } = expSelected();
+function exportExcel(rowsOpt, fileOpt) {
+  const rows = Array.isArray(rowsOpt) ? rowsOpt : expSelected().rows;
   const col = i => String.fromCharCode(65 + i);
   // Every cell is an inline string, including PMID and date: they are
   // identifiers, not quantities, and Excel must not reformat or round them.
@@ -4342,16 +4486,19 @@ function exportExcel() {
     { name: 'xl/_rels/workbook.xml.rels', text:
       `<?xml version="1.0" encoding="UTF-8" standalone="yes"?><Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships"><Relationship Id="rId1" Type="${REL}/worksheet" Target="worksheets/sheet1.xml"/></Relationships>` },
     { name: 'xl/worksheets/sheet1.xml', text:
-      `<?xml version="1.0" encoding="UTF-8" standalone="yes"?><worksheet xmlns="${NS}"><cols><col min="1" max="1" width="12"/><col min="2" max="3" width="18"/><col min="4" max="4" width="30"/><col min="5" max="5" width="12"/><col min="6" max="6" width="70"/></cols><sheetData>${body}</sheetData></worksheet>` },
+      `<?xml version="1.0" encoding="UTF-8" standalone="yes"?><worksheet xmlns="${NS}"><cols><col min="1" max="1" width="12"/><col min="2" max="3" width="18"/><col min="4" max="4" width="30"/><col min="5" max="6" width="10"/><col min="7" max="7" width="12"/><col min="8" max="8" width="70"/><col min="9" max="9" width="100"/></cols><sheetData>${body}</sheetData></worksheet>` },
   ]);
-  downloadBlob(blob, expFilename('xlsx'));
+  downloadBlob(blob, typeof fileOpt === 'string' ? fileOpt : expFilename('xlsx'));
 }
 
 function exportPrint() {
   const { chosen, rows } = expSelected();
   const head = EXP_COLUMNS.map(c => `<th>${escapeHtml(c[1])}</th>`).join('');
-  const body = rows.map(a => '<tr>' + EXP_COLUMNS.map(([k, , get]) =>
-    `<td class="${k}">${escapeHtml(get(a))}</td>`).join('') + '</tr>').join('');
+  const body = rows.map(a => '<tr>' + EXP_COLUMNS.map(([k, , get]) => {
+    let v = get(a);
+    if (k === 'abstract' && v.length > 420) v = v.slice(0, 420).replace(/\s+\S*$/, '') + ' …';   // CSV/Excel carry the full abstract
+    return `<td class="${k}">${escapeHtml(v)}</td>`;
+  }).join('') + '</tr>').join('');
   const w = window.open('', '_blank');
   if (!w) {
     document.getElementById('exp-hint').textContent =
@@ -4369,8 +4516,9 @@ function exportPrint() {
       th { text-align: left; font-size: 8pt; letter-spacing: .08em; text-transform: uppercase;
            color: #4a5768; border-bottom: 1.2pt solid #4a5768; padding: 5pt 6pt; }
       td { padding: 5pt 6pt; border-bottom: .5pt solid #d5dde5; vertical-align: top; }
-      td.date, td.pmid { white-space: nowrap; font-variant-numeric: tabular-nums; }
-      td.title { width: 42%; }
+      td.date, td.pmid, td.if, td.hIndex { white-space: nowrap; font-variant-numeric: tabular-nums; }
+      td.title { width: 24%; }
+      td.abstract { width: 34%; font-size: 8pt; color: #3a4858; }
       tr { break-inside: avoid; }
       thead { display: table-header-group; }
     </style></head><body>
@@ -4385,6 +4533,7 @@ function exportPrint() {
 }
 
 function openExport() {
+  ensureAbstracts();   // the Abstract column; files export whatever has arrived by the time they are built
   const runs = expRuns();
   const sel = document.getElementById('exp-count');
   const choices = [1, 2, 3, 5, 10, 20].filter(n => n < runs.length);
@@ -4393,7 +4542,8 @@ function openExport() {
     + `<option value="${runs.length}">All ${runs.length} runs</option>`;
   sel.value = String(choices.includes(3) ? 3 : runs.length);
   renderExport();
-  expStatus('PDF and Print both open your browser\u2019s print dialog \u2014 choose \u201CSave as PDF\u201D there for a file.');
+  expStatus('PDF and Print both open your browser\u2019s print dialog \u2014 choose \u201CSave as PDF\u201D there for a file.'
+    + (abstractsState === 'unavailable' ? ' Abstracts are not available on this copy, so that column is empty.' : ''));
   document.getElementById('exp-backdrop').classList.add('open');
 }
 
@@ -4963,6 +5113,137 @@ document.addEventListener('keydown', (e) => { if (e.key === 'Escape') demoEnd();
 window.addEventListener('resize', () => { if (DEMO) demoPlace(DEMO.steps[DEMO.i]); });
 
 boot();
+
+// ============ 14-DAY REPORT ============
+// One click: everything that arrived across every lane inside a window. The
+// article store is already in memory; the other lanes are fetched on first open
+// — from the server here, from the baked *-data.json snapshots on the public
+// build — so the main page never pays for them until someone asks.
+const REP = { days: 14, data: null, loading: null };
+const REP_LANES = [
+  ['papers',  'Papers',        'var(--neon-immuno)'],
+  ['press',   'Press & media', 'var(--neon-neuro)'],
+  ['nih',     'NIH awards',    'var(--neon-gen)'],
+  ['trials',  'Trials',        'var(--neon-behav)'],
+  ['patents', 'Patents',       'var(--neon-interv)'],
+];
+async function repFetch(api, stat) {
+  if (!PUBLIC_MODE) {
+    try { const r = await fetch(api, { cache: 'no-store' }); if (r.ok) return await r.json(); } catch (e) {}
+  }
+  try { const r = await fetch(stat, { cache: 'no-store' }); if (r.ok) return await r.json(); } catch (e) {}
+  return null;
+}
+function repLoad() {
+  if (REP.data) return Promise.resolve(REP.data);
+  if (!REP.loading) {
+    REP.loading = Promise.all([
+      repFetch('/api/press', 'press-data.json'),
+      repFetch('/api/nih', 'nih-data.json'),
+      repFetch('/api/trials', 'trials-data.json'),
+      repFetch('/api/patents', 'patents-data.json'),
+    ]).then(([press, nih, trials, patents]) => (REP.data = { press, nih, trials, patents }));
+  }
+  return REP.loading;
+}
+const repDate = s => ((s || '').match(/\d{4}-\d{2}-\d{2}/) || [''])[0];
+function repItems(cutoff) {
+  const d = REP.data || {};
+  const paperRows = ARTICLES
+    .map(a => ({ when: [repDate(a.addedBy), a.date || ''].sort().reverse()[0], a }))
+    .filter(x => x.when >= cutoff)
+    .sort((x, y) => y.when.localeCompare(x.when));
+  const papers = paperRows
+    .map(({ when, a }) => ({ d: when, url: a.url, title: a.title,
+      meta: [a.firstAuthor || (a.authors || '').split(',')[0], a.journalName, a.date && repDate(a.addedBy) && a.date < cutoff ? 'added to the library' : ''].filter(Boolean).join(' · ') }));
+  const press = ((d.press && d.press.releases) || []).filter(r => (r.date || '') >= cutoff)
+    .sort((x, y) => (y.date || '').localeCompare(x.date || ''))
+    .map(r => ({ d: r.date, url: r.url, title: r.title, meta: r.sourceLabel || r.source || '' }));
+  const nih = ((d.nih && d.nih.projects) || []).filter(p => (p.notice || '') >= cutoff)
+    .sort((x, y) => (y.notice || '').localeCompare(x.notice || ''))
+    .map(p => ({ d: p.notice, url: p.url, title: p.title,
+      meta: [p.pi, p.org, p.ic, p.award ? '$' + Math.round(p.award / 1000) + 'K' : ''].filter(Boolean).join(' · ') }));
+  const trials = ((d.trials && d.trials.studies) || []).filter(s => (s.updated || '') >= cutoff)
+    .sort((x, y) => (y.updated || '').localeCompare(x.updated || ''))
+    .map(s => ({ d: s.updated, url: 'https://clinicaltrials.gov/study/' + encodeURIComponent(s.id), title: s.title,
+      meta: [s.id, (s.status || '').replace(/_/g, ' ').toLowerCase(), s.sponsor, (s.start || '') >= cutoff ? 'new study' : 'updated'].filter(Boolean).join(' · ') }));
+  const pd = d.patents || {};
+  const patents = pd.needsKey ? null : (pd.patents || []).filter(p => (p.date || '') >= cutoff)
+    .sort((x, y) => (y.date || '').localeCompare(x.date || ''))
+    .map(p => ({ d: p.date, url: 'https://patents.google.com/patent/' + encodeURIComponent(p.id), title: p.title,
+      meta: [(p.assignees || []).join(', '), p.patNum ? 'granted' : 'application'].filter(Boolean).join(' · ') }));
+  return { papers, press, nih, trials, patents, articles: paperRows.map(x => x.a) };
+}
+// The digest's papers export with the Export tab's nine columns (authors,
+// journal, impact factor, journal h-index, PMID, title, abstract).
+function repArticles() {
+  return repItems(new Date(Date.now() - REP.days * 864e5).toISOString().slice(0, 10)).articles;
+}
+function repExport(kind) {
+  const rows = repArticles();
+  if (!rows.length) { document.getElementById('rep-note').textContent = 'No papers in this window to export.'; return; }
+  const name = `atlas-last-${REP.days}-days-${new Date().toISOString().slice(0, 10)}.${kind}`;
+  if (kind === 'csv') exportCSV(rows, name); else exportExcel(rows, name);
+  document.getElementById('rep-note').textContent = `Saved ${name} — ${rows.length} papers, ${EXP_COLUMNS.length} columns.`;
+}
+function renderReport() {
+  const cutoff = new Date(Date.now() - REP.days * 864e5).toISOString().slice(0, 10);
+  const items = repItems(cutoff);
+  document.querySelector('#rep-backdrop .modal-title').textContent = `Last ${REP.days} days`;
+  document.getElementById('rep-note').textContent = `since ${cutoff}` + (REP.data ? '' : ' · loading lanes…');
+  document.querySelectorAll('#rep-days button').forEach(b => b.classList.toggle('on', +b.dataset.days === REP.days));
+  const LIMIT = 40;
+  document.getElementById('rep-body').innerHTML = REP_LANES.map(([k, label, color]) => {
+    const list = items[k];
+    let body;
+    if (list === null) body = '<div class="rep-empty">// PATENT LANE IS DORMANT (NO EPO KEY)</div>';
+    else if (!REP.data && k !== 'papers') body = '<div class="rep-empty">// LOADING…</div>';
+    else if (!list.length) body = '<div class="rep-empty">// NOTHING NEW IN THIS WINDOW</div>';
+    else body = list.slice(0, LIMIT).map(it => `<div class="rep-item"><span class="d">${escapeHtml(it.d)}</span>
+        <div class="t"><a href="${escapeHtml(it.url)}" target="_blank" rel="noopener">${escapeHtml(it.title)}</a>
+        ${it.meta ? `<div class="m">${escapeHtml(it.meta)}</div>` : ''}</div></div>`).join('')
+      + (list.length > LIMIT ? `<div class="rep-more">+ ${list.length - LIMIT} more — see the lane's own tab</div>` : '');
+    return `<div class="rep-sec" style="--rep-color:${color}"><h4>${label}<span class="n">${list ? list.length : '—'}</span></h4>${body}</div>`;
+  }).join('');
+}
+function openReport() {
+  ensureAbstracts();   // the export's Abstract column
+  document.getElementById('rep-backdrop').classList.add('open');
+  renderReport();
+  repLoad().then(renderReport);
+}
+function printReport() {
+  const cutoff = new Date(Date.now() - REP.days * 864e5).toISOString().slice(0, 10);
+  const items = repItems(cutoff);
+  const w = window.open('', '_blank');
+  if (!w) { document.getElementById('rep-note').textContent = 'Pop-up blocked — allow pop-ups for this page and try again.'; return; }
+  const sec = ([k, label]) => {
+    const list = items[k];
+    const rows = list === null ? '<p class="e">Patent lane dormant.</p>'
+      : !list.length ? '<p class="e">Nothing new in this window.</p>'
+      : '<table>' + list.map(it => `<tr><td class="d">${escapeHtml(it.d)}</td><td><a href="${escapeHtml(it.url)}">${escapeHtml(it.title)}</a>${it.meta ? `<div class="m">${escapeHtml(it.meta)}</div>` : ''}</td></tr>`).join('') + '</table>';
+    return `<h2>${label} <span>${list ? list.length : '—'}</span></h2>${rows}`;
+  };
+  w.document.write(`<!doctype html><html><head><meta charset="utf-8"><title>Atlas — last ${REP.days} days</title><style>
+    @page { margin: 14mm; } body { font: 10.5pt/1.4 -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif; color: #14202c; margin: 0; }
+    h1 { font-size: 16pt; margin: 0 0 2pt; } .sub { font-size: 9pt; color: #5c6b7c; margin: 0 0 14pt; }
+    h2 { font-size: 11pt; letter-spacing: .08em; text-transform: uppercase; color: #4a5768; border-bottom: 1pt solid #4a5768; padding-bottom: 3pt; margin: 14pt 0 6pt; }
+    h2 span { color: #8a97a8; font-weight: normal; } table { width: 100%; border-collapse: collapse; }
+    td { padding: 4pt 6pt; border-bottom: .5pt solid #d5dde5; vertical-align: top; } td.d { white-space: nowrap; width: 72pt; color: #5c6b7c; font-variant-numeric: tabular-nums; }
+    a { color: #14202c; text-decoration: none; } .m { font-size: 9pt; color: #5c6b7c; } .e { color: #8a97a8; font-size: 9.5pt; } tr { break-inside: avoid; }
+    </style></head><body><h1>Autism Research Network Atlas — last ${REP.days} days</h1>
+    <p class="sub">Everything new since ${cutoff} across papers, press, NIH awards, trials and patents · generated ${new Date().toISOString().slice(0, 10)}</p>
+    ${REP_LANES.map(sec).join('')}</body></html>`);
+  w.document.close(); w.focus();
+  setTimeout(() => w.print(), 350);
+}
+document.getElementById('rep-fab').addEventListener('click', openReport);
+document.getElementById('rep-close').addEventListener('click', () => document.getElementById('rep-backdrop').classList.remove('open'));
+document.getElementById('rep-backdrop').addEventListener('click', e => { if (e.target.id === 'rep-backdrop') e.currentTarget.classList.remove('open'); });
+document.querySelectorAll('#rep-days button').forEach(b => b.onclick = () => { REP.days = +b.dataset.days; renderReport(); });
+document.getElementById('rep-print').addEventListener('click', printReport);
+document.getElementById('rep-csv').addEventListener('click', () => repExport('csv'));
+document.getElementById('rep-xlsx').addEventListener('click', () => repExport('xlsx'));
 </script>
 </body>
 </html>
