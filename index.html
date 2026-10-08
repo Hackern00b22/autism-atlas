@@ -2272,6 +2272,7 @@
 const PUBLIC_MODE = true;
 
 let JOURNALS, BRANCHES, ARTICLES, META, TIERS;
+let JMETRICS = {};   // journal_metrics.json — OpenAlex metrics for journals outside the catalogue
 // Read from the stylesheet, not copied from it. This table used to hold the
 // dark palette verbatim, so in light mode every active priority chip painted a
 // neon fill under white text (the default "All" chip came out at 1.18:1).
@@ -2382,9 +2383,15 @@ function resolveArticle(a) {
   // only so descending sorts park these at the bottom; the badge must never
   // render it as a measured value, for the same reason 'other' is not allowed to
   // absorb a missing tier below.
-  a.ifKnown = !!(j || a.if_override);
-  a.if = j ? j.if : (a.if_override || 0);
-  a.hIndex = j ? (j.hIndex || 0) : 0;
+  // Outside the catalogue, OpenAlex's 2-year mean citedness stands in for the
+  // impact factor (same construction as the JCR figure, open citation index);
+  // ifSource says which one a reader is looking at.
+  const m = (!j && a.journalDisplay) ? JMETRICS[a.journalDisplay.toLowerCase()] : null;
+  const mIF = m && m.citedness2y != null ? m.citedness2y : null;
+  a.ifKnown = !!(j || a.if_override || mIF != null);
+  a.if = j ? j.if : (a.if_override || (mIF != null ? mIF : 0));
+  a.hIndex = j ? (j.hIndex || 0) : ((m && m.hIndex) || 0);
+  a.ifSource = j ? 'JCR' : (a.if_override ? 'override' : (mIF != null ? 'OpenAlex' : ''));
   // An unrecognised tier means we don't know, not that we looked and found
   // nothing — 'other' is a verdict and must not absorb missing data.
   a.tags = classifyTags(a);
@@ -2400,9 +2407,13 @@ async function boot() {
   const errEl = document.getElementById('boot-err');
   try {
     msgEl.textContent = 'FETCHING ARTICLES.JSON…';
-    const resp = await fetch('articles.json', { cache: 'no-store' });
+    const [resp, mresp] = await Promise.all([
+      fetch('articles.json', { cache: 'no-store' }),
+      fetch('journal_metrics.json', { cache: 'no-store' }).catch(() => null),
+    ]);
     if (!resp.ok) throw new Error('HTTP ' + resp.status);
     const data = await resp.json();
+    try { JMETRICS = (mresp && mresp.ok) ? await mresp.json() : {}; } catch (e) { JMETRICS = {}; }
     JOURNALS = data.journals;
     BRANCHES = data.branches;
     ARTICLES = data.articles;
@@ -3447,7 +3458,7 @@ function renderArticleCard(a, showNode, tagSet) {
         ${node ? `<span class="node-badge">${escapeHtml(node)}</span>` : ''}
         ${homeNode ? `<span class="node-badge also" title="Also relevant here — filed under ${escapeHtml(homeNode)}">◇ ${escapeHtml(homeNode)}</span>` : ''}
         <span class="journal">${escapeHtml(a.journalName)}</span>
-        <span class="if-badge"${a.ifKnown ? '' : ' title="Journal is not in the catalogue — impact factor and h-index unknown"'}>IF ${a.ifKnown ? a.if.toFixed(1) : '—'}</span>
+        <span class="if-badge"${a.ifKnown ? (a.ifSource === 'OpenAlex' ? ' title="OpenAlex 2-year mean citedness — the open equivalent of the impact factor (journal is outside the catalogue)"' : '') : ' title="No metrics for this journal — not in the catalogue and not matched in OpenAlex"'}>IF ${a.ifKnown ? (a.ifSource === 'OpenAlex' ? '≈' : '') + a.if.toFixed(1) : '—'}</span>
         ${a.hIndex ? `<span class="if-badge" title="Journal h-index (OpenAlex)">H ${a.hIndex}</span>` : ''}
         ${badgeKeys.map(k => `<span class="mod-badge" title="Tagged from title + MeSH">${escapeHtml(TAGS[k].label)}</span>`).join('')}
         ${a.viaOpenVenue && !a.journalKey ? '<span class="via-badge" title="Found by topical match in a journal outside the catalogue — admitted on topic score rather than on its journal">◎ OPEN VENUE</span>' : ''}
@@ -4286,6 +4297,7 @@ const EXP_COLUMNS = [
   ['lastAuthor',  'Last author',      expLastAuthor],
   ['journal',     'Journal',          a => a.journalName || ''],
   ['if',          'Impact factor',    a => a.ifKnown ? a.if.toFixed(1) : ''],
+  ['ifSource',    'IF source',        a => a.ifSource === 'JCR' ? 'JCR impact factor' : a.ifSource === 'OpenAlex' ? 'OpenAlex 2-yr citedness' : ''],
   ['hIndex',      'Journal h-index',  a => a.hIndex ? String(a.hIndex) : ''],
   ['pmid',        'PMID',             a => pmidOf(a)],
   ['title',       'Title',            a => a.title || ''],
@@ -4486,7 +4498,7 @@ function exportExcel(rowsOpt, fileOpt) {
     { name: 'xl/_rels/workbook.xml.rels', text:
       `<?xml version="1.0" encoding="UTF-8" standalone="yes"?><Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships"><Relationship Id="rId1" Type="${REL}/worksheet" Target="worksheets/sheet1.xml"/></Relationships>` },
     { name: 'xl/worksheets/sheet1.xml', text:
-      `<?xml version="1.0" encoding="UTF-8" standalone="yes"?><worksheet xmlns="${NS}"><cols><col min="1" max="1" width="12"/><col min="2" max="3" width="18"/><col min="4" max="4" width="30"/><col min="5" max="6" width="10"/><col min="7" max="7" width="12"/><col min="8" max="8" width="70"/><col min="9" max="9" width="100"/></cols><sheetData>${body}</sheetData></worksheet>` },
+      `<?xml version="1.0" encoding="UTF-8" standalone="yes"?><worksheet xmlns="${NS}"><cols><col min="1" max="1" width="12"/><col min="2" max="3" width="18"/><col min="4" max="4" width="30"/><col min="5" max="5" width="10"/><col min="6" max="6" width="22"/><col min="7" max="7" width="10"/><col min="8" max="8" width="12"/><col min="9" max="9" width="70"/><col min="10" max="10" width="100"/></cols><sheetData>${body}</sheetData></worksheet>` },
   ]);
   downloadBlob(blob, typeof fileOpt === 'string' ? fileOpt : expFilename('xlsx'));
 }
@@ -4517,6 +4529,7 @@ function exportPrint() {
            color: #4a5768; border-bottom: 1.2pt solid #4a5768; padding: 5pt 6pt; }
       td { padding: 5pt 6pt; border-bottom: .5pt solid #d5dde5; vertical-align: top; }
       td.date, td.pmid, td.if, td.hIndex { white-space: nowrap; font-variant-numeric: tabular-nums; }
+      td.ifSource { font-size: 8pt; color: #5c6b7c; }
       td.title { width: 24%; }
       td.abstract { width: 34%; font-size: 8pt; color: #3a4858; }
       tr { break-inside: avoid; }

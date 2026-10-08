@@ -1,0 +1,1358 @@
+{
+ "alpha psychiatry": {
+  "name": "Alpha psychiatry",
+  "fetched": "2026-10-08",
+  "openalexId": "S4210208099",
+  "openalexName": "ALPHA PSYCHIATRY",
+  "type": "journal",
+  "worksCount": 459,
+  "hIndex": 19,
+  "citedness2y": 2.824451410658307
+ },
+ "american journal of medical genetics. part b, neuropsychiatric genetics : the official publication of the international society of psychiatric genetics": {
+  "name": "American journal of medical genetics. Part B, Neuropsychiatric genetics : the official publication of the International Society of Psychiatric Genetics",
+  "fetched": "2026-10-08",
+  "openalexId": "S2764647521",
+  "openalexName": "American Journal of Medical Genetics Part B Neuropsychiatric Genetics",
+  "type": "journal",
+  "worksCount": 2816,
+  "hIndex": 131,
+  "citedness2y": 1.4573170731707317
+ },
+ "american journal of obstetrics and gynecology": {
+  "name": "American journal of obstetrics and gynecology",
+  "fetched": "2026-10-08",
+  "openalexId": "S122347013",
+  "openalexName": "American Journal of Obstetrics and Gynecology",
+  "type": "journal",
+  "worksCount": 95454,
+  "hIndex": 383,
+  "citedness2y": 2.125757575757576
+ },
+ "american journal of speech-language pathology": {
+  "name": "American journal of speech-language pathology",
+  "fetched": "2026-10-08",
+  "openalexId": "S50443188",
+  "openalexName": "American Journal of Speech-Language Pathology",
+  "type": "journal",
+  "worksCount": 2931,
+  "hIndex": 122,
+  "citedness2y": 2.470684039087948
+ },
+ "anaesthesia": {
+  "name": "Anaesthesia",
+  "fetched": "2026-10-08",
+  "openalexId": "S7689096",
+  "openalexName": "Anaesthesia",
+  "type": "journal",
+  "worksCount": 29958,
+  "hIndex": 204,
+  "citedness2y": 4.085659287776708
+ },
+ "archives of clinical neuropsychology : the official journal of the national academy of neuropsychologists": {
+  "name": "Archives of clinical neuropsychology : the official journal of the National Academy of Neuropsychologists",
+  "fetched": "2026-10-08",
+  "openalexId": "S13265631",
+  "openalexName": "Archives of Clinical Neuropsychology",
+  "type": "journal",
+  "worksCount": 13854,
+  "hIndex": 151,
+  "citedness2y": 0.563919532770928
+ },
+ "archives of medical research": {
+  "name": "Archives of medical research",
+  "fetched": "2026-10-08",
+  "openalexId": "S157833918",
+  "openalexName": "Archives of Medical Research",
+  "type": "journal",
+  "worksCount": 3604,
+  "hIndex": 118,
+  "citedness2y": 2.942857142857143
+ },
+ "asian journal of psychiatry": {
+  "name": "Asian journal of psychiatry",
+  "fetched": "2026-10-08",
+  "openalexId": "S152361726",
+  "openalexName": "Asian Journal of Psychiatry",
+  "type": "journal",
+  "worksCount": 5030,
+  "hIndex": 98,
+  "citedness2y": 3.571564885496183
+ },
+ "autism & developmental language impairments": {
+  "name": "Autism & developmental language impairments",
+  "fetched": "2026-10-08",
+  "openalexId": "S4210236790",
+  "openalexName": "Autism & Developmental Language Impairments",
+  "type": "journal",
+  "worksCount": 235,
+  "hIndex": 34,
+  "citedness2y": 3.25
+ },
+ "autism in adulthood": {
+  "name": "Autism in adulthood",
+  "fetched": "2026-10-08",
+  "openalexId": "S4210230365",
+  "openalexName": "Autism in Adulthood",
+  "type": "journal",
+  "worksCount": 572,
+  "hIndex": 54,
+  "citedness2y": 4.003125
+ },
+ "behavioural brain research": {
+  "name": "Behavioural brain research",
+  "fetched": "2026-10-08",
+  "openalexId": "S81474683",
+  "openalexName": "Behavioural Brain Research",
+  "type": "journal",
+  "worksCount": 16887,
+  "hIndex": 252,
+  "citedness2y": 3.0386100386100385
+ },
+ "biochemical and biophysical research communications": {
+  "name": "Biochemical and biophysical research communications",
+  "fetched": "2026-10-08",
+  "openalexId": "S151589183",
+  "openalexName": "Biochemical and Biophysical Research Communications",
+  "type": "journal",
+  "worksCount": 101666,
+  "hIndex": 394,
+  "citedness2y": 2.7223540579022307
+ },
+ "biochemical genetics": {
+  "name": "Biochemical genetics",
+  "fetched": "2026-10-08",
+  "openalexId": "S8388595",
+  "openalexName": "Biochemical Genetics",
+  "type": "journal",
+  "worksCount": 5124,
+  "hIndex": 86,
+  "citedness2y": 2.091799265605875
+ },
+ "biological psychiatry global open science": {
+  "name": "Biological psychiatry global open science",
+  "fetched": "2026-10-08",
+  "openalexId": "S4210179861",
+  "openalexName": "Biological Psychiatry Global Open Science",
+  "type": "journal",
+  "worksCount": 854,
+  "hIndex": 32,
+  "citedness2y": 2.1007604562737643
+ },
+ "biological psychiatry. cognitive neuroscience and neuroimaging": {
+  "name": "Biological psychiatry. Cognitive neuroscience and neuroimaging",
+  "fetched": "2026-10-08",
+  "openalexId": "S2898601774",
+  "openalexName": "Biological Psychiatry Cognitive Neuroscience and Neuroimaging",
+  "type": "journal",
+  "worksCount": 2162,
+  "hIndex": 81,
+  "citedness2y": 1.895865237366003
+ },
+ "biorxiv : the preprint server for biology": {
+  "name": "bioRxiv : the preprint server for biology",
+  "fetched": "2026-10-08",
+  "openalexId": "S4306402567",
+  "openalexName": "bioRxiv (Cold Spring Harbor Laboratory)",
+  "type": "repository",
+  "worksCount": 195945,
+  "hIndex": null,
+  "citedness2y": null
+ },
+ "bjpsych bulletin": {
+  "name": "BJPsych bulletin",
+  "fetched": "2026-10-08",
+  "openalexId": "S2764642026",
+  "openalexName": "BJPsych Bulletin",
+  "type": "journal",
+  "worksCount": 1440,
+  "hIndex": 46,
+  "citedness2y": 0.9652173913043478
+ },
+ "bjpsych open": {
+  "name": "BJPsych open",
+  "fetched": "2026-10-08",
+  "openalexId": "S2764831659",
+  "openalexName": "BJPsych Open",
+  "type": "journal",
+  "worksCount": 5781,
+  "hIndex": 74,
+  "citedness2y": 0.8487738419618529
+ },
+ "bmc pediatrics": {
+  "name": "BMC pediatrics",
+  "fetched": "2026-10-08",
+  "openalexId": "S134535697",
+  "openalexName": "BMC Pediatrics",
+  "type": "journal",
+  "worksCount": 8656,
+  "hIndex": 135,
+  "citedness2y": 2.3918629550321198
+ },
+ "bmj open": {
+  "name": "BMJ open",
+  "fetched": "2026-10-08",
+  "openalexId": "S79054089",
+  "openalexName": "BMJ Open",
+  "type": "journal",
+  "worksCount": 45832,
+  "hIndex": 241,
+  "citedness2y": 2.607282821685173
+ },
+ "brain & development": {
+  "name": "Brain & development",
+  "fetched": "2026-10-08",
+  "openalexId": "S122866201",
+  "openalexName": "Brain and Development",
+  "type": "journal",
+  "worksCount": 7298,
+  "hIndex": 121,
+  "citedness2y": 1.4212034383954155
+ },
+ "brain behavior and immunity integrative": {
+  "name": "Brain behavior and immunity integrative",
+  "fetched": "2026-10-08",
+  "openalexId": "S4387285536",
+  "openalexName": "Brain Behavior and Immunity Integrative",
+  "type": "journal",
+  "worksCount": 191,
+  "hIndex": 10,
+  "citedness2y": 1.8223684210526316
+ },
+ "brain connectivity": {
+  "name": "Brain connectivity",
+  "fetched": "2026-10-08",
+  "openalexId": "S2764941518",
+  "openalexName": "Brain Connectivity",
+  "type": "journal",
+  "worksCount": 949,
+  "hIndex": 83,
+  "citedness2y": 1.8928571428571428
+ },
+ "brain plasticity (amsterdam, netherlands)": {
+  "name": "Brain plasticity (Amsterdam, Netherlands)",
+  "fetched": "2026-10-08",
+  "openalexId": "S4210210568",
+  "openalexName": "Brain Plasticity",
+  "type": "journal",
+  "worksCount": 124,
+  "hIndex": 39,
+  "citedness2y": 9.5
+ },
+ "brain topography": {
+  "name": "Brain topography",
+  "fetched": "2026-10-08",
+  "openalexId": "S201609156",
+  "openalexName": "Brain Topography",
+  "type": "journal",
+  "worksCount": 1880,
+  "hIndex": 115,
+  "citedness2y": 3.09375
+ },
+ "brain, behavior, & immunity - health": {
+  "name": "Brain, behavior, & immunity - health",
+  "fetched": "2026-10-08",
+  "openalexId": "S4210199197",
+  "openalexName": "Brain Behavior & Immunity - Health",
+  "type": "journal",
+  "worksCount": 1235,
+  "hIndex": 53,
+  "citedness2y": 3.285240464344942
+ },
+ "british journal of pharmacology": {
+  "name": "British journal of pharmacology",
+  "fetched": "2026-10-08",
+  "openalexId": "S55107261",
+  "openalexName": "British Journal of Pharmacology",
+  "type": "journal",
+  "worksCount": 26568,
+  "hIndex": 319,
+  "citedness2y": 5.091954022988506
+ },
+ "cardiovascular intervention and therapeutics": {
+  "name": "Cardiovascular intervention and therapeutics",
+  "fetched": "2026-10-08",
+  "openalexId": "S204778136",
+  "openalexName": "Cardiovascular Intervention and Therapeutics",
+  "type": "journal",
+  "worksCount": 1366,
+  "hIndex": 39,
+  "citedness2y": 2.74468085106383
+ },
+ "cell communication and signaling : ccs": {
+  "name": "Cell communication and signaling : CCS",
+  "fetched": "2026-10-08",
+  "openalexId": "S138104925",
+  "openalexName": "Cell Communication and Signaling",
+  "type": "journal",
+  "worksCount": 3691,
+  "hIndex": 134,
+  "citedness2y": 10.27095413811281
+ },
+ "cellular signalling": {
+  "name": "Cellular signalling",
+  "fetched": "2026-10-08",
+  "openalexId": "S113768434",
+  "openalexName": "Cellular Signalling",
+  "type": "journal",
+  "worksCount": 8251,
+  "hIndex": 192,
+  "citedness2y": 4.132646880678377
+ },
+ "cerebral cortex (new york, n.y. : 1991)": {
+  "name": "Cerebral cortex (New York, N.Y. : 1991)",
+  "fetched": "2026-10-08",
+  "openalexId": "S117898428",
+  "openalexName": "Cerebral Cortex",
+  "type": "journal",
+  "worksCount": 9495,
+  "hIndex": 346,
+  "citedness2y": 4.235127478753541
+ },
+ "clinical child psychology and psychiatry": {
+  "name": "Clinical child psychology and psychiatry",
+  "fetched": "2026-10-08",
+  "openalexId": "S25859030",
+  "openalexName": "Clinical Child Psychology and Psychiatry",
+  "type": "journal",
+  "worksCount": 2379,
+  "hIndex": 88,
+  "citedness2y": 1.2671480144404332
+ },
+ "clinical genetics": {
+  "name": "Clinical genetics",
+  "fetched": "2026-10-08",
+  "openalexId": "S4954800",
+  "openalexName": "Clinical Genetics",
+  "type": "journal",
+  "worksCount": 11030,
+  "hIndex": 151,
+  "citedness2y": 2.099836333878887
+ },
+ "computers in biology and medicine": {
+  "name": "Computers in biology and medicine",
+  "fetched": "2026-10-08",
+  "openalexId": "S44278595",
+  "openalexName": "Computers in Biology and Medicine",
+  "type": "journal",
+  "worksCount": 12090,
+  "hIndex": 188,
+  "citedness2y": 8.671460800902425
+ },
+ "contemporary clinical trials": {
+  "name": "Contemporary clinical trials",
+  "fetched": "2026-10-08",
+  "openalexId": "S63040059",
+  "openalexName": "Contemporary Clinical Trials",
+  "type": "journal",
+  "worksCount": 4088,
+  "hIndex": 93,
+  "citedness2y": 1.7872340425531914
+ },
+ "current neuropharmacology": {
+  "name": "Current neuropharmacology",
+  "fetched": "2026-10-08",
+  "openalexId": "S85221069",
+  "openalexName": "Current Neuropharmacology",
+  "type": "journal",
+  "worksCount": 2394,
+  "hIndex": 140,
+  "citedness2y": 2.793594306049822
+ },
+ "current opinion in immunology": {
+  "name": "Current opinion in immunology",
+  "fetched": "2026-10-08",
+  "openalexId": "S170047187",
+  "openalexName": "Current Opinion in Immunology",
+  "type": "journal",
+  "worksCount": 4840,
+  "hIndex": 247,
+  "citedness2y": 4.486404833836858
+ },
+ "current opinion in neurobiology": {
+  "name": "Current opinion in neurobiology",
+  "fetched": "2026-10-08",
+  "openalexId": "S120775027",
+  "openalexName": "Current Opinion in Neurobiology",
+  "type": "journal",
+  "worksCount": 4811,
+  "hIndex": 306,
+  "citedness2y": 5.20679012345679
+ },
+ "current opinion in psychiatry": {
+  "name": "Current opinion in psychiatry",
+  "fetched": "2026-10-08",
+  "openalexId": "S15258550",
+  "openalexName": "Current Opinion in Psychiatry",
+  "type": "journal",
+  "worksCount": 4649,
+  "hIndex": 142,
+  "citedness2y": 1.3703703703703705
+ },
+ "cytokine & growth factor reviews": {
+  "name": "Cytokine & growth factor reviews",
+  "fetched": "2026-10-08",
+  "openalexId": "S194552188",
+  "openalexName": "Cytokine & Growth Factor Reviews",
+  "type": "journal",
+  "worksCount": 1689,
+  "hIndex": 206,
+  "citedness2y": 13.58421052631579
+ },
+ "developmental cognitive neuroscience": {
+  "name": "Developmental cognitive neuroscience",
+  "fetched": "2026-10-08",
+  "openalexId": "S176508836",
+  "openalexName": "Developmental Cognitive Neuroscience",
+  "type": "journal",
+  "worksCount": 1822,
+  "hIndex": 127,
+  "citedness2y": 5.1847133757961785
+ },
+ "developmental medicine and child neurology": {
+  "name": "Developmental medicine and child neurology",
+  "fetched": "2026-10-08",
+  "openalexId": "S158041768",
+  "openalexName": "Developmental Medicine & Child Neurology",
+  "type": "journal",
+  "worksCount": 18857,
+  "hIndex": 227,
+  "citedness2y": 1.706201550387597
+ },
+ "developmental neurobiology": {
+  "name": "Developmental neurobiology",
+  "fetched": "2026-10-08",
+  "openalexId": "S73400187",
+  "openalexName": "Developmental Neurobiology",
+  "type": "journal",
+  "worksCount": 1890,
+  "hIndex": 100,
+  "citedness2y": 1.9823529411764707
+ },
+ "developmental neuroscience": {
+  "name": "Developmental neuroscience",
+  "fetched": "2026-10-08",
+  "openalexId": "S88959177",
+  "openalexName": "Developmental Neuroscience",
+  "type": "journal",
+  "worksCount": 2422,
+  "hIndex": 117,
+  "citedness2y": 1.8571428571428572
+ },
+ "developmental science": {
+  "name": "Developmental science",
+  "fetched": "2026-10-08",
+  "openalexId": "S154906575",
+  "openalexName": "Developmental Science",
+  "type": "journal",
+  "worksCount": 3324,
+  "hIndex": 199,
+  "citedness2y": 2.8995726495726495
+ },
+ "diagnostics (basel, switzerland)": {
+  "name": "Diagnostics (Basel, Switzerland)",
+  "fetched": "2026-10-08",
+  "openalexId": "S4210172076",
+  "openalexName": "Diagnostics",
+  "type": "journal",
+  "worksCount": 20325,
+  "hIndex": 128,
+  "citedness2y": 3.9616296615649924
+ },
+ "epilepsia": {
+  "name": "Epilepsia",
+  "fetched": "2026-10-08",
+  "openalexId": "S203153751",
+  "openalexName": "Epilepsia",
+  "type": "journal",
+  "worksCount": 18344,
+  "hIndex": 286,
+  "citedness2y": 4.791161796151105
+ },
+ "european archives of psychiatry and clinical neuroscience": {
+  "name": "European archives of psychiatry and clinical neuroscience",
+  "fetched": "2026-10-08",
+  "openalexId": "S105662685",
+  "openalexName": "European Archives of Psychiatry and Clinical Neuroscience",
+  "type": "journal",
+  "worksCount": 10400,
+  "hIndex": 158,
+  "citedness2y": 3.0045523520485586
+ },
+ "european child & adolescent psychiatry": {
+  "name": "European child & adolescent psychiatry",
+  "fetched": "2026-10-08",
+  "openalexId": "S159275680",
+  "openalexName": "European Child & Adolescent Psychiatry",
+  "type": "journal",
+  "worksCount": 4262,
+  "hIndex": 170,
+  "citedness2y": 3.9531615925058547
+ },
+ "european journal of human genetics : ejhg": {
+  "name": "European journal of human genetics : EJHG",
+  "fetched": "2026-10-08",
+  "openalexId": "S121703463",
+  "openalexName": "European Journal of Human Genetics",
+  "type": "journal",
+  "worksCount": 7369,
+  "hIndex": 180,
+  "citedness2y": 4.773224043715847
+ },
+ "european journal of nuclear medicine and molecular imaging": {
+  "name": "European journal of nuclear medicine and molecular imaging",
+  "fetched": "2026-10-08",
+  "openalexId": "S191349260",
+  "openalexName": "European Journal of Nuclear Medicine and Molecular Imaging",
+  "type": "journal",
+  "worksCount": 14489,
+  "hIndex": 223,
+  "citedness2y": 5.024059222702036
+ },
+ "european journal of pharmacology": {
+  "name": "European journal of pharmacology",
+  "fetched": "2026-10-08",
+  "openalexId": "S187816532",
+  "openalexName": "European Journal of Pharmacology",
+  "type": "journal",
+  "worksCount": 44061,
+  "hIndex": 276,
+  "citedness2y": 4.736094674556213
+ },
+ "european neuropsychopharmacology : the journal of the european college of neuropsychopharmacology": {
+  "name": "European neuropsychopharmacology : the journal of the European College of Neuropsychopharmacology",
+  "fetched": "2026-10-08",
+  "openalexId": "S168041952",
+  "openalexName": "European Neuropsychopharmacology",
+  "type": "journal",
+  "worksCount": 36040,
+  "hIndex": 157,
+  "citedness2y": 0.9889156626506024
+ },
+ "experimental neurology": {
+  "name": "Experimental neurology",
+  "fetched": "2026-10-08",
+  "openalexId": "S165592611",
+  "openalexName": "Experimental Neurology",
+  "type": "journal",
+  "worksCount": 16745,
+  "hIndex": 272,
+  "citedness2y": 4.068100358422939
+ },
+ "free radical biology & medicine": {
+  "name": "Free radical biology & medicine",
+  "fetched": "2026-10-08",
+  "openalexId": "S128018148",
+  "openalexName": "Free Radical Biology and Medicine",
+  "type": "journal",
+  "worksCount": 27847,
+  "hIndex": 379,
+  "citedness2y": 3.9051959890610757
+ },
+ "frontiers in genetics": {
+  "name": "Frontiers in genetics",
+  "fetched": "2026-10-08",
+  "openalexId": "S2597340651",
+  "openalexName": "Frontiers in Genetics",
+  "type": "journal",
+  "worksCount": 17251,
+  "hIndex": 174,
+  "citedness2y": 2.9646393210749644
+ },
+ "frontiers in immunology": {
+  "name": "Frontiers in immunology",
+  "fetched": "2026-10-08",
+  "openalexId": "S2595292759",
+  "openalexName": "Frontiers in Immunology",
+  "type": "journal",
+  "worksCount": 58017,
+  "hIndex": 351,
+  "citedness2y": 5.513709210272253
+ },
+ "general psychiatry": {
+  "name": "General psychiatry",
+  "fetched": "2026-10-08",
+  "openalexId": "S4210225740",
+  "openalexName": "General Psychiatry",
+  "type": "journal",
+  "worksCount": 602,
+  "hIndex": 50,
+  "citedness2y": 7.516746411483253
+ },
+ "genetics and molecular biology": {
+  "name": "Genetics and molecular biology",
+  "fetched": "2026-10-08",
+  "openalexId": "S151355818",
+  "openalexName": "Genetics and Molecular Biology",
+  "type": "journal",
+  "worksCount": 3195,
+  "hIndex": 81,
+  "citedness2y": 1.4450867052023122
+ },
+ "gut microbes": {
+  "name": "Gut microbes",
+  "fetched": "2026-10-08",
+  "openalexId": "S2764770702",
+  "openalexName": "Gut Microbes",
+  "type": "journal",
+  "worksCount": 2781,
+  "hIndex": 170,
+  "citedness2y": 17.016843971631207
+ },
+ "human molecular genetics": {
+  "name": "Human molecular genetics",
+  "fetched": "2026-10-08",
+  "openalexId": "S166515463",
+  "openalexName": "Human Molecular Genetics",
+  "type": "journal",
+  "worksCount": 14229,
+  "hIndex": 357,
+  "citedness2y": 3.1905697445972496
+ },
+ "human mutation": {
+  "name": "Human mutation",
+  "fetched": "2026-10-08",
+  "openalexId": "S98809561",
+  "openalexName": "Human Mutation",
+  "type": "journal",
+  "worksCount": 8152,
+  "hIndex": 219,
+  "citedness2y": 0.9086651053864169
+ },
+ "ieee transactions on medical imaging": {
+  "name": "IEEE transactions on medical imaging",
+  "fetched": "2026-10-08",
+  "openalexId": "S58069681",
+  "openalexName": "IEEE Transactions on Medical Imaging",
+  "type": "journal",
+  "worksCount": 8780,
+  "hIndex": 329,
+  "citedness2y": 9.947794779477947
+ },
+ "international clinical psychopharmacology": {
+  "name": "International clinical psychopharmacology",
+  "fetched": "2026-10-08",
+  "openalexId": "S149156103",
+  "openalexName": "International Clinical Psychopharmacology",
+  "type": "journal",
+  "worksCount": 3505,
+  "hIndex": 128,
+  "citedness2y": 3.330357142857143
+ },
+ "international immunopharmacology": {
+  "name": "International immunopharmacology",
+  "fetched": "2026-10-08",
+  "openalexId": "S158377717",
+  "openalexName": "International Immunopharmacology",
+  "type": "journal",
+  "worksCount": 16735,
+  "hIndex": 165,
+  "citedness2y": 6.146823956442831
+ },
+ "international journal of language & communication disorders": {
+  "name": "International journal of language & communication disorders",
+  "fetched": "2026-10-08",
+  "openalexId": "S119771102",
+  "openalexName": "International Journal of Language & Communication Disorders",
+  "type": "journal",
+  "worksCount": 3781,
+  "hIndex": 125,
+  "citedness2y": 1.8810483870967742
+ },
+ "international journal of molecular sciences": {
+  "name": "International journal of molecular sciences",
+  "fetched": "2026-10-08",
+  "openalexId": "S10623703",
+  "openalexName": "International Journal of Molecular Sciences",
+  "type": "journal",
+  "worksCount": 115124,
+  "hIndex": 424,
+  "citedness2y": 6.944345645899537
+ },
+ "international journal of nursing studies": {
+  "name": "International journal of nursing studies",
+  "fetched": "2026-10-08",
+  "openalexId": "S56493663",
+  "openalexName": "International Journal of Nursing Studies",
+  "type": "journal",
+  "worksCount": 6634,
+  "hIndex": 210,
+  "citedness2y": 6.519447929736512
+ },
+ "internet interventions": {
+  "name": "Internet interventions",
+  "fetched": "2026-10-08",
+  "openalexId": "S4210232579",
+  "openalexName": "Internet Interventions",
+  "type": "journal",
+  "worksCount": 998,
+  "hIndex": 74,
+  "citedness2y": 4.214521452145214
+ },
+ "iscience": {
+  "name": "iScience",
+  "fetched": "2026-10-08",
+  "openalexId": "S2898358376",
+  "openalexName": "iScience",
+  "type": "journal",
+  "worksCount": 17373,
+  "hIndex": 142,
+  "citedness2y": 4.780821917808219
+ },
+ "jaacap open": {
+  "name": "JAACAP open",
+  "fetched": "2026-10-08",
+  "openalexId": "S4387283917",
+  "openalexName": "JAACAP Open",
+  "type": "journal",
+  "worksCount": 282,
+  "hIndex": 13,
+  "citedness2y": 2.2987012987012987
+ },
+ "jcpp advances": {
+  "name": "JCPP advances",
+  "fetched": "2026-10-08",
+  "openalexId": "S4210215158",
+  "openalexName": "JCPP Advances",
+  "type": "journal",
+  "worksCount": 490,
+  "hIndex": 31,
+  "citedness2y": 3.2454212454212454
+ },
+ "jmir formative research": {
+  "name": "JMIR formative research",
+  "fetched": "2026-10-08",
+  "openalexId": "S4210234749",
+  "openalexName": "JMIR Formative Research",
+  "type": "journal",
+  "worksCount": 4973,
+  "hIndex": 53,
+  "citedness2y": 2.8596419853539463
+ },
+ "jmir research protocols": {
+  "name": "JMIR research protocols",
+  "fetched": "2026-10-08",
+  "openalexId": "S2739058702",
+  "openalexName": "JMIR Research Protocols",
+  "type": "journal",
+  "worksCount": 6331,
+  "hIndex": 62,
+  "citedness2y": 1.5833333333333333
+ },
+ "journal of child and adolescent psychopharmacology": {
+  "name": "Journal of child and adolescent psychopharmacology",
+  "fetched": "2026-10-08",
+  "openalexId": "S198272637",
+  "openalexName": "Journal of Child and Adolescent Psychopharmacology",
+  "type": "journal",
+  "worksCount": 2965,
+  "hIndex": 116,
+  "citedness2y": 2.296875
+ },
+ "journal of cognitive psychotherapy": {
+  "name": "Journal of cognitive psychotherapy",
+  "fetched": "2026-10-08",
+  "openalexId": "S18971317",
+  "openalexName": "Journal of Cognitive Psychotherapy",
+  "type": "journal",
+  "worksCount": 1346,
+  "hIndex": 90,
+  "citedness2y": 0.9242424242424242
+ },
+ "journal of developmental and behavioral pediatrics : jdbp": {
+  "name": "Journal of developmental and behavioral pediatrics : JDBP",
+  "fetched": "2026-10-08",
+  "openalexId": "S116305490",
+  "openalexName": "Journal of Developmental & Behavioral Pediatrics",
+  "type": "journal",
+  "worksCount": 5837,
+  "hIndex": 168,
+  "citedness2y": 1.4424460431654675
+ },
+ "journal of inflammation research": {
+  "name": "Journal of inflammation research",
+  "fetched": "2026-10-08",
+  "openalexId": "S176681491",
+  "openalexName": "Journal of Inflammation Research",
+  "type": "journal",
+  "worksCount": 4488,
+  "hIndex": 81,
+  "citedness2y": 4.543839758125473
+ },
+ "journal of medical genetics": {
+  "name": "Journal of medical genetics",
+  "fetched": "2026-10-08",
+  "openalexId": "S112540174",
+  "openalexName": "Journal of Medical Genetics",
+  "type": "journal",
+  "worksCount": 11303,
+  "hIndex": 246,
+  "citedness2y": 3.2128279883381925
+ },
+ "journal of neural engineering": {
+  "name": "Journal of neural engineering",
+  "fetched": "2026-10-08",
+  "openalexId": "S32898093",
+  "openalexName": "Journal of Neural Engineering",
+  "type": "journal",
+  "worksCount": 4249,
+  "hIndex": 165,
+  "citedness2y": 4.266666666666667
+ },
+ "journal of neural transmission (vienna, austria : 1996)": {
+  "name": "Journal of neural transmission (Vienna, Austria : 1996)",
+  "fetched": "2026-10-08",
+  "openalexId": "S1737980",
+  "openalexName": "Journal of Neural Transmission",
+  "type": "journal",
+  "worksCount": 8127,
+  "hIndex": 168,
+  "citedness2y": 3.2482517482517483
+ },
+ "journal of neuroimmunology": {
+  "name": "Journal of neuroimmunology",
+  "fetched": "2026-10-08",
+  "openalexId": "S137419829",
+  "openalexName": "Journal of Neuroimmunology",
+  "type": "journal",
+  "worksCount": 13211,
+  "hIndex": 193,
+  "citedness2y": 2.301003344481605
+ },
+ "journal of neurology": {
+  "name": "Journal of neurology",
+  "fetched": "2026-10-08",
+  "openalexId": "S175814247",
+  "openalexName": "Journal of Neurology",
+  "type": "journal",
+  "worksCount": 21562,
+  "hIndex": 207,
+  "citedness2y": 4.778219791148683
+ },
+ "journal of neuropsychology": {
+  "name": "Journal of neuropsychology",
+  "fetched": "2026-10-08",
+  "openalexId": "S120269741",
+  "openalexName": "Journal of Neuropsychology",
+  "type": "journal",
+  "worksCount": 694,
+  "hIndex": 56,
+  "citedness2y": 1.5174418604651163
+ },
+ "journal of psychiatric research": {
+  "name": "Journal of psychiatric research",
+  "fetched": "2026-10-08",
+  "openalexId": "S160879026",
+  "openalexName": "Journal of Psychiatric Research",
+  "type": "journal",
+  "worksCount": 9232,
+  "hIndex": 220,
+  "citedness2y": 3.6227064220183487
+ },
+ "medeniyet medical journal": {
+  "name": "Medeniyet medical journal",
+  "fetched": "2026-10-08",
+  "openalexId": "S4210181927",
+  "openalexName": "Medeniyet Medical Journal",
+  "type": "journal",
+  "worksCount": 609,
+  "hIndex": 17,
+  "citedness2y": 0.9705882352941176
+ },
+ "medrxiv : the preprint server for health sciences": {
+  "name": "medRxiv : the preprint server for health sciences",
+  "fetched": "2026-10-08",
+  "openalexId": "S3005729997",
+  "openalexName": "medRxiv",
+  "type": "repository",
+  "worksCount": 56863,
+  "hIndex": null,
+  "citedness2y": null
+ },
+ "metabolic brain disease": {
+  "name": "Metabolic brain disease",
+  "fetched": "2026-10-08",
+  "openalexId": "S31409034",
+  "openalexName": "Metabolic Brain Disease",
+  "type": "journal",
+  "worksCount": 3607,
+  "hIndex": 101,
+  "citedness2y": 4.12962962962963
+ },
+ "molecular biology reports": {
+  "name": "Molecular biology reports",
+  "fetched": "2026-10-08",
+  "openalexId": "S197962172",
+  "openalexName": "Molecular Biology Reports",
+  "type": "journal",
+  "worksCount": 15052,
+  "hIndex": 116,
+  "citedness2y": 3.2464898595943836
+ },
+ "molecular neurobiology": {
+  "name": "Molecular neurobiology",
+  "fetched": "2026-10-08",
+  "openalexId": "S194681035",
+  "openalexName": "Molecular Neurobiology",
+  "type": "journal",
+  "worksCount": 8823,
+  "hIndex": 176,
+  "citedness2y": 5.52409381663113
+ },
+ "molecules and cells": {
+  "name": "Molecules and cells",
+  "fetched": "2026-10-08",
+  "openalexId": "S171170158",
+  "openalexName": "Molecules and Cells",
+  "type": "journal",
+  "worksCount": 4005,
+  "hIndex": 116,
+  "citedness2y": 6.927335640138408
+ },
+ "msphere": {
+  "name": "mSphere",
+  "fetched": "2026-10-08",
+  "openalexId": "S4210207018",
+  "openalexName": "mSphere",
+  "type": "journal",
+  "worksCount": 3248,
+  "hIndex": 102,
+  "citedness2y": 4.8487584650112865
+ },
+ "neural networks : the official journal of the international neural network society": {
+  "name": "Neural networks : the official journal of the International Neural Network Society",
+  "fetched": "2026-10-08",
+  "openalexId": "S123019304",
+  "openalexName": "Neural Networks",
+  "type": "journal",
+  "worksCount": 10560,
+  "hIndex": 253,
+  "citedness2y": 5.887053169119856
+ },
+ "neurobiology of disease": {
+  "name": "Neurobiology of disease",
+  "fetched": "2026-10-08",
+  "openalexId": "S35878148",
+  "openalexName": "Neurobiology of Disease",
+  "type": "journal",
+  "worksCount": 7389,
+  "hIndex": 226,
+  "citedness2y": 5.184210526315789
+ },
+ "neurobiology of sleep and circadian rhythms": {
+  "name": "Neurobiology of sleep and circadian rhythms",
+  "fetched": "2026-10-08",
+  "openalexId": "S2898384152",
+  "openalexName": "Neurobiology of Sleep and Circadian Rhythms",
+  "type": "journal",
+  "worksCount": 145,
+  "hIndex": 28,
+  "citedness2y": 2.608695652173913
+ },
+ "neurochemistry international": {
+  "name": "Neurochemistry international",
+  "fetched": "2026-10-08",
+  "openalexId": "S53315755",
+  "openalexName": "Neurochemistry International",
+  "type": "journal",
+  "worksCount": 8889,
+  "hIndex": 171,
+  "citedness2y": 5.47741935483871
+ },
+ "neuroimage": {
+  "name": "NeuroImage",
+  "fetched": "2026-10-08",
+  "openalexId": "S103225281",
+  "openalexName": "NeuroImage",
+  "type": "journal",
+  "worksCount": 28585,
+  "hIndex": 525,
+  "citedness2y": 4.232358003442341
+ },
+ "neuroinformatics": {
+  "name": "Neuroinformatics",
+  "fetched": "2026-10-08",
+  "openalexId": "S3444786",
+  "openalexName": "Neuroinformatics",
+  "type": "journal",
+  "worksCount": 962,
+  "hIndex": 83,
+  "citedness2y": 2.461988304093567
+ },
+ "neuropsychiatrie : klinik, diagnostik, therapie und rehabilitation : organ der gesellschaft osterreichischer nervenarzte und psychiater": {
+  "name": "Neuropsychiatrie : Klinik, Diagnostik, Therapie und Rehabilitation : Organ der Gesellschaft Osterreichischer Nervenarzte und Psychiater",
+  "fetched": "2026-10-08",
+  "openalexId": "S94210703",
+  "openalexName": "Neuropsychiatrie",
+  "type": "journal",
+  "worksCount": 808,
+  "hIndex": 24,
+  "citedness2y": 1.2647058823529411
+ },
+ "neuropsychobiology": {
+  "name": "Neuropsychobiology",
+  "fetched": "2026-10-08",
+  "openalexId": "S147539111",
+  "openalexName": "Neuropsychobiology",
+  "type": "journal",
+  "worksCount": 3434,
+  "hIndex": 113,
+  "citedness2y": 2.9411764705882355
+ },
+ "neuropsychologia": {
+  "name": "Neuropsychologia",
+  "fetched": "2026-10-08",
+  "openalexId": "S165368631",
+  "openalexName": "Neuropsychologia",
+  "type": "journal",
+  "worksCount": 12071,
+  "hIndex": 322,
+  "citedness2y": 2.468045112781955
+ },
+ "neuroreport": {
+  "name": "Neuroreport",
+  "fetched": "2026-10-08",
+  "openalexId": "S121278948",
+  "openalexName": "Neuroreport",
+  "type": "journal",
+  "worksCount": 13543,
+  "hIndex": 243,
+  "citedness2y": 2.428115015974441
+ },
+ "neuroscience": {
+  "name": "Neuroscience",
+  "fetched": "2026-10-08",
+  "openalexId": "S30122339",
+  "openalexName": "Neuroscience",
+  "type": "journal",
+  "worksCount": 29495,
+  "hIndex": 370,
+  "citedness2y": 2.9926289926289926
+ },
+ "neuroscience and biobehavioral reviews": {
+  "name": "Neuroscience and biobehavioral reviews",
+  "fetched": "2026-10-08",
+  "openalexId": "S170052170",
+  "openalexName": "Neuroscience & Biobehavioral Reviews",
+  "type": "journal",
+  "worksCount": 7614,
+  "hIndex": 376,
+  "citedness2y": 8.007165605095542
+ },
+ "neuroscience bulletin": {
+  "name": "Neuroscience bulletin",
+  "fetched": "2026-10-08",
+  "openalexId": "S123288037",
+  "openalexName": "Neuroscience Bulletin",
+  "type": "journal",
+  "worksCount": 2322,
+  "hIndex": 88,
+  "citedness2y": 3.6404293381037567
+ },
+ "neurotherapeutics : the journal of the american society for experimental neurotherapeutics": {
+  "name": "Neurotherapeutics : the journal of the American Society for Experimental NeuroTherapeutics",
+  "fetched": "2026-10-08",
+  "openalexId": "S75519821",
+  "openalexName": "Neurotherapeutics",
+  "type": "journal",
+  "worksCount": 2776,
+  "hIndex": 156,
+  "citedness2y": 5.535511363636363
+ },
+ "orthopedic reviews": {
+  "name": "Orthopedic reviews",
+  "fetched": "2026-10-08",
+  "openalexId": "S165997499",
+  "openalexName": "Orthopedic Reviews",
+  "type": "journal",
+  "worksCount": 1015,
+  "hIndex": 51,
+  "citedness2y": 2.0487179487179485
+ },
+ "pediatrics": {
+  "name": "Pediatrics",
+  "fetched": "2026-10-08",
+  "openalexId": "S77494981",
+  "openalexName": "PEDIATRICS",
+  "type": "journal",
+  "worksCount": 62049,
+  "hIndex": 518,
+  "citedness2y": 5.123342939481268
+ },
+ "peerj": {
+  "name": "PeerJ",
+  "fetched": "2026-10-08",
+  "openalexId": "S1983995261",
+  "openalexName": "PeerJ",
+  "type": "journal",
+  "worksCount": 21659,
+  "hIndex": 166,
+  "citedness2y": 3.5963938973647713
+ },
+ "pituitary": {
+  "name": "Pituitary",
+  "fetched": "2026-10-08",
+  "openalexId": "S142774597",
+  "openalexName": "Pituitary",
+  "type": "journal",
+  "worksCount": 2084,
+  "hIndex": 100,
+  "citedness2y": 3.1679586563307494
+ },
+ "plos mental health": {
+  "name": "PLOS mental health",
+  "fetched": "2026-10-08",
+  "openalexId": "S4404663781",
+  "openalexName": "PLOS mental health.",
+  "type": "journal",
+  "worksCount": 610,
+  "hIndex": 13,
+  "citedness2y": 2.2852459016393443
+ },
+ "plos one": {
+  "name": "PloS one",
+  "fetched": "2026-10-08",
+  "openalexId": "S202381698",
+  "openalexName": "PLoS ONE",
+  "type": "journal",
+  "worksCount": 342992,
+  "hIndex": 597,
+  "citedness2y": 3.376734766811603
+ },
+ "progress in neuro-psychopharmacology & biological psychiatry": {
+  "name": "Progress in neuro-psychopharmacology & biological psychiatry",
+  "fetched": "2026-10-08",
+  "openalexId": "S142279999",
+  "openalexName": "Progress in Neuro-Psychopharmacology and Biological Psychiatry",
+  "type": "journal",
+  "worksCount": 8410,
+  "hIndex": 188,
+  "citedness2y": 3.652400835073069
+ },
+ "psychiatric genetics": {
+  "name": "Psychiatric genetics",
+  "fetched": "2026-10-08",
+  "openalexId": "S41645954",
+  "openalexName": "Psychiatric Genetics",
+  "type": "journal",
+  "worksCount": 1712,
+  "hIndex": 77,
+  "citedness2y": 1.2
+ },
+ "psychiatry investigation": {
+  "name": "Psychiatry investigation",
+  "fetched": "2026-10-08",
+  "openalexId": "S121704485",
+  "openalexName": "Psychiatry Investigation",
+  "type": "journal",
+  "worksCount": 2081,
+  "hIndex": 73,
+  "citedness2y": 2.23841059602649
+ },
+ "psychiatry research": {
+  "name": "Psychiatry research",
+  "fetched": "2026-10-08",
+  "openalexId": "S84074229",
+  "openalexName": "Psychiatry Research",
+  "type": "journal",
+  "worksCount": 15481,
+  "hIndex": 249,
+  "citedness2y": 4.614878209348255
+ },
+ "psychological medicine": {
+  "name": "Psychological medicine",
+  "fetched": "2026-10-08",
+  "openalexId": "S71144982",
+  "openalexName": "Psychological Medicine",
+  "type": "journal",
+  "worksCount": 14708,
+  "hIndex": 332,
+  "citedness2y": 5.195192307692308
+ },
+ "psychopharmacology": {
+  "name": "Psychopharmacology",
+  "fetched": "2026-10-08",
+  "openalexId": "S80334769",
+  "openalexName": "Psychopharmacology",
+  "type": "journal",
+  "worksCount": 18572,
+  "hIndex": 288,
+  "citedness2y": 3.188905547226387
+ },
+ "redox biology": {
+  "name": "Redox biology",
+  "fetched": "2026-10-08",
+  "openalexId": "S2764928002",
+  "openalexName": "Redox Biology",
+  "type": "journal",
+  "worksCount": 4385,
+  "hIndex": 209,
+  "citedness2y": 14.293053545586107
+ },
+ "research in developmental disabilities": {
+  "name": "Research in developmental disabilities",
+  "fetched": "2026-10-08",
+  "openalexId": "S132320204",
+  "openalexName": "Research in Developmental Disabilities",
+  "type": "journal",
+  "worksCount": 5290,
+  "hIndex": 158,
+  "citedness2y": 3.3948412698412698
+ },
+ "research on child and adolescent psychopathology": {
+  "name": "Research on child and adolescent psychopathology",
+  "fetched": "2026-10-08",
+  "openalexId": "S58220144",
+  "openalexName": "Research on Child and Adolescent Psychopathology",
+  "type": "journal",
+  "worksCount": 4003,
+  "hIndex": 229,
+  "citedness2y": 2.7793696275071635
+ },
+ "science advances": {
+  "name": "Science advances",
+  "fetched": "2026-10-08",
+  "openalexId": "S2737427234",
+  "openalexName": "Science Advances",
+  "type": "journal",
+  "worksCount": 20578,
+  "hIndex": 379,
+  "citedness2y": 13.120344868877979
+ },
+ "scientific reports": {
+  "name": "Scientific Reports",
+  "fetched": "2026-10-08",
+  "openalexId": "S196734849",
+  "openalexName": "Scientific Reports",
+  "type": "journal",
+  "worksCount": 316366,
+  "hIndex": 462,
+  "citedness2y": 5.213039378489114
+ },
+ "social cognitive and affective neuroscience": {
+  "name": "Social cognitive and affective neuroscience",
+  "fetched": "2026-10-08",
+  "openalexId": "S107213193",
+  "openalexName": "Social Cognitive and Affective Neuroscience",
+  "type": "journal",
+  "worksCount": 2378,
+  "hIndex": 165,
+  "citedness2y": 3.2777777777777777
+ },
+ "the application of clinical genetics": {
+  "name": "The application of clinical genetics",
+  "fetched": "2026-10-08",
+  "openalexId": "S2764354353",
+  "openalexName": "The Application of Clinical Genetics",
+  "type": "journal",
+  "worksCount": 357,
+  "hIndex": 54,
+  "citedness2y": 1.6764705882352942
+ },
+ "the international journal of eating disorders": {
+  "name": "The International journal of eating disorders",
+  "fetched": "2026-10-08",
+  "openalexId": "S74080386",
+  "openalexName": "International Journal of Eating Disorders",
+  "type": "journal",
+  "worksCount": 6665,
+  "hIndex": 219,
+  "citedness2y": 3.7887700534759357
+ },
+ "the journal of clinical endocrinology and metabolism": {
+  "name": "The Journal of clinical endocrinology and metabolism",
+  "fetched": "2026-10-08",
+  "openalexId": "S5407042814",
+  "openalexName": "Journal of Clinical Endocrinology and Metabolism",
+  "type": "journal",
+  "worksCount": 8,
+  "hIndex": 1,
+  "citedness2y": 11.25
+ },
+ "the journal of craniofacial surgery": {
+  "name": "The Journal of craniofacial surgery",
+  "fetched": "2026-10-08",
+  "openalexId": "S36642063",
+  "openalexName": "Journal of Craniofacial Surgery",
+  "type": "journal",
+  "worksCount": 19680,
+  "hIndex": 110,
+  "citedness2y": 0.9560315670800451
+ },
+ "the journal of ect": {
+  "name": "The journal of ECT",
+  "fetched": "2026-10-08",
+  "openalexId": "S164150133",
+  "openalexName": "Journal of Ect",
+  "type": "journal",
+  "worksCount": 2701,
+  "hIndex": 81,
+  "citedness2y": 1.1014084507042254
+ },
+ "trends in immunology": {
+  "name": "Trends in immunology",
+  "fetched": "2026-10-08",
+  "openalexId": "S84926904",
+  "openalexName": "Trends in Immunology",
+  "type": "journal",
+  "worksCount": 3357,
+  "hIndex": 276,
+  "citedness2y": 7.150990099009901
+ },
+ "acta medica portuguesa": {
+  "name": "Acta medica portuguesa",
+  "fetched": "2026-10-08"
+ },
+ "cerebellum (london, england)": {
+  "name": "Cerebellum (London, England)",
+  "fetched": "2026-10-08",
+  "openalexId": "S107707151",
+  "openalexName": "The Cerebellum",
+  "type": "journal",
+  "worksCount": 2379,
+  "hIndex": 107,
+  "citedness2y": 2.65625
+ },
+ "jama network open": {
+  "name": "JAMA network open",
+  "fetched": "2026-10-08",
+  "openalexId": "S4210217848",
+  "openalexName": "JAMA Network Open",
+  "type": "journal",
+  "worksCount": 17118,
+  "hIndex": 234,
+  "citedness2y": 9.86362371277484
+ },
+ "jama pediatrics": {
+  "name": "JAMA pediatrics",
+  "fetched": "2026-10-08",
+  "openalexId": "S4210192535",
+  "openalexName": "Archives of Pediatrics and Adolescent Medicine",
+  "type": "journal",
+  "worksCount": 30382,
+  "hIndex": 297,
+  "citedness2y": 6.760151085930123
+ },
+ "journal of immunology (baltimore, md. : 1950)": {
+  "name": "Journal of immunology (Baltimore, Md. : 1950)",
+  "fetched": "2026-10-08",
+  "openalexId": "S38008053",
+  "openalexName": "The Journal of Immunology",
+  "type": "journal",
+  "worksCount": 107659,
+  "hIndex": 532,
+  "citedness2y": 0.6207831325301205
+ },
+ "pcn reports : psychiatry and clinical neurosciences": {
+  "name": "PCN reports : psychiatry and clinical neurosciences",
+  "fetched": "2026-10-08"
+ },
+ "the australian and new zealand journal of psychiatry": {
+  "name": "The Australian and New Zealand journal of psychiatry",
+  "fetched": "2026-10-08"
+ },
+ "zeitschrift fur kinder- und jugendpsychiatrie und psychotherapie": {
+  "name": "Zeitschrift fur Kinder- und Jugendpsychiatrie und Psychotherapie",
+  "fetched": "2026-10-08"
+ }
+}
