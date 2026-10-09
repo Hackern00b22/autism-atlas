@@ -4060,6 +4060,10 @@ const readIdList = (key) => {
 };
 let BOOKMARKS = readIdList(BOOKMARK_KEY);
 let BM_REMOVED = readIdList(BM_REMOVED_KEY);
+// Hosted copy with accounts: the owner's list is shared with every account
+// ('admin' edits it, 'member' sees it and keeps personal stars on top).
+let BM_ROLE = 'owner';
+let SHARED_BM = new Set();
 function saveBookmarks() {
   try { localStorage.setItem(BOOKMARK_KEY, JSON.stringify(BOOKMARKS)); } catch (e) {}
   try { localStorage.setItem(BM_REMOVED_KEY, JSON.stringify(BM_REMOVED)); } catch (e) {}
@@ -4101,8 +4105,9 @@ function pushUIState() {
   PUSH_INFLIGHT = true;
   fetch('/api/ui-state', {
     method: 'POST', headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ dismissed: DISMISSED, bookmarks: BOOKMARKS,
-                           bookmarksRemoved: BM_REMOVED }),
+    body: JSON.stringify(BM_ROLE === 'member'
+      ? { bookmarks: BOOKMARKS }          // the server keeps only the non-shared part, per account
+      : { dismissed: DISMISSED, bookmarks: BOOKMARKS, bookmarksRemoved: BM_REMOVED }),
   }).catch(() => {})    // sync is best-effort; localStorage still has the state
     .finally(() => {
       PUSH_INFLIGHT = false;
@@ -4119,6 +4124,9 @@ async function syncUIState() {
     s = await r.json();
   } catch (e) { return; }
 
+  BM_ROLE = s.role || 'owner';
+  SHARED_BM = new Set(Array.isArray(s.shared) ? s.shared : []);
+  if (BM_ROLE === 'member') BM_REMOVED = BM_REMOVED.filter(id => !SHARED_BM.has(id));   // shared stars always come back
   if (s.exists) {
     const dis = s.dismissed || {};
     DISMISSED = {
@@ -4197,6 +4205,14 @@ function updateBookmarkCount() {
   if (el) el.textContent = BOOKMARKS.length ? String(BOOKMARKS.length) : '';
 }
 function toggleBookmark(id, el) {
+  if (BM_ROLE === 'member' && SHARED_BM.has(id) && BOOKMARKS.includes(id)) {
+    // Shared by the owner: members cannot un-star it.
+    if (el) {
+      el.textContent = '★ Shared'; el.title = 'Shared by the atlas owner — only an admin can remove it';
+      setTimeout(() => { if (el.isConnected) el.textContent = '★ Saved'; }, 1600);
+    }
+    return;
+  }
   const i = BOOKMARKS.indexOf(id);
   if (i >= 0) {
     BOOKMARKS.splice(i, 1);
@@ -4829,6 +4845,14 @@ function renderBookmarks() {
     return;
   }
   body.innerHTML = items.map(a => renderArticleCard(a, true)).join('');
+  if (BM_ROLE === 'member') {
+    const nShared = items.filter(a => SHARED_BM.has(a.id)).length;
+    body.insertAdjacentHTML('afterbegin', `<div style="font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:0.16em;text-transform:uppercase;color:var(--ink-2);padding:0 0 10px">★ ${nShared} shared by the atlas owner · ${items.length - nShared} of your own</div>`);
+    body.querySelectorAll('[onclick*="toggleBookmark"]').forEach(el => {
+      const m = (el.getAttribute('onclick') || '').match(/toggleBookmark\('([^']+)'/);
+      if (m && SHARED_BM.has(m[1])) { el.textContent = '★ Shared'; el.title = 'Shared by the atlas owner'; }
+    });
+  }
 }
 document.getElementById('bm-button').addEventListener('click', async () => {
   if (BOOKMARKS.some(id => !ARTICLES.some(a => a.id === id))) {
@@ -5244,7 +5268,11 @@ function printReport() {
     h2 span { color: #8a97a8; font-weight: normal; } table { width: 100%; border-collapse: collapse; }
     td { padding: 4pt 6pt; border-bottom: .5pt solid #d5dde5; vertical-align: top; } td.d { white-space: nowrap; width: 72pt; color: #5c6b7c; font-variant-numeric: tabular-nums; }
     a { color: #14202c; text-decoration: none; } .m { font-size: 9pt; color: #5c6b7c; } .e { color: #8a97a8; font-size: 9.5pt; } tr { break-inside: avoid; }
-    </style></head><body><h1>Autism Research Network Atlas — last ${REP.days} days</h1>
+    
+  /* account line under the stats block (hosted copy only) */
+  .meta .acct-links a { color: var(--ink-1); text-decoration: none; transition: color 0.18s; }
+  .meta .acct-links a:hover { color: var(--accent); }
+</style></head><body><h1>Autism Research Network Atlas — last ${REP.days} days</h1>
     <p class="sub">Everything new since ${cutoff} across papers, press, NIH awards, trials and patents · generated ${new Date().toISOString().slice(0, 10)}</p>
     ${REP_LANES.map(sec).join('')}</body></html>`);
   w.document.close(); w.focus();
@@ -5257,6 +5285,35 @@ document.querySelectorAll('#rep-days button').forEach(b => b.onclick = () => { R
 document.getElementById('rep-print').addEventListener('click', printReport);
 document.getElementById('rep-csv').addEventListener('click', () => repExport('csv'));
 document.getElementById('rep-xlsx').addEventListener('click', () => repExport('xlsx'));
+</script>
+
+<script>
+/* Account widget (hosted copy only): shows who is signed in with Sign out /
+   Accounts links. On the laptop (accounts off) and on the public static copy
+   /api/auth/me is absent or reports enabled:false, so nothing is drawn. */
+(function () {
+  if (location.protocol === 'file:') return;
+  fetch('/api/auth/me', { cache: 'no-store' }).then(r => r.ok ? r.json() : null).then(d => {
+    if (!d || !d.enabled || !d.user) return;
+    const u = d.user, esc = s => String(s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+    const links = (u.isAdmin ? '<a href="/admin" title="Approve and manage accounts">◈ Accounts</a> · ' : '')
+                + '<a href="/account" title="Change your password">Account</a> · '
+                + '<a href="#" id="atlas-signout" title="Sign out of the atlas">⏻ Sign out</a>';
+    const meta = document.querySelector('.hud .meta');
+    if (meta) {
+      meta.insertAdjacentHTML('beforeend', '<br>USER: <span title="' + esc(u.email) + '">' + esc(u.email) + '</span><br><span class="acct-links">' + links + '</span>');
+    } else {
+      const tb = document.querySelector('.toolbar');
+      if (!tb) return;
+      tb.insertAdjacentHTML('beforeend', '<span class="acct" title="' + esc(u.email) + '">' + esc(u.email) + ' · ' + links + '</span>');
+    }
+    document.getElementById('atlas-signout').addEventListener('click', e => {
+      e.preventDefault();
+      fetch('/api/auth/logout', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: '{}' })
+        .finally(() => { location.href = '/login'; });
+    });
+  }).catch(() => {});
+})();
 </script>
 </body>
 </html>

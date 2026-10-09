@@ -615,6 +615,10 @@ body.public #pm-q, body.public #pm-search,
 body.public #refresh-one, body.public #untrack, body.public #get-recs,
 body.public [data-track-rec], body.public [data-dismiss-rec],
 body.public [data-exclude] { display: none !important; }
+
+  .toolbar .acct { margin-left: auto; font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.08em; color: var(--ink-2); white-space: nowrap; }
+  .toolbar .acct a { color: var(--ink-1); text-decoration: none; }
+  .toolbar .acct a:hover { color: var(--accent); }
 </style>
 </head>
 <body>
@@ -2026,6 +2030,35 @@ addEventListener('resize', () => { if (DEMO) demoPlace(DEMO.steps[DEMO.i]); });
 bindTip($('demo-fab'), 'PLAY GUIDED DEMO');
 
 load().catch(e => setStatus('global-status', 'Could not load: ' + e.message + ' — is serve.py running?', 'err'));
+</script>
+
+<script>
+/* Account widget (hosted copy only): shows who is signed in with Sign out /
+   Accounts links. On the laptop (accounts off) and on the public static copy
+   /api/auth/me is absent or reports enabled:false, so nothing is drawn. */
+(function () {
+  if (location.protocol === 'file:') return;
+  fetch('/api/auth/me', { cache: 'no-store' }).then(r => r.ok ? r.json() : null).then(d => {
+    if (!d || !d.enabled || !d.user) return;
+    const u = d.user, esc = s => String(s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+    const links = (u.isAdmin ? '<a href="/admin" title="Approve and manage accounts">◈ Accounts</a> · ' : '')
+                + '<a href="/account" title="Change your password">Account</a> · '
+                + '<a href="#" id="atlas-signout" title="Sign out of the atlas">⏻ Sign out</a>';
+    const meta = document.querySelector('.hud .meta');
+    if (meta) {
+      meta.insertAdjacentHTML('beforeend', '<br>USER: <span title="' + esc(u.email) + '">' + esc(u.email) + '</span><br><span class="acct-links">' + links + '</span>');
+    } else {
+      const tb = document.querySelector('.toolbar');
+      if (!tb) return;
+      tb.insertAdjacentHTML('beforeend', '<span class="acct" title="' + esc(u.email) + '">' + esc(u.email) + ' · ' + links + '</span>');
+    }
+    document.getElementById('atlas-signout').addEventListener('click', e => {
+      e.preventDefault();
+      fetch('/api/auth/logout', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: '{}' })
+        .finally(() => { location.href = '/login'; });
+    });
+  }).catch(() => {});
+})();
 </script>
 </body>
 </html>
