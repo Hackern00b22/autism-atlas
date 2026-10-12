@@ -383,6 +383,13 @@
   .paper:hover .paper-act, .paper:focus-within .paper-act { opacity: 1; }
   /* A starred or filed paper keeps its state visible without hovering. */
   .paper-act.lit { opacity: 1; }
+  a.fbtn { text-decoration: none; display: inline-block; }
+  .kchip {
+    font-family: 'JetBrains Mono', ui-monospace, 'SF Mono', SFMono-Regular, Menlo, Consolas, monospace; font-size: 11px; letter-spacing: 0.14em;
+    text-transform: uppercase; padding: 2px 7px; border-radius: 2px; color: var(--c, var(--ink-1));
+    border: 1px solid color-mix(in srgb, var(--c, var(--ink-1)) 40%, transparent); background: color-mix(in srgb, var(--c, var(--ink-1)) 8%, transparent);
+  }
+  .lane-sum { font-family: 'JetBrains Mono', ui-monospace, 'SF Mono', SFMono-Regular, Menlo, Consolas, monospace; font-size: 11.5px; letter-spacing: 0.08em; color: var(--ink-2); text-transform: none; margin-left: 8px; }
   .bm-btn { color: var(--gold); border-color: rgba(255, 217, 122, 0.4); }
   .bm-btn:hover { color: var(--gold); background: rgba(255, 217, 122, 0.12); }
   .bm-btn.on { background: var(--gold); color: var(--on-accent); border-color: var(--gold); }
@@ -754,6 +761,19 @@ const ROLES = [
   { key: 'solo',   label: 'Sole author',   color: 'var(--ink-1)',       desc: 'single-author work' },
 ];
 const UPDATE_ICONS = { retraction: '⊘', concern: '⚠', erratum: '✎', republished: '⟳', update: '↑', comment: '❝' };
+// Funding / trials / patents lanes (see attach_lanes in serve.py)
+const fmtUSD = n => { n = +n || 0; return n >= 1e6 ? '$' + (n / 1e6).toFixed(n >= 1e7 ? 1 : 2).replace(/\.?0+$/, '') + 'M'
+  : n >= 1e3 ? '$' + Math.round(n / 1e3) + 'K' : '$' + n; };
+// "1R01FD008531-01A1" -> "R01FD008531": one grant across its fiscal years.
+const grantCore = num => ((num || '').toUpperCase().match(/([A-Z]\d{2}[A-Z]{2}\d{6})/) || [])[1] || (num || '');
+const TRIAL_STATUS = {
+  RECRUITING: ['Recruiting', 'var(--neon-behav)'], NOT_YET_RECRUITING: ['Not yet recruiting', 'var(--neon-neuro)'],
+  ACTIVE_NOT_RECRUITING: ['Active', 'var(--neon-immuno)'], ENROLLING_BY_INVITATION: ['By invitation', 'var(--neon-immuno)'],
+  COMPLETED: ['Completed', 'var(--ink-1)'], TERMINATED: ['Terminated', 'var(--neon-interv)'], WITHDRAWN: ['Withdrawn', 'var(--neon-interv)'],
+  SUSPENDED: ['Suspended', 'var(--neon-interv)'], UNKNOWN: ['Unknown status', 'var(--ink-2)'],
+};
+const TRIAL_ROLE = { responsible: 'Responsible party', pi: 'Principal investigator', director: 'Study director', chair: 'Study chair' };
+const phaseLabel = ph => (ph || []).map(x => x.replace(/^EARLY_PHASE1$/, 'Early phase 1').replace(/^PHASE(\d)$/, 'Phase $1')).join('/');
 
 let DATA = { authors: {}, branches: {}, dismissed: [], dismissedUpdates: [] };
 // Updates you have acknowledged. Hidden by default but never destroyed —
@@ -887,10 +907,12 @@ function renderRoster() {
     const ups = (p.papers || []).reduce((m, a) => m + (a.updates || []).length, 0);
     const br = DATA.branches && DATA.branches[p.branch];
     const yr = p.stats && p.stats.latestPaper ? p.stats.latestPaper.slice(0, 4) : '';
+    const ng = new Set((p.nihGrants || []).map(g => grantCore(g.num))).size, nt = (p.trials || []).length;
     return `<button class="roster-item ${k === SELECTED ? 'active' : ''}" data-key="${esc(k)}">
       <span class="rmain">
         <span class="rname">${br ? `<span class="rdot" style="background:${esc(br.color)}"></span>` : ''}${esc(p.displayName)}</span>
-        <span class="rmeta">${n} PAPER${n === 1 ? '' : 'S'}${ups ? ` · <span class="rflag">${ups} UPDATE${ups === 1 ? '' : 'S'}</span>` : ''}</span>
+        <span class="rmeta">${n} PAPER${n === 1 ? '' : 'S'}${ups ? ` · <span class="rflag">${ups} UPDATE${ups === 1 ? '' : 'S'}</span>` : ''}${
+          ng ? ` · ${ng} GRANT${ng === 1 ? '' : 'S'}` : ''}${nt ? ` · ${nt} TRIAL${nt === 1 ? '' : 'S'}` : ''}</span>
       </span>
       ${yr ? `<span class="ryr" title="Most recent paper">${esc(yr)}</span>` : ''}
     </button>`;
@@ -923,7 +945,7 @@ function renderProfile() {
   const s = p.stats || {};
   const papers = p.papers || [];
   main.innerHTML =
-    headerHTML(p) + tilesHTML(p, s, papers) + updatesHTML(p, papers) +
+    headerHTML(p) + tilesHTML(p, s, papers) + updatesHTML(p, papers) + lanesHTML(p) +
     chartsHTML(s, papers, p) + papersHTML(p, papers) + reviewHTML(p) + recsHTML(p);
   wireProfile(p);
 }
@@ -969,13 +991,105 @@ function tilesHTML(p, s, papers) {
       <div class="tnote">first to latest publication</div></div>
     <div class="tile"><div class="tlabel">Research updates</div><div class="tval">${upd}</div>
       <div class="tnote">corrections &amp; responses</div></div>
-    <div class="tile"><div class="tlabel">NIH grants</div><div class="tval">${(p.nihGrants || []).length}</div>
-      <div class="tnote">${(p.nihGrants || []).length
-        ? `<a href="nih.html?q=${encodeURIComponent(p.lastName || '')}" title="Open on the NIH Funding tab">as contact PI, latest 3 FYs ↗</a>`
-        : 'none as contact PI, latest 3 FYs'}</div></div>
+    ${laneTilesHTML(p)}
     ${latest ? `<div class="tile"><div class="tlabel">Most recent</div>
       <div class="tval" style="font-size: 16px;line-height:1.4;margin-top:8px">${esc(latest.journal || '—')}</div>
       <div class="tnote">${esc(latest.date)}</div></div>` : ''}
+  </div>`;
+}
+
+function fyWindow() {
+  const f = DATA.nihFys || [];
+  return f.length ? (f.length === 1 ? `FY${f[0]}` : `FY${f[0]}–${f[f.length - 1]}`) : 'the browsable FYs';
+}
+function laneTilesHTML(p) {
+  const grants = p.nihGrants || [], trials = p.trials || [], pats = p.patents || [];
+  const total = grants.reduce((m, g) => m + (+g.award || 0), 0);
+  const n = new Set(grants.map(g => grantCore(g.num))).size;
+  const active = trials.filter(t => /RECRUITING|ACTIVE|ENROLLING/.test(t.status || '')).length;
+  const granted = pats.filter(x => x.patNum).length;
+  return `<div class="tile"><div class="tlabel">NIH funding</div><div class="tval">${n ? fmtUSD(total) : '—'}</div>
+      <div class="tnote">${n ? `${n} grant${n === 1 ? '' : 's'} as PI, ${esc(fyWindow())}` : `no awards as PI, ${esc(fyWindow())}`}</div></div>
+    <div class="tile"><div class="tlabel">Clinical trials</div><div class="tval">${trials.length}</div>
+      <div class="tnote">${trials.length ? `${active} active · named investigator` : 'none as named investigator'}</div></div>
+    <div class="tile"><div class="tlabel">Patents</div><div class="tval">${DATA.patentsNeedKey ? '—' : pats.length}</div>
+      <div class="tnote">${DATA.patentsNeedKey ? 'lane dormant — no EPO key' : pats.length ? `${granted} granted · as inventor` : 'none as inventor'}</div></div>`;
+}
+
+// --- funding, trials & patents: the tracked person in the other lanes ---
+function lanesHTML(p) {
+  const grants = p.nihGrants || [], trials = p.trials || [], pats = p.patents || [];
+  const empty = msg => `<div class="status">${msg}</div>`;
+  // One row per grant: a multi-year award appears once, with every FY and the sum.
+  const byCore = new Map();
+  grants.forEach(g => {
+    const c = grantCore(g.num);
+    const e = byCore.get(c) || { ...g, core: c, fys: [], total: 0 };
+    e.fys.push(g.fy); e.total += (+g.award || 0);
+    if (g.role === 'contact') e.role = 'contact';
+    byCore.set(c, e);
+  });
+  const total = [...byCore.values()].reduce((m, g) => m + g.total, 0);
+  const grantRows = [...byCore.values()].sort((a, b) => b.total - a.total).map(g => `<div class="paper">
+    <div class="paper-tier" style="background:${g.role === 'contact' ? 'var(--neon-behav)' : 'var(--neon-immuno)'}"></div>
+    <div class="paper-main">
+      <div class="paper-title"><a href="${esc(g.url)}" target="_blank" rel="noopener">${esc(g.title)}</a></div>
+      <div class="paper-meta">
+        <span class="kchip" style="--c:${g.role === 'contact' ? 'var(--neon-behav)' : 'var(--neon-immuno)'}">${g.role === 'contact' ? 'Contact PI' : 'Co-PI'}</span>
+        <span style="color:var(--ink-0)">${fmtUSD(g.total)}</span>
+        <span>${esc(g.num)}</span><span>${esc(g.ic)}</span>
+        <span>FY ${esc([...new Set(g.fys)].sort().join(', '))}</span>
+        ${g.start ? `<span>${esc(g.start.slice(0, 4))}–${esc((g.end || '').slice(0, 4))}</span>` : ''}
+        <span>${esc(g.org || '')}</span>
+        ${g.role !== 'contact' && g.pi ? `<span title="Contact PI">with ${esc(g.pi)}</span>` : ''}
+        <a class="fbtn" href="nih.html?q=${encodeURIComponent(g.core)}" title="Open on the NIH Funding tab">NIH tab ↗</a>
+      </div></div></div>`).join('');
+  const trialRows = trials.map(t => {
+    const st = TRIAL_STATUS[t.status] || [(t.status || '').replace(/_/g, ' ').toLowerCase(), 'var(--ink-2)'];
+    return `<div class="paper">
+    <div class="paper-tier" style="background:${st[1]}"></div>
+    <div class="paper-main">
+      <div class="paper-title"><a href="https://clinicaltrials.gov/study/${encodeURIComponent(t.id)}" target="_blank" rel="noopener">${esc(t.title)}</a></div>
+      <div class="paper-meta">
+        <span class="kchip" style="--c:${st[1]}">${esc(st[0])}</span>
+        <span class="kchip">${esc(TRIAL_ROLE[t.role] || t.role || 'investigator')}</span>
+        <span>${esc(t.id)}</span>
+        <span>${esc(t.type || '')}${t.phase && t.phase.length ? ` · ${esc(phaseLabel(t.phase))}` : ''}</span>
+        ${t.start ? `<span>${esc(t.start.slice(0, 4))}–${esc((t.done || '').slice(0, 4))}</span>` : ''}
+        ${t.enroll ? `<span>n=${t.enroll}</span>` : ''}
+        ${t.results ? '<span>▤ results posted</span>' : ''}
+        <span>${esc(t.sponsor || '')}</span>
+        ${(t.grants || []).map(g => `<a class="fbtn" href="nih.html?q=${encodeURIComponent(g)}" title="NIH grant ${esc(g)} — view on the NIH Funding tab">◎ ${esc(g)}</a>`).join('')}
+      </div></div></div>`;
+  }).join('');
+  const patRows = pats.map(x => {
+    const url = /^[A-Z]{2}[0-9A-Z]+$/.test(x.id || '')
+      ? 'https://patents.google.com/patent/' + encodeURIComponent(x.id)
+      : 'https://patents.google.com/?q=' + encodeURIComponent(x.title || x.id);
+    return `<div class="paper">
+    <div class="paper-tier" style="background:var(--neon-neuro)"></div>
+    <div class="paper-main">
+      <div class="paper-title"><a href="${esc(url)}" target="_blank" rel="noopener">${esc(x.title)}</a></div>
+      <div class="paper-meta">
+        <span class="kchip" style="--c:var(--neon-neuro)">${x.patNum ? 'Granted' : 'Application'}</span>
+        <span>${esc(x.patNum || x.id)}</span>
+        ${x.date ? `<span>${esc(x.date)}</span>` : ''}
+        <span>${esc((x.assignees || []).join(', '))}</span>
+        <span>inventors: ${esc((x.inventors || []).join(', '))}</span>
+      </div></div></div>`;
+  }).join('');
+  return `<div class="panel"><h3>// Funding, trials &amp; patents</h3>
+    <div class="chart-caption">Where ${esc(p.displayName)}'s work meets money and translation: NIH awards naming
+      them as a principal investigator (RePORTER, ${esc(fyWindow())}), ClinicalTrials.gov studies listing them as an
+      investigator, and patents naming them as an inventor. Matched on surname <em>and</em> given name, so a namesake
+      is not swept in; a grant where they are an unnamed co-investigator will not appear.</div>
+    <div class="sec-title">NIH funding${byCore.size ? `<span class="lane-sum">${byCore.size} grant${byCore.size === 1 ? '' : 's'} · ${fmtUSD(total)}</span>` : ''}</div>
+    ${grantRows || empty(`No NIH awards name them as PI in ${esc(fyWindow())}.`)}
+    <div class="sec-title" style="margin-top:22px">Clinical trials${trials.length ? `<span class="lane-sum">${trials.length}</span>` : ''}</div>
+    ${trialRows || empty('No registered studies list them as an investigator.')}
+    <div class="sec-title" style="margin-top:22px">Patents${pats.length ? `<span class="lane-sum">${pats.length}</span>` : ''}</div>
+    ${DATA.patentsNeedKey ? empty('The patent lane is dormant until an EPO OPS key is installed (see the Pipeline tab).')
+      : patRows || empty('No patents name them as an inventor.')}
   </div>`;
 }
 
