@@ -616,7 +616,7 @@ function renderLanes() {
     : LANE === 'trials'
     ? `US study sites from ClinicalTrials.gov. A multi-site trial counts once in <em>each</em> state it recruits in, so state totals exceed the ${fmt(c.trialsLocated)} located studies.`
     : LANE === 'patents'
-    ? (D.patentsNeedKey ? `Dormant — the patent lane needs EPO Open Patent Services credentials (see Trials &amp; Patents).` : `Assignee state for US patents and applications.`)
+    ? (D.patentsNeedKey ? `Dormant — the patent lane needs a USPTO Open Data Portal API key (see Trials &amp; Patents).` : `First US correspondence address (inventor or applicant) for US patents and applications.`)
     : `Every lane together. Each state takes the hue of the lane that dominates it and is shaded by its total. Hover for the breakdown; click a state to list its records.`;
 }
 

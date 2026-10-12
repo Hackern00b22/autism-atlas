@@ -549,7 +549,7 @@ async function refresh(auto) {
     const r = await api('/api/trials-refresh');
     let msg = `Refreshed — ${r.studies} studies.`;
     if (!PD.needsKey) {
-      setStatus('Refreshing patents (EPO Open Patent Services)…', 'spin');
+      setStatus('Refreshing patents…', 'spin');
       try {
         const p = await api('/api/patents-refresh');
         msg += p.ok ? ` Patents: ${p.patents}.` : ` Patents: ${p.error || 'failed'}.`;
@@ -583,8 +583,8 @@ function render() {
   $('lane-note').innerHTML = LANE === 'trials'
     ? `Every ClinicalTrials.gov study matching <code>${esc(TD.searchCond || '"autism" OR "autistic"')}</code> as a condition — refreshed weekly. Studies carrying an NIH grant number link to the grant on the NIH Funding tab.`
     : (PD.needsKey
-      ? `Dormant — needs free EPO Open Patent Services credentials. Register at <code>developers.epo.org</code> (e-mail confirmation only), create an app for a consumer key + secret, then write <code>key:secret</code> to <code>~/atlas/.epo_ops_key</code> and refresh.`
-      : `US patents and applications whose title or abstract mentions <code>autism</code> or <code>autistic</code> (OPS query <code>${esc(PD.query || 'ta=autism or ta=autistic')}</code>), via the EPO Open Patent Services mirror of USPTO data — refreshed weekly. One row per application; the grant supersedes its own published application.`);
+      ? `Dormant — needs a free USPTO Open Data Portal API key. Sign in at <code>data.uspto.gov</code> with a USPTO.gov account, open <em>My API Key</em>, generate a key, write it to <code>~/atlas/.uspto_api_key</code> and refresh. (EPO Open Patent Services credentials in <code>.epo_ops_key</code> work as a fallback.)`
+      : `US patents and applications whose title mentions <code>autism</code> or <code>autistic</code> (query <code>${esc(PD.query || '')}</code>), from ${esc(PD.source || 'the USPTO Open Data Portal')} — refreshed weekly. One row per application; a grant supersedes its own published application.`);
   renderStatuses();
   renderPhases();
   renderPatYears();
@@ -700,13 +700,17 @@ function patentCard(p) {
   const num = p.patNum || p.id;
   // OPS ids are full publication numbers (US10655178B2, US20260027166A1),
   // which Google Patents resolves directly for grants and applications alike.
-  const url = /^[A-Z]{2}[0-9A-Z]+$/.test(p.id || '')
+  // USPTO rows carry their own link (Google Patents for published documents,
+  // Patent Center for provisional / PCT / unpublished filings); EPO rows don't.
+  const url = p.url || (/^[A-Z]{2}[0-9A-Z]+$/.test(p.id || '')
     ? 'https://patents.google.com/patent/' + encodeURIComponent(p.id)
-    : 'https://patents.google.com/?q=' + encodeURIComponent(p.title || p.id);
+    : 'https://patents.google.com/?q=' + encodeURIComponent(p.title || p.id));
+  const kindLabel = p.patNum ? 'Patent' : /provisional/i.test(p.status || '') ? 'Provisional'
+    : /^PCT/i.test(p.status || '') ? 'PCT' : /unpublished/i.test(p.status || '') ? 'Unpublished' : 'Application';
   return `
     <div class="card" style="--st-color:var(--neon-neuro)">
       <div class="head">
-        <span class="stchip" style="--st-color:var(--neon-neuro)">${esc(p.patNum ? 'Patent' : 'Application')}</span>
+        <span class="stchip" style="--st-color:var(--neon-neuro)">${esc(kindLabel)}</span>
         <span class="num">${esc(num)}</span>
         <span class="date">${esc(p.date || '')}</span>
         <span class="enr"></span>
@@ -728,8 +732,8 @@ function renderList() {
   let view;
   if (LANE === 'patents' && PD.needsKey) {
     $('list').innerHTML = `<div class="empty">// PATENT LANE IS DORMANT<br>
-      REGISTER FREE AT DEVELOPERS.EPO.ORG (E-MAIL ONLY, NO ID CHECK), CREATE AN APP,<br>
-      WRITE KEY:SECRET TO ~/atlas/.epo_ops_key, THEN REFRESH.</div>`;
+      SIGN IN AT DATA.USPTO.GOV, OPEN MY API KEY AND GENERATE ONE,<br>
+      WRITE IT TO ~/atlas/.uspto_api_key, THEN REFRESH.</div>`;
     $('more-btn').style.display = 'none';
     return;
   }

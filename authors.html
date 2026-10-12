@@ -1013,7 +1013,7 @@ function laneTilesHTML(p) {
     <div class="tile"><div class="tlabel">Clinical trials</div><div class="tval">${trials.length}</div>
       <div class="tnote">${trials.length ? `${active} active · named investigator` : 'none as named investigator'}</div></div>
     <div class="tile"><div class="tlabel">Patents</div><div class="tval">${DATA.patentsNeedKey ? '—' : pats.length}</div>
-      <div class="tnote">${DATA.patentsNeedKey ? 'lane dormant — no EPO key' : pats.length ? `${granted} granted · as inventor` : 'none as inventor'}</div></div>`;
+      <div class="tnote">${DATA.patentsNeedKey ? 'lane dormant — no USPTO key' : pats.length ? `${granted} granted · as inventor` : 'none as inventor'}</div></div>`;
 }
 
 // --- funding, trials & patents: the tracked person in the other lanes ---
@@ -1063,15 +1063,15 @@ function lanesHTML(p) {
       </div></div></div>`;
   }).join('');
   const patRows = pats.map(x => {
-    const url = /^[A-Z]{2}[0-9A-Z]+$/.test(x.id || '')
+    const url = x.url || (/^[A-Z]{2}[0-9A-Z]+$/.test(x.id || '')
       ? 'https://patents.google.com/patent/' + encodeURIComponent(x.id)
-      : 'https://patents.google.com/?q=' + encodeURIComponent(x.title || x.id);
+      : 'https://patents.google.com/?q=' + encodeURIComponent(x.title || x.id));
     return `<div class="paper">
     <div class="paper-tier" style="background:var(--neon-neuro)"></div>
     <div class="paper-main">
       <div class="paper-title"><a href="${esc(url)}" target="_blank" rel="noopener">${esc(x.title)}</a></div>
       <div class="paper-meta">
-        <span class="kchip" style="--c:var(--neon-neuro)">${x.patNum ? 'Granted' : 'Application'}</span>
+        <span class="kchip" style="--c:var(--neon-neuro)">${esc(x.status || (x.patNum ? 'Granted' : 'Application'))}</span>
         <span>${esc(x.patNum || x.id)}</span>
         ${x.date ? `<span>${esc(x.date)}</span>` : ''}
         <span>${esc((x.assignees || []).join(', '))}</span>
@@ -1088,7 +1088,7 @@ function lanesHTML(p) {
     <div class="sec-title" style="margin-top:22px">Clinical trials${trials.length ? `<span class="lane-sum">${trials.length}</span>` : ''}</div>
     ${trialRows || empty('No registered studies list them as an investigator.')}
     <div class="sec-title" style="margin-top:22px">Patents${pats.length ? `<span class="lane-sum">${pats.length}</span>` : ''}</div>
-    ${DATA.patentsNeedKey ? empty('The patent lane is dormant until an EPO OPS key is installed (see the Pipeline tab).')
+    ${DATA.patentsNeedKey ? empty('The patent lane is dormant until a USPTO Open Data Portal API key is installed (see the Trials &amp; Patents tab).')
       : patRows || empty('No patents name them as an inventor.')}
   </div>`;
 }
