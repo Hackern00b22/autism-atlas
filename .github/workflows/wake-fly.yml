@@ -1,0 +1,24 @@
+# Wakes the hosted atlas (autism-atlas.fly.dev) four times a day.
+#
+# The Fly machine only runs while someone is using it and, on the trial plan,
+# for at most five minutes per boot. Its refresh tick (entrypoint.sh) runs
+# seconds after each boot, so a request from here is what makes the hosted
+# stores refetch even when nobody visits. Nothing is deployed or changed by
+# this workflow; it just loads the sign-in page.
+name: Wake the hosted atlas
+
+on:
+  schedule:
+    - cron: "7 */6 * * *"     # 00:07, 06:07, 12:07, 18:07 UTC
+  workflow_dispatch:
+
+jobs:
+  wake:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Request the sign-in page so Fly boots the machine
+        run: |
+          code=$(curl -sS -o /dev/null -w "%{http_code}" --retry 3 --retry-delay 10 --max-time 90 https://autism-atlas.fly.dev/login)
+          echo "autism-atlas.fly.dev/login -> HTTP $code"
+          test "$code" = "200"
