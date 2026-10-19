@@ -1301,7 +1301,7 @@
  },
  "acta medica portuguesa": {
   "name": "Acta medica portuguesa",
-  "fetched": "2026-10-15"
+  "fetched": "2026-10-18"
  },
  "cerebellum (london, england)": {
   "name": "Cerebellum (London, England)",
@@ -1345,14 +1345,116 @@
  },
  "pcn reports : psychiatry and clinical neurosciences": {
   "name": "PCN reports : psychiatry and clinical neurosciences",
-  "fetched": "2026-10-15"
+  "fetched": "2026-10-18"
  },
  "the australian and new zealand journal of psychiatry": {
   "name": "The Australian and New Zealand journal of psychiatry",
-  "fetched": "2026-10-15"
+  "fetched": "2026-10-18"
  },
  "zeitschrift fur kinder- und jugendpsychiatrie und psychotherapie": {
   "name": "Zeitschrift fur Kinder- und Jugendpsychiatrie und Psychotherapie",
-  "fetched": "2026-10-15"
+  "fetched": "2026-10-18"
+ },
+ "applied neuropsychology. adult": {
+  "name": "Applied neuropsychology. Adult",
+  "fetched": "2026-10-18",
+  "openalexId": "S4210220878",
+  "openalexName": "Applied Neuropsychology Adult",
+  "type": "journal",
+  "worksCount": 1644,
+  "hIndex": 51,
+  "citedness2y": 1.3913978494623656
+ },
+ "biochimie": {
+  "name": "Biochimie",
+  "fetched": "2026-10-18",
+  "openalexId": "S75247133",
+  "openalexName": "Biochimie",
+  "type": "journal",
+  "worksCount": 12860,
+  "hIndex": 203,
+  "citedness2y": 3.0631578947368423
+ },
+ "biomedical physics & engineering express": {
+  "name": "Biomedical physics & engineering express",
+  "fetched": "2026-10-18",
+  "openalexId": "S2764445381",
+  "openalexName": "Biomedical Physics & Engineering Express",
+  "type": "journal",
+  "worksCount": 2580,
+  "hIndex": 42,
+  "citedness2y": 1.7083743842364532
+ },
+ "brain imaging and behavior": {
+  "name": "Brain imaging and behavior",
+  "fetched": "2026-10-18",
+  "openalexId": "S51590970",
+  "openalexName": "Brain Imaging and Behavior",
+  "type": "journal",
+  "worksCount": 2195,
+  "hIndex": 89,
+  "citedness2y": 2.330601092896175
+ },
+ "chembiochem : a european journal of chemical biology": {
+  "name": "Chembiochem : a European journal of chemical biology",
+  "fetched": "2026-10-18",
+  "openalexId": "S154285657",
+  "openalexName": "ChemBioChem",
+  "type": "journal",
+  "worksCount": 11264,
+  "hIndex": 162,
+  "citedness2y": 2.9465699208443272
+ },
+ "cognitive neurodynamics": {
+  "name": "Cognitive neurodynamics",
+  "fetched": "2026-10-18",
+  "openalexId": "S766161",
+  "openalexName": "Cognitive Neurodynamics",
+  "type": "journal",
+  "worksCount": 1545,
+  "hIndex": 70,
+  "citedness2y": 3.9085603112840466
+ },
+ "hgg advances": {
+  "name": "HGG advances",
+  "fetched": "2026-10-18"
+ },
+ "international medical case reports journal": {
+  "name": "International medical case reports journal",
+  "fetched": "2026-10-18",
+  "openalexId": "S2738884135",
+  "openalexName": "International Medical Case Reports Journal",
+  "type": "journal",
+  "worksCount": 1694,
+  "hIndex": 26,
+  "citedness2y": 0.5542691751085383
+ },
+ "pharmacological research": {
+  "name": "Pharmacological research",
+  "fetched": "2026-10-18",
+  "openalexId": "S54485712",
+  "openalexName": "Pharmacological Research",
+  "type": "journal",
+  "worksCount": 12362,
+  "hIndex": 220,
+  "citedness2y": 11.15774647887324
+ },
+ "psychiatry and clinical neurosciences": {
+  "name": "Psychiatry and clinical neurosciences",
+  "fetched": "2026-10-18",
+  "openalexId": "S111042112",
+  "openalexName": "Psychiatry and Clinical Neurosciences",
+  "type": "journal",
+  "worksCount": 7694,
+  "hIndex": 120,
+  "citedness2y": 2.5944206008583692
+ },
+ "the american journal of occupational therapy : official publication of the american occupational therapy association": {
+  "name": "The American journal of occupational therapy : official publication of the American Occupational Therapy Association",
+  "fetched": "2026-10-18"
+ },
+ "zhonghua yi xue yi chuan xue za zhi = zhonghua yixue yichuanxue zazhi = chinese journal of medical genetics": {
+  "name": "Zhonghua yi xue yi chuan xue za zhi = Zhonghua yixue yichuanxue zazhi = Chinese journal of medical genetics",
+  "fetched": "2026-10-18"
  }
 }
