@@ -224,6 +224,15 @@
     animation: pulse 2s ease-in-out infinite;
   }
   @keyframes pulse { 0%,100% { opacity: 1; } 50% { opacity: 0.3; } }
+  /* One-click weekly export: a link in the stats block rather than another
+     toolbar button, so the nav row keeps fitting on one line. */
+  .meta .wk-export {
+    color: var(--neon-behav); text-decoration: none;
+    border-bottom: 1px dotted rgba(182, 255, 60, 0.45);
+    transition: color 0.18s, border-color 0.18s;
+  }
+  .meta .wk-export:hover { color: var(--ink-0); border-color: var(--ink-0); }
+  body.demo-on .meta .wk-export { pointer-events: none; }
 
   .legend {
     position: fixed; left: 32px; bottom: 32px; z-index: 10;
@@ -1728,6 +1737,9 @@
     align-self: flex-start; margin-right: 10px; white-space: nowrap;
   }
   .exp-open:hover { color: var(--ink-0); border-color: var(--neon-immuno); }
+  a.exp-open { text-decoration: none; display: inline-flex; align-items: center; }
+  .rep-ctl .rep-all { margin: 0 0 0 auto; align-self: center; border-color: var(--neon-behav); color: var(--neon-behav); }
+  .rep-ctl .rep-all:hover { background: var(--neon-behav); color: var(--on-accent); }
   .exp-controls {
     display: flex; flex-wrap: wrap; align-items: center; gap: 14px;
     padding: 14px 26px; border-bottom: 1px solid rgba(var(--line-rgb), 0.15);
@@ -1990,7 +2002,9 @@
     <span class="dot"></span>BRANCHES: <span id="branch-count">—</span><br>
     JOURNALS: <span id="journal-count">—</span><br>
     ARTICLES: <span id="article-count">—</span><br>
-    UPDATED: <span id="last-updated">—</span>
+    UPDATED: <span id="last-updated">—</span><br>
+    <a class="wk-export" id="wk-export" href="/api/export/weekly?days=7" download
+       title="One Excel file with this week's publications, NIH grants, press &amp; media and tracked authors">&#8615; Weekly export</a>
   </div>
 </div>
 
@@ -2010,7 +2024,7 @@
   <span class="pipe-bubble-hint" aria-hidden="true">&#9656; Click to open</span>
 </a>
 
-<div class="hint">CLICK A BRANCH NODE · ◈ AUTHORS · ⚕ TRIALS + PATENTS · ◫ US MAP · ⬢ AGENT LAB · ◆ WHAT'S NEW · ⌕ SEARCH · ⇩ EXPORT · ESC TO CLOSE</div>
+<div class="hint">CLICK A BRANCH NODE · ◈ AUTHORS · ⚕ TRIALS + PATENTS · ◫ US MAP · ⬢ AGENT LAB · ◆ WHAT'S NEW · ⌕ SEARCH · ⇩ EXPORT · ⇩ WEEKLY EXPORT · ESC TO CLOSE</div>
 
 <button class="search-fab" id="search-fab" aria-label="Search every node" title="Search the whole library  ( / )">⌕</button>
 <button class="export-fab" id="export-fab" aria-label="Export runs as a table" title="Export runs as CSV, Excel or PDF">&#8615;</button>
@@ -2173,6 +2187,7 @@
           <button data-days="7">7 days</button><button data-days="14" class="on">14 days</button><button data-days="30">30 days</button>
         </div>
         <span class="note" id="rep-note"></span>
+        <a class="exp-open rep-all" id="rep-all" href="/api/export/weekly?days=14" download title="Everything in this window — publications, NIH grants, press &amp; media and tracked authors — as one Excel workbook">&#8595; All lanes (Excel)</a>
       </div>
       <div id="rep-body"><div class="rep-empty">// LOADING…</div></div>
     </div>
@@ -5223,9 +5238,24 @@ function repExport(kind) {
   if (kind === 'csv') exportCSV(rows, name); else exportExcel(rows, name);
   document.getElementById('rep-note').textContent = `Saved ${name} — ${rows.length} papers, ${EXP_COLUMNS.length} columns.`;
 }
+// The one-click export: every lane in the window as one workbook, built by the
+// server (weekly_export.py). The static public build has no server, so there
+// the links point at the 7-day file publish.py bakes alongside the site.
+function weeklyExportHref(days) {
+  return PUBLIC_MODE ? 'atlas-weekly.xlsx' : `/api/export/weekly?days=${days}`;
+}
+function syncWeeklyExportLinks() {
+  const all = document.getElementById('rep-all');
+  all.href = weeklyExportHref(REP.days);
+  if (PUBLIC_MODE) all.title = 'Publications, NIH grants, press & media and tracked authors — the last 7 days as of the last publish, as one Excel workbook';
+  const wk = document.getElementById('wk-export');
+  wk.href = weeklyExportHref(7);
+  if (PUBLIC_MODE) wk.title = 'This week\'s publications, NIH grants, press & media and tracked authors as of the last publish (Excel)';
+}
 function renderReport() {
   const cutoff = new Date(Date.now() - REP.days * 864e5).toISOString().slice(0, 10);
   const items = repItems(cutoff);
+  syncWeeklyExportLinks();
   document.querySelector('#rep-backdrop .modal-title').textContent = `Last ${REP.days} days`;
   document.getElementById('rep-note').textContent = `since ${cutoff}` + (REP.data ? '' : ' · loading lanes…');
   document.querySelectorAll('#rep-days button').forEach(b => b.classList.toggle('on', +b.dataset.days === REP.days));
@@ -5285,6 +5315,12 @@ document.querySelectorAll('#rep-days button').forEach(b => b.onclick = () => { R
 document.getElementById('rep-print').addEventListener('click', printReport);
 document.getElementById('rep-csv').addEventListener('click', () => repExport('csv'));
 document.getElementById('rep-xlsx').addEventListener('click', () => repExport('xlsx'));
+document.getElementById('rep-all').addEventListener('click', () => {
+  document.getElementById('rep-note').textContent = PUBLIC_MODE
+    ? 'Downloading the weekly workbook (last 7 days as of the last publish) — Summary, Publications, NIH grants, Press & media, Tracked authors, Author papers.'
+    : `Downloading the last ${REP.days} days as one workbook — Summary, Publications, NIH grants, Press & media, Tracked authors, Author papers.`;
+});
+syncWeeklyExportLinks();
 </script>
 
 <script>
