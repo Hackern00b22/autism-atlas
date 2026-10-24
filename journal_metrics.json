@@ -1456,5 +1456,73 @@
  "zhonghua yi xue yi chuan xue za zhi = zhonghua yixue yichuanxue zazhi = chinese journal of medical genetics": {
   "name": "Zhonghua yi xue yi chuan xue za zhi = Zhonghua yixue yichuanxue zazhi = Chinese journal of medical genetics",
   "fetched": "2026-10-24"
+ },
+ "balkan journal of medical genetics : bjmg": {
+  "name": "Balkan journal of medical genetics : BJMG",
+  "fetched": "2026-10-24",
+  "openalexId": "S168777572",
+  "openalexName": "Balkan Journal of Medical Genetics",
+  "type": "journal",
+  "worksCount": 494,
+  "hIndex": 23,
+  "citedness2y": 0.5555555555555556
+ },
+ "current topics in behavioral neurosciences": {
+  "name": "Current topics in behavioral neurosciences",
+  "fetched": "2026-10-24",
+  "openalexId": "S2754447418",
+  "openalexName": "Current topics in behavioral neurosciences",
+  "type": "book series",
+  "worksCount": 1294,
+  "hIndex": null,
+  "citedness2y": null
+ },
+ "ieee transactions on bio-medical engineering": {
+  "name": "IEEE transactions on bio-medical engineering",
+  "fetched": "2026-10-24",
+  "openalexId": "S5240358",
+  "openalexName": "IEEE Transactions on Biomedical Engineering",
+  "type": "journal",
+  "worksCount": 15657,
+  "hIndex": 310,
+  "citedness2y": 4.124036979969183
+ },
+ "journal of the american dental association (1939)": {
+  "name": "Journal of the American Dental Association (1939)",
+  "fetched": "2026-10-24",
+  "openalexId": "S116566766",
+  "openalexName": "The Journal of the American Dental Association",
+  "type": "journal",
+  "worksCount": 34613,
+  "hIndex": 212,
+  "citedness2y": 1.4758064516129032
+ },
+ "l'encephale": {
+  "name": "L'Encephale",
+  "fetched": "2026-10-24"
+ },
+ "medcomm": {
+  "name": "MedComm",
+  "fetched": "2026-10-24",
+  "openalexId": "S4210236862",
+  "openalexName": "MedComm",
+  "type": "journal",
+  "worksCount": 1895,
+  "hIndex": 83,
+  "citedness2y": 10.937762237762238
+ },
+ "movement disorders clinical practice": {
+  "name": "Movement disorders clinical practice",
+  "fetched": "2026-10-24",
+  "openalexId": "S2764712647",
+  "openalexName": "Movement Disorders Clinical Practice",
+  "type": "journal",
+  "worksCount": 3324,
+  "hIndex": 59,
+  "citedness2y": 2.0163678877630553
+ },
+ "proceedings of the national academy of sciences of the united states of america": {
+  "name": "Proceedings of the National Academy of Sciences of the United States of America",
+  "fetched": "2026-10-24"
  }
 }
