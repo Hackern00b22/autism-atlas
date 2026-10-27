@@ -1301,7 +1301,13 @@
  },
  "acta medica portuguesa": {
   "name": "Acta medica portuguesa",
-  "fetched": "2026-10-25"
+  "fetched": "2026-10-26",
+  "openalexId": "S147790641",
+  "openalexName": "Acta Médica Portuguesa",
+  "type": "journal",
+  "worksCount": 2673,
+  "hIndex": 39,
+  "citedness2y": 0.8114285714285714
  },
  "cerebellum (london, england)": {
   "name": "Cerebellum (London, England)",
@@ -1345,15 +1351,21 @@
  },
  "pcn reports : psychiatry and clinical neurosciences": {
   "name": "PCN reports : psychiatry and clinical neurosciences",
-  "fetched": "2026-10-25"
+  "fetched": "2026-10-26"
  },
  "the australian and new zealand journal of psychiatry": {
   "name": "The Australian and New Zealand journal of psychiatry",
-  "fetched": "2026-10-25"
+  "fetched": "2026-10-26"
  },
  "zeitschrift fur kinder- und jugendpsychiatrie und psychotherapie": {
   "name": "Zeitschrift fur Kinder- und Jugendpsychiatrie und Psychotherapie",
-  "fetched": "2026-10-25"
+  "fetched": "2026-10-26",
+  "openalexId": "S4210193042",
+  "openalexName": "Zeitschrift für Kinder- und Jugendpsychiatrie und Psychotherapie",
+  "type": "journal",
+  "worksCount": 1873,
+  "hIndex": 39,
+  "citedness2y": 0.9259259259259259
  },
  "applied neuropsychology. adult": {
   "name": "Applied neuropsychology. Adult",
@@ -1417,7 +1429,7 @@
  },
  "hgg advances": {
   "name": "HGG advances",
-  "fetched": "2026-10-25"
+  "fetched": "2026-10-26"
  },
  "international medical case reports journal": {
   "name": "International medical case reports journal",
@@ -1451,11 +1463,11 @@
  },
  "the american journal of occupational therapy : official publication of the american occupational therapy association": {
   "name": "The American journal of occupational therapy : official publication of the American Occupational Therapy Association",
-  "fetched": "2026-10-25"
+  "fetched": "2026-10-26"
  },
  "zhonghua yi xue yi chuan xue za zhi = zhonghua yixue yichuanxue zazhi = chinese journal of medical genetics": {
   "name": "Zhonghua yi xue yi chuan xue za zhi = Zhonghua yixue yichuanxue zazhi = Chinese journal of medical genetics",
-  "fetched": "2026-10-25"
+  "fetched": "2026-10-26"
  },
  "balkan journal of medical genetics : bjmg": {
   "name": "Balkan journal of medical genetics : BJMG",
@@ -1499,7 +1511,13 @@
  },
  "l'encephale": {
   "name": "L'Encephale",
-  "fetched": "2026-10-25"
+  "fetched": "2026-10-26",
+  "openalexId": "S4210168811",
+  "openalexName": "L Encéphale",
+  "type": "journal",
+  "worksCount": 3236,
+  "hIndex": 59,
+  "citedness2y": 1.2697547683923707
  },
  "medcomm": {
   "name": "MedComm",
@@ -1523,6 +1541,6 @@
  },
  "proceedings of the national academy of sciences of the united states of america": {
   "name": "Proceedings of the National Academy of Sciences of the United States of America",
-  "fetched": "2026-10-25"
+  "fetched": "2026-10-26"
  }
 }
