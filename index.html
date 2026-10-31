@@ -61,6 +61,9 @@
     --canvas-core-ring: rgba(255, 255, 255, 0.9);
     --canvas-overlap: 150, 170, 220;
     --canvas-spoke-start: rgba(245, 247, 255, 0.5);
+    /* 1 = paint the graph as solid discs with a cast shadow (light theme);
+       0 = neon bloom + radial fade (dark HUD). */
+    --canvas-solid: 0;
     --core-fill: #E8EDF7;
     --core-label: #0B1119;
     /* Text and marks that sit on a filled accent. Dark in this theme because
@@ -115,53 +118,205 @@
      pure #fff, which is what keeps the hairline borders visible. */
   :root[data-theme="light"] {
     color-scheme: light;
-    /* A soft slate paper, not a lightbox. Near-white read as glaring against a
-       full-screen canvas, so the ground is dropped well below white and the
-       panels sit just above it — the lift comes from the step between them
-       rather than from raw brightness. */
-    --line-rgb: 46, 62, 90;
-    --panel-rgb: 246, 248, 252;
-    --void-rgb: 226, 231, 240;
-    --bg-0: #DFE5EE;
-    --bg-1: #F2F5F9;
-    --bg-2: #D2DAE6;
-    --ink-0: #0F1720;
-    --ink-1: #414F66;
-    --ink-2: #55617A;
-    --grid: rgba(46, 62, 90, 0.10);
-    --neon-immuno:   #00707F;
-    --neon-cyto:     #B01B8C;
-    --neon-behav:    #446400;
-    --neon-neuro:    #875600;
-    --neon-gen:      #5340C4;
-    --neon-interv:   #AB2C28;
-    --tier-trial:  #AB2C28;
-    --tier-clin:   #875600;
-    --tier-trans:  #446400;
-    --tier-mech:   #5C6A85;
-    --tier-review: #5340C4;
-    --tier-uncl:   #5C6A85;
-    --tier-other:  #5F6B82;
-    --gold: #8A5A00;
-    --warn: #9A6300;
-    --scrim: rgba(28, 40, 62, 0.34);
-    --canvas-bg: #F4F7FB;
-    --canvas-node-label: rgba(28, 38, 52, 0.9);
-    --canvas-core-ring: rgba(30, 40, 55, 0.75);
-    --canvas-overlap: 96, 116, 158;
-    --canvas-spoke-start: rgba(70, 86, 116, 0.55);
-    --core-fill: #2B3852;
-    --core-label: #F4F7FC;
-    --surface-1: #F2F5F9;
-    --surface-2: #E8EDF4;
-    --surface-3: #E3E9F2;
+    /* Solid, not glassy. The first light pass kept the HUD's translucency and
+       radial washes, which on a pale ground read as fog: every chip, disc and
+       panel bled into the one behind it. This pass paints opaque surfaces —
+       white panels on a cool paper ground, real borders, ink dark enough to
+       hold at 11px — and gives each accent one saturated, contrast-safe value
+       (all six clear 4.5:1 on white) instead of a tint of itself. */
+    --line-rgb: 28, 42, 68;
+    --panel-rgb: 255, 255, 255;
+    --void-rgb: 236, 240, 246;
+    --bg-0: #E8EDF4;
+    --bg-1: #FFFFFF;
+    --bg-2: #EEF2F7;
+    --ink-0: #0B1220;
+    --ink-1: #2A3648;
+    --ink-2: #4A5668;
+    --grid: rgba(28, 42, 68, 0.085);
+    --neon-immuno:   #007C8C;
+    --neon-cyto:     #BE1A96;
+    --neon-behav:    #3F7D00;
+    --neon-neuro:    #9A5A00;
+    --neon-gen:      #5B46D6;
+    --neon-interv:   #C62E2A;
+    --tier-trial:  #C62E2A;
+    --tier-clin:   #9A5A00;
+    --tier-trans:  #3F7D00;
+    --tier-mech:   #4F5E7A;
+    --tier-review: #5B46D6;
+    --tier-uncl:   #4F5E7A;
+    --tier-other:  #5A677E;
+    --gold: #9A6200;
+    --warn: #9A6200;
+    --scrim: rgba(16, 26, 44, 0.46);
+    --canvas-bg: #FFFFFF;
+    --canvas-node-label: rgba(11, 18, 32, 0.95);
+    --canvas-core-ring: rgba(11, 18, 32, 0.9);
+    --canvas-overlap: 70, 88, 124;
+    --canvas-spoke-start: rgba(58, 74, 104, 0.6);
+    --canvas-solid: 1;
+    --core-fill: #1C2740;
+    --core-label: #FFFFFF;
+    --surface-1: #FFFFFF;
+    --surface-2: #F3F6FA;
+    --surface-3: #EEF2F7;
     --blur: none;
     --blur-sm: none;
-    /* Depth now comes from a real edge and a soft shadow rather than from
+    /* Depth comes from a real edge and a cast shadow, never from
        see-through panels. */
-    --panel-shadow: 0 1px 2px rgba(30, 42, 66, 0.06), 0 6px 20px rgba(30, 42, 66, 0.08);
+    --panel-shadow: 0 1px 2px rgba(16, 26, 44, 0.08), 0 8px 24px rgba(16, 26, 44, 0.10);
     --on-accent: #FFFFFF;
-    --invert-bg: #16202B;
+    --invert-bg: #111A26;
+  }
+
+  /* ---- Light theme: solid surfaces ----
+     Glow, haze and see-through fills belong to the dark HUD. On paper each
+     becomes a flat fill, a 1.5px rule or a cast shadow, so every chip, card
+     and disc has one unambiguous edge.
+     Base overrides are wrapped in :where() so they outrank a component's own
+     single-class rule but NOT its later .active / .on / :hover states — the
+     first draft of this block painted the active chips white-on-white. */
+  :root[data-theme="light"] body::after {
+    background: radial-gradient(ellipse at center, rgba(255,255,255,0.62) 0%, rgba(255,255,255,0) 62%, var(--bg-0) 100%);
+  }
+  :root[data-theme="light"] .brand .title em { text-shadow: none; }
+  :root[data-theme="light"] .meta .dot,
+  :root[data-theme="light"] .new-button .pulse-dot,
+  :root[data-theme="light"] .agent-banner .dot,
+  :root[data-theme="light"] #boot .spinner { box-shadow: none; }
+  :root[data-theme="light"] .meta .wk-export { border-bottom: 1px solid currentColor; font-weight: 500; }
+  :root[data-theme="light"] :where(.hud .nav-toolbar > *, .search-fab, .export-fab, .theme-fab, .demo-fab, .rep-fab) {
+    background: #FFFFFF; border-width: 1.5px; font-weight: 500;
+  }
+  :root[data-theme="light"] :where(.rep-fab) { box-shadow: var(--panel-shadow); }
+  :root[data-theme="light"] :where(.theme-fab) { border-color: var(--ink-1); color: var(--ink-0); }
+  :root[data-theme="light"] .export-fab:hover { color: #FFFFFF; }
+  :root[data-theme="light"] :where(.legend) {
+    background: #FFFFFF; border: 1.5px solid rgba(var(--line-rgb), 0.22);
+  }
+  :root[data-theme="light"] :where(.legend-item) { color: var(--ink-0); }
+  :root[data-theme="light"] :where(.legend-swatch) { box-shadow: 0 0 0 2px color-mix(in srgb, currentColor 22%, transparent); }
+  :root[data-theme="light"] :where(.legend-count) { color: var(--ink-1); }
+  :root[data-theme="light"] :where(.corner) { border-color: var(--ink-1); }
+  /* Satellites: a flat pastel disc with a firm ring instead of a radial wash. */
+  :root[data-theme="light"] :where(.pipe-bubble-disc) {
+    background: color-mix(in srgb, var(--bub) 16%, #FFFFFF);
+    border-width: 1.8px;
+    box-shadow: var(--panel-shadow);
+  }
+  :root[data-theme="light"] :where(.pipe-bubble-disc)::after { border-color: color-mix(in srgb, var(--bub) 45%, transparent); }
+  :root[data-theme="light"] .pipe-bubble:hover .pipe-bubble-disc,
+  :root[data-theme="light"] .pipe-bubble:focus-visible .pipe-bubble-disc {
+    box-shadow: 0 2px 4px rgba(16, 26, 44, 0.10), 0 10px 28px rgba(16, 26, 44, 0.16);
+  }
+  :root[data-theme="light"] :where(.pipe-bubble-label) {
+    background: #FFFFFF; border: 1.5px solid color-mix(in srgb, var(--bub) 70%, transparent);
+  }
+  :root[data-theme="light"] .geo-icon .land { fill: color-mix(in srgb, var(--bub) 22%, #FFFFFF); }
+  /* Modals and their chrome */
+  :root[data-theme="light"] :where(.modal, .def-modal, .lab-modal, .new-modal) {
+    border: 1px solid rgba(var(--line-rgb), 0.22);
+    box-shadow: 0 2px 6px rgba(16, 26, 44, 0.10), 0 24px 60px rgba(16, 26, 44, 0.22);
+  }
+  :root[data-theme="light"] :where(.modal-header, .priority-filters, .modal-filters, .lab-tabs, .result-count) {
+    border-bottom-color: rgba(var(--line-rgb), 0.16);
+  }
+  :root[data-theme="light"] :where(.agent-banner) {
+    background: color-mix(in srgb, var(--accent, var(--neon-immuno)) 7%, #FFFFFF);
+    border: 1px solid color-mix(in srgb, var(--accent, var(--neon-immuno)) 35%, transparent);
+  }
+  :root[data-theme="light"] :where(.pf-chip) {
+    background: #FFFFFF; border-color: rgba(var(--line-rgb), 0.34); color: var(--ink-1);
+  }
+  :root[data-theme="light"] .pf-chip:hover { border-color: var(--ink-1); color: var(--ink-0); }
+  :root[data-theme="light"] .pf-chip .count { opacity: 0.85; }
+  :root[data-theme="light"] .pf-chip.active {
+    background: var(--chip-color, var(--ink-1)); border-color: var(--chip-color, var(--ink-1)); color: #FFFFFF;
+  }
+  :root[data-theme="light"] .pf-chip:disabled { opacity: 0.45; }
+  :root[data-theme="light"] .pf-chip:disabled:hover { border-color: rgba(var(--line-rgb), 0.34); color: var(--ink-1); }
+  :root[data-theme="light"] :where(.modal-filters input, .exp-field select),
+  :root[data-theme="light"] .lab-controls input[type="search"],
+  :root[data-theme="light"] .lab-controls input[type="number"],
+  :root[data-theme="light"] .lab-card .lab-card-actions select {
+    background: #FFFFFF; border-color: rgba(var(--line-rgb), 0.34);
+  }
+  :root[data-theme="light"] .lab-controls input:focus { border-color: var(--neon-cyto); }
+  :root[data-theme="light"] :where(.filter-clear, .scope-toggle, .sort-btn, .exp-open, .demo-nav button,
+      .ask-act, .ask-chip, .ni-dismiss, .run-dismiss, .undo-bar button, .lab-btn-secondary, .modal-close) {
+    background: #FFFFFF; border-color: rgba(var(--line-rgb), 0.34); color: var(--ink-1);
+  }
+  :root[data-theme="light"] .sort-btn.active {
+    background: color-mix(in srgb, var(--accent, var(--neon-immuno)) 10%, #FFFFFF);
+    font-weight: 600;
+  }
+  :root[data-theme="light"] :where(.exp-btn, .scope-hint button) { background: color-mix(in srgb, var(--neon-immuno) 8%, #FFFFFF); }
+  :root[data-theme="light"] :where(.undo-bar) { background: var(--surface-3); border-color: rgba(var(--line-rgb), 0.3); }
+  /* Cards: white, edged, with the tier colour kept to the left rule and badge. */
+  :root[data-theme="light"] :where(.article) {
+    background: #FFFFFF; border-color: rgba(var(--line-rgb), 0.18);
+    border-left-color: var(--priority-color, var(--accent, var(--neon-immuno)));
+  }
+  :root[data-theme="light"] .article:hover {
+    background: #FFFFFF; border-color: rgba(var(--line-rgb), 0.38);
+    border-left-color: var(--priority-color, var(--accent, var(--neon-immuno)));
+    box-shadow: var(--panel-shadow);
+  }
+  :root[data-theme="light"] .article.boosted { background: #FFFFFF; box-shadow: inset 0 0 0 1px rgba(var(--line-rgb), 0.06); }
+  :root[data-theme="light"] .article.boosted::before { box-shadow: none; }
+  :root[data-theme="light"] .article.boosted:hover { box-shadow: inset 0 0 0 1px var(--priority-color), var(--panel-shadow); }
+  :root[data-theme="light"] :where(.new-item) {
+    background: #FFFFFF; border-color: rgba(var(--line-rgb), 0.16);
+    border-left-color: var(--priority-color, var(--ink-2));
+  }
+  :root[data-theme="light"] .new-item:hover,
+  :root[data-theme="light"] .new-item.is-boosted {
+    background: #FFFFFF; border-color: rgba(var(--line-rgb), 0.36);
+    border-left-color: var(--priority-color, var(--ink-2));
+  }
+  :root[data-theme="light"] :where(.lab-card) {
+    background: #FFFFFF; border-color: rgba(var(--line-rgb), 0.16);
+    border-left-color: var(--priority-color, var(--ink-2));
+  }
+  :root[data-theme="light"] :where(.ask-hit) { border-color: rgba(var(--line-rgb), 0.18); border-left-color: var(--hit-color, #5d6783); }
+  :root[data-theme="light"] .ask-hit:hover { background: #FFFFFF; border-color: rgba(var(--line-rgb), 0.38); border-left-color: var(--hit-color, #5d6783); box-shadow: var(--panel-shadow); }
+  :root[data-theme="light"] :where(.run-header) {
+    background: var(--surface-3); border-color: rgba(var(--line-rgb), 0.16);
+    border-left-color: var(--run-color, var(--neon-behav));
+  }
+  :root[data-theme="light"] :where(.lab-result-header) {
+    background: var(--surface-3); border-color: rgba(var(--line-rgb), 0.16);
+    border-left-color: var(--group-color, var(--neon-cyto));
+  }
+  :root[data-theme="light"] :where(.run-tag) { background: #FFFFFF; }
+  :root[data-theme="light"] :where(.ask-q) { background: color-mix(in srgb, var(--neon-immuno) 8%, #FFFFFF); border-color: color-mix(in srgb, var(--neon-immuno) 40%, transparent); }
+  :root[data-theme="light"] :where(.lab-ssl-bar) { background: color-mix(in srgb, var(--neon-behav) 6%, #FFFFFF); border-color: color-mix(in srgb, var(--neon-behav) 40%, transparent); }
+  /* Badges */
+  :root[data-theme="light"] :where(.mod-badge) { color: var(--ink-1); border-color: rgba(var(--line-rgb), 0.45); background: #FFFFFF; }
+  :root[data-theme="light"] .article-meta .if-badge,
+  :root[data-theme="light"] .article-meta .node-badge,
+  :root[data-theme="light"] :where(.def-tag) { background: var(--surface-3); border: 1px solid rgba(var(--line-rgb), 0.16); }
+  :root[data-theme="light"] .article-meta .node-badge.also { background: #FFFFFF; border-color: rgba(var(--line-rgb), 0.4); }
+  :root[data-theme="light"] .article-meta .new-badge {
+    background: color-mix(in srgb, var(--neon-immuno) 12%, #FFFFFF);
+    border: 1px solid color-mix(in srgb, var(--neon-immuno) 45%, transparent);
+  }
+  :root[data-theme="light"] .article-meta .preprint-badge { background: color-mix(in srgb, var(--warn) 12%, #FFFFFF); }
+  :root[data-theme="light"] .article-meta .via-badge { background: #FFFFFF; border-color: rgba(var(--line-rgb), 0.4); }
+  :root[data-theme="light"] :where(.bm-toggle) { border-color: color-mix(in srgb, var(--gold) 60%, transparent); background: #FFFFFF; }
+  :root[data-theme="light"] .bm-toggle:hover { background: color-mix(in srgb, var(--gold) 12%, #FFFFFF); }
+  :root[data-theme="light"] .bm-toggle.on { background: var(--gold); color: #FFFFFF; border-color: var(--gold); }
+  :root[data-theme="light"] .def-term .def-marker {
+    background: color-mix(in srgb, var(--neon-immuno) 10%, #FFFFFF);
+    border-color: color-mix(in srgb, var(--neon-immuno) 45%, transparent);
+  }
+  :root[data-theme="light"] .abs-snip mark { background: color-mix(in srgb, var(--neon-immuno) 18%, #FFFFFF); }
+  /* Guided demo chrome */
+  :root[data-theme="light"] :where(.demo-spot) { border: 2px solid var(--neon-cyto); box-shadow: 0 0 0 9999px var(--scrim); }
+  :root[data-theme="light"] :where(.demo-card) {
+    border: 1.5px solid color-mix(in srgb, var(--neon-cyto) 55%, transparent);
+    box-shadow: 0 2px 6px rgba(16, 26, 44, 0.12), 0 20px 50px rgba(16, 26, 44, 0.28);
   }
   * { box-sizing: border-box; margin: 0; padding: 0; }
   html, body {
@@ -1879,6 +2034,8 @@
   }
   .rep-fab:hover { background: var(--neon-behav); color: var(--on-accent); box-shadow: 0 0 24px rgba(182,255,60,0.5); }
   body.demo-on .rep-fab { display: none; }
+  /* A tour step that talks about a round button brings just that one back. */
+  body.demo-on .demo-reveal { display: flex !important; }
   .rep-ctl { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; margin: 0 0 14px; }
   .rep-ctl .seg { display: inline-flex; border: 1px solid var(--line); border-radius: 4px; overflow: hidden; }
   .rep-ctl .seg button {
@@ -2789,11 +2946,19 @@ function draw() {
   }
 
   const order = nodes.slice().sort((a, b) => (a.type === 'core' ? 1 : 0) - (b.type === 'core' ? 1 : 0));
+  // Light theme: solid discs with a cast shadow. Dark HUD: neon bloom.
+  const solid = themeVar('--canvas-solid') === '1';
   for (const n of order) {
     if (!isActive(n)) continue;
     const isHover = hoverNode === n;
-    ctx.shadowColor = n.color;
-    ctx.shadowBlur = isHover ? 36 : (n.type === 'core' ? 32 : 22);
+    if (solid) {
+      ctx.shadowColor = 'rgba(16, 26, 44, 0.22)';
+      ctx.shadowBlur = isHover ? 26 : 16;
+      ctx.shadowOffsetY = 5;
+    } else {
+      ctx.shadowColor = n.color;
+      ctx.shadowBlur = isHover ? 36 : (n.type === 'core' ? 32 : 22);
+    }
     ctx.beginPath();
     ctx.arc(n.x, n.y, n.r, 0, Math.PI * 2);
 
@@ -2806,20 +2971,33 @@ function draw() {
     } else {
       const aura = isHover ? (1 + 0.06 * Math.sin(t * 0.15)) : 1;
       const r = n.r * aura;
-      const g = ctx.createRadialGradient(n.x, n.y, 2, n.x, n.y, r);
-      g.addColorStop(0, n.color + 'ff');
-      g.addColorStop(0.5, n.color + '66');
-      g.addColorStop(1, n.color + '0a');
-      ctx.fillStyle = g;
-      ctx.fill();
-      ctx.lineWidth = isHover ? 2 : 1.4;
-      ctx.strokeStyle = n.color;
-      ctx.stroke();
+      if (solid) {
+        // Opaque pastel disc: white first so the grid never shows through,
+        // then one flat wash of the branch colour under a firm ring.
+        ctx.fillStyle = '#FFFFFF';
+        ctx.fill();
+        ctx.shadowBlur = 0; ctx.shadowOffsetY = 0;
+        ctx.fillStyle = n.color + (isHover ? '52' : '3d');
+        ctx.fill();
+        ctx.lineWidth = isHover ? 3 : 2.2;
+        ctx.strokeStyle = n.color;
+        ctx.stroke();
+      } else {
+        const g = ctx.createRadialGradient(n.x, n.y, 2, n.x, n.y, r);
+        g.addColorStop(0, n.color + 'ff');
+        g.addColorStop(0.5, n.color + '66');
+        g.addColorStop(1, n.color + '0a');
+        ctx.fillStyle = g;
+        ctx.fill();
+        ctx.lineWidth = isHover ? 2 : 1.4;
+        ctx.strokeStyle = n.color;
+        ctx.stroke();
+      }
 
       ctx.beginPath();
       ctx.arc(n.x, n.y, n.r - 8, 0, Math.PI * 2);
-      ctx.strokeStyle = n.color + '44';
-      ctx.lineWidth = 0.5;
+      ctx.strokeStyle = n.color + (solid ? '66' : '44');
+      ctx.lineWidth = solid ? 0.8 : 0.5;
       ctx.stroke();
 
       // article count badge (top-right) — total
@@ -2828,7 +3006,7 @@ function draw() {
       ctx.arc(n.x + n.r * 0.65, n.y - n.r * 0.65, 14, 0, Math.PI * 2);
       ctx.fill();
       ctx.strokeStyle = n.color;
-      ctx.lineWidth = 1;
+      ctx.lineWidth = solid ? 1.5 : 1;
       ctx.stroke();
       ctx.fillStyle = n.color;
       ctx.font = '600 12.5px "JetBrains Mono", monospace';
@@ -2844,8 +3022,8 @@ function draw() {
         ctx.fill();
         ctx.strokeStyle = themeVar('--gold');
         ctx.shadowColor = themeVar('--gold');
-        ctx.shadowBlur = 8;
-        ctx.lineWidth = 1;
+        ctx.shadowBlur = solid ? 0 : 8;
+        ctx.lineWidth = solid ? 1.5 : 1;
         ctx.stroke();
         ctx.shadowBlur = 0;
         ctx.fillStyle = themeVar('--gold');
@@ -2855,7 +3033,7 @@ function draw() {
         ctx.fillText('★' + n.boostedCount, n.x - n.r * 0.65, n.y - n.r * 0.65);
       }
     }
-    ctx.shadowBlur = 0;
+    ctx.shadowBlur = 0; ctx.shadowOffsetY = 0;
 
     if (n.type === 'core') {
       // Chosen against --core-fill, not against the page: the core is now a
@@ -2886,10 +3064,10 @@ function draw() {
       const m2 = ctx.measureText(line2).width;
       const mw = Math.max(m1, m2);
       const ph = line2 ? 32 : 18;
-      ctx.fillStyle = `rgba(${themeVar('--void-rgb')}, 0.85)`;
+      ctx.fillStyle = solid ? '#FFFFFF' : `rgba(${themeVar('--void-rgb')}, 0.85)`;
       ctx.fillRect(n.x - mw / 2 - pad, n.y + n.r + 10, mw + pad * 2, ph);
-      ctx.strokeStyle = n.color + '66';
-      ctx.lineWidth = 1;
+      ctx.strokeStyle = n.color + (solid ? 'b3' : '66');
+      ctx.lineWidth = solid ? 1.3 : 1;
       ctx.strokeRect(n.x - mw / 2 - pad, n.y + n.r + 10, mw + pad * 2, ph);
 
       ctx.fillStyle = n.color;
@@ -4920,16 +5098,16 @@ const demoBigBranch = () => nodes.filter(n => n.type === 'branch' && isActive(n)
 const DEMO_STEPS = [
   {
     title: 'ASD Research Atlas',
-    text: 'A live map of autism research: branches of the field orbiting one core, fed weekly from PubMed. The demo drives the page for you — click anywhere to skip ahead, Esc to leave.',
+    text: 'A live map of autism research: six branches of the field orbiting one core, fed weekly from PubMed. This tour visits every module — the map, the branch views, search, bookmarks, exports and the Authors, Press, NIH, Trials + Patents and US Map tabs. Click anywhere to skip ahead, Esc to leave.',
   },
   {
-    title: 'Live totals',
-    text: 'What the database holds right now: research branches, the journals indexed for each, every article filed, and when the weekly fetch last ran.',
+    title: 'Live totals & weekly export',
+    text: 'What the database holds right now — branches, indexed journals, every article filed, and when the weekly fetch last ran. ⇩ Weekly export downloads this week’s briefing as one Excel workbook: the top papers ranked with the reason each surfaced, lane totals against last week, then every new publication, NIH grant, trial, patent and press item.',
     target: () => document.querySelector('.hud .meta'),
   },
   {
     title: 'The map',
-    text: 'Each glowing node is a research branch, sized by how much literature sits inside it. The layout is a live physics simulation — nodes can be dragged, and signals pulse along the links.',
+    text: 'Each node is a research branch, sized by how much literature sits inside it. The layout is a live physics simulation — nodes can be dragged, signals pulse along the spokes, and dashed links show how many papers two branches share.',
     rect: demoGraphRect,
   },
   {
@@ -4945,13 +5123,13 @@ const DEMO_STEPS = [
   },
   {
     title: 'Inside a branch',
-    text: 'Every article filed under the branch, colour-coded by evidence tier, with full-text search and a date range. The header also shows terms the branch has learned from your votes.',
+    text: 'Every article filed under the branch, colour-coded by evidence tier, with full-text search, an all-nodes switch and a date range. The header lists the journals indexed for it and the terms it has learned from your votes.',
     target: () => document.getElementById('modal'),
     run() { const n = demoBigBranch(); if (n) openBranchModal(n.branch); },
   },
   {
     title: 'Priority & sorting',
-    text: 'Tier chips filter to just trials or reviews; sorting runs by priority, recency, title, or journal impact factor — the demo just switched to newest-first.',
+    text: 'Tier chips filter to just trials, clinical observations, translational work or reviews; sorting runs by priority, recency, title, journal impact factor or journal h-index — the demo just switched to newest-first.',
     target: () => document.querySelector('#modal .result-count'),
     also: '#priority-filters',
     run(state) {
@@ -4966,8 +5144,25 @@ const DEMO_STEPS = [
     },
   },
   {
+    title: 'Topic tabs',
+    text: 'Each branch carries its own topic tabs, tagged from title and MeSH: Intervention shows the eight therapeutic modality lanes (gene, nucleic-acid, viral, antibody, peptide, small-molecule, device, behavioural), Neuroscience its imaging methods, Genetics its variant classes, and so on. The same eight modality lanes label press, grants, trials and the map — the demo just filtered to one.',
+    target: () => document.getElementById('modality-filters'),
+    run(state) {
+      state.timers.push(setTimeout(() => {
+        const b = [...document.querySelectorAll('#modality-filters .pf-chip')]
+          .find(el => !el.disabled && !el.classList.contains('active'));
+        if (b) b.click();
+      }, 1600));
+      state.undo.push(() => {
+        if (!activeMods.size) return;
+        activeMods.clear();
+        if (currentBranch) { buildModalityChips(); renderArticles(); }
+      });
+    },
+  },
+  {
     title: 'An article card',
-    text: 'Each card links out to the paper. ☆ Save stars it into Bookmarks, and 👍/👎 teach the branch what belongs — repeated votes become learned terms that tune the weekly agent.',
+    text: 'Each card links out to the paper and shows its journal, impact factor (JCR, or an OpenAlex estimate marked ≈), journal h-index, topic tags and a NEW flag for this week’s arrivals. ☆ Save stars it into Bookmarks; 👍/👎 teach the branch what belongs — repeated votes become learned terms that tune the weekly agent.',
     target: () => document.querySelector('#article-list .article'),
   },
   {
@@ -4977,19 +5172,34 @@ const DEMO_STEPS = [
     run() { closeModal(); },
   },
   {
+    title: 'Search the whole library',
+    text: 'The ⌕ button (or the / key) searches every node at once — titles, every listed author, journal, MeSH headings and full abstracts, with a snippet showing why a card matched. is:preprint, is:new, is:via and via:name narrow by provenance.',
+    target: () => document.getElementById('modal'),
+    run(state) { openGlobalSearch(); state.undo.push(() => closeModal()); },
+  },
+  {
     title: 'Bookmarks',
-    text: 'Articles you star collect here, saved in this browser, so a reading list survives between visits.',
+    text: 'Papers you star — in a branch, in search, or from the Author Tracker — collect in one reading list that survives between visits. On the hosted copy the owner’s list is shared with every account; members add their own on top.',
     target: () => document.getElementById('bm-button'),
   },
   {
-    title: 'Reference panels',
-    text: 'What’s New groups articles by the weekly run that added them, newest first. Definitions holds the glossary behind the branch names.',
-    target: () => document.getElementById('new-button'),
-    also: '.def-button',
+    title: 'What’s New',
+    text: 'Articles grouped by the weekly run that added them, newest first, with the same tier colours and modality lanes. Dismiss a paper or a whole run once you have read it — an undo bar keeps it reversible.',
+    target: () => document.querySelector('#new-backdrop .new-modal'),
+    run(state) {
+      renderWhatsNew();
+      newBackdrop.classList.add('open');
+      state.undo.push(() => newBackdrop.classList.remove('open'));
+    },
+  },
+  {
+    title: 'Definitions',
+    text: 'The glossary behind the branch names and the vocabulary used across the atlas — open it whenever a term on a card, a tab or a tier chip is unfamiliar.',
+    target: () => document.querySelector('.def-button'),
   },
   {
     title: 'Agent Lab',
-    text: 'The owner’s console: preview what the weekly agent would add before anything is saved, or search PubMed manually and file results into any branch.',
+    text: 'The owner’s console, in three tabs: Agent Run previews what the weekly agent would add before anything is saved; Manual Search queries PubMed directly and files results into any branch; Ask answers a plain-language question from the library and shows why each paper matched.',
     when: () => !PUBLIC_MODE,
     target: () => document.querySelector('#lab-backdrop .lab-modal'),
     run(state) {
@@ -4998,16 +5208,64 @@ const DEMO_STEPS = [
     },
   },
   {
-    title: 'The other half',
-    text: 'Authors crosses to the Author Tracker, where the same literature is followed researcher by researcher — every paper, correction, and response. It has a ▶ demo of its own.',
+    title: 'Export runs',
+    text: 'The ⇩ button exports the most recent weekly runs as CSV, Excel or a print/PDF table — ten columns: published date, first and last author, journal, impact factor and its source, journal h-index, PMID, title and abstract.',
+    target: () => document.querySelector('#exp-backdrop .def-modal'),
+    run(state) {
+      openExport();
+      state.undo.push(() => document.getElementById('exp-backdrop').classList.remove('open'));
+    },
+  },
+  {
+    title: '14-day report',
+    text: 'The ▦ button in the corner is the one-click briefing: everything new across papers, press, NIH awards, trial updates and patents in a 7-, 14- or 30-day window, with a print view and an all-lanes Excel export.',
+    target: () => document.querySelector('#rep-backdrop .def-modal'),
+    run(state) {
+      openReport();
+      state.undo.push(() => document.getElementById('rep-backdrop').classList.remove('open'));
+    },
+  },
+  {
+    title: 'Light & dark',
+    text: 'The ◒ button switches between the dark HUD and a solid light theme; the choice is remembered on every page of the atlas. The demo just flipped it — and flips it back when you move on.',
+    reveal: '#theme-fab',
+    target: () => document.getElementById('theme-fab'),
+    run(state) {
+      const before = document.documentElement.getAttribute('data-theme') || 'dark';
+      state.timers.push(setTimeout(() => applyTheme(before === 'light' ? 'dark' : 'light'), 1400));
+      state.undo.push(() => applyTheme(before));
+    },
+  },
+  {
+    title: 'Trials + Patents',
+    text: 'This satellite opens the pipeline view: autism studies from ClinicalTrials.gov with phase, status and sites, and USPTO patent filings with inventors and status — both searchable and tagged with the same eight modality lanes.',
+    target: () => document.getElementById('pipe-bubble'),
+  },
+  {
+    title: 'US Map',
+    text: 'A state-by-state map of where the atlas’s records come from — publications by first-author affiliation, NIH grants by awardee, trials by site, patents by inventor. Filter by lane, modality or year, and click a state for its breakdown.',
+    target: () => document.getElementById('geo-bubble'),
+  },
+  {
+    title: 'Press',
+    text: 'Press releases and research news on autism from four feeds — ScienceDaily, Medical Xpress, News-Medical and The Transmitter — refreshed with every weekly run and tagged by modality. 👍/👎 there train the same ranking the branches learn from.',
+    target: () => document.querySelector('.press-button'),
+  },
+  {
+    title: 'NIH funding',
+    text: 'Autism grants from NIH RePORTER: funding per fiscal year back to FY2015, browsable projects for the three latest years with institute, awardee and dollars, and the lead PI’s h-index.',
+    target: () => document.querySelector('.nih-button'),
+  },
+  {
+    title: 'Authors',
+    text: 'The Author Tracker follows the same literature researcher by researcher — every paper, correction and response, plus each person’s NIH grants, trials and patents. ☆ Save there lands in the same Bookmarks. It has a ▶ demo of its own.',
     target: () => document.querySelector('.auth-button'),
   },
   {
     title: 'That’s the tour',
-    text: 'Everything the demo touched has been put back. Explore for real — click any node to open its branch.',
+    text: 'Everything the demo touched has been put back. Explore for real — click any node to open its branch, or ▶ to run this again.',
   },
 ];
-
 let DEMO = null;
 
 function demoStart() {
@@ -5033,7 +5291,8 @@ function demoEnd() {
   demoClearStep();
   document.body.classList.remove('demo-on');
   closeModal();
-  document.getElementById('lab-backdrop').classList.remove('open');
+  ['lab-backdrop', 'exp-backdrop', 'rep-backdrop', 'new-backdrop']
+    .forEach(id => document.getElementById(id).classList.remove('open'));
   DEMO = null;
 }
 
@@ -5051,6 +5310,10 @@ function demoStep(dir) {
   if (i >= DEMO.steps.length) { demoEnd(); return; }
   DEMO.i = i;
   const s = DEMO.steps[i];
+  if (s.reveal) {
+    const el = document.querySelector(s.reveal);
+    if (el) { el.classList.add('demo-reveal'); DEMO.undo.push(() => el.classList.remove('demo-reveal')); }
+  }
   if (s.run) s.run(DEMO);
   // Let any modal opening settle before placing the spotlight.
   DEMO.timers.push(setTimeout(() => demoShowStep(s), s.run ? 420 : 60));

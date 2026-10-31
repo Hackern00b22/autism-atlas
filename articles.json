@@ -1,7 +1,7 @@
 {
  "_meta": {
   "schema_version": 5,
-  "last_updated": "2026-10-24",
+  "last_updated": "2026-10-29",
   "description": "Article store for the Autism Research Network Atlas.",
   "schema": {
    "id": "unique string id",
@@ -423,9 +423,9 @@
    "learned": {
     "include": {},
     "exclude": {},
-    "pos_events": 6,
+    "pos_events": 7,
     "neg_events": 4,
-    "updatedAt": "2026-09-30"
+    "updatedAt": "2026-10-29"
    },
    "lastFetched": "2026-10-24"
   },
@@ -437,6 +437,11 @@
    "minYear": 2021,
    "learned": {
     "include": {
+     "Visual Cortex": {
+      "w": 1.099,
+      "pos": 2,
+      "neg": 0
+     },
      "Magnetic Resonance Imaging": {
       "w": 1.099,
       "pos": 2,
@@ -444,9 +449,9 @@
      }
     },
     "exclude": {},
-    "pos_events": 9,
+    "pos_events": 10,
     "neg_events": 0,
-    "updatedAt": "2026-09-18"
+    "updatedAt": "2026-10-29"
    },
    "lastFetched": "2026-10-24"
   },
@@ -36299,6 +36304,41 @@
    "firstAuthor": "Cardelle-Pérez F",
    "lastAuthor": "Leal-Hernández M",
    "meshChecked": "2026-10-28"
+  },
+  {
+   "id": "pm-42557909",
+   "title": "Visual Cortical Response Variability in Infants at High Familial Likelihood for Autism.",
+   "date": "2026-09-01",
+   "authors": "Dickinson A, Booth M, Huberty S, et al.",
+   "url": "https://pubmed.ncbi.nlm.nih.gov/42557909/",
+   "priority": "unclassified",
+   "addedBy": "authors-manual-2026-10-29",
+   "mesh": [
+    "Humans",
+    "Evoked Potentials, Visual",
+    "Infant",
+    "Female",
+    "Male",
+    "Visual Cortex",
+    "Autistic Disorder",
+    "Electroencephalography",
+    "Child, Preschool",
+    "Child Development",
+    "Autism Spectrum Disorder",
+    "Cognition"
+   ],
+   "branchKey": "neuroscience",
+   "viaAuthors": [
+    "pruett-john-r"
+   ],
+   "viaReason": "filed by hand from John R Pruett's tracker page",
+   "journalDisplay": "Developmental science",
+   "geo": {
+    "state": "CA",
+    "city": "Los Angeles"
+   },
+   "firstAuthor": "Dickinson A",
+   "lastAuthor": "IBIS Network"
   }
  ]
 }
