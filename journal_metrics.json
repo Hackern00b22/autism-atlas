@@ -1542,5 +1542,135 @@
  "proceedings of the national academy of sciences of the united states of america": {
   "name": "Proceedings of the National Academy of Sciences of the United States of America",
   "fetched": "2026-11-05"
+ },
+ "american journal of medical genetics. part a": {
+  "name": "American journal of medical genetics. Part A",
+  "fetched": "2026-11-05",
+  "openalexId": "S180901878",
+  "openalexName": "American Journal of Medical Genetics Part A",
+  "type": "journal",
+  "worksCount": 13201,
+  "hIndex": 161,
+  "citedness2y": 1.533795493934142
+ },
+ "brain : a journal of neurology": {
+  "name": "Brain : a journal of neurology",
+  "fetched": "2026-11-05",
+  "openalexId": "S118357697",
+  "openalexName": "Brain",
+  "type": "journal",
+  "worksCount": 19578,
+  "hIndex": 501,
+  "citedness2y": 9.326307572209211
+ },
+ "cell and tissue banking": {
+  "name": "Cell and tissue banking",
+  "fetched": "2026-11-05",
+  "openalexId": "S101351556",
+  "openalexName": "Cell and Tissue Banking",
+  "type": "journal",
+  "worksCount": 1571,
+  "hIndex": 64,
+  "citedness2y": 2.112676056338028
+ },
+ "clinical neurophysiology : official journal of the international federation of clinical neurophysiology": {
+  "name": "Clinical neurophysiology : official journal of the International Federation of Clinical Neurophysiology",
+  "fetched": "2026-11-05",
+  "openalexId": "S38337076",
+  "openalexName": "Clinical Neurophysiology",
+  "type": "journal",
+  "worksCount": 25626,
+  "hIndex": 246,
+  "citedness2y": 1.4097859327217126
+ },
+ "human genetics": {
+  "name": "Human genetics",
+  "fetched": "2026-11-05",
+  "openalexId": "S199832308",
+  "openalexName": "Human Genetics",
+  "type": "journal",
+  "worksCount": 12495,
+  "hIndex": 207,
+  "citedness2y": 4.1050583657587545
+ },
+ "international journal of dermatology": {
+  "name": "International journal of dermatology",
+  "fetched": "2026-11-05",
+  "openalexId": "S32635664",
+  "openalexName": "International Journal of Dermatology",
+  "type": "journal",
+  "worksCount": 19434,
+  "hIndex": 141,
+  "citedness2y": 2.3289036544850497
+ },
+ "international journal of developmental disabilities": {
+  "name": "International journal of developmental disabilities",
+  "fetched": "2026-11-05",
+  "openalexId": "S2764979803",
+  "openalexName": "International Journal of Developmental Disabilities",
+  "type": "journal",
+  "worksCount": 1289,
+  "hIndex": 46,
+  "citedness2y": 1.7993019197207678
+ },
+ "jama internal medicine": {
+  "name": "JAMA internal medicine",
+  "fetched": "2026-11-05",
+  "openalexId": "S65364685",
+  "openalexName": "JAMA Internal Medicine",
+  "type": "journal",
+  "worksCount": 7993,
+  "hIndex": 258,
+  "citedness2y": 8.099773242630386
+ },
+ "journal of affective disorders": {
+  "name": "Journal of affective disorders",
+  "fetched": "2026-11-05",
+  "openalexId": "S113871862",
+  "openalexName": "Journal of Affective Disorders",
+  "type": "journal",
+  "worksCount": 23678,
+  "hIndex": 308,
+  "citedness2y": 5.851278357940223
+ },
+ "journal of eating disorders": {
+  "name": "Journal of eating disorders",
+  "fetched": "2026-11-05",
+  "openalexId": "S4210234357",
+  "openalexName": "Journal of Eating Disorders",
+  "type": "journal",
+  "worksCount": 2080,
+  "hIndex": 79,
+  "citedness2y": 4.5680190930787585
+ },
+ "nutrition reviews": {
+  "name": "Nutrition reviews",
+  "fetched": "2026-11-05",
+  "openalexId": "S38078933",
+  "openalexName": "Nutrition Reviews",
+  "type": "journal",
+  "worksCount": 13553,
+  "hIndex": 234,
+  "citedness2y": 5.981507823613087
+ },
+ "research in neurodiversity": {
+  "name": "Research in neurodiversity",
+  "fetched": "2026-11-05",
+  "openalexId": "S5407047409",
+  "openalexName": "Research in Neurodiversity",
+  "type": "journal",
+  "worksCount": 88,
+  "hIndex": 4,
+  "citedness2y": 0.5568181818181818
+ },
+ "the journal of nutritional biochemistry": {
+  "name": "The Journal of nutritional biochemistry",
+  "fetched": "2026-11-05",
+  "openalexId": "S548917",
+  "openalexName": "The Journal of Nutritional Biochemistry",
+  "type": "journal",
+  "worksCount": 5915,
+  "hIndex": 188,
+  "citedness2y": 4.654494382022472
  }
 }

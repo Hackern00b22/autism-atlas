@@ -36484,7 +36484,8 @@
    "firstAuthor": "Canada K",
    "lastAuthor": "Pelphrey K",
    "journalKey": "mol-psych",
-   "branchKey": "genetics"
+   "branchKey": "genetics",
+   "meshChecked": "2026-11-05"
   },
   {
    "id": "pm-42977016",
@@ -36505,7 +36506,8 @@
    "alsoBranches": [
     "immunology",
     "cytokines"
-   ]
+   ],
+   "meshChecked": "2026-11-05"
   },
   {
    "id": "pm-42966433",
@@ -36525,7 +36527,8 @@
    "journalKey": "bbi",
    "alsoBranches": [
     "neuroscience"
-   ]
+   ],
+   "meshChecked": "2026-11-05"
   },
   {
    "id": "pm-42986523",
@@ -36543,7 +36546,8 @@
    "firstAuthor": "Landau E",
    "lastAuthor": "Wodka EL",
    "journalKey": "j-autism-dev-disord",
-   "branchKey": "intervention"
+   "branchKey": "intervention",
+   "meshChecked": "2026-11-05"
   },
   {
    "id": "pm-42986522",
@@ -36561,7 +36565,8 @@
    "firstAuthor": "Almulla AA",
    "lastAuthor": "Khasawneh MAS",
    "journalKey": "j-autism-dev-disord",
-   "branchKey": "behavioral"
+   "branchKey": "behavioral",
+   "meshChecked": "2026-11-05"
   },
   {
    "id": "pm-42980942",
@@ -36579,7 +36584,8 @@
    "firstAuthor": "Layton C",
    "lastAuthor": "Bennetto L",
    "journalKey": "j-autism-dev-disord",
-   "branchKey": "behavioral"
+   "branchKey": "behavioral",
+   "meshChecked": "2026-11-05"
   },
   {
    "id": "pm-42978384",
@@ -36594,7 +36600,8 @@
    "firstAuthor": "Van der Burg E",
    "lastAuthor": "Begeer S",
    "journalKey": "autism",
-   "branchKey": "behavioral"
+   "branchKey": "behavioral",
+   "meshChecked": "2026-11-05"
   },
   {
    "id": "pm-42975584",
@@ -36609,7 +36616,8 @@
    "firstAuthor": "Waite M",
    "lastAuthor": "Birmingham E",
    "journalKey": "j-autism-dev-disord",
-   "branchKey": "behavioral"
+   "branchKey": "behavioral",
+   "meshChecked": "2026-11-05"
   },
   {
    "id": "pm-42973346",
@@ -36627,7 +36635,8 @@
    "firstAuthor": "Kenworthy L",
    "lastAuthor": "Wallace GL",
    "journalKey": "autism-res",
-   "branchKey": "behavioral"
+   "branchKey": "behavioral",
+   "meshChecked": "2026-11-05"
   },
   {
    "id": "pm-42965630",
@@ -36645,7 +36654,8 @@
    "firstAuthor": "Horowitz-Kraus T",
    "lastAuthor": "Rosch KS",
    "journalKey": "j-autism-dev-disord",
-   "branchKey": "behavioral"
+   "branchKey": "behavioral",
+   "meshChecked": "2026-11-05"
   },
   {
    "id": "pm-42944815",
@@ -36663,7 +36673,8 @@
    "firstAuthor": "Garotti R",
    "lastAuthor": "Terrone G",
    "journalKey": "j-autism-dev-disord",
-   "branchKey": "behavioral"
+   "branchKey": "behavioral",
+   "meshChecked": "2026-11-05"
   },
   {
    "id": "pm-42937264",
@@ -36678,7 +36689,8 @@
    "firstAuthor": "Brilhante AVM",
    "lastAuthor": "de Amorim MMR",
    "journalKey": "autism",
-   "branchKey": "behavioral"
+   "branchKey": "behavioral",
+   "meshChecked": "2026-11-05"
   },
   {
    "id": "pm-42933870",
@@ -36695,7 +36707,8 @@
    "journalKey": "jcpp",
    "alsoBranches": [
     "behavioral"
-   ]
+   ],
+   "meshChecked": "2026-11-05"
   },
   {
    "id": "pm-42932109",
@@ -36713,7 +36726,8 @@
    "firstAuthor": "Clarke EB",
    "lastAuthor": "Bal VH",
    "journalKey": "j-autism-dev-disord",
-   "branchKey": "behavioral"
+   "branchKey": "behavioral",
+   "meshChecked": "2026-11-05"
   },
   {
    "id": "pm-40465071",
@@ -36882,7 +36896,8 @@
    "firstAuthor": "Andersen RE",
    "lastAuthor": "Walsh CA",
    "journalKey": "nature",
-   "branchKey": "genetics"
+   "branchKey": "genetics",
+   "meshChecked": "2026-11-05"
   },
   {
    "id": "pm-42934845",
@@ -36897,7 +36912,8 @@
    "firstAuthor": "Li Y",
    "lastAuthor": "Liu W",
    "journalKey": "autism",
-   "branchKey": "genetics"
+   "branchKey": "genetics",
+   "meshChecked": "2026-11-05"
   },
   {
    "id": "pm-40450614",
@@ -36946,7 +36962,8 @@
    "firstAuthor": "Saleh TH",
    "lastAuthor": "Mohammed SGAA",
    "journalKey": "j-autism-dev-disord",
-   "branchKey": "intervention"
+   "branchKey": "intervention",
+   "meshChecked": "2026-11-05"
   },
   {
    "id": "pm-42980943",
@@ -36964,7 +36981,8 @@
    "firstAuthor": "Straiton-Webster D",
    "lastAuthor": "Ingersoll B",
    "journalKey": "j-autism-dev-disord",
-   "branchKey": "intervention"
+   "branchKey": "intervention",
+   "meshChecked": "2026-11-05"
   },
   {
    "id": "pm-42965631",
@@ -36979,7 +36997,8 @@
    "firstAuthor": "de Bildt A",
    "lastAuthor": "Alma MA",
    "journalKey": "j-autism-dev-disord",
-   "branchKey": "intervention"
+   "branchKey": "intervention",
+   "meshChecked": "2026-11-05"
   },
   {
    "id": "pm-42965628",
@@ -36997,7 +37016,8 @@
    "firstAuthor": "Blacher J",
    "lastAuthor": "Ledoux Galligan M",
    "journalKey": "j-autism-dev-disord",
-   "branchKey": "intervention"
+   "branchKey": "intervention",
+   "meshChecked": "2026-11-05"
   },
   {
    "id": "pm-42962960",
@@ -37014,7 +37034,8 @@
    },
    "firstAuthor": "Kim YS",
    "lastAuthor": "Leventhal B",
-   "journalKey": "biol-psych"
+   "journalKey": "biol-psych",
+   "meshChecked": "2026-11-05"
   },
   {
    "id": "pm-42944816",
@@ -37032,7 +37053,8 @@
    "firstAuthor": "Rousan MJ",
    "lastAuthor": "Corbett BA",
    "journalKey": "j-autism-dev-disord",
-   "branchKey": "intervention"
+   "branchKey": "intervention",
+   "meshChecked": "2026-11-05"
   },
   {
    "id": "pm-42936932",
@@ -37046,7 +37068,8 @@
    "geo": null,
    "firstAuthor": "Flaherty E",
    "journalKey": "autism",
-   "branchKey": "intervention"
+   "branchKey": "intervention",
+   "meshChecked": "2026-11-05"
   },
   {
    "id": "pm-42926313",
@@ -37064,7 +37087,8 @@
    "firstAuthor": "Wallace GL",
    "lastAuthor": "Klinger LG",
    "journalKey": "autism",
-   "branchKey": "intervention"
+   "branchKey": "intervention",
+   "meshChecked": "2026-11-05"
   },
   {
    "id": "pm-40465072",
@@ -37411,7 +37435,8 @@
    "lastAuthor": "Chambers C",
    "branchKey": "cytokines",
    "viaOpenVenue": true,
-   "journalDisplay": "International journal of dermatology"
+   "journalDisplay": "International journal of dermatology",
+   "meshChecked": "2026-11-05"
   },
   {
    "id": "pm-42142545",
@@ -37463,7 +37488,8 @@
    "lastAuthor": "Ashwood P",
    "branchKey": "cytokines",
    "viaOpenVenue": true,
-   "journalDisplay": "Brain, behavior, & immunity - health"
+   "journalDisplay": "Brain, behavior, & immunity - health",
+   "meshChecked": "2026-11-05"
   },
   {
    "id": "pm-42825045",
@@ -37482,7 +37508,8 @@
    "lastAuthor": "Nunes Perez Fandiño J",
    "branchKey": "immunology",
    "viaOpenVenue": true,
-   "journalDisplay": "Brain, behavior, & immunity - health"
+   "journalDisplay": "Brain, behavior, & immunity - health",
+   "meshChecked": "2026-11-05"
   },
   {
    "id": "pm-42961672",
@@ -37651,7 +37678,8 @@
    "lastAuthor": "Wang M",
    "branchKey": "neuroscience",
    "viaOpenVenue": true,
-   "journalDisplay": "Neuroscience"
+   "journalDisplay": "Neuroscience",
+   "meshChecked": "2026-11-05"
   },
   {
    "id": "pm-42981179",
@@ -37704,7 +37732,8 @@
    "lastAuthor": "Dravid SM",
    "branchKey": "neuroscience",
    "viaOpenVenue": true,
-   "journalDisplay": "Brain : a journal of neurology"
+   "journalDisplay": "Brain : a journal of neurology",
+   "meshChecked": "2026-11-05"
   },
   {
    "id": "pm-42976588",
@@ -37720,7 +37749,8 @@
    "lastAuthor": "Cross JH",
    "branchKey": "neuroscience",
    "viaOpenVenue": true,
-   "journalDisplay": "Clinical neurophysiology : official journal of the International Federation of Clinical Neurophysiology"
+   "journalDisplay": "Clinical neurophysiology : official journal of the International Federation of Clinical Neurophysiology",
+   "meshChecked": "2026-11-05"
   },
   {
    "id": "pm-42931765",
@@ -37736,7 +37766,8 @@
    "lastAuthor": "Shu H",
    "branchKey": "intervention",
    "viaOpenVenue": true,
-   "journalDisplay": "JAMA internal medicine"
+   "journalDisplay": "JAMA internal medicine",
+   "meshChecked": "2026-11-05"
   },
   {
    "id": "pm-42677003",
@@ -37755,7 +37786,8 @@
    "lastAuthor": "Feinberg ME",
    "branchKey": "intervention",
    "viaOpenVenue": true,
-   "journalDisplay": "Research in neurodiversity"
+   "journalDisplay": "Research in neurodiversity",
+   "meshChecked": "2026-11-05"
   },
   {
    "id": "pm-42976340",
@@ -37806,7 +37838,8 @@
    "lastAuthor": "Treasure J",
    "branchKey": "intervention",
    "viaOpenVenue": true,
-   "journalDisplay": "The International journal of eating disorders"
+   "journalDisplay": "The International journal of eating disorders",
+   "meshChecked": "2026-11-05"
   },
   {
    "id": "pm-42958456",
@@ -37821,7 +37854,8 @@
    "firstAuthor": "Cobbaert L",
    "branchKey": "behavioral",
    "viaOpenVenue": true,
-   "journalDisplay": "Journal of eating disorders"
+   "journalDisplay": "Journal of eating disorders",
+   "meshChecked": "2026-11-05"
   },
   {
    "id": "pm-42937370",
@@ -37840,7 +37874,8 @@
    "journalDisplay": "Nutrition reviews",
    "alsoBranches": [
     "intervention"
-   ]
+   ],
+   "meshChecked": "2026-11-05"
   },
   {
    "id": "pm-42945936",
@@ -37856,7 +37891,8 @@
    "lastAuthor": "He H",
    "branchKey": "behavioral",
    "viaOpenVenue": true,
-   "journalDisplay": "Research in developmental disabilities"
+   "journalDisplay": "Research in developmental disabilities",
+   "meshChecked": "2026-11-05"
   },
   {
    "id": "pm-42936596",
@@ -37872,7 +37908,8 @@
    "lastAuthor": "Archiles Donoso SR",
    "branchKey": "behavioral",
    "viaOpenVenue": true,
-   "journalDisplay": "International journal of developmental disabilities"
+   "journalDisplay": "International journal of developmental disabilities",
+   "meshChecked": "2026-11-05"
   },
   {
    "id": "pm-42978390",
@@ -37886,7 +37923,8 @@
    "mesh": [],
    "geo": null,
    "firstAuthor": "Habiballah LK",
-   "lastAuthor": "Abu-Akel A"
+   "lastAuthor": "Abu-Akel A",
+   "meshChecked": "2026-11-05"
   },
   {
    "id": "pm-42928607",
@@ -37903,7 +37941,8 @@
     "city": "Los Angeles"
    },
    "firstAuthor": "Singer H",
-   "lastAuthor": "Lord C"
+   "lastAuthor": "Lord C",
+   "meshChecked": "2026-11-05"
   },
   {
    "id": "pm-42986525",
@@ -37919,7 +37958,8 @@
     "state": "PA",
     "city": "Philadelphia"
    },
-   "firstAuthor": "Lee Y"
+   "firstAuthor": "Lee Y",
+   "meshChecked": "2026-11-05"
   },
   {
    "id": "pm-42980944",
@@ -37933,7 +37973,8 @@
    "mesh": [],
    "geo": null,
    "firstAuthor": "Ozyazici K",
-   "lastAuthor": "Can E"
+   "lastAuthor": "Can E",
+   "meshChecked": "2026-11-05"
   }
  ]
 }
