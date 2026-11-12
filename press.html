@@ -275,6 +275,16 @@
   body.public .card .bm-toggle { margin-left: auto; }
   #saved-btn.on { border-color: var(--gold); color: var(--gold); }
   #saved-btn.on:hover { background: var(--gold); color: var(--on-accent); }
+  /* funder filter (Marcus Foundation …) — gold like Saved: it marks money, not topic */
+  #funder-btn.on { border-color: var(--gold); color: var(--gold); }
+  #funder-btn.on:hover { background: var(--gold); color: var(--on-accent); }
+  .card .fundtag {
+    font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.06em;
+    color: var(--gold); border: 1px solid color-mix(in srgb, var(--gold) 55%, transparent);
+    border-radius: 999px; padding: 0 7px; white-space: nowrap; align-self: center;
+  }
+  .card .fundsnip { margin-top: 7px; font-family: 'JetBrains Mono', monospace; font-size: 10.5px; color: var(--ink-2); letter-spacing: 0.02em; line-height: 1.5; }
+  .card .fundsnip b { font-weight: 400; color: var(--gold); }
 
   .card .rtitle { font-size: 15.5px; font-weight: 500; line-height: 1.35; margin: 6px 0 5px; }
   .card .rtitle a { color: var(--ink-0); text-decoration: none; }
@@ -354,6 +364,8 @@
         </div>
         <button class="btn" id="saved-btn" aria-pressed="false"
                 title="Show only saved releases">☆ Saved</button>
+        <button class="btn" id="funder-btn" aria-pressed="false"
+                title="Show only releases that credit the Marcus Foundation (feed text or the release page)">◈ Marcus Foundation</button>
       </div>
       <div class="modchips" id="modchips" role="group" aria-label="Filter by therapeutic modality"></div>
       <div id="list"></div>
@@ -396,6 +408,8 @@ let PUBLIC = false;
 let SRC_ON = null;            // Set of enabled source keys
 let SORT = 'new';
 let SAVED_ONLY = false;
+let FUNDER_ONLY = null;       // funder key, e.g. 'marcus', or null — see funders.py
+const FUNDER_LABELS = { marcus: 'Marcus Foundation' };
 let MOD_ON = new Set();       // therapeutic-modality filter, OR semantics (as on every other page)
 try { SORT = localStorage.getItem(SORT_KEY) || 'new'; } catch (e) {}
 
@@ -553,6 +567,7 @@ async function refresh(auto) {
 // ---------- render ----------
 function render() {
   const rels = DATA.releases || [];
+  updateFunderBtn();
   $('m-total').textContent = rels.length;
   $('m-sources').textContent = (DATA.sources || []).length;
   $('m-votes').textContent = Object.keys(DATA.feedback).length;
@@ -635,6 +650,7 @@ function renderList(rels) {
   let view = SAVED_ONLY ? rels.filter(r => isBookmarked(r.id))
                         : rels.filter(r => SRC_ON.has(r.source));
   renderMods(view);
+  if (FUNDER_ONLY) view = view.filter(r => r.funders && r.funders[FUNDER_ONLY]);
   if (MOD_ON.size) view = view.filter(r => (r.mods || []).some(m => MOD_ON.has(m)));
   if (q) view = view.filter(r =>
     r.title.toLowerCase().includes(q) || (r.summary || '').toLowerCase().includes(q)
@@ -648,6 +664,9 @@ function renderList(rels) {
   if (!view.length) {
     $('list').innerHTML = SAVED_ONLY
       ? `<div class="empty">// NOTHING SAVED YET — HIT ☆ SAVE ON A RELEASE</div>`
+      : FUNDER_ONLY
+      ? `<div class="empty">// NO RELEASE IN THE FEEDS CREDITS THE ${esc((FUNDER_LABELS[FUNDER_ONLY] || FUNDER_ONLY).toUpperCase())} YET<br><br>
+           <span style="letter-spacing:0.04em;text-transform:none">Each release's page is read once it arrives; a mention in the body text or the funder line is enough.</span></div>`
       : `<div class="empty">// NO RELEASES MATCH</div>`;
     return;
   }
@@ -667,6 +686,7 @@ function renderList(rels) {
         <span class="date">${esc(r.date)}</span>
         ${chip}
         ${(r.mods || []).map(m => `<span class="modtag" title="Therapeutic modality (from title + summary)">${esc((DATA.modalities || {})[m] || m)}</span>`).join('')}
+        ${Object.entries(r.funders || {}).map(([k, f]) => `<span class="fundtag" title="Credits the ${esc(FUNDER_LABELS[k] || k)} — ${esc((f.via || []).join(', '))}">◈ ${esc(FUNDER_LABELS[k] || k)}</span>`).join('')}
         <span class="fb">
           <button class="fb-up ${v > 0 ? 'on' : ''}" data-id="${esc(r.id)}" data-v="1"
                   aria-label="Mark relevant" aria-pressed="${v > 0}"
@@ -682,6 +702,8 @@ function renderList(rels) {
       <div class="rtitle"><a href="${esc(r.url)}" target="_blank" rel="noopener">${esc(r.title)}</a></div>
       ${r.summary ? `<div class="summ">${esc(r.summary)}</div>` : ''}
       ${hits}
+      ${FUNDER_ONLY && r.funders && r.funders[FUNDER_ONLY] && r.funders[FUNDER_ONLY].snippet
+        ? `<div class="fundsnip"><b>◈</b> ${esc(r.funders[FUNDER_ONLY].snippet)}</div>` : ''}
     </div>`;
   }).join('');
 
@@ -722,6 +744,18 @@ document.querySelectorAll('#sortseg button').forEach(b => {
 $('saved-btn').onclick = () => {
   SAVED_ONLY = !SAVED_ONLY;
   updateSavedBtn();
+  renderList(DATA.releases || []);
+};
+function updateFunderBtn() {
+  const b = $('funder-btn');
+  const n = (DATA.releases || []).filter(r => r.funders && r.funders.marcus).length;
+  b.classList.toggle('on', FUNDER_ONLY === 'marcus');
+  b.setAttribute('aria-pressed', FUNDER_ONLY === 'marcus');
+  b.textContent = `◈ Marcus Foundation${n ? ` (${n})` : ''}`;
+}
+$('funder-btn').onclick = () => {
+  FUNDER_ONLY = FUNDER_ONLY ? null : 'marcus';
+  updateFunderBtn();
   renderList(DATA.releases || []);
 };
 $('refresh-btn').onclick = () => refresh(false);

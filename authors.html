@@ -544,6 +544,10 @@
   .ident.tracked { opacity: 0.5; cursor: not-allowed; }
   .ident.tracked:hover { border-color: var(--line); background: var(--surface-3); }
   .ident-name { font-size: 17px; font-weight: 500; }
+  .ident-atlas { display: inline-block; vertical-align: 2px; margin-left: 9px; padding: 1px 7px; border-radius: 3px;
+                 font-family: 'JetBrains Mono', ui-monospace, 'SF Mono', SFMono-Regular, Menlo, Consolas, monospace; font-size: 10px;
+                 letter-spacing: 0.1em; color: var(--gold); border: 1px solid var(--gold); }
+  .ident.in-atlas { border-color: rgba(255, 217, 122, 0.45); }
   .ident-meta { font-family: 'JetBrains Mono', ui-monospace, 'SF Mono', SFMono-Regular, Menlo, Consolas, monospace; font-size: 11.5px; color: var(--ink-2);
                 letter-spacing: 0.08em; margin-top: 5px; line-height: 1.7; }
   .ident-samp { font-size: 13.5px; color: var(--ink-1); margin-top: 9px; line-height: 1.55; }
@@ -1003,7 +1007,8 @@ function fyWindow() {
   return f.length ? (f.length === 1 ? `FY${f[0]}` : `FY${f[0]}–${f[f.length - 1]}`) : 'the browsable FYs';
 }
 function laneTilesHTML(p) {
-  const grants = p.nihGrants || [], trials = p.trials || [], pats = p.patents || [];
+  const grants = p.nihGrants || [], trials = p.trials || [], pats = p.patents || [], press = p.press || [];
+  const firm = press.filter(r => r.why.some(w => w !== 'title')).length;
   const total = grants.reduce((m, g) => m + (+g.award || 0), 0);
   const n = new Set(grants.map(g => grantCore(g.num))).size;
   const active = trials.filter(t => /RECRUITING|ACTIVE|ENROLLING/.test(t.status || '')).length;
@@ -1013,12 +1018,19 @@ function laneTilesHTML(p) {
     <div class="tile"><div class="tlabel">Clinical trials</div><div class="tval">${trials.length}</div>
       <div class="tnote">${trials.length ? `${active} active · named investigator` : 'none as named investigator'}</div></div>
     <div class="tile"><div class="tlabel">Patents</div><div class="tval">${DATA.patentsNeedKey ? '—' : pats.length}</div>
-      <div class="tnote">${DATA.patentsNeedKey ? 'lane dormant — no USPTO key' : pats.length ? `${granted} granted · as inventor` : 'none as inventor'}</div></div>`;
+      <div class="tnote">${DATA.patentsNeedKey ? 'lane dormant — no USPTO key' : pats.length ? `${granted} granted · as inventor` : 'none as inventor'}</div></div>
+    <div class="tile"><div class="tlabel">Press</div><div class="tval">${press.length}</div>
+      <div class="tnote">${press.length ? `${firm} confirmed${press.length - firm ? ` · ${press.length - firm} likely` : ''}` : 'no releases name them'}</div></div>`;
 }
 
 // --- funding, trials & patents: the tracked person in the other lanes ---
+const PRESS_WHY = {
+  doi:   ['cites their paper', 'var(--neon-cyto)'],
+  named: ['names them',        'var(--neon-cyto)'],
+  title: ['likely — same finding', 'var(--ink-2)'],
+};
 function lanesHTML(p) {
-  const grants = p.nihGrants || [], trials = p.trials || [], pats = p.patents || [];
+  const grants = p.nihGrants || [], trials = p.trials || [], pats = p.patents || [], press = p.press || [];
   const empty = msg => `<div class="status">${msg}</div>`;
   // One row per grant: a multi-year award appears once, with every FY and the sum.
   const byCore = new Map();
@@ -1078,10 +1090,29 @@ function lanesHTML(p) {
         <span>inventors: ${esc((x.inventors || []).join(', '))}</span>
       </div></div></div>`;
   }).join('');
-  return `<div class="panel"><h3>// Funding, trials &amp; patents</h3>
-    <div class="chart-caption">Where ${esc(p.displayName)}'s work meets money and translation: NIH awards naming
+  const pressRows = press.map(r => {
+    const firm = r.why.some(w => w !== 'title');
+    const chips = r.why.map(w => { const [lab, c] = PRESS_WHY[w] || [w, 'var(--ink-2)']; return `<span class="kchip" style="--c:${c}">${esc(lab)}</span>`; }).join('');
+    return `<div class="paper">
+    <div class="paper-tier" style="background:${firm ? 'var(--neon-cyto)' : 'var(--line)'}"></div>
+    <div class="paper-main">
+      <div class="paper-title"><a href="${esc(r.url)}" target="_blank" rel="noopener">${esc(r.title)}</a></div>
+      <div class="paper-meta">
+        ${chips}
+        <span>${esc(r.sourceLabel || r.source || '')}</span>
+        ${r.date ? `<span>${esc(r.date)}</span>` : ''}
+        ${r.paper ? `<span title="${esc(r.paper.title)}">↳ ${esc(r.paper.journal || 'paper')}${r.paper.date ? ` ${esc(r.paper.date.slice(0, 4))}` : ''}</span>` : ''}
+        <a class="fbtn" href="press.html" title="Open the Press tab">Press tab ↗</a>
+      </div>
+      ${r.cite ? `<div class="paper-meta" style="margin-top:4px"><span style="letter-spacing:0;font-size:11px">${esc(r.cite)}</span></div>` : ''}
+    </div></div>`;
+  }).join('');
+  const pending = DATA.pressPagesPending || 0;
+  return `<div class="panel"><h3>// Funding, trials, patents &amp; press</h3>
+    <div class="chart-caption">Where ${esc(p.displayName)}'s work meets money, translation and the public: NIH awards naming
       them as a principal investigator (RePORTER, ${esc(fyWindow())}), ClinicalTrials.gov studies listing them as an
-      investigator, and patents naming them as an inventor. Matched on surname <em>and</em> given name, so a namesake
+      investigator, patents naming them as an inventor, and press releases from the Press tab's feeds that name them
+      or cite one of their papers. Matched on surname <em>and</em> given name, so a namesake
       is not swept in; a grant where they are an unnamed co-investigator will not appear.</div>
     <div class="sec-title">NIH funding${byCore.size ? `<span class="lane-sum">${byCore.size} grant${byCore.size === 1 ? '' : 's'} · ${fmtUSD(total)}</span>` : ''}</div>
     ${grantRows || empty(`No NIH awards name them as PI in ${esc(fyWindow())}.`)}
@@ -1090,6 +1121,8 @@ function lanesHTML(p) {
     <div class="sec-title" style="margin-top:22px">Patents${pats.length ? `<span class="lane-sum">${pats.length}</span>` : ''}</div>
     ${DATA.patentsNeedKey ? empty('The patent lane is dormant until a USPTO Open Data Portal API key is installed (see the Trials &amp; Patents tab).')
       : patRows || empty('No patents name them as an inventor.')}
+    <div class="sec-title" style="margin-top:22px">Press${press.length ? `<span class="lane-sum">${press.length}</span>` : ''}</div>
+    ${pressRows || empty(`No release in the press feeds names them or cites their papers${pending ? ` (${pending} release page${pending === 1 ? '' : 's'} still to read)` : ''}.`)}
   </div>`;
 }
 
@@ -1669,6 +1702,10 @@ function publicProfile(c) {
            orcids: [], affiliations: [], alreadyTracked: false, quickLook: true };
 }
 
+function atlasBadge(c) {
+  return c.inAtlas ? `<span class="ident-atlas" title="${c.inAtlas} paper${c.inAtlas === 1 ? '' : 's'} already in the atlas under this name">IN ATLAS · ${c.inAtlas}</span>` : '';
+}
+
 async function doAuthorLookup() {
   const name = $('pm-q').value.trim();
   if (!name) { $('pm-q').focus(); return; }
@@ -1754,8 +1791,8 @@ function renderPreview() {
     } else {
       body = `<div class="status">${P.identities.length} distinct ${P.identities.length === 1 ? 'person publishes' : 'people publish'} under that name — click one to browse their record.</div>`
         + P.identities.map((c, i) => `
-        <div class="ident" data-prev-i="${i}" role="button" tabindex="0">
-          <div class="ident-name">${esc(c.displayName)}${c.alreadyTracked ? ' — already tracked' : ''}</div>
+        <div class="ident ${c.inAtlas ? 'in-atlas' : ''}" data-prev-i="${i}" role="button" tabindex="0">
+          <div class="ident-name">${esc(c.displayName)}${c.alreadyTracked ? ' — already tracked' : ''}${atlasBadge(c)}</div>
           <div class="ident-meta">
             ${c.papers} PAPER${c.papers === 1 ? '' : 'S'} · ${esc(c.firstYear)}–${esc(c.lastYear)}
             ${c.orcids.length ? ` · ORCID ${esc(c.orcids[0])}` : ''}<br>
@@ -1848,8 +1885,8 @@ async function doSearch() {
     if (!ids.length) { setStatus('add-status', 'No PubMed authors matched that name — try another form of it, or use “Add manually” below.', 'err'); return; }
     setStatus('add-status', `${ids.length} distinct ${ids.length === 1 ? 'person' : 'people'} match that name — pick the researcher you mean.`, '');
     $('identities').innerHTML = ids.map((c, i) => `
-      <div class="ident ${c.alreadyTracked ? 'tracked' : ''}" data-i="${i}" role="button" tabindex="${c.alreadyTracked ? -1 : 0}" ${c.alreadyTracked ? 'aria-disabled="true"' : ''}>
-        <div class="ident-name">${esc(c.displayName)}${c.alreadyTracked ? ' — already tracked' : ''}</div>
+      <div class="ident ${c.alreadyTracked ? 'tracked' : ''} ${c.inAtlas ? 'in-atlas' : ''}" data-i="${i}" role="button" tabindex="${c.alreadyTracked ? -1 : 0}" ${c.alreadyTracked ? 'aria-disabled="true"' : ''}>
+        <div class="ident-name">${esc(c.displayName)}${c.alreadyTracked ? ' — already tracked' : ''}${atlasBadge(c)}</div>
         <div class="ident-meta">
           ${c.papers} PAPER${c.papers === 1 ? '' : 'S'} · ${esc(c.firstYear)}–${esc(c.lastYear)}
           ${c.orcids.length ? ` · ORCID ${esc(c.orcids[0])}` : ''}<br>
@@ -1960,8 +1997,8 @@ const DEMO_STEPS = [
     target: () => demoPanel('Research updates'),
   },
   {
-    title: 'Funding, trials & patents',
-    text: 'The same person across the other lanes: NIH grants where they are the contact or a co-PI, ClinicalTrials.gov studies naming them as an investigator, and USPTO filings listing them as an inventor — matched by name, so follow the links to confirm.',
+    title: 'Funding, trials, patents & press',
+    text: 'The same person across the other lanes: NIH grants where they are the contact or a co-PI, ClinicalTrials.gov studies naming them as an investigator, USPTO filings listing them as an inventor, and press releases that name them or cite one of their papers — matched by name, so follow the links to confirm.',
     target: () => demoPanel('Funding, trials'),
   },
   {

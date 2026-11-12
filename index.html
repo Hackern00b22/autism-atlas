@@ -1883,6 +1883,20 @@
     padding: 2px 6px; border-radius: 2px;
     font-size: 11px; letter-spacing: 0.12em;
   }
+  /* funder acknowledgement (Marcus Foundation …) — gold like the bookmark
+     star: it marks money, not topic */
+  .article-meta .funder-badge {
+    background: none; border: 1px solid color-mix(in srgb, var(--gold) 55%, transparent);
+    color: var(--gold); padding: 2px 6px; border-radius: 2px;
+    font-size: 11px; letter-spacing: 0.12em;
+  }
+  .funder-note {
+    margin: 4px 0 14px; padding: 10px 14px; border: 1px dashed color-mix(in srgb, var(--gold) 45%, transparent);
+    border-radius: 4px; font-family: 'JetBrains Mono', ui-monospace, 'SF Mono', SFMono-Regular, Menlo, Consolas, monospace;
+    font-size: 11.5px; letter-spacing: 0.04em; color: var(--ink-1); line-height: 1.6;
+  }
+  .funder-note a { color: var(--gold); }
+  .funder-note .src { color: var(--ink-2); }
   /* ---- Export ---- */
   .exp-open {
     background: none; border: 1px solid rgba(var(--line-rgb), 0.4);
@@ -2407,9 +2421,13 @@
       <span class="pf-label">MODALITY</span>
     </div>
 
+    <div class="priority-filters" id="funder-filters">
+      <span class="pf-label">FUNDER</span>
+    </div>
+
     <div class="modal-filters">
       <span class="filter-label">SEARCH</span>
-      <input type="search" id="filter-search" placeholder="Title, author, abstract, MeSH, PMID, or is:preprint · is:via · is:new · is:shared" autocomplete="off">
+      <input type="search" id="filter-search" placeholder="Title, author, abstract, MeSH, PMID, or is:preprint · is:via · is:new · is:shared · funder:marcus" autocomplete="off">
       <label class="scope-toggle" id="filter-scope-label" title="Search every node, not just this one">
         <input type="checkbox" id="filter-scope"> All nodes
       </label>
@@ -3177,11 +3195,38 @@ const toEl = document.getElementById('filter-to');
 const clearEl = document.getElementById('filter-clear');
 const pfEl = document.getElementById('priority-filters');
 const modEl = document.getElementById('modality-filters');
+const fundEl = document.getElementById('funder-filters');
 
 let currentBranch = null;
 let currentSort = 'priority';
 let activeTiers = new Set();
 let activeMods = new Set();   // therapeutic-modality filter, OR semantics
+// Funder filter (see funders.py): article.funders = {marcus: {via, snippet}}
+// rides along in articles.json; /api/funders (or the baked funders-data.json)
+// supplies the label, the evidence vocabulary and the funder's autism papers
+// that are NOT in the atlas yet.
+let activeFunders = new Set();
+let FUNDERS = null;            // key -> {label, viaLabels, beyondAtlas, …}
+let fundersState = 'idle';
+const FUNDER_FALLBACK = { marcus: { label: 'Marcus Foundation', viaLabels: {} } };
+function ensureFunders() {
+  if (fundersState !== 'idle') return;
+  fundersState = 'loading';
+  fetch(PUBLIC_MODE ? 'funders-data.json' : '/api/funders', { cache: 'no-store' })
+    .then(r => { if (!r.ok) throw new Error('unavailable'); return r.json(); })
+    .then(d => { FUNDERS = d.funders || FUNDER_FALLBACK; fundersState = 'ready';
+                 if (backdrop.classList.contains('open')) { buildFunderChips(); renderArticles(); } })
+    .catch(() => { FUNDERS = FUNDER_FALLBACK; fundersState = 'ready';
+                   if (backdrop.classList.contains('open')) buildFunderChips(); });
+}
+function funderLabel(k) { return (FUNDERS && FUNDERS[k] && FUNDERS[k].label) || (FUNDER_FALLBACK[k] || {}).label || k; }
+function funderKeys() {
+  // Every funder any article carries, plus the configured ones — so the chip
+  // exists (at 0) even before the first scan has flagged anything.
+  const ks = new Set(Object.keys(FUNDERS || FUNDER_FALLBACK));
+  ARTICLES.forEach(a => Object.keys(a.funders || {}).forEach(k => ks.add(k)));
+  return [...ks];
+}
 
 // ---- deep search: abstracts + MeSH ----
 // MeSH descriptors ride along in articles.json, but the full abstracts live in
@@ -3276,6 +3321,7 @@ function renderBranchSub(branchKey) {
 function openBranchModal(branchKey) {
   GLOBAL_SEARCH = false;
   ensureAbstracts();
+  ensureFunders();
   scopeLabelEl.style.display = '';   // restore the toggle global search hides
   currentBranch = branchKey;
   const b = BRANCHES[branchKey];
@@ -3289,7 +3335,7 @@ function openBranchModal(branchKey) {
   scopeLabelEl.classList.remove('on');
   activeTiers.clear();
   buildPriorityChips();
-  buildModalityChips();
+  buildModalityChips(); buildFunderChips();
   renderArticles();
   backdrop.classList.add('open');
 }
@@ -3304,6 +3350,7 @@ let GLOBAL_SEARCH = false;
 function openGlobalSearch(prefill) {
   GLOBAL_SEARCH = true;
   ensureAbstracts();
+  ensureFunders();
   currentBranch = Object.keys(BRANCHES)[0];
   eyebrowEl.textContent = '// SEARCH · ALL NODES';
   eyebrowEl.style.color = 'var(--neon-immuno)';
@@ -3321,7 +3368,7 @@ function openGlobalSearch(prefill) {
   scopeLabelEl.style.display = 'none';
   activeTiers.clear();
   buildPriorityChips();
-  buildModalityChips();
+  buildModalityChips(); buildFunderChips();
   renderArticles();
   backdrop.classList.add('open');
   setTimeout(() => searchEl.focus(), 60);
@@ -3346,7 +3393,7 @@ function buildPriorityChips() {
   allBtn.addEventListener('click', () => {
     activeTiers.clear();
     buildPriorityChips();
-    buildModalityChips();
+    buildModalityChips(); buildFunderChips();
     renderArticles();
   });
   pfEl.appendChild(allBtn);
@@ -3368,7 +3415,7 @@ function buildPriorityChips() {
         activeTiers = new Set(boostedSet);
       }
       buildPriorityChips();
-      buildModalityChips();
+      buildModalityChips(); buildFunderChips();
       renderArticles();
     });
     pfEl.appendChild(boostBtn);
@@ -3387,7 +3434,7 @@ function buildPriorityChips() {
       if (activeTiers.has(key)) activeTiers.delete(key);
       else activeTiers.add(key);
       buildPriorityChips();
-      buildModalityChips();
+      buildModalityChips(); buildFunderChips();
       renderArticles();
     });
     pfEl.appendChild(btn);
@@ -3441,7 +3488,28 @@ function buildModalityChips() {
     : ARTICLES.filter(a => a.branches.includes(currentBranch));
   const counts = {};
   branchArticles.forEach(a => (a.tags || []).forEach(m => counts[m] = (counts[m] || 0) + 1));
-  renderModalityStrip(modEl, viewTagSet(), counts, activeMods, () => { buildModalityChips(); renderArticles(); });
+  renderModalityStrip(modEl, viewTagSet(), counts, activeMods, () => { buildModalityChips(); buildFunderChips(); renderArticles(); });
+}
+
+function buildFunderChips() {
+  // Same counting contract as the other chip rows: counts follow the scope.
+  const branchArticles = scopeEl.checked
+    ? ARTICLES.slice()
+    : ARTICLES.filter(a => a.branches.includes(currentBranch));
+  while (fundEl.children.length > 1) fundEl.removeChild(fundEl.lastChild);
+  for (const k of funderKeys()) {
+    const n = branchArticles.filter(a => a.funders && a.funders[k]).length;
+    const btn = document.createElement('button');
+    btn.className = 'pf-chip' + (activeFunders.has(k) ? ' active' : '');
+    btn.style.setProperty('--chip-color', 'var(--gold)');
+    btn.title = `Articles whose full text, funder list or abstract credits the ${funderLabel(k)} (Europe PMC + abstract scan). Also: funder:${k} in the search box.`;
+    btn.innerHTML = `◈ ${escapeHtml(funderLabel(k))} <span class="count">${n}</span>`;
+    btn.addEventListener('click', () => {
+      if (activeFunders.has(k)) activeFunders.delete(k); else activeFunders.add(k);
+      buildFunderChips(); renderArticles();
+    });
+    fundEl.appendChild(btn);
+  }
 }
 
 function closeModal() {
@@ -3463,6 +3531,7 @@ function renderArticles() {
   let list = allNodes ? ARTICLES.slice() : ARTICLES.filter(a => a.branches.includes(currentBranch));
   if (activeTiers.size > 0) list = list.filter(a => activeTiers.has(a.priority));
   if (activeMods.size > 0) list = list.filter(a => (a.tags || []).some(m => activeMods.has(m)));
+  if (activeFunders.size > 0) list = list.filter(a => a.funders && [...activeFunders].some(k => a.funders[k]));
   if (q) list = list.filter(a => matchesQuery(a, q));
   if (fromD) list = list.filter(a => new Date(a.date) >= fromD);
   if (toD)   list = list.filter(a => new Date(a.date) <= toD);
@@ -3528,7 +3597,24 @@ function renderArticles() {
     }
     html += renderArticleCard(a, allNodes, viewTagSet());
   }
-  listEl.innerHTML = html;
+  listEl.innerHTML = funderNoteHtml(allNodes) + html;
+}
+
+// With a funder chip on, say how far the atlas's slice falls short of Europe
+// PMC's: the papers crediting the funder that nothing here has imported yet.
+function funderNoteHtml(allNodes) {
+  if (!activeFunders.size || !FUNDERS) return '';
+  return [...activeFunders].map(k => {
+    const f = FUNDERS[k]; if (!f || f.epmcTotal == null) return '';
+    const beyond = f.beyondAtlas || [];
+    const q = encodeURIComponent(`(ACK_FUND:"${f.label}" OR GRANT_AGENCY:"${f.label}") AND (autis* OR ASD)`);
+    const sample = beyond.slice(0, 3).map(p => `<a href="https://pubmed.ncbi.nlm.nih.gov/${p.pmid}/" target="_blank" rel="noopener">${escapeHtml(p.title.replace(/\.$/, ''))}</a> <span class="src">(${escapeHtml(p.year)})</span>`).join(' · ');
+    return `<div class="funder-note">◈ Europe PMC lists <b>${f.epmcTotal}</b> papers crediting the ${escapeHtml(f.label)},
+      <b>${f.epmcAutism}</b> of them autism-related — <b>${beyond.length}</b> of those are not in the atlas${allNodes ? '' : ' (searching one node; switch to all nodes for the full slice)'}.
+      <a href="https://europepmc.org/search?query=${q}" target="_blank" rel="noopener">Open the Europe PMC search ↗</a>
+      ${sample ? `<br><span class="src">e.g.</span> ${sample}` : ''}
+      <br><span class="src">Scanned ${escapeHtml(f.fetchedAt || '—')} · full-text acknowledgements, publisher funder lists and abstracts.</span></div>`;
+  }).join('');
 }
 
 // Matches on identifiers as well as prose: arriving with a PMID in hand and
@@ -3545,10 +3631,13 @@ const QUERY_TOKENS = [
   ['is:seed',     'original hand-curated entry'],
   ['is:shared',   'claimed by more than one node'],
   ['via:NAME',    'vouched for by that author, e.g. via:huh'],
+  ['funder:marcus', 'credits the Marcus Foundation (full text, funder list or abstract)'],
 ];
 
 function matchesTerm(a, t) {
   if (t === 'is:preprint') return !!a.isPreprint;
+  if (t.startsWith('funder:')) return !!(a.funders && a.funders[t.slice(7)]);
+  if (t === 'is:marcus' || t === 'is:funded') return !!(a.funders && Object.keys(a.funders).length);
   if (t === 'is:via' || t === 'is:author') return !!(a.viaAuthors && a.viaAuthors.length);
   if (t === 'is:new') return !!(a.addedBy && a.addedBy !== 'seed');
   if (t === 'is:seed') return a.addedBy === 'seed';
@@ -3613,7 +3702,7 @@ function setSearchScope(on) {
   scopeEl.checked = on;
   scopeLabelEl.classList.toggle('on', on);
   buildPriorityChips();
-  buildModalityChips();
+  buildModalityChips(); buildFunderChips();
   renderArticles();
 }
 
@@ -3658,6 +3747,7 @@ function renderArticleCard(a, showNode, tagSet) {
         <span class="date">${formatDate(a.date)}</span>
         ${a.isPreprint ? '<span class="preprint-badge" title="Preprint — not peer reviewed">PREPRINT</span>' : ''}
         ${via ? `<span class="via-badge" title="Imported because a tracked author is on it, not via the usual autism + journal filters">◈ ${escapeHtml(via)}</span>` : ''}
+        ${Object.entries(a.funders || {}).map(([k, f]) => `<span class="funder-badge" title="${escapeHtml(funderLabel(k))} — ${escapeHtml((f.via || []).map(v => ((FUNDERS && FUNDERS[k] && FUNDERS[k].viaLabels) || {})[v] || v).join('; '))}${f.snippet ? '\n' + escapeHtml(f.snippet) : ''}">◈ ${escapeHtml(funderLabel(k))}</span>`).join('')}
         ${isNew ? '<span class="new-badge">NEW</span>' : ''}
         <span class="ext">↗ PUBMED</span>
         <span class="authors">${escapeHtml(a.authors)}</span>
@@ -3678,11 +3768,11 @@ function formatDate(iso) {
 scopeEl.addEventListener('change', () => setSearchScope(scopeEl.checked));
 clearEl.addEventListener('click', () => {
   activeMods.clear();
-  buildModalityChips();
+  buildModalityChips(); buildFunderChips();
   searchEl.value = ''; fromEl.value = ''; toEl.value = '';
   activeTiers.clear();
   buildPriorityChips();
-  buildModalityChips();
+  buildModalityChips(); buildFunderChips();
   // In library-wide search the scope toggle is hidden, so turning it off here
   // would strand you inside one node with no visible control to get back out.
   if (GLOBAL_SEARCH) { renderArticles(); return; }
@@ -5156,7 +5246,7 @@ const DEMO_STEPS = [
       state.undo.push(() => {
         if (!activeMods.size) return;
         activeMods.clear();
-        if (currentBranch) { buildModalityChips(); renderArticles(); }
+        if (currentBranch) { buildModalityChips(); buildFunderChips(); renderArticles(); }
       });
     },
   },

@@ -1,7 +1,7 @@
 {
  "_meta": {
   "schema_version": 5,
-  "last_updated": "2026-11-05",
+  "last_updated": "2026-11-12",
   "description": "Article store for the Autism Research Network Atlas.",
   "schema": {
    "id": "unique string id",
@@ -65,8 +65,8 @@
    "alpha": 1.0
   },
   "last_run": {
-   "at": "2026-11-05T21:33:31",
-   "added": 66,
+   "at": "2026-11-12T07:24:55",
+   "added": 37,
    "mode": "weekly"
   },
   "last_sync": "2026-10-12T11:19:05"
@@ -355,7 +355,7 @@
     "neg_events": 0,
     "updatedAt": "2026-08-05"
    },
-   "lastFetched": "2026-11-05"
+   "lastFetched": "2026-11-12"
   },
   "cytokines": {
    "color": "#ff2bd6",
@@ -364,7 +364,7 @@
    "pubmedQuery": "(\"IL-17\"[Title/Abstract] OR \"IL17\"[Title/Abstract] OR \"interleukin-17\"[Title/Abstract] OR \"interleukin 17\"[Title/Abstract] OR \"IL-17A\"[Title/Abstract] OR \"IL-17a\"[Title/Abstract] OR \"IL-17E\"[Title/Abstract] OR \"interleukin\"[Title/Abstract] OR \"interleukins\"[Title/Abstract] OR \"cytokine\"[Title/Abstract] OR \"cytokines\"[Title/Abstract] OR \"Th17\"[Title/Abstract] OR \"T helper 17\"[Title/Abstract] OR \"TNF-alpha\"[Title/Abstract] OR \"tumor necrosis factor\"[Title/Abstract] OR \"IL-6\"[Title/Abstract] OR \"IL-1\"[Title/Abstract] OR \"IL-1beta\"[Title/Abstract] OR \"IL-1β\"[Title/Abstract] OR \"IL-8\"[Title/Abstract] OR \"IL-10\"[Title/Abstract] OR \"IL-22\"[Title/Abstract] OR \"IL-33\"[Title/Abstract] OR \"neuroinflammation\"[Title/Abstract] OR \"neuroimmune\"[Title/Abstract] OR \"maternal immune activation\"[Title/Abstract] OR \"MIA\"[Title/Abstract] OR \"pro-inflammatory\"[Title/Abstract] OR \"proinflammatory\"[Title/Abstract] OR \"inflammatory\"[Title/Abstract] OR \"inflammation\"[Title/Abstract])",
    "minYear": 2021,
    "broadAutism": true,
-   "lastFetched": "2026-11-05",
+   "lastFetched": "2026-11-12",
    "learned": {
     "include": {
      "Oxytocin": {
@@ -427,7 +427,7 @@
     "neg_events": 4,
     "updatedAt": "2026-10-29"
    },
-   "lastFetched": "2026-11-05"
+   "lastFetched": "2026-11-12"
   },
   "neuroscience": {
    "color": "#ffb020",
@@ -453,7 +453,7 @@
     "neg_events": 0,
     "updatedAt": "2026-10-29"
    },
-   "lastFetched": "2026-11-05"
+   "lastFetched": "2026-11-12"
   },
   "genetics": {
    "color": "#7a5cff",
@@ -484,7 +484,7 @@
     "neg_events": 0,
     "updatedAt": "2026-09-29"
    },
-   "lastFetched": "2026-11-05"
+   "lastFetched": "2026-11-12"
   },
   "intervention": {
    "color": "#ff5757",
@@ -505,7 +505,7 @@
     "neg_events": 1,
     "updatedAt": "2026-10-08"
    },
-   "lastFetched": "2026-11-05"
+   "lastFetched": "2026-11-12"
   }
  },
  "articles": [
@@ -2372,6 +2372,14 @@
    "geo": {
     "state": "MA",
     "city": "Boston"
+   },
+   "funders": {
+    "marcus": {
+     "via": [
+      "ack",
+      "grant"
+     ]
+    }
    }
   },
   {
@@ -5588,7 +5596,7 @@
     "state": "WI",
     "city": "Madison"
    },
-   "meshChecked": "2026-10-28"
+   "meshChecked": "2026-11-12"
   },
   {
    "id": "pm-39611328",
@@ -6405,7 +6413,7 @@
     "state": "CA",
     "city": ""
    },
-   "meshChecked": "2026-10-28"
+   "meshChecked": "2026-11-12"
   },
   {
    "id": "pm-42034056",
@@ -6545,7 +6553,7 @@
     "state": "MA",
     "city": "Boston"
    },
-   "meshChecked": "2026-10-28"
+   "meshChecked": "2026-11-12"
   },
   {
    "id": "pm-41882355",
@@ -7262,6 +7270,13 @@
    "geo": {
     "state": "NC",
     "city": "Durham"
+   },
+   "funders": {
+    "marcus": {
+     "via": [
+      "ack"
+     ]
+    }
    }
   },
   {
@@ -7727,7 +7742,7 @@
     "state": "VA",
     "city": "Charlottesville"
    },
-   "meshChecked": "2026-10-28"
+   "meshChecked": "2026-11-12"
   },
   {
    "id": "pm-41495254",
@@ -8612,7 +8627,7 @@
    "firstAuthor": "Bugarski-Kirola D",
    "lastAuthor": "Arango C",
    "geo": null,
-   "meshChecked": "2026-10-28"
+   "meshChecked": "2026-11-12"
   },
   {
    "id": "pm-42153593",
@@ -10127,7 +10142,7 @@
     "state": "NC",
     "city": "Chapel Hill"
    },
-   "meshChecked": "2026-10-28"
+   "meshChecked": "2026-11-12"
   },
   {
    "id": "pm-42141307",
@@ -12830,7 +12845,7 @@
     "state": "PA",
     "city": "Pittsburgh"
    },
-   "meshChecked": "2026-10-28"
+   "meshChecked": "2026-11-12"
   },
   {
    "id": "pm-41991716",
@@ -13001,7 +13016,7 @@
     "state": "MD",
     "city": "Baltimore"
    },
-   "meshChecked": "2026-10-28"
+   "meshChecked": "2026-11-12"
   },
   {
    "id": "pm-41933478",
@@ -13551,7 +13566,7 @@
    "_priorityWas": "mechanistic",
    "firstAuthor": "Anderer S",
    "geo": null,
-   "meshChecked": "2026-10-28"
+   "meshChecked": "2026-11-12"
   },
   {
    "id": "pm-35131181",
@@ -14199,7 +14214,7 @@
     "state": "CA",
     "city": "San Francisco"
    },
-   "meshChecked": "2026-10-28"
+   "meshChecked": "2026-11-12"
   },
   {
    "id": "pm-42242209",
@@ -14238,7 +14253,7 @@
    "firstAuthor": "Cobbaert L",
    "lastAuthor": "Pavlopoulou G",
    "geo": null,
-   "meshChecked": "2026-10-28"
+   "meshChecked": "2026-11-12"
   },
   {
    "id": "pm-42265894",
@@ -14836,7 +14851,7 @@
    "mesh": [],
    "firstAuthor": "Doherty M",
    "geo": null,
-   "meshChecked": "2026-10-28"
+   "meshChecked": "2026-11-12"
   },
   {
    "id": "pm-42365510",
@@ -14995,7 +15010,7 @@
     "state": "CO",
     "city": "Aurora"
    },
-   "meshChecked": "2026-10-28"
+   "meshChecked": "2026-11-12"
   },
   {
    "id": "pm-42366594",
@@ -15097,7 +15112,7 @@
    "mesh": [],
    "firstAuthor": "İçen S",
    "geo": null,
-   "meshChecked": "2026-10-28"
+   "meshChecked": "2026-11-12"
   },
   {
    "id": "pm-42349898",
@@ -15773,7 +15788,7 @@
    "_priorityWas": "mechanistic",
    "firstAuthor": "Hager R",
    "geo": null,
-   "meshChecked": "2026-10-28"
+   "meshChecked": "2026-11-12"
   },
   {
    "id": "pm-42409184",
@@ -15962,7 +15977,7 @@
     "state": "NY",
     "city": "New York"
    },
-   "meshChecked": "2026-10-28"
+   "meshChecked": "2026-11-12"
   },
   {
    "id": "pm-42410084",
@@ -16042,7 +16057,7 @@
    "firstAuthor": "Zisman-Ilani Y",
    "lastAuthor": "Mandell DS",
    "geo": null,
-   "meshChecked": "2026-10-28"
+   "meshChecked": "2026-11-12"
   },
   {
    "id": "pm-42430144",
@@ -16057,7 +16072,7 @@
    "_priorityWas": "mechanistic",
    "firstAuthor": "Anderer S",
    "geo": null,
-   "meshChecked": "2026-10-28"
+   "meshChecked": "2026-11-12"
   },
   {
    "id": "pm-42411151",
@@ -16234,7 +16249,18 @@
    "url": "https://pubmed.ncbi.nlm.nih.gov/42454526/",
    "priority": "unclassified",
    "addedBy": "agent-2026-07-20",
-   "mesh": [],
+   "mesh": [
+    "Humans",
+    "Child",
+    "Adolescent",
+    "Male",
+    "Magnetic Resonance Imaging",
+    "Female",
+    "Autism Spectrum Disorder",
+    "Emotional Regulation",
+    "Prefrontal Cortex",
+    "Touch Perception"
+   ],
    "journalKey": "jcpp",
    "_priorityWas": "mechanistic",
    "alsoBranches": [
@@ -16245,8 +16271,7 @@
    "geo": {
     "state": "WA",
     "city": "Seattle"
-   },
-   "meshChecked": "2026-10-28"
+   }
   },
   {
    "id": "pm-42452988",
@@ -16416,7 +16441,7 @@
    "firstAuthor": "Grammatikou M",
    "lastAuthor": "Manning C",
    "geo": null,
-   "meshChecked": "2026-10-28"
+   "meshChecked": "2026-11-12"
   },
   {
    "id": "pm-42449513",
@@ -16431,7 +16456,7 @@
    "firstAuthor": "Campbell-Mapplebeck A",
    "lastAuthor": "Davis R",
    "geo": null,
-   "meshChecked": "2026-10-28"
+   "meshChecked": "2026-11-12"
   },
   {
    "id": "pm-42473297",
@@ -16705,7 +16730,7 @@
     "state": "CA",
     "city": "Stanford"
    },
-   "meshChecked": "2026-10-28"
+   "meshChecked": "2026-11-12"
   },
   {
    "id": "pm-42490140",
@@ -16723,7 +16748,7 @@
     "state": "AR",
     "city": ""
    },
-   "meshChecked": "2026-10-28"
+   "meshChecked": "2026-11-12"
   },
   {
    "id": "pm-42487339",
@@ -17161,7 +17186,7 @@
    "firstAuthor": "Burte B",
    "lastAuthor": "Tringali S",
    "geo": null,
-   "meshChecked": "2026-10-28"
+   "meshChecked": "2026-11-12"
   },
   {
    "id": "pm-42522081",
@@ -17351,7 +17376,7 @@
    "firstAuthor": "Annamneedi A",
    "lastAuthor": "Stork O",
    "geo": null,
-   "meshChecked": "2026-10-28"
+   "meshChecked": "2026-11-12"
   },
   {
    "id": "pm-42526678",
@@ -17369,7 +17394,7 @@
    "firstAuthor": "González-Peñas J",
    "lastAuthor": "Janssen J",
    "geo": null,
-   "meshChecked": "2026-10-28"
+   "meshChecked": "2026-11-12"
   },
   {
    "id": "pm-42039560",
@@ -17395,7 +17420,7 @@
     "state": "UT",
     "city": "Salt Lake City"
    },
-   "meshChecked": "2026-10-28"
+   "meshChecked": "2026-11-12"
   },
   {
    "id": "pm-40199321",
@@ -17432,6 +17457,14 @@
    "geo": {
     "state": "MA",
     "city": "Cambridge"
+   },
+   "funders": {
+    "marcus": {
+     "via": [
+      "ack",
+      "grant"
+     ]
+    }
    }
   },
   {
@@ -17584,7 +17617,7 @@
     "state": "FL",
     "city": "Jupiter"
    },
-   "meshChecked": "2026-10-28"
+   "meshChecked": "2026-11-12"
   },
   {
    "id": "pm-35417672",
@@ -21869,7 +21902,7 @@
    },
    "firstAuthor": "Boxberger A",
    "lastAuthor": "Fishman I",
-   "meshChecked": "2026-10-28"
+   "meshChecked": "2026-11-12"
   },
   {
    "id": "pm-40885894",
@@ -23818,7 +23851,7 @@
    },
    "firstAuthor": "Saito YE",
    "lastAuthor": "Lin PI",
-   "meshChecked": "2026-10-28"
+   "meshChecked": "2026-11-12"
   },
   {
    "id": "pm-42545632",
@@ -23837,7 +23870,7 @@
    },
    "firstAuthor": "Sherwood KL",
    "lastAuthor": "Smith MJ",
-   "meshChecked": "2026-10-28"
+   "meshChecked": "2026-11-12"
   },
   {
    "id": "pm-42541672",
@@ -23856,7 +23889,7 @@
    },
    "firstAuthor": "Perovic A",
    "lastAuthor": "Wexler K",
-   "meshChecked": "2026-10-28"
+   "meshChecked": "2026-11-12"
   },
   {
    "id": "pm-42541671",
@@ -23872,7 +23905,7 @@
    "geo": null,
    "firstAuthor": "Grieve CM",
    "lastAuthor": "Oosterling IJ",
-   "meshChecked": "2026-10-28"
+   "meshChecked": "2026-11-12"
   },
   {
    "id": "pm-42525207",
@@ -23888,7 +23921,7 @@
    "geo": null,
    "firstAuthor": "Chen YL",
    "lastAuthor": "Chen KL",
-   "meshChecked": "2026-10-28"
+   "meshChecked": "2026-11-12"
   },
   {
    "id": "pm-42501216",
@@ -23904,7 +23937,7 @@
    "geo": null,
    "firstAuthor": "Egwu EO",
    "lastAuthor": "Clement A",
-   "meshChecked": "2026-10-28"
+   "meshChecked": "2026-11-12"
   },
   {
    "id": "pm-42496859",
@@ -23920,7 +23953,7 @@
    "geo": null,
    "firstAuthor": "Rivard M",
    "lastAuthor": "Forget J",
-   "meshChecked": "2026-10-28"
+   "meshChecked": "2026-11-12"
   },
   {
    "id": "pm-42489802",
@@ -23936,7 +23969,7 @@
    "geo": null,
    "firstAuthor": "Khan YT",
    "lastAuthor": "Baron-Cohen S",
-   "meshChecked": "2026-10-28"
+   "meshChecked": "2026-11-12"
   },
   {
    "id": "pm-42189367",
@@ -24234,7 +24267,7 @@
    },
    "firstAuthor": "Martínez-García JJ",
    "lastAuthor": "Canizalez-Román A",
-   "meshChecked": "2026-10-28"
+   "meshChecked": "2026-11-12"
   },
   {
    "id": "pm-42525206",
@@ -24253,7 +24286,7 @@
    },
    "firstAuthor": "Dueñas AD",
    "lastAuthor": "Kuperman K",
-   "meshChecked": "2026-10-28"
+   "meshChecked": "2026-11-12"
   },
   {
    "id": "pm-42525203",
@@ -24269,7 +24302,7 @@
    "geo": null,
    "firstAuthor": "Oh SJ",
    "lastAuthor": "Kim Y",
-   "meshChecked": "2026-10-28"
+   "meshChecked": "2026-11-12"
   },
   {
    "id": "pm-42525202",
@@ -24288,7 +24321,7 @@
    },
    "firstAuthor": "Gülle BT",
    "lastAuthor": "Ören Çelik MM",
-   "meshChecked": "2026-10-28"
+   "meshChecked": "2026-11-12"
   },
   {
    "id": "pm-42496858",
@@ -24304,7 +24337,7 @@
    "geo": null,
    "firstAuthor": "Goel A",
    "lastAuthor": "Xie Z",
-   "meshChecked": "2026-10-28"
+   "meshChecked": "2026-11-12"
   },
   {
    "id": "pm-42489803",
@@ -24323,7 +24356,7 @@
    },
    "firstAuthor": "Erlid C",
    "lastAuthor": "Øien RA",
-   "meshChecked": "2026-10-28"
+   "meshChecked": "2026-11-12"
   },
   {
    "id": "pm-40120017",
@@ -24575,7 +24608,7 @@
    "geo": null,
    "firstAuthor": "Martin ER",
    "lastAuthor": "Oguro-Ando A",
-   "meshChecked": "2026-10-28"
+   "meshChecked": "2026-11-12"
   },
   {
    "id": "pm-42468411",
@@ -24624,7 +24657,7 @@
    },
    "firstAuthor": "Kaat AJ",
    "lastAuthor": "Roberts MY",
-   "meshChecked": "2026-10-28"
+   "meshChecked": "2026-11-12"
   },
   {
    "id": "pm-42555633",
@@ -24849,7 +24882,7 @@
    },
    "firstAuthor": "Macari SL",
    "lastAuthor": "Chawarska K",
-   "meshChecked": "2026-10-28"
+   "meshChecked": "2026-11-12"
   },
   {
    "id": "pm-42383266",
@@ -25218,7 +25251,7 @@
    },
    "firstAuthor": "Akomolafe AF",
    "lastAuthor": "Chivese T",
-   "meshChecked": "2026-10-28"
+   "meshChecked": "2026-11-12"
   },
   {
    "id": "pm-42530744",
@@ -25233,7 +25266,7 @@
    "geo": null,
    "firstAuthor": "Ambrose K",
    "lastAuthor": "Adams D",
-   "meshChecked": "2026-10-28"
+   "meshChecked": "2026-11-12"
   },
   {
    "id": "pm-42525205",
@@ -25248,7 +25281,7 @@
    "geo": null,
    "firstAuthor": "Ashworth E",
    "lastAuthor": "Pavlopoulou G",
-   "meshChecked": "2026-10-28"
+   "meshChecked": "2026-11-12"
   },
   {
    "id": "pm-38370801",
@@ -25354,7 +25387,7 @@
    },
    "firstAuthor": "Cirnigliaro M",
    "lastAuthor": "Geschwind DH",
-   "meshChecked": "2026-10-28"
+   "meshChecked": "2026-11-12"
   },
   {
    "id": "pm-36712571",
@@ -25706,7 +25739,7 @@
    "geo": null,
    "firstAuthor": "Liu R",
    "lastAuthor": "Jiang W",
-   "meshChecked": "2026-10-28"
+   "meshChecked": "2026-11-12"
   },
   {
    "id": "pm-42595836",
@@ -25725,7 +25758,7 @@
    },
    "firstAuthor": "Cavalier H",
    "lastAuthor": "Ghassabian A",
-   "meshChecked": "2026-10-28"
+   "meshChecked": "2026-11-12"
   },
   {
    "id": "pm-42581194",
@@ -25826,7 +25859,7 @@
    "branchKey": "behavioral",
    "geo": null,
    "firstAuthor": "Wang W",
-   "meshChecked": "2026-10-28"
+   "meshChecked": "2026-11-12"
   },
   {
    "id": "pm-42595007",
@@ -25847,7 +25880,7 @@
    },
    "firstAuthor": "Luo H",
    "lastAuthor": "Schwarzlose RF",
-   "meshChecked": "2026-10-28"
+   "meshChecked": "2026-11-12"
   },
   {
    "id": "pm-42592702",
@@ -25949,7 +25982,7 @@
    "geo": null,
    "firstAuthor": "Lasch C",
    "lastAuthor": "Sylvester CM",
-   "meshChecked": "2026-10-28"
+   "meshChecked": "2026-11-12"
   },
   {
    "id": "pm-42579036",
@@ -25968,7 +26001,7 @@
    },
    "firstAuthor": "Prabhakaran N",
    "lastAuthor": "Raman V",
-   "meshChecked": "2026-10-28"
+   "meshChecked": "2026-11-12"
   },
   {
    "id": "pm-42572352",
@@ -26006,7 +26039,7 @@
    "geo": null,
    "firstAuthor": "Hampton S",
    "lastAuthor": "Cooper K",
-   "meshChecked": "2026-10-28"
+   "meshChecked": "2026-11-12"
   },
   {
    "id": "pm-42565926",
@@ -26025,7 +26058,7 @@
    },
    "firstAuthor": "Poiencot LM",
    "lastAuthor": "Franc I",
-   "meshChecked": "2026-10-28"
+   "meshChecked": "2026-11-12"
   },
   {
    "id": "pm-42595244",
@@ -26043,7 +26076,7 @@
    },
    "firstAuthor": "Griffin JW",
    "lastAuthor": "McPartland JC",
-   "meshChecked": "2026-10-28"
+   "meshChecked": "2026-11-12"
   },
   {
    "id": "pm-42587157",
@@ -26128,7 +26161,7 @@
    },
    "firstAuthor": "Fang C",
    "lastAuthor": "Jonson-Reid M",
-   "meshChecked": "2026-10-28"
+   "meshChecked": "2026-11-12"
   },
   {
    "id": "pm-42599627",
@@ -26147,7 +26180,7 @@
    },
    "firstAuthor": "Anbar JS",
    "lastAuthor": "Andrews J",
-   "meshChecked": "2026-10-28"
+   "meshChecked": "2026-11-12"
   },
   {
    "id": "pm-42599626",
@@ -26163,7 +26196,7 @@
    "geo": null,
    "firstAuthor": "Alon R",
    "lastAuthor": "Catz O",
-   "meshChecked": "2026-10-28"
+   "meshChecked": "2026-11-12"
   },
   {
    "id": "pm-42593049",
@@ -26269,7 +26302,7 @@
    "geo": null,
    "firstAuthor": "Ellis M",
    "lastAuthor": "Staton S",
-   "meshChecked": "2026-10-28"
+   "meshChecked": "2026-11-12"
   },
   {
    "id": "pm-42573731",
@@ -26288,7 +26321,7 @@
    },
    "firstAuthor": "Stephenson KG",
    "lastAuthor": "Butter EM",
-   "meshChecked": "2026-10-28"
+   "meshChecked": "2026-11-12"
   },
   {
    "id": "pm-42601509",
@@ -26339,7 +26372,7 @@
    },
    "firstAuthor": "Naderi Malek A",
    "lastAuthor": "Prelock P",
-   "meshChecked": "2026-10-28"
+   "meshChecked": "2026-11-12"
   },
   {
    "id": "pm-42330854",
@@ -26410,14 +26443,28 @@
    "url": "https://pubmed.ncbi.nlm.nih.gov/42575949/",
    "priority": "mechanistic",
    "addedBy": "agent-2026-08-17",
-   "mesh": [],
+   "mesh": [
+    "Humans",
+    "Mutation, Missense",
+    "DNA-Binding Proteins",
+    "Transcription Factors",
+    "Autistic Disorder",
+    "Female",
+    "Male",
+    "Intellectual Disability",
+    "Megalencephaly",
+    "Phenotype",
+    "Child",
+    "Child, Preschool",
+    "Adolescent",
+    "Genetic Testing"
+   ],
    "branchKey": "genetics",
    "viaOpenVenue": true,
    "journalDisplay": "European journal of human genetics : EJHG",
    "geo": null,
    "firstAuthor": "Godfrey M",
-   "lastAuthor": "Banka S",
-   "meshChecked": "2026-10-28"
+   "lastAuthor": "Banka S"
   },
   {
    "id": "pm-42595811",
@@ -26500,7 +26547,7 @@
    },
    "firstAuthor": "Yoon CD",
    "lastAuthor": "Dean DC",
-   "meshChecked": "2026-10-28"
+   "meshChecked": "2026-11-12"
   },
   {
    "id": "pm-42565840",
@@ -26579,7 +26626,7 @@
    "geo": null,
    "firstAuthor": "So WC",
    "lastAuthor": "Li XH",
-   "meshChecked": "2026-10-28"
+   "meshChecked": "2026-11-12"
   },
   {
    "id": "pm-42361318",
@@ -26677,7 +26724,7 @@
    "mesh": [],
    "geo": null,
    "firstAuthor": "Shamay-Tsoory SG",
-   "meshChecked": "2026-10-28"
+   "meshChecked": "2026-11-12"
   },
   {
    "id": "pm-42572330",
@@ -26721,7 +26768,7 @@
    "mesh": [],
    "geo": null,
    "firstAuthor": "Yang L",
-   "meshChecked": "2026-10-28"
+   "meshChecked": "2026-11-12"
   },
   {
    "id": "pm-42592704",
@@ -26821,7 +26868,7 @@
    "geo": null,
    "firstAuthor": "Binsfeld CR",
    "lastAuthor": "Lopes LFD",
-   "meshChecked": "2026-10-28"
+   "meshChecked": "2026-11-12"
   },
   {
    "id": "pm-42565927",
@@ -26836,7 +26883,7 @@
    "geo": null,
    "firstAuthor": "Aktu Y",
    "lastAuthor": "Vural B",
-   "meshChecked": "2026-10-28"
+   "meshChecked": "2026-11-12"
   },
   {
    "id": "pm-42612846",
@@ -26918,7 +26965,7 @@
    "geo": null,
    "firstAuthor": "Gundeslioglu H",
    "lastAuthor": "Langdon PE",
-   "meshChecked": "2026-10-28"
+   "meshChecked": "2026-11-12"
   },
   {
    "id": "pm-42627436",
@@ -26934,7 +26981,7 @@
    "geo": null,
    "firstAuthor": "Eltalkhawy M",
    "lastAuthor": "Wafa MA",
-   "meshChecked": "2026-10-28"
+   "meshChecked": "2026-11-12"
   },
   {
    "id": "pm-42625448",
@@ -27016,7 +27063,7 @@
    },
    "firstAuthor": "Kotsari K",
    "lastAuthor": "Gena A",
-   "meshChecked": "2026-10-28"
+   "meshChecked": "2026-11-12"
   },
   {
    "id": "pm-42606785",
@@ -27032,7 +27079,7 @@
    "geo": null,
    "firstAuthor": "Alasiri A",
    "lastAuthor": "Alyazidi A",
-   "meshChecked": "2026-10-28"
+   "meshChecked": "2026-11-12"
   },
   {
    "id": "pm-42631533",
@@ -27079,7 +27126,7 @@
    "geo": null,
    "firstAuthor": "Tripathi A",
    "lastAuthor": "Kumar K",
-   "meshChecked": "2026-10-28"
+   "meshChecked": "2026-11-12"
   },
   {
    "id": "pm-42622955",
@@ -27095,7 +27142,7 @@
    "geo": null,
    "firstAuthor": "Lu H",
    "lastAuthor": "Hu Z",
-   "meshChecked": "2026-10-28"
+   "meshChecked": "2026-11-12"
   },
   {
    "id": "pm-42622952",
@@ -27114,7 +27161,7 @@
    },
    "firstAuthor": "Barbosa de Matos M",
    "lastAuthor": "Mack JM",
-   "meshChecked": "2026-10-28"
+   "meshChecked": "2026-11-12"
   },
   {
    "id": "pm-42613816",
@@ -27129,7 +27176,7 @@
    "geo": null,
    "firstAuthor": "Frayman D",
    "lastAuthor": "Mandy W",
-   "meshChecked": "2026-10-28"
+   "meshChecked": "2026-11-12"
   },
   {
    "id": "pm-42615359",
@@ -27146,7 +27193,7 @@
    "geo": null,
    "firstAuthor": "Shadid OH",
    "lastAuthor": "Dale RC",
-   "meshChecked": "2026-10-28"
+   "meshChecked": "2026-11-12"
   },
   {
    "id": "pm-42619183",
@@ -27251,7 +27298,7 @@
    "geo": null,
    "firstAuthor": "Gouveia HJCB",
    "lastAuthor": "Toscano AE",
-   "meshChecked": "2026-10-28"
+   "meshChecked": "2026-11-12"
   },
   {
    "id": "pm-42616101",
@@ -27295,7 +27342,7 @@
    "geo": null,
    "firstAuthor": "Martinez Olondo P",
    "lastAuthor": "de Kerchove d'Exaerde A",
-   "meshChecked": "2026-10-28"
+   "meshChecked": "2026-11-12"
   },
   {
    "id": "pm-42633081",
@@ -27344,7 +27391,7 @@
    "geo": null,
    "firstAuthor": "Joo S",
    "lastAuthor": "Kim J",
-   "meshChecked": "2026-10-28"
+   "meshChecked": "2026-11-12"
   },
   {
    "id": "pm-42627543",
@@ -27491,7 +27538,7 @@
    "geo": null,
    "firstAuthor": "Demily C",
    "lastAuthor": "Soumier A",
-   "meshChecked": "2026-10-28"
+   "meshChecked": "2026-11-12"
   },
   {
    "id": "pm-42631645",
@@ -27613,7 +27660,7 @@
    "geo": null,
    "firstAuthor": "Meera SS",
    "lastAuthor": "Hoekstra RA",
-   "meshChecked": "2026-10-28"
+   "meshChecked": "2026-11-12"
   },
   {
    "id": "pm-42635014",
@@ -27670,7 +27717,7 @@
    "geo": null,
    "firstAuthor": "Tolegenova A",
    "lastAuthor": "Gareth Noble J",
-   "meshChecked": "2026-10-28"
+   "meshChecked": "2026-11-12"
   },
   {
    "id": "pm-42627435",
@@ -27685,7 +27732,7 @@
    "geo": null,
    "firstAuthor": "Kakoulidou M",
    "lastAuthor": "RE-STAR team",
-   "meshChecked": "2026-10-28"
+   "meshChecked": "2026-11-12"
   },
   {
    "id": "pm-42622953",
@@ -27703,7 +27750,7 @@
    },
    "firstAuthor": "Gürsoy S",
    "lastAuthor": "Kot M",
-   "meshChecked": "2026-10-28"
+   "meshChecked": "2026-11-12"
   },
   {
    "id": "pm-42606786",
@@ -27718,7 +27765,7 @@
    "geo": null,
    "firstAuthor": "Nikić K",
    "lastAuthor": "Koelkebeck K",
-   "meshChecked": "2026-10-28"
+   "meshChecked": "2026-11-12"
   },
   {
    "id": "pm-42666024",
@@ -27764,7 +27811,7 @@
    "geo": null,
    "firstAuthor": "Aagaard K",
    "lastAuthor": "Hannigan LJ",
-   "meshChecked": "2026-10-28"
+   "meshChecked": "2026-11-12"
   },
   {
    "id": "pm-42658940",
@@ -27810,7 +27857,7 @@
    "geo": null,
    "firstAuthor": "Lu PT",
    "lastAuthor": "Wu YT",
-   "meshChecked": "2026-10-28"
+   "meshChecked": "2026-11-12"
   },
   {
    "id": "pm-42669601",
@@ -27857,7 +27904,7 @@
    "geo": null,
    "firstAuthor": "Polo-Blanco I",
    "lastAuthor": "Chimoni M",
-   "meshChecked": "2026-10-28"
+   "meshChecked": "2026-11-12"
   },
   {
    "id": "pm-42663882",
@@ -27873,7 +27920,7 @@
    "geo": null,
    "firstAuthor": "Attanasio M",
    "lastAuthor": "Valenti M",
-   "meshChecked": "2026-10-28"
+   "meshChecked": "2026-11-12"
   },
   {
    "id": "pm-42661058",
@@ -27889,7 +27936,7 @@
    "geo": null,
    "firstAuthor": "Yokokura M",
    "lastAuthor": "Yamasue H",
-   "meshChecked": "2026-10-28"
+   "meshChecked": "2026-11-12"
   },
   {
    "id": "pm-42660854",
@@ -27932,7 +27979,7 @@
    "geo": null,
    "firstAuthor": "David LW",
    "lastAuthor": "Wæhre A",
-   "meshChecked": "2026-10-28"
+   "meshChecked": "2026-11-12"
   },
   {
    "id": "pm-42657937",
@@ -28038,7 +28085,7 @@
    "geo": null,
    "firstAuthor": "Yu YT",
    "lastAuthor": "Chen KL",
-   "meshChecked": "2026-10-28"
+   "meshChecked": "2026-11-12"
   },
   {
    "id": "pm-42640439",
@@ -28054,7 +28101,7 @@
    "geo": null,
    "firstAuthor": "Charman T",
    "lastAuthor": "BASIS/STAARS Team",
-   "meshChecked": "2026-10-28"
+   "meshChecked": "2026-11-12"
   },
   {
    "id": "pm-42635692",
@@ -28073,7 +28120,7 @@
    },
    "firstAuthor": "Kim J",
    "lastAuthor": "Yang S",
-   "meshChecked": "2026-10-28"
+   "meshChecked": "2026-11-12"
   },
   {
    "id": "pm-42635691",
@@ -28092,7 +28139,7 @@
    },
    "firstAuthor": "Alba LA",
    "lastAuthor": "Salinas G",
-   "meshChecked": "2026-10-28"
+   "meshChecked": "2026-11-12"
   },
   {
    "id": "pm-42649243",
@@ -28111,7 +28158,7 @@
    },
    "firstAuthor": "Li P",
    "lastAuthor": "Yan Z",
-   "meshChecked": "2026-10-28"
+   "meshChecked": "2026-11-12"
   },
   {
    "id": "pm-42640041",
@@ -28125,7 +28172,7 @@
    "journalKey": "autism-res",
    "branchKey": "neuroscience",
    "geo": null,
-   "meshChecked": "2026-10-28"
+   "meshChecked": "2026-11-12"
   },
   {
    "id": "pm-42637679",
@@ -28141,7 +28188,7 @@
    "geo": null,
    "firstAuthor": "Knudsen LV",
    "lastAuthor": "Michel TM",
-   "meshChecked": "2026-10-28"
+   "meshChecked": "2026-11-12"
   },
   {
    "id": "pm-42665438",
@@ -28159,7 +28206,7 @@
    },
    "firstAuthor": "Fenning RM",
    "lastAuthor": "Neece CL",
-   "meshChecked": "2026-10-28"
+   "meshChecked": "2026-11-12"
   },
   {
    "id": "pm-42658421",
@@ -28178,7 +28225,7 @@
    },
    "firstAuthor": "Cervantes PE",
    "lastAuthor": "Horwitz SM",
-   "meshChecked": "2026-10-28"
+   "meshChecked": "2026-11-12"
   },
   {
    "id": "pm-42649086",
@@ -28251,7 +28298,7 @@
    },
    "firstAuthor": "Abbas K",
    "lastAuthor": "Barnhardt E",
-   "meshChecked": "2026-10-28"
+   "meshChecked": "2026-11-12"
   },
   {
    "id": "pm-42667252",
@@ -28268,7 +28315,7 @@
    "geo": null,
    "firstAuthor": "Mohammed HO",
    "lastAuthor": "Younes ER",
-   "meshChecked": "2026-10-28"
+   "meshChecked": "2026-11-12"
   },
   {
    "id": "pm-42660852",
@@ -28285,7 +28332,7 @@
    "geo": null,
    "firstAuthor": "Dadds MR",
    "lastAuthor": "Tully L",
-   "meshChecked": "2026-10-28"
+   "meshChecked": "2026-11-12"
   },
   {
    "id": "pm-42661351",
@@ -28302,7 +28349,7 @@
    "geo": null,
    "firstAuthor": "Adisu MA",
    "lastAuthor": "Habte TE",
-   "meshChecked": "2026-10-28"
+   "meshChecked": "2026-11-12"
   },
   {
    "id": "pm-42653435",
@@ -28381,7 +28428,7 @@
    "geo": null,
    "firstAuthor": "Larose MP",
    "lastAuthor": "Bowes L",
-   "meshChecked": "2026-10-28"
+   "meshChecked": "2026-11-12"
   },
   {
    "id": "pm-42657951",
@@ -28435,7 +28482,7 @@
    "geo": null,
    "firstAuthor": "Shu K",
    "lastAuthor": "Lei B",
-   "meshChecked": "2026-10-28"
+   "meshChecked": "2026-11-12"
   },
   {
    "id": "pm-42643087",
@@ -28455,7 +28502,7 @@
    "geo": null,
    "firstAuthor": "Yoon N",
    "lastAuthor": "Kim BN",
-   "meshChecked": "2026-10-28"
+   "meshChecked": "2026-11-12"
   },
   {
    "id": "pm-42668002",
@@ -28585,7 +28632,7 @@
    "geo": null,
    "firstAuthor": "Gram EB",
    "lastAuthor": "Damkier P",
-   "meshChecked": "2026-10-28"
+   "meshChecked": "2026-11-12"
   },
   {
    "id": "pm-42665503",
@@ -28600,7 +28647,7 @@
    "geo": null,
    "firstAuthor": "Evenepoel M",
    "lastAuthor": "Alaerts K",
-   "meshChecked": "2026-10-28"
+   "meshChecked": "2026-11-12"
   },
   {
    "id": "pm-42660858",
@@ -28706,7 +28753,7 @@
    "geo": null,
    "firstAuthor": "Erdal K",
    "lastAuthor": "Finnemann J",
-   "meshChecked": "2026-10-28"
+   "meshChecked": "2026-11-12"
   },
   {
    "id": "pm-42667550",
@@ -28721,7 +28768,7 @@
    "geo": null,
    "firstAuthor": "Ma B",
    "lastAuthor": "Chen O",
-   "meshChecked": "2026-10-28"
+   "meshChecked": "2026-11-12"
   },
   {
    "id": "pm-42663880",
@@ -28736,7 +28783,7 @@
    "geo": null,
    "firstAuthor": "Chen ZY",
    "lastAuthor": "Wu SM",
-   "meshChecked": "2026-10-28"
+   "meshChecked": "2026-11-12"
   },
   {
    "id": "pm-42640438",
@@ -28751,7 +28798,7 @@
    "geo": null,
    "firstAuthor": "Desimpelaere EN",
    "lastAuthor": "Soenens B",
-   "meshChecked": "2026-10-28"
+   "meshChecked": "2026-11-12"
   },
   {
    "id": "pm-39163782",
@@ -28922,7 +28969,7 @@
    },
    "firstAuthor": "Hlynsson JI",
    "lastAuthor": "Carlbring P",
-   "meshChecked": "2026-10-28"
+   "meshChecked": "2026-11-12"
   },
   {
    "id": "pm-42674808",
@@ -28942,7 +28989,7 @@
    },
    "firstAuthor": "Cheng JS",
    "lastAuthor": "Storch EA",
-   "meshChecked": "2026-10-28"
+   "meshChecked": "2026-11-12"
   },
   {
    "id": "pm-42670045",
@@ -28959,7 +29006,7 @@
    "geo": null,
    "firstAuthor": "Calugi S",
    "lastAuthor": "Dalle Grave R",
-   "meshChecked": "2026-10-28"
+   "meshChecked": "2026-11-12"
   },
   {
    "id": "pm-42702018",
@@ -29008,7 +29055,7 @@
    },
    "firstAuthor": "Garoli A",
    "lastAuthor": "Greco A",
-   "meshChecked": "2026-10-28"
+   "meshChecked": "2026-11-12"
   },
   {
    "id": "pm-40131682",
@@ -29126,7 +29173,7 @@
    },
    "firstAuthor": "Lai CY",
    "lastAuthor": "Behrens MM",
-   "meshChecked": "2026-10-28"
+   "meshChecked": "2026-11-12"
   },
   {
    "id": "pm-42217685",
@@ -29244,7 +29291,7 @@
    "geo": null,
    "firstAuthor": "Chen X",
    "lastAuthor": "Qi J",
-   "meshChecked": "2026-10-28"
+   "meshChecked": "2026-11-12"
   },
   {
    "id": "pm-42696786",
@@ -29426,7 +29473,7 @@
    "geo": null,
    "firstAuthor": "Zuo X",
    "lastAuthor": "Fan X",
-   "meshChecked": "2026-10-28"
+   "meshChecked": "2026-11-12"
   },
   {
    "id": "pm-42045433",
@@ -29511,7 +29558,7 @@
    },
    "firstAuthor": "Kim SY",
    "lastAuthor": "Mazefsky CA",
-   "meshChecked": "2026-10-28"
+   "meshChecked": "2026-11-12"
   },
   {
    "id": "pm-40541926",
@@ -29694,7 +29741,7 @@
    "geo": null,
    "firstAuthor": "Bronzuoli MR",
    "lastAuthor": "Scuderi C",
-   "meshChecked": "2026-10-28"
+   "meshChecked": "2026-11-12"
   },
   {
    "id": "pm-42698332",
@@ -29709,7 +29756,7 @@
    "geo": null,
    "firstAuthor": "Gao Y",
    "lastAuthor": "Wang T",
-   "meshChecked": "2026-10-28"
+   "meshChecked": "2026-11-12"
   },
   {
    "id": "pm-42670580",
@@ -29755,7 +29802,7 @@
    "geo": null,
    "firstAuthor": "Fayena E",
    "lastAuthor": "Golan O",
-   "meshChecked": "2026-10-28"
+   "meshChecked": "2026-11-12"
   },
   {
    "id": "pm-42675457",
@@ -29800,7 +29847,7 @@
    },
    "firstAuthor": "VanDaalen RA",
    "lastAuthor": "Fung LK",
-   "meshChecked": "2026-10-28"
+   "meshChecked": "2026-11-12"
   },
   {
    "id": "pm-42690290",
@@ -29845,7 +29892,7 @@
    },
    "firstAuthor": "Salamat M",
    "lastAuthor": "Rostami M",
-   "meshChecked": "2026-10-28"
+   "meshChecked": "2026-11-12"
   },
   {
    "id": "pm-42730828",
@@ -29864,7 +29911,7 @@
    },
    "firstAuthor": "Keim SA",
    "lastAuthor": "Rogers LK",
-   "meshChecked": "2026-10-28"
+   "meshChecked": "2026-11-12"
   },
   {
    "id": "pm-42712074",
@@ -29880,7 +29927,7 @@
    "geo": null,
    "firstAuthor": "Maruani A",
    "lastAuthor": "Ellul P",
-   "meshChecked": "2026-10-28"
+   "meshChecked": "2026-11-12"
   },
   {
    "id": "pm-40120015",
@@ -29930,7 +29977,7 @@
    },
    "firstAuthor": "Kaufmann WE",
    "lastAuthor": "FORWARD Consortium",
-   "meshChecked": "2026-10-28"
+   "meshChecked": "2026-11-12"
   },
   {
    "id": "pm-42730824",
@@ -29949,7 +29996,7 @@
    },
    "firstAuthor": "Safran S",
    "lastAuthor": "Hurwitz S",
-   "meshChecked": "2026-10-28"
+   "meshChecked": "2026-11-12"
   },
   {
    "id": "pm-42728763",
@@ -29965,7 +30012,7 @@
    "geo": null,
    "firstAuthor": "Ishida R",
    "lastAuthor": "Makinodan M",
-   "meshChecked": "2026-10-28"
+   "meshChecked": "2026-11-12"
   },
   {
    "id": "pm-42726182",
@@ -29984,7 +30031,7 @@
    },
    "firstAuthor": "Cottle JJ",
    "lastAuthor": "O'Kelley SE",
-   "meshChecked": "2026-10-28"
+   "meshChecked": "2026-11-12"
   },
   {
    "id": "pm-42721965",
@@ -30002,7 +30049,7 @@
    },
    "firstAuthor": "Zhao P",
    "lastAuthor": "Golshani P",
-   "meshChecked": "2026-10-28"
+   "meshChecked": "2026-11-12"
   },
   {
    "id": "pm-42720860",
@@ -30079,7 +30126,7 @@
    "geo": null,
    "firstAuthor": "Ramme A",
    "lastAuthor": "Bernhardt N",
-   "meshChecked": "2026-10-28"
+   "meshChecked": "2026-11-12"
   },
   {
    "id": "pm-42009985",
@@ -30361,7 +30408,7 @@
    "geo": null,
    "firstAuthor": "Tekeli Uçar Ö",
    "lastAuthor": "Eyüboğlu M",
-   "meshChecked": "2026-10-28"
+   "meshChecked": "2026-11-12"
   },
   {
    "id": "pm-42228236",
@@ -30377,7 +30424,7 @@
    "geo": null,
    "firstAuthor": "Dai Z",
    "lastAuthor": "Wang B",
-   "meshChecked": "2026-10-28"
+   "meshChecked": "2026-11-12"
   },
   {
    "id": "pm-40240531",
@@ -30426,7 +30473,7 @@
    "geo": null,
    "firstAuthor": "Okewole A",
    "lastAuthor": "Warrier V",
-   "meshChecked": "2026-10-28"
+   "meshChecked": "2026-11-12"
   },
   {
    "id": "pm-42728317",
@@ -30442,7 +30489,7 @@
    "geo": null,
    "firstAuthor": "Mendes M",
    "lastAuthor": "Scherer SW",
-   "meshChecked": "2026-10-28"
+   "meshChecked": "2026-11-12"
   },
   {
    "id": "pm-40240530",
@@ -30491,7 +30538,7 @@
     "city": "Pittsburgh"
    },
    "firstAuthor": "Strobl EV",
-   "meshChecked": "2026-10-28"
+   "meshChecked": "2026-11-12"
   },
   {
    "id": "pm-42728848",
@@ -30534,7 +30581,7 @@
    "geo": null,
    "firstAuthor": "Melo TFAO",
    "lastAuthor": "Heimer MV",
-   "meshChecked": "2026-10-28"
+   "meshChecked": "2026-11-12"
   },
   {
    "id": "pm-42726183",
@@ -30553,7 +30600,7 @@
    },
    "firstAuthor": "Akemoğlu Y",
    "lastAuthor": "Xiong J",
-   "meshChecked": "2026-10-28"
+   "meshChecked": "2026-11-12"
   },
   {
    "id": "pm-42714883",
@@ -30598,7 +30645,7 @@
    "geo": null,
    "firstAuthor": "Uslu B",
    "lastAuthor": "Çevik FA",
-   "meshChecked": "2026-10-28"
+   "meshChecked": "2026-11-12"
   },
   {
    "id": "pm-42708329",
@@ -30617,7 +30664,7 @@
    },
    "firstAuthor": "Smith JR",
    "lastAuthor": "Luccarelli J",
-   "meshChecked": "2026-10-28"
+   "meshChecked": "2026-11-12"
   },
   {
    "id": "pm-40252201",
@@ -30906,7 +30953,7 @@
    "geo": null,
    "firstAuthor": "González-Madrid E",
    "lastAuthor": "Kalergis AM",
-   "meshChecked": "2026-10-28"
+   "meshChecked": "2026-11-12"
   },
   {
    "id": "pm-42723086",
@@ -30950,7 +30997,7 @@
    "geo": null,
    "firstAuthor": "Guez E",
    "lastAuthor": "Cohen D",
-   "meshChecked": "2026-10-28"
+   "meshChecked": "2026-11-12"
   },
   {
    "id": "pm-42708331",
@@ -31007,7 +31054,7 @@
    },
    "firstAuthor": "Bala A",
    "lastAuthor": "Hashmi A",
-   "meshChecked": "2026-10-28"
+   "meshChecked": "2026-11-12"
   },
   {
    "id": "pm-42522558",
@@ -31115,7 +31162,7 @@
    },
    "firstAuthor": "Arutiunian V",
    "lastAuthor": "Gupta AR",
-   "meshChecked": "2026-10-28"
+   "meshChecked": "2026-11-12"
   },
   {
    "id": "pm-42721928",
@@ -31254,7 +31301,7 @@
    "geo": null,
    "firstAuthor": "Sadr Z",
    "lastAuthor": "Neamatzadeh H",
-   "meshChecked": "2026-10-28"
+   "meshChecked": "2026-11-12"
   },
   {
    "id": "pm-41931014",
@@ -31302,7 +31349,7 @@
    "geo": null,
    "firstAuthor": "Campos GDS",
    "lastAuthor": "Passos-Bueno MR",
-   "meshChecked": "2026-10-28"
+   "meshChecked": "2026-11-12"
   },
   {
    "id": "pm-42715378",
@@ -31359,7 +31406,7 @@
    "geo": null,
    "firstAuthor": "Miller SL",
    "lastAuthor": "Upreti R",
-   "meshChecked": "2026-10-28"
+   "meshChecked": "2026-11-12"
   },
   {
    "id": "pm-42627333",
@@ -31456,7 +31503,7 @@
    "geo": null,
    "firstAuthor": "Minuk A",
    "lastAuthor": "D Zwicker J",
-   "meshChecked": "2026-10-28"
+   "meshChecked": "2026-11-12"
   },
   {
    "id": "pm-42730826",
@@ -31474,7 +31521,7 @@
    },
    "firstAuthor": "Esprit JL",
    "lastAuthor": "Stephenson KG",
-   "meshChecked": "2026-10-28"
+   "meshChecked": "2026-11-12"
   },
   {
    "id": "pm-42726181",
@@ -31492,7 +31539,7 @@
    },
    "firstAuthor": "Kiernan B",
    "lastAuthor": "Nevill RE",
-   "meshChecked": "2026-10-28"
+   "meshChecked": "2026-11-12"
   },
   {
    "id": "pm-42752124",
@@ -31567,7 +31614,7 @@
    "geo": null,
    "firstAuthor": "Quinlan E",
    "lastAuthor": "Emery H",
-   "meshChecked": "2026-10-28"
+   "meshChecked": "2026-11-12"
   },
   {
    "id": "pm-42747846",
@@ -31583,7 +31630,7 @@
    "geo": null,
    "firstAuthor": "Bellato A",
    "lastAuthor": "Cortese S",
-   "meshChecked": "2026-10-28"
+   "meshChecked": "2026-11-12"
   },
   {
    "id": "pm-42747663",
@@ -31602,7 +31649,7 @@
    },
    "firstAuthor": "Pelaez M",
    "lastAuthor": "Monlux K",
-   "meshChecked": "2026-10-28"
+   "meshChecked": "2026-11-12"
   },
   {
    "id": "pm-42747661",
@@ -31618,7 +31665,7 @@
    "geo": null,
    "firstAuthor": "Osten S",
    "lastAuthor": "Kelley E",
-   "meshChecked": "2026-10-28"
+   "meshChecked": "2026-11-12"
   },
   {
    "id": "pm-42744011",
@@ -31639,7 +31686,7 @@
    },
    "firstAuthor": "Davidson E",
    "lastAuthor": "Hoffman EJ",
-   "meshChecked": "2026-10-28"
+   "meshChecked": "2026-11-12"
   },
   {
    "id": "pm-42749810",
@@ -31717,7 +31764,7 @@
    },
    "firstAuthor": "Deb W",
    "lastAuthor": "Küry S",
-   "meshChecked": "2026-10-28"
+   "meshChecked": "2026-11-12"
   },
   {
    "id": "pm-42755238",
@@ -31768,7 +31815,7 @@
    },
    "firstAuthor": "Hendrix N",
    "lastAuthor": "Pickard K",
-   "meshChecked": "2026-10-28"
+   "meshChecked": "2026-11-12"
   },
   {
    "id": "pm-42739309",
@@ -31788,7 +31835,7 @@
    },
    "firstAuthor": "Kablan A",
    "lastAuthor": "Işık E",
-   "meshChecked": "2026-10-28"
+   "meshChecked": "2026-11-12"
   },
   {
    "id": "pm-42746363",
@@ -31805,7 +31852,7 @@
    "geo": null,
    "firstAuthor": "Liu T",
    "lastAuthor": "Wang Y",
-   "meshChecked": "2026-10-28"
+   "meshChecked": "2026-11-12"
   },
   {
    "id": "pm-42716728",
@@ -31822,7 +31869,7 @@
    "geo": null,
    "firstAuthor": "Sandsdalen AL",
    "lastAuthor": "Hansen TVO",
-   "meshChecked": "2026-10-28"
+   "meshChecked": "2026-11-12"
   },
   {
    "id": "pm-42747551",
@@ -31977,7 +32024,7 @@
    },
    "firstAuthor": "Menu I",
    "lastAuthor": "Thomason ME",
-   "meshChecked": "2026-10-28"
+   "meshChecked": "2026-11-12"
   },
   {
    "id": "pm-42751252",
@@ -31994,7 +32041,7 @@
    "geo": null,
    "firstAuthor": "Li Y",
    "lastAuthor": "Gao J",
-   "meshChecked": "2026-10-28"
+   "meshChecked": "2026-11-12"
   },
   {
    "id": "pm-42742790",
@@ -32072,7 +32119,7 @@
    "geo": null,
    "firstAuthor": "Snijder MIJ",
    "lastAuthor": "Oosterling IJ",
-   "meshChecked": "2026-10-28"
+   "meshChecked": "2026-11-12"
   },
   {
    "id": "pm-42734950",
@@ -32092,7 +32139,7 @@
    },
    "firstAuthor": "Kim YS",
    "lastAuthor": "Leventhal BL",
-   "meshChecked": "2026-10-28"
+   "meshChecked": "2026-11-12"
   },
   {
    "id": "pm-42759400",
@@ -32137,7 +32184,7 @@
    "journalDisplay": "BJPsych bulletin",
    "geo": null,
    "firstAuthor": "Groenewald C",
-   "meshChecked": "2026-10-28"
+   "meshChecked": "2026-11-12"
   },
   {
    "id": "pm-42742391",
@@ -32179,7 +32226,7 @@
    "geo": null,
    "firstAuthor": "Salmon LJ",
    "lastAuthor": "Wood-Downie H",
-   "meshChecked": "2026-10-28"
+   "meshChecked": "2026-11-12"
   },
   {
    "id": "pm-42736039",
@@ -32194,7 +32241,7 @@
    "geo": null,
    "firstAuthor": "Lu ML",
    "lastAuthor": "Chen YL",
-   "meshChecked": "2026-10-28"
+   "meshChecked": "2026-11-12"
   },
   {
    "id": "pm-42802217",
@@ -32216,7 +32263,7 @@
    },
    "firstAuthor": "Sturner R",
    "lastAuthor": "Attar S",
-   "meshChecked": "2026-10-28"
+   "meshChecked": "2026-11-12"
   },
   {
    "id": "pm-42801470",
@@ -32235,7 +32282,7 @@
    },
    "firstAuthor": "Rothermich K",
    "lastAuthor": "Dannhauer M",
-   "meshChecked": "2026-10-28"
+   "meshChecked": "2026-11-12"
   },
   {
    "id": "pm-42801405",
@@ -32251,7 +32298,7 @@
    "geo": null,
    "firstAuthor": "Ayaslan Z",
    "lastAuthor": "Baykara HB",
-   "meshChecked": "2026-10-28"
+   "meshChecked": "2026-11-12"
   },
   {
    "id": "pm-42799971",
@@ -32267,7 +32314,7 @@
    "geo": null,
    "firstAuthor": "Liu X",
    "lastAuthor": "Liu X",
-   "meshChecked": "2026-10-28"
+   "meshChecked": "2026-11-12"
   },
   {
    "id": "pm-42785627",
@@ -32285,7 +32332,7 @@
    "geo": null,
    "firstAuthor": "Cartigny A",
    "lastAuthor": "Delorme R",
-   "meshChecked": "2026-10-28"
+   "meshChecked": "2026-11-12"
   },
   {
    "id": "pm-42781827",
@@ -32301,7 +32348,7 @@
    "geo": null,
    "firstAuthor": "Baisa A",
    "lastAuthor": "Naamati-Schneider L",
-   "meshChecked": "2026-10-28"
+   "meshChecked": "2026-11-12"
   },
   {
    "id": "pm-42776461",
@@ -32317,7 +32364,7 @@
    "geo": null,
    "firstAuthor": "De Laet H",
    "lastAuthor": "Wiersema JR",
-   "meshChecked": "2026-10-28"
+   "meshChecked": "2026-11-12"
   },
   {
    "id": "pm-42773560",
@@ -32387,7 +32434,7 @@
    },
    "firstAuthor": "Bessé M",
    "lastAuthor": "Morel-Kohlmeyer S",
-   "meshChecked": "2026-10-28"
+   "meshChecked": "2026-11-12"
   },
   {
    "id": "pm-42771127",
@@ -32406,7 +32453,7 @@
    },
    "firstAuthor": "Zhong NH",
    "lastAuthor": "Mazurek MO",
-   "meshChecked": "2026-10-28"
+   "meshChecked": "2026-11-12"
   },
   {
    "id": "pm-42767294",
@@ -32428,7 +32475,7 @@
    },
    "firstAuthor": "Shedd A",
    "lastAuthor": "Huber K",
-   "meshChecked": "2026-10-28"
+   "meshChecked": "2026-11-12"
   },
   {
    "id": "pm-42765423",
@@ -32447,7 +32494,7 @@
    },
    "firstAuthor": "Eldeeb S",
    "lastAuthor": "Mazefsky CA",
-   "meshChecked": "2026-10-28"
+   "meshChecked": "2026-11-12"
   },
   {
    "id": "pm-42768145",
@@ -32463,7 +32510,7 @@
    "geo": null,
    "firstAuthor": "Roig Adam A",
    "lastAuthor": "Verhage M",
-   "meshChecked": "2026-10-28"
+   "meshChecked": "2026-11-12"
   },
   {
    "id": "pm-42800802",
@@ -32482,7 +32529,7 @@
    },
    "firstAuthor": "Paha MJ",
    "lastAuthor": "Le Duc D",
-   "meshChecked": "2026-10-28"
+   "meshChecked": "2026-11-12"
   },
   {
    "id": "pm-42767215",
@@ -32530,7 +32577,7 @@
    "geo": null,
    "firstAuthor": "Yeoman M",
    "lastAuthor": "Totsika V",
-   "meshChecked": "2026-10-28"
+   "meshChecked": "2026-11-12"
   },
   {
    "id": "pm-42788998",
@@ -32546,7 +32593,7 @@
    "geo": null,
    "firstAuthor": "Tan Q",
    "lastAuthor": "Yao L",
-   "meshChecked": "2026-10-28"
+   "meshChecked": "2026-11-12"
   },
   {
    "id": "pm-42771129",
@@ -32562,7 +32609,7 @@
    "geo": null,
    "firstAuthor": "Ghilav R",
    "lastAuthor": "Talebzadeh Shoushtari M",
-   "meshChecked": "2026-10-28"
+   "meshChecked": "2026-11-12"
   },
   {
    "id": "pm-42771561",
@@ -32579,7 +32626,7 @@
    "geo": null,
    "firstAuthor": "Cleary S",
    "lastAuthor": "Foster JA",
-   "meshChecked": "2026-10-28"
+   "meshChecked": "2026-11-12"
   },
   {
    "id": "pm-42794651",
@@ -32657,7 +32704,7 @@
    "geo": null,
    "firstAuthor": "Hu C",
    "lastAuthor": "Hao Y",
-   "meshChecked": "2026-10-28"
+   "meshChecked": "2026-11-12"
   },
   {
    "id": "pm-42794832",
@@ -32703,7 +32750,7 @@
    "geo": null,
    "firstAuthor": "Tanuku S",
    "lastAuthor": "Ganti L",
-   "meshChecked": "2026-10-28"
+   "meshChecked": "2026-11-12"
   },
   {
    "id": "pm-42476349",
@@ -32833,7 +32880,7 @@
    },
    "firstAuthor": "Silver J",
    "lastAuthor": "Carlson GA",
-   "meshChecked": "2026-10-28"
+   "meshChecked": "2026-11-12"
   },
   {
    "id": "pm-42771106",
@@ -32853,7 +32900,7 @@
    "geo": null,
    "firstAuthor": "Hoppstock P",
    "lastAuthor": "Friedrich F",
-   "meshChecked": "2026-10-28"
+   "meshChecked": "2026-11-12"
   },
   {
    "id": "pm-42733661",
@@ -32870,7 +32917,7 @@
    "geo": null,
    "firstAuthor": "Aaltonen A",
    "lastAuthor": "Santini E",
-   "meshChecked": "2026-10-28"
+   "meshChecked": "2026-11-12"
   },
   {
    "id": "pm-42768401",
@@ -32893,7 +32940,7 @@
    },
    "firstAuthor": "Rosenthal Z",
    "lastAuthor": "Palmer C",
-   "meshChecked": "2026-10-28"
+   "meshChecked": "2026-11-12"
   },
   {
    "id": "pm-42801973",
@@ -32913,7 +32960,7 @@
    },
    "firstAuthor": "Kim AS",
    "lastAuthor": "Chi DL",
-   "meshChecked": "2026-10-28"
+   "meshChecked": "2026-11-12"
   },
   {
    "id": "pm-42757931",
@@ -32930,7 +32977,7 @@
    "geo": null,
    "firstAuthor": "Suggarangaiah S",
    "lastAuthor": "Duriasamy P",
-   "meshChecked": "2026-10-28"
+   "meshChecked": "2026-11-12"
   },
   {
    "id": "pm-42757222",
@@ -32947,7 +32994,7 @@
    "geo": null,
    "firstAuthor": "Tachibana M",
    "lastAuthor": "Sasaki T",
-   "meshChecked": "2026-10-28"
+   "meshChecked": "2026-11-12"
   },
   {
    "id": "pm-42782206",
@@ -32963,7 +33010,7 @@
    "journalDisplay": "Zeitschrift fur Kinder- und Jugendpsychiatrie und Psychotherapie",
    "geo": null,
    "firstAuthor": "Munz M",
-   "meshChecked": "2026-10-28"
+   "meshChecked": "2026-11-12"
   },
   {
    "id": "pm-42781824",
@@ -32978,7 +33025,7 @@
    "geo": null,
    "firstAuthor": "McAdams E",
    "lastAuthor": "Stewart GR",
-   "meshChecked": "2026-10-28"
+   "meshChecked": "2026-11-12"
   },
   {
    "id": "pm-42781823",
@@ -33021,7 +33068,7 @@
    "geo": null,
    "firstAuthor": "Jiao J",
    "lastAuthor": "Tang X",
-   "meshChecked": "2026-10-28"
+   "meshChecked": "2026-11-12"
   },
   {
    "id": "pm-42802218",
@@ -33039,7 +33086,7 @@
    },
    "firstAuthor": "Frazier TW",
    "lastAuthor": "Uljarevic M",
-   "meshChecked": "2026-10-28"
+   "meshChecked": "2026-11-12"
   },
   {
    "id": "pm-42799970",
@@ -33057,7 +33104,14 @@
    },
    "firstAuthor": "Bottini S",
    "lastAuthor": "Scahill L",
-   "meshChecked": "2026-10-28"
+   "meshChecked": "2026-11-12",
+   "funders": {
+    "marcus": {
+     "via": [
+      "grant"
+     ]
+    }
+   }
   },
   {
    "id": "pm-42789000",
@@ -33075,7 +33129,7 @@
    },
    "firstAuthor": "Burke MM",
    "lastAuthor": "Alagozoglu E",
-   "meshChecked": "2026-10-28"
+   "meshChecked": "2026-11-12"
   },
   {
    "id": "pm-42788999",
@@ -33090,7 +33144,7 @@
    "geo": null,
    "firstAuthor": "Chen Z",
    "lastAuthor": "Ma Y",
-   "meshChecked": "2026-10-28"
+   "meshChecked": "2026-11-12"
   },
   {
    "id": "pm-33790466",
@@ -33181,7 +33235,7 @@
    "geo": null,
    "firstAuthor": "Szalkay K",
    "lastAuthor": "Farkas K",
-   "meshChecked": "2026-10-28"
+   "meshChecked": "2026-11-12"
   },
   {
    "id": "pm-42833502",
@@ -33202,7 +33256,7 @@
    },
    "firstAuthor": "Hubbard JA",
    "lastAuthor": "Bauman MD",
-   "meshChecked": "2026-10-28"
+   "meshChecked": "2026-11-12"
   },
   {
    "id": "pm-40272731",
@@ -33252,7 +33306,7 @@
    "geo": null,
    "firstAuthor": "Hou W",
    "lastAuthor": "Chu X",
-   "meshChecked": "2026-10-28"
+   "meshChecked": "2026-11-12"
   },
   {
    "id": "pm-42832010",
@@ -33268,7 +33322,7 @@
    "geo": null,
    "firstAuthor": "Chen X",
    "lastAuthor": "Yan D",
-   "meshChecked": "2026-10-28"
+   "meshChecked": "2026-11-12"
   },
   {
    "id": "pm-42830616",
@@ -33284,7 +33338,7 @@
    "geo": null,
    "firstAuthor": "Zingale M",
    "lastAuthor": "Ferri R",
-   "meshChecked": "2026-10-28"
+   "meshChecked": "2026-11-12"
   },
   {
    "id": "pm-42830483",
@@ -33306,7 +33360,7 @@
    },
    "firstAuthor": "Wall CA",
    "lastAuthor": "Shic F",
-   "meshChecked": "2026-10-28"
+   "meshChecked": "2026-11-12"
   },
   {
    "id": "pm-42827296",
@@ -33322,7 +33376,7 @@
    "geo": null,
    "firstAuthor": "Osborn EJ",
    "lastAuthor": "Fuss B",
-   "meshChecked": "2026-10-28"
+   "meshChecked": "2026-11-12"
   },
   {
    "id": "pm-42821189",
@@ -33338,7 +33392,7 @@
    "geo": null,
    "firstAuthor": "Doruk O",
    "lastAuthor": "Elgörmüş MN",
-   "meshChecked": "2026-10-28"
+   "meshChecked": "2026-11-12"
   },
   {
    "id": "pm-42821188",
@@ -33357,7 +33411,7 @@
    },
    "firstAuthor": "Reichow B",
    "lastAuthor": "Song J",
-   "meshChecked": "2026-10-28"
+   "meshChecked": "2026-11-12"
   },
   {
    "id": "pm-42815954",
@@ -33375,7 +33429,7 @@
    "geo": null,
    "firstAuthor": "Zeng Y",
    "lastAuthor": "Cao Q",
-   "meshChecked": "2026-10-28"
+   "meshChecked": "2026-11-12"
   },
   {
    "id": "pm-42813421",
@@ -33391,7 +33445,7 @@
    "geo": null,
    "firstAuthor": "Dawson A",
    "lastAuthor": "Flower RL",
-   "meshChecked": "2026-10-28"
+   "meshChecked": "2026-11-12"
   },
   {
    "id": "pm-40372565",
@@ -33569,7 +33623,7 @@
    "geo": null,
    "firstAuthor": "Diao Y",
    "lastAuthor": "Wu K",
-   "meshChecked": "2026-10-28"
+   "meshChecked": "2026-11-12"
   },
   {
    "id": "pm-42815470",
@@ -33587,7 +33641,7 @@
    },
    "firstAuthor": "Chen X",
    "lastAuthor": "Yang Y",
-   "meshChecked": "2026-10-28"
+   "meshChecked": "2026-11-12"
   },
   {
    "id": "pm-42805187",
@@ -33597,15 +33651,27 @@
    "url": "https://pubmed.ncbi.nlm.nih.gov/42805187/",
    "priority": "unclassified",
    "addedBy": "agent-2026-10-07",
-   "mesh": [],
+   "mesh": [
+    "Animals",
+    "Humans",
+    "Protein Serine-Threonine Kinases",
+    "Neurodevelopmental Disorders",
+    "Female",
+    "Drosophila Proteins",
+    "Epilepsy",
+    "Alleles",
+    "Male",
+    "Phenotype",
+    "Drosophila melanogaster",
+    "Neuromuscular Junction"
+   ],
    "journalKey": "ajhg",
    "geo": {
     "state": "TX",
     "city": "Houston"
    },
    "firstAuthor": "Deng M",
-   "lastAuthor": "Bellen HJ",
-   "meshChecked": "2026-10-28"
+   "lastAuthor": "Bellen HJ"
   },
   {
    "id": "pm-42816538",
@@ -33621,7 +33687,7 @@
    "geo": null,
    "firstAuthor": "Fury B",
    "lastAuthor": "Shakeshaft A",
-   "meshChecked": "2026-10-28"
+   "meshChecked": "2026-11-12"
   },
   {
    "id": "pm-42815469",
@@ -33636,7 +33702,7 @@
    "geo": null,
    "firstAuthor": "Ouellette J",
    "lastAuthor": "Lacoste B",
-   "meshChecked": "2026-10-28"
+   "meshChecked": "2026-11-12"
   },
   {
    "id": "pm-40327233",
@@ -33676,7 +33742,7 @@
    "geo": null,
    "firstAuthor": "Gundeslioglu H",
    "lastAuthor": "Langdon PE",
-   "meshChecked": "2026-10-28"
+   "meshChecked": "2026-11-12"
   },
   {
    "id": "pm-42832008",
@@ -33695,7 +33761,7 @@
    },
    "firstAuthor": "Gardner L",
    "lastAuthor": "Campbell J",
-   "meshChecked": "2026-10-28"
+   "meshChecked": "2026-11-12"
   },
   {
    "id": "pm-42826765",
@@ -33710,7 +33776,7 @@
    "geo": null,
    "firstAuthor": "Shaw KA",
    "lastAuthor": "Maenner MJ",
-   "meshChecked": "2026-10-28"
+   "meshChecked": "2026-11-12"
   },
   {
    "id": "pm-42817233",
@@ -33729,7 +33795,7 @@
    },
    "firstAuthor": "Coffman MC",
    "lastAuthor": "Huang WA",
-   "meshChecked": "2026-10-28"
+   "meshChecked": "2026-11-12"
   },
   {
    "id": "pm-41456706",
@@ -34113,14 +34179,26 @@
    "url": "https://pubmed.ncbi.nlm.nih.gov/42803945/",
    "priority": "clinical-trial",
    "addedBy": "agent-2026-10-07",
-   "mesh": [],
+   "mesh": [
+    "Humans",
+    "Female",
+    "Male",
+    "Behavior Therapy",
+    "Child, Preschool",
+    "Autistic Disorder",
+    "Child Behavior",
+    "Communication Devices for People with Disabilities",
+    "Attention",
+    "Single-Case Studies as Topic",
+    "Treatment Outcome",
+    "Visual Perception"
+   ],
    "branchKey": "intervention",
    "viaOpenVenue": true,
    "journalDisplay": "American journal of speech-language pathology",
    "geo": null,
    "firstAuthor": "Ousley C",
-   "lastAuthor": "Pitt K",
-   "meshChecked": "2026-10-28"
+   "lastAuthor": "Pitt K"
   },
   {
    "id": "pm-42839350",
@@ -34137,7 +34215,7 @@
    "geo": null,
    "firstAuthor": "Sikora V",
    "lastAuthor": "Trabace L",
-   "meshChecked": "2026-10-28"
+   "meshChecked": "2026-11-12"
   },
   {
    "id": "pm-42806658",
@@ -34402,7 +34480,7 @@
    "geo": null,
    "firstAuthor": "Feng Y",
    "lastAuthor": "Liu F",
-   "meshChecked": "2026-10-28"
+   "meshChecked": "2026-11-12"
   },
   {
    "id": "pm-42814250",
@@ -34419,7 +34497,7 @@
    "geo": null,
    "firstAuthor": "Wang Z",
    "lastAuthor": "Li S",
-   "meshChecked": "2026-10-28"
+   "meshChecked": "2026-11-12"
   },
   {
    "id": "pm-42320287",
@@ -34496,7 +34574,7 @@
    "mesh": [],
    "geo": null,
    "firstAuthor": "Anderer S",
-   "meshChecked": "2026-10-28"
+   "meshChecked": "2026-11-12"
   },
   {
    "id": "pm-42815847",
@@ -34511,7 +34589,7 @@
    "geo": null,
    "firstAuthor": "Chang JC",
    "lastAuthor": "Lan TH",
-   "meshChecked": "2026-10-28"
+   "meshChecked": "2026-11-12"
   },
   {
    "id": "pm-42686321",
@@ -34524,7 +34602,7 @@
    "addedBy": "agent-2026-10-07",
    "mesh": [],
    "geo": null,
-   "meshChecked": "2026-10-28"
+   "meshChecked": "2026-11-12"
   },
   {
    "id": "pm-42686319",
@@ -34541,7 +34619,7 @@
     "city": "Madison"
    },
    "firstAuthor": "Werling DM",
-   "meshChecked": "2026-10-28"
+   "meshChecked": "2026-11-12"
   },
   {
    "id": "pm-42839619",
@@ -34559,7 +34637,7 @@
    },
    "firstAuthor": "Kim SY",
    "lastAuthor": "Nicolaidis C",
-   "meshChecked": "2026-10-28"
+   "meshChecked": "2026-11-12"
   },
   {
    "id": "pm-42832011",
@@ -34574,7 +34652,7 @@
    "geo": null,
    "firstAuthor": "Takagi A",
    "lastAuthor": "Kashino M",
-   "meshChecked": "2026-10-28"
+   "meshChecked": "2026-11-12"
   },
   {
    "id": "pm-42828590",
@@ -34589,7 +34667,7 @@
    "geo": null,
    "firstAuthor": "Kılınç Tulum GE",
    "lastAuthor": "Özenoğlu A",
-   "meshChecked": "2026-10-28"
+   "meshChecked": "2026-11-12"
   },
   {
    "id": "pm-42828588",
@@ -34604,7 +34682,7 @@
    "geo": null,
    "firstAuthor": "Liao X",
    "lastAuthor": "Lei X",
-   "meshChecked": "2026-10-28"
+   "meshChecked": "2026-11-12"
   },
   {
    "id": "pm-42821190",
@@ -34622,7 +34700,7 @@
    },
    "firstAuthor": "Shivers CM",
    "lastAuthor": "Lee CE",
-   "meshChecked": "2026-10-28"
+   "meshChecked": "2026-11-12"
   },
   {
    "id": "pm-42844313",
@@ -34641,7 +34719,7 @@
    "lastAuthor": "Gur TL",
    "journalKey": "mol-psych",
    "branchKey": "cytokines",
-   "meshChecked": "2026-10-28"
+   "meshChecked": "2026-11-12"
   },
   {
    "id": "pm-42872382",
@@ -34657,7 +34735,7 @@
    "lastAuthor": "Waddington H",
    "journalKey": "autism",
    "branchKey": "behavioral",
-   "meshChecked": "2026-10-28"
+   "meshChecked": "2026-11-12"
   },
   {
    "id": "pm-42869120",
@@ -34678,7 +34756,7 @@
    "alsoBranches": [
     "neuroscience"
    ],
-   "meshChecked": "2026-10-28"
+   "meshChecked": "2026-11-12"
   },
   {
    "id": "pm-42867737",
@@ -34694,7 +34772,7 @@
    "lastAuthor": "Du JQ",
    "journalKey": "j-autism-dev-disord",
    "branchKey": "intervention",
-   "meshChecked": "2026-10-28"
+   "meshChecked": "2026-11-12"
   },
   {
    "id": "pm-42862433",
@@ -34713,7 +34791,7 @@
    "lastAuthor": "Woynaroski TG",
    "journalKey": "j-autism-dev-disord",
    "branchKey": "neuroscience",
-   "meshChecked": "2026-10-28"
+   "meshChecked": "2026-11-12"
   },
   {
    "id": "pm-42862432",
@@ -34732,7 +34810,7 @@
    "lastAuthor": "Scott L",
    "journalKey": "j-autism-dev-disord",
    "branchKey": "behavioral",
-   "meshChecked": "2026-10-28"
+   "meshChecked": "2026-11-12"
   },
   {
    "id": "pm-42860767",
@@ -34751,7 +34829,7 @@
    "lastAuthor": "Weng C",
    "journalKey": "autism-res",
    "branchKey": "intervention",
-   "meshChecked": "2026-10-28"
+   "meshChecked": "2026-11-12"
   },
   {
    "id": "pm-42849904",
@@ -34765,7 +34843,7 @@
    "geo": null,
    "firstAuthor": "Swanepoel A",
    "journalKey": "jcpp",
-   "meshChecked": "2026-10-28"
+   "meshChecked": "2026-11-12"
   },
   {
    "id": "pm-42848294",
@@ -34787,7 +34865,7 @@
    "alsoBranches": [
     "behavioral"
    ],
-   "meshChecked": "2026-10-28"
+   "meshChecked": "2026-11-12"
   },
   {
    "id": "pm-42844592",
@@ -34803,7 +34881,7 @@
    "lastAuthor": "Green J",
    "journalKey": "autism",
    "branchKey": "behavioral",
-   "meshChecked": "2026-10-28"
+   "meshChecked": "2026-11-12"
   },
   {
    "id": "pm-42875502",
@@ -34819,7 +34897,7 @@
    "lastAuthor": "Blencowe BJ",
    "journalKey": "nature",
    "branchKey": "genetics",
-   "meshChecked": "2026-10-28"
+   "meshChecked": "2026-11-12"
   },
   {
    "id": "pm-42854861",
@@ -34838,7 +34916,7 @@
     "genetics",
     "neuroscience"
    ],
-   "meshChecked": "2026-10-28"
+   "meshChecked": "2026-11-12"
   },
   {
    "id": "pm-42869119",
@@ -34856,7 +34934,7 @@
    "firstAuthor": "Starnawska A",
    "lastAuthor": "Demontis D",
    "journalKey": "biol-psych",
-   "meshChecked": "2026-10-28"
+   "meshChecked": "2026-11-12"
   },
   {
    "id": "pm-42859211",
@@ -34875,7 +34953,7 @@
    "lastAuthor": "Geng Y",
    "journalKey": "mol-psych",
    "branchKey": "genetics",
-   "meshChecked": "2026-10-28"
+   "meshChecked": "2026-11-12"
   },
   {
    "id": "pm-42854690",
@@ -34885,15 +34963,29 @@
    "url": "https://pubmed.ncbi.nlm.nih.gov/42854690/",
    "priority": "unclassified",
    "addedBy": "agent-2026-10-15",
-   "mesh": [],
+   "mesh": [
+    "Methyl-CpG-Binding Protein 2",
+    "Humans",
+    "Male",
+    "Autistic Disorder",
+    "Female",
+    "Animals",
+    "Mice",
+    "Pedigree",
+    "Genes, Reporter",
+    "Regulatory Sequences, Nucleic Acid",
+    "Promoter Regions, Genetic",
+    "Phenotype",
+    "Neurons",
+    "Chromosomes, Human, X"
+   ],
    "geo": {
     "state": "TX",
     "city": "Houston"
    },
    "firstAuthor": "Meyer-Schuman R",
    "lastAuthor": "Zoghbi H",
-   "journalKey": "ajhg",
-   "meshChecked": "2026-10-28"
+   "journalKey": "ajhg"
   },
   {
    "id": "pm-42867738",
@@ -34909,7 +35001,7 @@
    "lastAuthor": "Hamitoglu A",
    "journalKey": "j-autism-dev-disord",
    "branchKey": "intervention",
-   "meshChecked": "2026-10-28"
+   "meshChecked": "2026-11-12"
   },
   {
    "id": "pm-42862434",
@@ -34928,7 +35020,7 @@
    "lastAuthor": "Loftin R",
    "journalKey": "j-autism-dev-disord",
    "branchKey": "intervention",
-   "meshChecked": "2026-10-28"
+   "meshChecked": "2026-11-12"
   },
   {
    "id": "pm-42861636",
@@ -34942,7 +35034,7 @@
    "geo": null,
    "journalKey": "autism-res",
    "branchKey": "intervention",
-   "meshChecked": "2026-10-28"
+   "meshChecked": "2026-11-12"
   },
   {
    "id": "pm-42859339",
@@ -34961,7 +35053,7 @@
    "lastAuthor": "Peters BC",
    "journalKey": "j-autism-dev-disord",
    "branchKey": "intervention",
-   "meshChecked": "2026-10-28"
+   "meshChecked": "2026-11-12"
   },
   {
    "id": "pm-42851035",
@@ -34977,7 +35069,7 @@
    "lastAuthor": "James AI",
    "journalKey": "autism",
    "branchKey": "intervention",
-   "meshChecked": "2026-10-28"
+   "meshChecked": "2026-11-12"
   },
   {
    "id": "pm-42874702",
@@ -34997,7 +35089,7 @@
    "branchKey": "immunology",
    "viaOpenVenue": true,
    "journalDisplay": "Biochimie",
-   "meshChecked": "2026-10-28"
+   "meshChecked": "2026-11-12"
   },
   {
    "id": "pm-42867752",
@@ -35037,7 +35129,7 @@
    "alsoBranches": [
     "cytokines"
    ],
-   "meshChecked": "2026-10-28"
+   "meshChecked": "2026-11-12"
   },
   {
    "id": "pm-42413861",
@@ -35116,7 +35208,7 @@
    "branchKey": "behavioral",
    "viaOpenVenue": true,
    "journalDisplay": "Applied neuropsychology. Adult",
-   "meshChecked": "2026-10-28"
+   "meshChecked": "2026-11-12"
   },
   {
    "id": "pm-42433021",
@@ -35256,7 +35348,7 @@
    "branchKey": "cytokines",
    "viaOpenVenue": true,
    "journalDisplay": "Pharmacological research",
-   "meshChecked": "2026-10-28"
+   "meshChecked": "2026-11-12"
   },
   {
    "id": "pm-42361859",
@@ -35363,7 +35455,7 @@
    "branchKey": "neuroscience",
    "viaOpenVenue": true,
    "journalDisplay": "Cognitive neurodynamics",
-   "meshChecked": "2026-10-28"
+   "meshChecked": "2026-11-12"
   },
   {
    "id": "pm-42865690",
@@ -35468,7 +35560,7 @@
    "branchKey": "intervention",
    "viaOpenVenue": true,
    "journalDisplay": "Journal of developmental and behavioral pediatrics : JDBP",
-   "meshChecked": "2026-10-28"
+   "meshChecked": "2026-11-12"
   },
   {
    "id": "pm-42854201",
@@ -35520,7 +35612,7 @@
    "branchKey": "intervention",
    "viaOpenVenue": true,
    "journalDisplay": "The American journal of occupational therapy : official publication of the American Occupational Therapy Association",
-   "meshChecked": "2026-10-28"
+   "meshChecked": "2026-11-12"
   },
   {
    "id": "pm-42487254",
@@ -35568,7 +35660,7 @@
    "geo": null,
    "firstAuthor": "Wu Z",
    "lastAuthor": "Li F",
-   "meshChecked": "2026-10-28"
+   "meshChecked": "2026-11-12"
   },
   {
    "id": "pm-42852941",
@@ -35583,7 +35675,7 @@
    "geo": null,
    "firstAuthor": "Giannakopoulos G",
    "lastAuthor": "Papanikolaou K",
-   "meshChecked": "2026-10-28"
+   "meshChecked": "2026-11-12"
   },
   {
    "id": "pm-42844649",
@@ -35601,7 +35693,7 @@
    },
    "firstAuthor": "Girolamo T",
    "lastAuthor": "Suhrheinrich J",
-   "meshChecked": "2026-10-28"
+   "meshChecked": "2026-11-12"
   },
   {
    "id": "pm-42856069",
@@ -35619,7 +35711,7 @@
    },
    "firstAuthor": "Wood JJ",
    "lastAuthor": "Crowell SE",
-   "meshChecked": "2026-10-28"
+   "meshChecked": "2026-11-12"
   },
   {
    "id": "pm-42850942",
@@ -35634,7 +35726,7 @@
    "geo": null,
    "firstAuthor": "Ho LC",
    "lastAuthor": "Wei LC",
-   "meshChecked": "2026-10-28"
+   "meshChecked": "2026-11-12"
   },
   {
    "id": "pm-42862435",
@@ -35649,7 +35741,7 @@
    "geo": null,
    "firstAuthor": "Wu Z",
    "lastAuthor": "To CKS",
-   "meshChecked": "2026-10-28"
+   "meshChecked": "2026-11-12"
   },
   {
    "id": "pm-42842175",
@@ -35664,7 +35756,7 @@
    "geo": null,
    "firstAuthor": "Chua SJS",
    "lastAuthor": "Henry JD",
-   "meshChecked": "2026-10-28"
+   "meshChecked": "2026-11-12"
   },
   {
    "id": "pm-42842174",
@@ -35679,7 +35771,7 @@
    "geo": null,
    "firstAuthor": "Agyapong M",
    "lastAuthor": "STAARS Team",
-   "meshChecked": "2026-10-28"
+   "meshChecked": "2026-11-12"
   },
   {
    "id": "pm-42892634",
@@ -35701,7 +35793,7 @@
    "alsoBranches": [
     "intervention"
    ],
-   "meshChecked": "2026-10-28"
+   "meshChecked": "2026-11-12"
   },
   {
    "id": "pm-42919820",
@@ -35717,7 +35809,7 @@
    "lastAuthor": "Simonoff E",
    "journalKey": "autism-res",
    "branchKey": "behavioral",
-   "meshChecked": "2026-10-28"
+   "meshChecked": "2026-11-12"
   },
   {
    "id": "pm-42911481",
@@ -35736,7 +35828,7 @@
    "lastAuthor": "Parish-Morris J",
    "journalKey": "j-autism-dev-disord",
    "branchKey": "intervention",
-   "meshChecked": "2026-10-28"
+   "meshChecked": "2026-11-12"
   },
   {
    "id": "pm-42911479",
@@ -35755,7 +35847,7 @@
    "alsoBranches": [
     "intervention"
    ],
-   "meshChecked": "2026-10-28"
+   "meshChecked": "2026-11-12"
   },
   {
    "id": "pm-42911478",
@@ -35771,7 +35863,7 @@
    "lastAuthor": "Melia R",
    "journalKey": "j-autism-dev-disord",
    "branchKey": "behavioral",
-   "meshChecked": "2026-10-28"
+   "meshChecked": "2026-11-12"
   },
   {
    "id": "pm-42897683",
@@ -35787,7 +35879,7 @@
    "lastAuthor": "Otsuka S",
    "journalKey": "autism-res",
    "branchKey": "behavioral",
-   "meshChecked": "2026-10-28"
+   "meshChecked": "2026-11-12"
   },
   {
    "id": "pm-42888939",
@@ -35803,7 +35895,7 @@
    "lastAuthor": "Fox JRE",
    "journalKey": "autism",
    "branchKey": "behavioral",
-   "meshChecked": "2026-10-28"
+   "meshChecked": "2026-11-12"
   },
   {
    "id": "pm-42887673",
@@ -35811,7 +35903,7 @@
    "date": "2026-10-16",
    "authors": "Sukhodolsky DG",
    "url": "https://pubmed.ncbi.nlm.nih.gov/42887673/",
-   "priority": "other",
+   "priority": "clinical-observation",
    "addedBy": "agent-2026-10-24",
    "mesh": [],
    "geo": {
@@ -35820,7 +35912,8 @@
    },
    "firstAuthor": "Sukhodolsky DG",
    "journalKey": "jaacap",
-   "meshChecked": "2026-10-28"
+   "meshChecked": "2026-11-12",
+   "_priorityWas": "other"
   },
   {
    "id": "pm-42886452",
@@ -35839,7 +35932,7 @@
    "lastAuthor": "Cantero-García M",
    "journalKey": "j-autism-dev-disord",
    "branchKey": "behavioral",
-   "meshChecked": "2026-10-28"
+   "meshChecked": "2026-11-12"
   },
   {
    "id": "pm-42886451",
@@ -35855,7 +35948,7 @@
    "lastAuthor": "Krainer D",
    "journalKey": "j-autism-dev-disord",
    "branchKey": "behavioral",
-   "meshChecked": "2026-10-28"
+   "meshChecked": "2026-11-12"
   },
   {
    "id": "pm-42886448",
@@ -35874,7 +35967,7 @@
    "alsoBranches": [
     "intervention"
    ],
-   "meshChecked": "2026-10-28"
+   "meshChecked": "2026-11-12"
   },
   {
    "id": "pm-42886447",
@@ -35890,7 +35983,7 @@
    "lastAuthor": "Zimic M",
    "journalKey": "j-autism-dev-disord",
    "branchKey": "intervention",
-   "meshChecked": "2026-10-28"
+   "meshChecked": "2026-11-12"
   },
   {
    "id": "pm-42881350",
@@ -35906,7 +35999,7 @@
    "lastAuthor": "Kim SH",
    "journalKey": "j-autism-dev-disord",
    "branchKey": "intervention",
-   "meshChecked": "2026-10-28"
+   "meshChecked": "2026-11-12"
   },
   {
    "id": "pm-42901987",
@@ -35916,15 +36009,25 @@
    "url": "https://pubmed.ncbi.nlm.nih.gov/42901987/",
    "priority": "unclassified",
    "addedBy": "agent-2026-10-24",
-   "mesh": [],
+   "mesh": [
+    "Animals",
+    "Humans",
+    "Mutation, Missense",
+    "Genes, Essential",
+    "Mammals",
+    "Evolution, Molecular",
+    "Selection, Genetic",
+    "DNA Copy Number Variations",
+    "Phylogeny",
+    "Gene Deletion"
+   ],
    "geo": {
     "state": "MA",
     "city": "Boston"
    },
    "firstAuthor": "Liao C",
    "lastAuthor": "Neale BM",
-   "journalKey": "nat-genet",
-   "meshChecked": "2026-10-28"
+   "journalKey": "nat-genet"
   },
   {
    "id": "pm-42881222",
@@ -35945,7 +36048,7 @@
    "alsoBranches": [
     "genetics"
    ],
-   "meshChecked": "2026-10-28"
+   "meshChecked": "2026-11-12"
   },
   {
    "id": "pm-42914007",
@@ -35963,7 +36066,7 @@
    "firstAuthor": "Findling RL",
    "lastAuthor": "Smith E",
    "journalKey": "jaacap",
-   "meshChecked": "2026-10-28"
+   "meshChecked": "2026-11-12"
   },
   {
    "id": "pm-42911480",
@@ -35982,7 +36085,7 @@
    "lastAuthor": "Lerner MD",
    "journalKey": "j-autism-dev-disord",
    "branchKey": "intervention",
-   "meshChecked": "2026-10-28"
+   "meshChecked": "2026-11-12"
   },
   {
    "id": "pm-42911477",
@@ -36001,7 +36104,7 @@
    "lastAuthor": "Keim SA",
    "journalKey": "j-autism-dev-disord",
    "branchKey": "intervention",
-   "meshChecked": "2026-10-28"
+   "meshChecked": "2026-11-12"
   },
   {
    "id": "pm-42885320",
@@ -36017,7 +36120,7 @@
    "lastAuthor": "Peng K",
    "journalKey": "autism-res",
    "branchKey": "intervention",
-   "meshChecked": "2026-10-28"
+   "meshChecked": "2026-11-12"
   },
   {
    "id": "pm-42879056",
@@ -36036,7 +36139,7 @@
    "lastAuthor": "Koth K",
    "journalKey": "j-autism-dev-disord",
    "branchKey": "intervention",
-   "meshChecked": "2026-10-28"
+   "meshChecked": "2026-11-12"
   },
   {
    "id": "pm-42888366",
@@ -36056,7 +36159,7 @@
    "branchKey": "genetics",
    "viaOpenVenue": true,
    "journalDisplay": "Current topics in behavioral neurosciences",
-   "meshChecked": "2026-10-28"
+   "meshChecked": "2026-11-12"
   },
   {
    "id": "pm-42905887",
@@ -36107,7 +36210,7 @@
    "branchKey": "genetics",
    "viaOpenVenue": true,
    "journalDisplay": "Balkan journal of medical genetics : BJMG",
-   "meshChecked": "2026-10-28"
+   "meshChecked": "2026-11-12"
   },
   {
    "id": "pm-42480870",
@@ -36150,7 +36253,7 @@
    "branchKey": "intervention",
    "viaOpenVenue": true,
    "journalDisplay": "Movement disorders clinical practice",
-   "meshChecked": "2026-10-28"
+   "meshChecked": "2026-11-12"
   },
   {
    "id": "pm-42886150",
@@ -36167,7 +36270,7 @@
    "branchKey": "intervention",
    "viaOpenVenue": true,
    "journalDisplay": "Journal of the American Dental Association (1939)",
-   "meshChecked": "2026-10-28"
+   "meshChecked": "2026-11-12"
   },
   {
    "id": "pm-42907297",
@@ -36187,7 +36290,7 @@
    "branchKey": "intervention",
    "viaOpenVenue": true,
    "journalDisplay": "L'Encephale",
-   "meshChecked": "2026-10-28"
+   "meshChecked": "2026-11-12"
   },
   {
    "id": "pm-42862150",
@@ -36207,7 +36310,7 @@
    "branchKey": "intervention",
    "viaOpenVenue": true,
    "journalDisplay": "The American journal of occupational therapy : official publication of the American Occupational Therapy Association",
-   "meshChecked": "2026-10-28"
+   "meshChecked": "2026-11-12"
   },
   {
    "id": "pm-42898978",
@@ -36224,7 +36327,7 @@
    "branchKey": "immunology",
    "viaOpenVenue": true,
    "journalDisplay": "MedComm",
-   "meshChecked": "2026-10-28"
+   "meshChecked": "2026-11-12"
   },
   {
    "id": "pm-42914764",
@@ -36241,7 +36344,7 @@
    "branchKey": "cytokines",
    "viaOpenVenue": true,
    "journalDisplay": "Brain & development",
-   "meshChecked": "2026-10-28"
+   "meshChecked": "2026-11-12"
   },
   {
    "id": "pm-42892189",
@@ -36258,7 +36361,7 @@
    "branchKey": "neuroscience",
    "viaOpenVenue": true,
    "journalDisplay": "Psychiatry research",
-   "meshChecked": "2026-10-28"
+   "meshChecked": "2026-11-12"
   },
   {
    "id": "pm-42879491",
@@ -36304,7 +36407,7 @@
    "branchKey": "neuroscience",
    "viaOpenVenue": true,
    "journalDisplay": "IEEE transactions on bio-medical engineering",
-   "meshChecked": "2026-10-28"
+   "meshChecked": "2026-11-12"
   },
   {
    "id": "pm-42918308",
@@ -36324,7 +36427,7 @@
    "branchKey": "neuroscience",
    "viaOpenVenue": true,
    "journalDisplay": "Behavioural brain research",
-   "meshChecked": "2026-10-28"
+   "meshChecked": "2026-11-12"
   },
   {
    "id": "pm-42888159",
@@ -36344,7 +36447,7 @@
    "branchKey": "behavioral",
    "viaOpenVenue": true,
    "journalDisplay": "L'Encephale",
-   "meshChecked": "2026-10-28"
+   "meshChecked": "2026-11-12"
   },
   {
    "id": "pm-42888940",
@@ -36362,7 +36465,7 @@
    },
    "firstAuthor": "Kang S",
    "lastAuthor": "Locke J",
-   "meshChecked": "2026-10-28"
+   "meshChecked": "2026-11-12"
   },
   {
    "id": "pm-42885509",
@@ -36380,7 +36483,7 @@
    },
    "firstAuthor": "Morgan PL",
    "lastAuthor": "Hu EH",
-   "meshChecked": "2026-10-28"
+   "meshChecked": "2026-11-12"
   },
   {
    "id": "pm-42909748",
@@ -36398,7 +36501,7 @@
    },
    "firstAuthor": "Aguado-Gracia J",
    "lastAuthor": "Calvo Escalona R",
-   "meshChecked": "2026-10-28"
+   "meshChecked": "2026-11-12"
   },
   {
    "id": "pm-42909747",
@@ -36413,7 +36516,7 @@
    "geo": null,
    "firstAuthor": "Babalola TT",
    "lastAuthor": "Botting N",
-   "meshChecked": "2026-10-28"
+   "meshChecked": "2026-11-12"
   },
   {
    "id": "pm-42909746",
@@ -36431,7 +36534,7 @@
    },
    "firstAuthor": "Cardelle-Pérez F",
    "lastAuthor": "Leal-Hernández M",
-   "meshChecked": "2026-10-28"
+   "meshChecked": "2026-11-12"
   },
   {
    "id": "pm-42557909",
@@ -37975,6 +38078,771 @@
    "firstAuthor": "Ozyazici K",
    "lastAuthor": "Can E",
    "meshChecked": "2026-11-05"
+  },
+  {
+   "id": "pm-43014286",
+   "title": "Advancing brain organoids from disease phenotypes to mechanisms and translation across developmental, infectious, and neurodegenerative diseases.",
+   "date": "2026-11-11",
+   "authors": "Knoblich JA, Ming GL, Temple S",
+   "url": "https://pubmed.ncbi.nlm.nih.gov/43014286/",
+   "priority": "review",
+   "addedBy": "agent-2026-11-12",
+   "mesh": [
+    "Humans",
+    "Organoids",
+    "Neurodegenerative Diseases",
+    "Brain",
+    "Animals",
+    "Phenotype",
+    "Neurodevelopment",
+    "Neurodevelopmental Disorders"
+   ],
+   "geo": {
+    "state": "NY",
+    "city": "Albany"
+   },
+   "firstAuthor": "Knoblich JA",
+   "lastAuthor": "Temple S",
+   "journalKey": "neuron"
+  },
+  {
+   "id": "pm-43010848",
+   "title": "Escalating Distress and Sensory Seeking: Autism in Binge-Type Eating Disorders From a Clinical Perspective.",
+   "date": "2026-11-11",
+   "authors": "Makin L, Mondelli V, Tchanturia K",
+   "url": "https://pubmed.ncbi.nlm.nih.gov/43010848/",
+   "priority": "mechanistic",
+   "addedBy": "agent-2026-11-12",
+   "mesh": [],
+   "geo": null,
+   "firstAuthor": "Makin L",
+   "lastAuthor": "Tchanturia K",
+   "journalKey": "autism",
+   "branchKey": "intervention"
+  },
+  {
+   "id": "pm-43007544",
+   "title": "When Eating Organizes the Day: Food Chronocare Among Socioeconomically Vulnerable Families of Children and Adolescents With Autism and Other Neurodevelopmental Conditions in Northeastern Brazil.",
+   "date": "2026-11-10",
+   "authors": "Santos PCA, da Silva Lidio M, Gray HL, et al.",
+   "url": "https://pubmed.ncbi.nlm.nih.gov/43007544/",
+   "priority": "clinical-observation",
+   "addedBy": "agent-2026-11-12",
+   "mesh": [],
+   "geo": {
+    "state": "IL",
+    "city": "Ceará"
+   },
+   "firstAuthor": "Santos PCA",
+   "lastAuthor": "de Araújo MFM",
+   "journalKey": "j-autism-dev-disord",
+   "branchKey": "intervention"
+  },
+  {
+   "id": "pm-43004024",
+   "title": "Gesture, Not Speech, Distinguishes Autistic and Neurotypical Children's Narratives Across Toy and Human Listener Contexts.",
+   "date": "2026-11-10",
+   "authors": "Ghobadi A, Durrleman S",
+   "url": "https://pubmed.ncbi.nlm.nih.gov/43004024/",
+   "priority": "unclassified",
+   "addedBy": "agent-2026-11-12",
+   "mesh": [],
+   "geo": {
+    "state": "NY",
+    "city": ""
+   },
+   "firstAuthor": "Ghobadi A",
+   "lastAuthor": "Durrleman S",
+   "journalKey": "j-autism-dev-disord",
+   "branchKey": "behavioral"
+  },
+  {
+   "id": "pm-42993448",
+   "title": "Evaluation of Context-Specific Early Identification of Autism Models Involving Multiple Stakeholders: Examples From Three Areas of England.",
+   "date": "2026-11-06",
+   "authors": "Jefferson R, Farzinnia R, Verity L, et al.",
+   "url": "https://pubmed.ncbi.nlm.nih.gov/42993448/",
+   "priority": "unclassified",
+   "addedBy": "agent-2026-11-12",
+   "mesh": [],
+   "geo": null,
+   "firstAuthor": "Jefferson R",
+   "lastAuthor": "Bond C",
+   "journalKey": "j-autism-dev-disord",
+   "branchKey": "intervention"
+  },
+  {
+   "id": "pm-42992474",
+   "title": "Quantifying the Impact of Social Cues and Focused-Interest Objects on Joint Attention in Autistic Children via Eye-Tracking.",
+   "date": "2026-11-06",
+   "authors": "Antolí A, López-Soler C, Pérez-Dueñas C, et al.",
+   "url": "https://pubmed.ncbi.nlm.nih.gov/42992474/",
+   "priority": "unclassified",
+   "addedBy": "agent-2026-11-12",
+   "mesh": [],
+   "geo": null,
+   "firstAuthor": "Antolí A",
+   "lastAuthor": "Vacas J",
+   "journalKey": "autism-res",
+   "branchKey": "behavioral"
+  },
+  {
+   "id": "pm-43014310",
+   "title": "Antisense oligonucleotide silencing rescues neurodevelopmental deficits in AMPA receptor gain-of-function mice.",
+   "date": "2026-11-11",
+   "authors": "Chen CM, Huang YM, Chung CC, et al.",
+   "url": "https://pubmed.ncbi.nlm.nih.gov/43014310/",
+   "priority": "mechanistic",
+   "addedBy": "agent-2026-11-12",
+   "mesh": [],
+   "geo": null,
+   "firstAuthor": "Chen CM",
+   "lastAuthor": "Chiu SL",
+   "journalKey": "neuron"
+  },
+  {
+   "id": "pm-42987799",
+   "title": "Scaling haplospecific antisense oligonucleotides from N-of-1 to broad use in genetic disease populations by diplotyping.",
+   "date": "2026-11-05",
+   "authors": "Kim-McManus O, Goddard P, Olsson S, et al.",
+   "url": "https://pubmed.ncbi.nlm.nih.gov/42987799/",
+   "priority": "unclassified",
+   "addedBy": "agent-2026-11-12",
+   "mesh": [
+    "Humans",
+    "Oligonucleotides, Antisense",
+    "Haplotypes",
+    "Polymorphism, Single Nucleotide",
+    "NAV1.2 Voltage-Gated Sodium Channel",
+    "Neurodevelopmental Disorders",
+    "Whole Genome Sequencing",
+    "Alleles",
+    "Genetic Diseases, Inborn",
+    "Male"
+   ],
+   "geo": {
+    "state": "CA",
+    "city": "San Diego"
+   },
+   "firstAuthor": "Kim-McManus O",
+   "lastAuthor": "Kingsmore SF",
+   "journalKey": "ajhg"
+  },
+  {
+   "id": "pm-43014333",
+   "title": "Psychotherapy for autistic adults lacks guidance on the conduct of therapy itself.",
+   "date": "2026-11-11",
+   "authors": "Pantazakos T, Vanaken GJ",
+   "url": "https://pubmed.ncbi.nlm.nih.gov/43014333/",
+   "priority": "unclassified",
+   "addedBy": "agent-2026-11-12",
+   "mesh": [],
+   "geo": null,
+   "firstAuthor": "Pantazakos T",
+   "lastAuthor": "Vanaken GJ",
+   "journalKey": "lancet-psych"
+  },
+  {
+   "id": "pm-43013228",
+   "title": "Beyond Parent Training: Perceived Needs and Gaps in Family-Mediated Early Intervention for Autistic Toddlers in Spain.",
+   "date": "2026-11-11",
+   "authors": "Merino Martínez M, Virtus-Palacios D, Cuesta Gómez JL",
+   "url": "https://pubmed.ncbi.nlm.nih.gov/43013228/",
+   "priority": "unclassified",
+   "addedBy": "agent-2026-11-12",
+   "mesh": [],
+   "geo": null,
+   "firstAuthor": "Merino Martínez M",
+   "lastAuthor": "Cuesta Gómez JL",
+   "journalKey": "j-autism-dev-disord",
+   "branchKey": "intervention"
+  },
+  {
+   "id": "pm-43004955",
+   "title": "Autism Diagnoses Before and After Pregnancy: A Retrospective Population-Based Cohort Study in Ontario, Canada.",
+   "date": "2026-11-10",
+   "authors": "Brown HK, Lunsky Y, Berndl A, et al.",
+   "url": "https://pubmed.ncbi.nlm.nih.gov/43004955/",
+   "priority": "clinical-observation",
+   "addedBy": "agent-2026-11-12",
+   "mesh": [],
+   "geo": {
+    "state": "MA",
+    "city": "Waltham"
+   },
+   "firstAuthor": "Brown HK",
+   "lastAuthor": "Mitra M",
+   "journalKey": "autism",
+   "branchKey": "intervention"
+  },
+  {
+   "id": "pm-43004025",
+   "title": "Pilot Randomized Trial Testing the Feasibility and Outcomes of a Paraprofessional-Delivered After-School Social Intervention for Autistic Children.",
+   "date": "2026-11-10",
+   "authors": "Lopata C, Thomeer ML, Rodgers JD, et al.",
+   "url": "https://pubmed.ncbi.nlm.nih.gov/43004025/",
+   "priority": "clinical-trial",
+   "addedBy": "agent-2026-11-12",
+   "mesh": [],
+   "geo": {
+    "state": "NY",
+    "city": "Buffalo"
+   },
+   "firstAuthor": "Lopata C",
+   "lastAuthor": "Donnelly JP",
+   "journalKey": "j-autism-dev-disord",
+   "branchKey": "intervention"
+  },
+  {
+   "id": "pm-42998191",
+   "title": "Burnout Among Professionals in ABA-Based Services in Brazil.",
+   "date": "2026-11-07",
+   "authors": "Sarilho C, Monteleone TV, Franklin BM, et al.",
+   "url": "https://pubmed.ncbi.nlm.nih.gov/42998191/",
+   "priority": "clinical-observation",
+   "addedBy": "agent-2026-11-12",
+   "mesh": [],
+   "geo": null,
+   "firstAuthor": "Sarilho C",
+   "lastAuthor": "das Neves JAM",
+   "journalKey": "j-autism-dev-disord",
+   "branchKey": "intervention"
+  },
+  {
+   "id": "pm-43002898",
+   "title": "Critical advances and translational bottlenecks of gut microbiota-gut-brain axis targeted therapy for neurodegenerative and neurodevelopmental disorders.",
+   "date": "2026-11-03",
+   "authors": "Yu X, He J, Liu M",
+   "url": "https://pubmed.ncbi.nlm.nih.gov/43002898/",
+   "priority": "translational",
+   "addedBy": "agent-2026-11-12",
+   "mesh": [],
+   "geo": null,
+   "firstAuthor": "Yu X",
+   "lastAuthor": "Liu M",
+   "branchKey": "immunology",
+   "viaOpenVenue": true,
+   "journalDisplay": "Journal of neuroimmunology"
+  },
+  {
+   "id": "pm-43015107",
+   "title": "Maternal Immune Activation and Neurodevelopmental Disorders: A Cross-Species Perspective.",
+   "date": "2026-11-11",
+   "authors": "Mukherjee A, Bauman MD, Hill RA, et al.",
+   "url": "https://pubmed.ncbi.nlm.nih.gov/43015107/",
+   "priority": "review",
+   "addedBy": "agent-2026-11-12",
+   "mesh": [
+    "Humans",
+    "Female",
+    "Pregnancy",
+    "Animals",
+    "Neurodevelopmental Disorders",
+    "Prenatal Exposure Delayed Effects",
+    "Pregnancy Complications, Infectious",
+    "Species Specificity",
+    "Epigenesis, Genetic"
+   ],
+   "geo": {
+    "state": "PA",
+    "city": "Philadelphia"
+   },
+   "firstAuthor": "Mukherjee A",
+   "lastAuthor": "Sawa A",
+   "branchKey": "cytokines",
+   "viaOpenVenue": true,
+   "journalDisplay": "The Journal of neuroscience : the official journal of the Society for Neuroscience"
+  },
+  {
+   "id": "pm-42966430",
+   "title": "Maternal immune activation and the dopaminergic system: Models, mechanisms, and links to psychiatric disorders.",
+   "date": "2026-10-31",
+   "authors": "Chérouvrier M, Delhaye C, Le Magueresse C",
+   "url": "https://pubmed.ncbi.nlm.nih.gov/42966430/",
+   "priority": "review",
+   "addedBy": "agent-2026-11-12",
+   "mesh": [],
+   "geo": {
+    "state": "TX",
+    "city": ""
+   },
+   "firstAuthor": "Chérouvrier M",
+   "lastAuthor": "Le Magueresse C",
+   "branchKey": "cytokines",
+   "viaOpenVenue": true,
+   "journalDisplay": "Neurobiology of disease",
+   "alsoBranches": [
+    "immunology"
+   ]
+  },
+  {
+   "id": "pm-42299664",
+   "title": "Update on ADHD genetics: A practitioner's perspective: Mise à jour sur la génétique du TDAH : le point de vue d'un praticien.",
+   "date": "2026-06-16",
+   "authors": "Schachar R, Crosbie J, Arnold PD, et al.",
+   "url": "https://pubmed.ncbi.nlm.nih.gov/42299664/",
+   "priority": "review",
+   "addedBy": "agent-2026-11-12",
+   "mesh": [
+    "Humans",
+    "Attention Deficit Disorder with Hyperactivity",
+    "Genome-Wide Association Study",
+    "Genetic Risk Score",
+    "Gene-Environment Interaction",
+    "Genetic Predisposition to Disease",
+    "DNA Copy Number Variations"
+   ],
+   "geo": null,
+   "firstAuthor": "Schachar R",
+   "lastAuthor": "Burton CL",
+   "branchKey": "genetics",
+   "viaOpenVenue": true,
+   "journalDisplay": "Canadian journal of psychiatry. Revue canadienne de psychiatrie"
+  },
+  {
+   "id": "pm-43012926",
+   "title": "ASD Genetic Risk Implicates Late PAX2-Positive Interneuron-Progenitor and Purkinje Maturation Programs in the Developing Human Cerebellum.",
+   "date": "2026-11-11",
+   "authors": "Wen J, Lu J",
+   "url": "https://pubmed.ncbi.nlm.nih.gov/43012926/",
+   "priority": "mechanistic",
+   "addedBy": "agent-2026-11-12",
+   "mesh": [
+    "Humans",
+    "PAX2 Transcription Factor",
+    "Cerebellum",
+    "Interneurons",
+    "Purkinje Cells",
+    "Autism Spectrum Disorder",
+    "Genetic Predisposition to Disease",
+    "Female",
+    "Neural Stem Cells",
+    "Genome-Wide Association Study",
+    "Neurodevelopment"
+   ],
+   "geo": null,
+   "firstAuthor": "Wen J",
+   "lastAuthor": "Lu J",
+   "branchKey": "genetics",
+   "viaOpenVenue": true,
+   "journalDisplay": "Cerebellum (London, England)"
+  },
+  {
+   "id": "pm-43013182",
+   "title": "Altered dynamic brain states and potential transcriptomic correlates in autism spectrum disorder.",
+   "date": "2026-11-11",
+   "authors": "Li J, Ma X, Liu J, et al.",
+   "url": "https://pubmed.ncbi.nlm.nih.gov/43013182/",
+   "priority": "unclassified",
+   "addedBy": "agent-2026-11-12",
+   "mesh": [
+    "Humans",
+    "Autism Spectrum Disorder",
+    "Brain",
+    "Magnetic Resonance Imaging",
+    "Male",
+    "Female",
+    "Transcriptome",
+    "Brain Mapping",
+    "Neural Pathways",
+    "Adolescent",
+    "Child",
+    "Young Adult",
+    "Adult"
+   ],
+   "geo": null,
+   "firstAuthor": "Li J",
+   "lastAuthor": "Dou Y",
+   "branchKey": "genetics",
+   "viaOpenVenue": true,
+   "journalDisplay": "Brain imaging and behavior",
+   "alsoBranches": [
+    "neuroscience"
+   ]
+  },
+  {
+   "id": "pm-42733558",
+   "title": "CACNA1C Genetic Variants Differentially Affect Neuronal Networks Through Divergent Pathways.",
+   "date": "2026-07-22",
+   "authors": "Wilkinson G, Wood J, Roivainen N, et al.",
+   "url": "https://pubmed.ncbi.nlm.nih.gov/42733558/",
+   "priority": "mechanistic",
+   "addedBy": "agent-2026-11-12",
+   "mesh": [],
+   "geo": null,
+   "firstAuthor": "Wilkinson G",
+   "lastAuthor": "Harwood AJ",
+   "branchKey": "genetics",
+   "viaOpenVenue": true,
+   "journalDisplay": "Biological psychiatry global open science"
+  },
+  {
+   "id": "pm-40222638",
+   "title": "Unraveling the Neural Landscape of Mental Disorders Using Double Functional Independent Primitives.",
+   "date": "2025-04-11",
+   "authors": "Soleimani N, Iraji A, Pearlson G, et al.",
+   "url": "https://pubmed.ncbi.nlm.nih.gov/40222638/",
+   "priority": "translational",
+   "addedBy": "agent-2026-11-12",
+   "mesh": [
+    "Humans",
+    "Magnetic Resonance Imaging",
+    "Brain",
+    "Female",
+    "Schizophrenia",
+    "Adult",
+    "Male",
+    "Mental Disorders",
+    "Bipolar Disorder",
+    "Neural Pathways",
+    "Major Depressive Disorder",
+    "Autism Spectrum Disorder",
+    "Brain Mapping",
+    "Nerve Net"
+   ],
+   "geo": null,
+   "firstAuthor": "Soleimani N",
+   "lastAuthor": "Calhoun VD",
+   "branchKey": "neuroscience",
+   "viaOpenVenue": true,
+   "journalDisplay": "Biological psychiatry. Cognitive neuroscience and neuroimaging"
+  },
+  {
+   "id": "pm-43006912",
+   "title": "Handling Incomplete Multimodal Data in ASD Diagnosis: A Masked Autoencoder Approach With Sex-Stratified Fusion.",
+   "date": "2026-11-01",
+   "authors": "Prity JA, Nahin SN, Wardak AW, et al.",
+   "url": "https://pubmed.ncbi.nlm.nih.gov/43006912/",
+   "priority": "translational",
+   "addedBy": "agent-2026-11-12",
+   "mesh": [
+    "Humans",
+    "Autoencoder",
+    "Autism Spectrum Disorder",
+    "Magnetic Resonance Imaging",
+    "Female",
+    "Male",
+    "Multimodal Imaging",
+    "Brain",
+    "Sex Characteristics"
+   ],
+   "geo": null,
+   "firstAuthor": "Prity JA",
+   "lastAuthor": "Hasan MM",
+   "branchKey": "neuroscience",
+   "viaOpenVenue": true,
+   "journalDisplay": "Brain and behavior"
+  },
+  {
+   "id": "pm-42961356",
+   "title": "Measuring Sleep at Home in Adolescents With Autism Using EEG Headbands: Protocol for a Remote Study.",
+   "date": "2026-10-30",
+   "authors": "Hickey Townsend P, Jones L, Tolosa A, et al.",
+   "url": "https://pubmed.ncbi.nlm.nih.gov/42961356/",
+   "priority": "clinical-observation",
+   "addedBy": "agent-2026-11-12",
+   "mesh": [
+    "Humans",
+    "Adolescent",
+    "Electroencephalography",
+    "Male",
+    "Female",
+    "Polysomnography",
+    "Autistic Disorder",
+    "Surveys and Questionnaires",
+    "Autism Spectrum Disorder",
+    "Child",
+    "Sleep",
+    "Sleep Wake Disorders",
+    "Wearable Electronic Devices"
+   ],
+   "geo": {
+    "state": "MA",
+    "city": "Boston"
+   },
+   "firstAuthor": "Hickey Townsend P",
+   "lastAuthor": "Manoach DS",
+   "branchKey": "neuroscience",
+   "viaOpenVenue": true,
+   "journalDisplay": "JMIR research protocols"
+  },
+  {
+   "id": "pm-42542106",
+   "title": "The effect of sex on sleep neurophysiology in typical and altered neurodevelopment.",
+   "date": "2026-07-24",
+   "authors": "Kozhemiako N, Gong NN, Purcell SM",
+   "url": "https://pubmed.ncbi.nlm.nih.gov/42542106/",
+   "priority": "clinical-observation",
+   "addedBy": "agent-2026-11-12",
+   "mesh": [
+    "Humans",
+    "Male",
+    "Female",
+    "Electroencephalography",
+    "Child",
+    "Attention Deficit Disorder with Hyperactivity",
+    "Adolescent",
+    "Sleep",
+    "Child, Preschool",
+    "Sex Factors",
+    "Neurodevelopment",
+    "Autism Spectrum Disorder",
+    "Neurodevelopmental Disorders",
+    "Intellectual Disability",
+    "Sex Characteristics"
+   ],
+   "geo": {
+    "state": "MA",
+    "city": "Boston"
+   },
+   "firstAuthor": "Kozhemiako N",
+   "lastAuthor": "Purcell SM",
+   "branchKey": "neuroscience",
+   "viaOpenVenue": true,
+   "journalDisplay": "Sleep medicine"
+  },
+  {
+   "id": "pm-42995084",
+   "title": "Associations between social camouflaging behaviors and psychological distress in Taiwanese adults with or without autism spectrum disorder.",
+   "date": "2026-11-06",
+   "authors": "Liu MJ, Ni HC, Ma LY, et al.",
+   "url": "https://pubmed.ncbi.nlm.nih.gov/42995084/",
+   "priority": "clinical-observation",
+   "addedBy": "agent-2026-11-12",
+   "mesh": [],
+   "geo": null,
+   "firstAuthor": "Liu MJ",
+   "lastAuthor": "Yen CF",
+   "branchKey": "behavioral",
+   "viaOpenVenue": true,
+   "journalDisplay": "Journal of the Formosan Medical Association = Taiwan yi zhi"
+  },
+  {
+   "id": "pm-42998664",
+   "title": "Effects of Physical Activity and Sports Type on Executive Functions and Socioemotional Skills of Children and Adolescents With Autism Spectrum Disorder: Systematic Review and Meta-Analysis.",
+   "date": "2026-11-06",
+   "authors": "Gomes A, Di Martino G, Costa R, et al.",
+   "url": "https://pubmed.ncbi.nlm.nih.gov/42998664/",
+   "priority": "review",
+   "addedBy": "agent-2026-11-12",
+   "mesh": [],
+   "geo": null,
+   "firstAuthor": "Gomes A",
+   "lastAuthor": "Lamas L",
+   "branchKey": "behavioral",
+   "viaOpenVenue": true,
+   "journalDisplay": "Adapted physical activity quarterly : APAQ"
+  },
+  {
+   "id": "pm-42970011",
+   "title": "Restricted and Repetitive Behavior Subtypes Show Distinct Associations with Adaptive Functioning in Autistic Children.",
+   "date": "2026-11-02",
+   "authors": "Rozenblat S, Lapidot R, Zachor DA, et al.",
+   "url": "https://pubmed.ncbi.nlm.nih.gov/42970011/",
+   "priority": "unclassified",
+   "addedBy": "agent-2026-11-12",
+   "mesh": [],
+   "geo": null,
+   "firstAuthor": "Rozenblat S",
+   "lastAuthor": "Koller J",
+   "branchKey": "behavioral",
+   "viaOpenVenue": true,
+   "journalDisplay": "Child psychiatry and human development"
+  },
+  {
+   "id": "pm-42971337",
+   "title": "IGF signaling in autism and related neurodevelopmental disorders: Biomarkers and therapeutic targets.",
+   "date": "2026-11-02",
+   "authors": "Gulzar M, Numan N, Hassan AT, et al.",
+   "url": "https://pubmed.ncbi.nlm.nih.gov/42971337/",
+   "priority": "review",
+   "addedBy": "agent-2026-11-12",
+   "mesh": [],
+   "geo": {
+    "state": "NY",
+    "city": ""
+   },
+   "firstAuthor": "Gulzar M",
+   "lastAuthor": "Büsselberg D",
+   "branchKey": "behavioral",
+   "viaOpenVenue": true,
+   "journalDisplay": "Neuroscience and biobehavioral reviews",
+   "alsoBranches": [
+    "intervention"
+   ]
+  },
+  {
+   "id": "pm-42472472",
+   "title": "Effectiveness of guided internet-delivered cognitive behavioral therapy for insomnia in autistic adults (i-Sleep Autism): a randomized controlled trial.",
+   "date": "2026-11-10",
+   "authors": "Spaargaren KL, Begeer S, Nieuwenhuis S, et al.",
+   "url": "https://pubmed.ncbi.nlm.nih.gov/42472472/",
+   "priority": "clinical-trial",
+   "addedBy": "agent-2026-11-12",
+   "mesh": [
+    "Humans",
+    "Sleep Initiation and Maintenance Disorders",
+    "Cognitive Behavioral Therapy",
+    "Male",
+    "Adult",
+    "Female",
+    "Autistic Disorder",
+    "Treatment Outcome",
+    "Middle Aged",
+    "Internet",
+    "Quality of Life",
+    "Internet-Based Intervention",
+    "Young Adult"
+   ],
+   "geo": null,
+   "firstAuthor": "Spaargaren KL",
+   "lastAuthor": "van Straten A",
+   "branchKey": "intervention",
+   "viaOpenVenue": true,
+   "journalDisplay": "Sleep"
+  },
+  {
+   "id": "pm-42988321",
+   "title": "Understanding Primary Care Clinicians' Perspectives on Early Screening of Autism and Subsequent Referral Practices.",
+   "date": "2026-11-05",
+   "authors": "Austin A, Wieckowski AT, de Marchena A, et al.",
+   "url": "https://pubmed.ncbi.nlm.nih.gov/42988321/",
+   "priority": "clinical-observation",
+   "addedBy": "agent-2026-11-12",
+   "mesh": [],
+   "geo": {
+    "state": "PA",
+    "city": "Philadelphia"
+   },
+   "firstAuthor": "Austin A",
+   "lastAuthor": "Robins DL",
+   "branchKey": "intervention",
+   "viaOpenVenue": true,
+   "journalDisplay": "The Journal of pediatrics"
+  },
+  {
+   "id": "pm-42813699",
+   "title": "Person-Environment-Occupation Fit in Autistic College Students: A Mixed-Methods Study of Social Participation.",
+   "date": "2026-09-30",
+   "authors": "Iliff S, Richard Williams N, Collins S, et al.",
+   "url": "https://pubmed.ncbi.nlm.nih.gov/42813699/",
+   "priority": "clinical-observation",
+   "addedBy": "agent-2026-11-12",
+   "mesh": [
+    "Humans",
+    "Social Participation",
+    "Students",
+    "Female",
+    "Male",
+    "Universities",
+    "Autistic Disorder",
+    "Young Adult",
+    "Motivation",
+    "Personal Satisfaction",
+    "Southeastern United States",
+    "Academia",
+    "Surveys and Questionnaires",
+    "Adolescent",
+    "Social Environment",
+    "Adult"
+   ],
+   "geo": {
+    "state": "TN",
+    "city": "Nashville"
+   },
+   "firstAuthor": "Iliff S",
+   "lastAuthor": "Randall A",
+   "branchKey": "intervention",
+   "viaOpenVenue": true,
+   "journalDisplay": "The American journal of occupational therapy : official publication of the American Occupational Therapy Association"
+  },
+  {
+   "id": "pm-42968477",
+   "title": "Efficacy and safety of pharmacologic therapies for irritability in pediatric autism spectrum disorder: A systematic review and network meta-analysis of randomized controlled trials.",
+   "date": "2026-11-01",
+   "authors": "Wang Z, Fang L, Wang S, et al.",
+   "url": "https://pubmed.ncbi.nlm.nih.gov/42968477/",
+   "priority": "review",
+   "addedBy": "agent-2026-11-12",
+   "mesh": [],
+   "geo": null,
+   "firstAuthor": "Wang Z",
+   "lastAuthor": "Wu D",
+   "branchKey": "intervention",
+   "viaOpenVenue": true,
+   "journalDisplay": "Journal of psychopharmacology (Oxford, England)"
+  },
+  {
+   "id": "pm-42995225",
+   "title": "New neuronal microexons linked to autism.",
+   "journalKey": "nat-genet",
+   "date": "2026-11-01",
+   "authors": "Faial T",
+   "url": "https://pubmed.ncbi.nlm.nih.gov/42995225/",
+   "priority": "unclassified",
+   "addedBy": "agent-2026-11-12",
+   "mesh": [],
+   "geo": null,
+   "firstAuthor": "Faial T"
+  },
+  {
+   "id": "pm-43012119",
+   "title": "Personal Values, Knowledge, and Attributional Judgments as Predictors of Autism Attitudes and Volunteer Intention.",
+   "journalKey": "autism",
+   "date": "2026-11-11",
+   "authors": "Wang R, Yokota S",
+   "url": "https://pubmed.ncbi.nlm.nih.gov/43012119/",
+   "priority": "unclassified",
+   "addedBy": "agent-2026-11-12",
+   "mesh": [],
+   "geo": null,
+   "firstAuthor": "Wang R",
+   "lastAuthor": "Yokota S"
+  },
+  {
+   "id": "pm-43010192",
+   "title": "Community Attitudes Toward Meaningful Autism Inclusion.",
+   "journalKey": "autism",
+   "date": "2026-11-10",
+   "authors": "Matthews NL, Honda H, O'Rourke H, et al.",
+   "url": "https://pubmed.ncbi.nlm.nih.gov/43010192/",
+   "priority": "clinical-observation",
+   "addedBy": "agent-2026-11-12",
+   "mesh": [],
+   "geo": {
+    "state": "AZ",
+    "city": "Phoenix"
+   },
+   "firstAuthor": "Matthews NL",
+   "lastAuthor": "Smith CJ"
+  },
+  {
+   "id": "pm-43001612",
+   "title": "Kinematic Features of Handwriting Speed: A Comparative Study of Autistic and Non-Autistic Youth.",
+   "journalKey": "autism-res",
+   "date": "2026-11-09",
+   "authors": "Orefice C, Cardillo R, D'Antrassi P, et al.",
+   "url": "https://pubmed.ncbi.nlm.nih.gov/43001612/",
+   "priority": "unclassified",
+   "addedBy": "agent-2026-11-12",
+   "mesh": [],
+   "geo": null,
+   "firstAuthor": "Orefice C",
+   "lastAuthor": "Mammarella IC"
+  },
+  {
+   "id": "pm-43004023",
+   "title": "Do Autistic Children Have Empathy? Perspectives From Non-Autistic Perceivers and the Role of Their Understanding About Autism.",
+   "journalKey": "j-autism-dev-disord",
+   "date": "2026-11-10",
+   "authors": "So WC, Li XH",
+   "url": "https://pubmed.ncbi.nlm.nih.gov/43004023/",
+   "priority": "unclassified",
+   "addedBy": "agent-2026-11-12",
+   "mesh": [],
+   "geo": null,
+   "firstAuthor": "So WC",
+   "lastAuthor": "Li XH"
   }
  ]
 }
