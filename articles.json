@@ -38118,7 +38118,8 @@
    "firstAuthor": "Makin L",
    "lastAuthor": "Tchanturia K",
    "journalKey": "autism",
-   "branchKey": "intervention"
+   "branchKey": "intervention",
+   "meshChecked": "2026-11-13"
   },
   {
    "id": "pm-43007544",
@@ -38136,7 +38137,8 @@
    "firstAuthor": "Santos PCA",
    "lastAuthor": "de Araújo MFM",
    "journalKey": "j-autism-dev-disord",
-   "branchKey": "intervention"
+   "branchKey": "intervention",
+   "meshChecked": "2026-11-13"
   },
   {
    "id": "pm-43004024",
@@ -38154,7 +38156,8 @@
    "firstAuthor": "Ghobadi A",
    "lastAuthor": "Durrleman S",
    "journalKey": "j-autism-dev-disord",
-   "branchKey": "behavioral"
+   "branchKey": "behavioral",
+   "meshChecked": "2026-11-13"
   },
   {
    "id": "pm-42993448",
@@ -38169,7 +38172,8 @@
    "firstAuthor": "Jefferson R",
    "lastAuthor": "Bond C",
    "journalKey": "j-autism-dev-disord",
-   "branchKey": "intervention"
+   "branchKey": "intervention",
+   "meshChecked": "2026-11-13"
   },
   {
    "id": "pm-42992474",
@@ -38184,7 +38188,8 @@
    "firstAuthor": "Antolí A",
    "lastAuthor": "Vacas J",
    "journalKey": "autism-res",
-   "branchKey": "behavioral"
+   "branchKey": "behavioral",
+   "meshChecked": "2026-11-13"
   },
   {
    "id": "pm-43014310",
@@ -38198,7 +38203,8 @@
    "geo": null,
    "firstAuthor": "Chen CM",
    "lastAuthor": "Chiu SL",
-   "journalKey": "neuron"
+   "journalKey": "neuron",
+   "meshChecked": "2026-11-13"
   },
   {
    "id": "pm-42987799",
@@ -38240,7 +38246,8 @@
    "geo": null,
    "firstAuthor": "Pantazakos T",
    "lastAuthor": "Vanaken GJ",
-   "journalKey": "lancet-psych"
+   "journalKey": "lancet-psych",
+   "meshChecked": "2026-11-13"
   },
   {
    "id": "pm-43013228",
@@ -38255,7 +38262,8 @@
    "firstAuthor": "Merino Martínez M",
    "lastAuthor": "Cuesta Gómez JL",
    "journalKey": "j-autism-dev-disord",
-   "branchKey": "intervention"
+   "branchKey": "intervention",
+   "meshChecked": "2026-11-13"
   },
   {
    "id": "pm-43004955",
@@ -38273,7 +38281,8 @@
    "firstAuthor": "Brown HK",
    "lastAuthor": "Mitra M",
    "journalKey": "autism",
-   "branchKey": "intervention"
+   "branchKey": "intervention",
+   "meshChecked": "2026-11-13"
   },
   {
    "id": "pm-43004025",
@@ -38291,7 +38300,8 @@
    "firstAuthor": "Lopata C",
    "lastAuthor": "Donnelly JP",
    "journalKey": "j-autism-dev-disord",
-   "branchKey": "intervention"
+   "branchKey": "intervention",
+   "meshChecked": "2026-11-13"
   },
   {
    "id": "pm-42998191",
@@ -38306,7 +38316,8 @@
    "firstAuthor": "Sarilho C",
    "lastAuthor": "das Neves JAM",
    "journalKey": "j-autism-dev-disord",
-   "branchKey": "intervention"
+   "branchKey": "intervention",
+   "meshChecked": "2026-11-13"
   },
   {
    "id": "pm-43002898",
@@ -38322,7 +38333,8 @@
    "lastAuthor": "Liu M",
    "branchKey": "immunology",
    "viaOpenVenue": true,
-   "journalDisplay": "Journal of neuroimmunology"
+   "journalDisplay": "Journal of neuroimmunology",
+   "meshChecked": "2026-11-13"
   },
   {
    "id": "pm-43015107",
@@ -38373,7 +38385,8 @@
    "journalDisplay": "Neurobiology of disease",
    "alsoBranches": [
     "immunology"
-   ]
+   ],
+   "meshChecked": "2026-11-13"
   },
   {
    "id": "pm-42299664",
@@ -38474,7 +38487,8 @@
    "lastAuthor": "Harwood AJ",
    "branchKey": "genetics",
    "viaOpenVenue": true,
-   "journalDisplay": "Biological psychiatry global open science"
+   "journalDisplay": "Biological psychiatry global open science",
+   "meshChecked": "2026-11-13"
   },
   {
    "id": "pm-40222638",
@@ -38615,7 +38629,8 @@
    "lastAuthor": "Yen CF",
    "branchKey": "behavioral",
    "viaOpenVenue": true,
-   "journalDisplay": "Journal of the Formosan Medical Association = Taiwan yi zhi"
+   "journalDisplay": "Journal of the Formosan Medical Association = Taiwan yi zhi",
+   "meshChecked": "2026-11-13"
   },
   {
    "id": "pm-42998664",
@@ -38631,7 +38646,8 @@
    "lastAuthor": "Lamas L",
    "branchKey": "behavioral",
    "viaOpenVenue": true,
-   "journalDisplay": "Adapted physical activity quarterly : APAQ"
+   "journalDisplay": "Adapted physical activity quarterly : APAQ",
+   "meshChecked": "2026-11-13"
   },
   {
    "id": "pm-42970011",
@@ -38647,7 +38663,8 @@
    "lastAuthor": "Koller J",
    "branchKey": "behavioral",
    "viaOpenVenue": true,
-   "journalDisplay": "Child psychiatry and human development"
+   "journalDisplay": "Child psychiatry and human development",
+   "meshChecked": "2026-11-13"
   },
   {
    "id": "pm-42971337",
@@ -38669,7 +38686,8 @@
    "journalDisplay": "Neuroscience and biobehavioral reviews",
    "alsoBranches": [
     "intervention"
-   ]
+   ],
+   "meshChecked": "2026-11-13"
   },
   {
    "id": "pm-42472472",
@@ -38718,7 +38736,8 @@
    "lastAuthor": "Robins DL",
    "branchKey": "intervention",
    "viaOpenVenue": true,
-   "journalDisplay": "The Journal of pediatrics"
+   "journalDisplay": "The Journal of pediatrics",
+   "meshChecked": "2026-11-13"
   },
   {
    "id": "pm-42813699",
@@ -38770,7 +38789,8 @@
    "lastAuthor": "Wu D",
    "branchKey": "intervention",
    "viaOpenVenue": true,
-   "journalDisplay": "Journal of psychopharmacology (Oxford, England)"
+   "journalDisplay": "Journal of psychopharmacology (Oxford, England)",
+   "meshChecked": "2026-11-13"
   },
   {
    "id": "pm-42995225",
@@ -38783,7 +38803,8 @@
    "addedBy": "agent-2026-11-12",
    "mesh": [],
    "geo": null,
-   "firstAuthor": "Faial T"
+   "firstAuthor": "Faial T",
+   "meshChecked": "2026-11-13"
   },
   {
    "id": "pm-43012119",
@@ -38797,7 +38818,8 @@
    "mesh": [],
    "geo": null,
    "firstAuthor": "Wang R",
-   "lastAuthor": "Yokota S"
+   "lastAuthor": "Yokota S",
+   "meshChecked": "2026-11-13"
   },
   {
    "id": "pm-43010192",
@@ -38814,7 +38836,8 @@
     "city": "Phoenix"
    },
    "firstAuthor": "Matthews NL",
-   "lastAuthor": "Smith CJ"
+   "lastAuthor": "Smith CJ",
+   "meshChecked": "2026-11-13"
   },
   {
    "id": "pm-43001612",
@@ -38828,7 +38851,8 @@
    "mesh": [],
    "geo": null,
    "firstAuthor": "Orefice C",
-   "lastAuthor": "Mammarella IC"
+   "lastAuthor": "Mammarella IC",
+   "meshChecked": "2026-11-13"
   },
   {
    "id": "pm-43004023",
@@ -38842,7 +38866,8 @@
    "mesh": [],
    "geo": null,
    "firstAuthor": "So WC",
-   "lastAuthor": "Li XH"
+   "lastAuthor": "Li XH",
+   "meshChecked": "2026-11-13"
   }
  ]
 }

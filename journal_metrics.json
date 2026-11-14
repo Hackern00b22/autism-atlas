@@ -1351,11 +1351,11 @@
  },
  "pcn reports : psychiatry and clinical neurosciences": {
   "name": "PCN reports : psychiatry and clinical neurosciences",
-  "fetched": "2026-11-12"
+  "fetched": "2026-11-13"
  },
  "the australian and new zealand journal of psychiatry": {
   "name": "The Australian and New Zealand journal of psychiatry",
-  "fetched": "2026-11-12"
+  "fetched": "2026-11-13"
  },
  "zeitschrift fur kinder- und jugendpsychiatrie und psychotherapie": {
   "name": "Zeitschrift fur Kinder- und Jugendpsychiatrie und Psychotherapie",
@@ -1429,7 +1429,7 @@
  },
  "hgg advances": {
   "name": "HGG advances",
-  "fetched": "2026-11-12"
+  "fetched": "2026-11-13"
  },
  "international medical case reports journal": {
   "name": "International medical case reports journal",
@@ -1463,11 +1463,11 @@
  },
  "the american journal of occupational therapy : official publication of the american occupational therapy association": {
   "name": "The American journal of occupational therapy : official publication of the American Occupational Therapy Association",
-  "fetched": "2026-11-12"
+  "fetched": "2026-11-13"
  },
  "zhonghua yi xue yi chuan xue za zhi = zhonghua yixue yichuanxue zazhi = chinese journal of medical genetics": {
   "name": "Zhonghua yi xue yi chuan xue za zhi = Zhonghua yixue yichuanxue zazhi = Chinese journal of medical genetics",
-  "fetched": "2026-11-12"
+  "fetched": "2026-11-13"
  },
  "balkan journal of medical genetics : bjmg": {
   "name": "Balkan journal of medical genetics : BJMG",
@@ -1541,7 +1541,7 @@
  },
  "proceedings of the national academy of sciences of the united states of america": {
   "name": "Proceedings of the National Academy of Sciences of the United States of America",
-  "fetched": "2026-11-12"
+  "fetched": "2026-11-13"
  },
  "american journal of medical genetics. part a": {
   "name": "American journal of medical genetics. Part A",
@@ -1672,5 +1672,81 @@
   "worksCount": 5915,
   "hIndex": 188,
   "citedness2y": 4.654494382022472
+ },
+ "adapted physical activity quarterly : apaq": {
+  "name": "Adapted physical activity quarterly : APAQ",
+  "fetched": "2026-11-13",
+  "openalexId": "S18225753",
+  "openalexName": "Adapted Physical Activity Quarterly",
+  "type": "journal",
+  "worksCount": 1551,
+  "hIndex": 97,
+  "citedness2y": 2.27
+ },
+ "brain and behavior": {
+  "name": "Brain and behavior",
+  "fetched": "2026-11-13",
+  "openalexId": "S2764450051",
+  "openalexName": "Brain and Behavior",
+  "type": "journal",
+  "worksCount": 5611,
+  "hIndex": 94,
+  "citedness2y": 3.18
+ },
+ "canadian journal of psychiatry. revue canadienne de psychiatrie": {
+  "name": "Canadian journal of psychiatry. Revue canadienne de psychiatrie",
+  "fetched": "2026-11-13"
+ },
+ "child psychiatry and human development": {
+  "name": "Child psychiatry and human development",
+  "fetched": "2026-11-13"
+ },
+ "journal of psychopharmacology (oxford, england)": {
+  "name": "Journal of psychopharmacology (Oxford, England)",
+  "fetched": "2026-11-13",
+  "openalexId": "S136368880",
+  "openalexName": "Journal of Psychopharmacology",
+  "type": "journal",
+  "worksCount": 4769,
+  "hIndex": 173,
+  "citedness2y": 5.45
+ },
+ "journal of the formosan medical association = taiwan yi zhi": {
+  "name": "Journal of the Formosan Medical Association = Taiwan yi zhi",
+  "fetched": "2026-11-13"
+ },
+ "sleep": {
+  "name": "Sleep",
+  "fetched": "2026-11-13",
+  "openalexId": "S42921845",
+  "openalexName": "SLEEP",
+  "type": "journal",
+  "worksCount": 20176,
+  "hIndex": 311,
+  "citedness2y": 1.04
+ },
+ "sleep medicine": {
+  "name": "Sleep medicine",
+  "fetched": "2026-11-13",
+  "openalexId": "S183718435",
+  "openalexName": "Sleep Medicine",
+  "type": "journal",
+  "worksCount": 16627,
+  "hIndex": 196,
+  "citedness2y": 1.73
+ },
+ "the journal of neuroscience : the official journal of the society for neuroscience": {
+  "name": "The Journal of neuroscience : the official journal of the Society for Neuroscience",
+  "fetched": "2026-11-13"
+ },
+ "the journal of pediatrics": {
+  "name": "The Journal of pediatrics",
+  "fetched": "2026-11-13",
+  "openalexId": "S3774022",
+  "openalexName": "The Journal of Pediatrics",
+  "type": "journal",
+  "worksCount": 50216,
+  "hIndex": 333,
+  "citedness2y": 3.04
  }
 }
