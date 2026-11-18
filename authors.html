@@ -797,7 +797,14 @@ let PUBLIC = false;   // set when we fall back to the static data snapshot
 // when it has been filed into articles.json AND that id is on the list.
 let SAVED = new Set();
 async function loadSaved() {
-  if (PUBLIC) return;
+  if (PUBLIC) {
+    // Static site: the owner's starred papers come from the baked curated.json.
+    try {
+      const r = await fetch('curated.json', { cache: 'no-store' });
+      if (r.ok) { const c = await r.json(); SAVED = new Set(Array.isArray(c.bookmarks) ? c.bookmarks : []); }
+    } catch (e) { /* stars just won't light */ }
+    return;
+  }
   try {
     const r = await fetch('/api/ui-state', { cache: 'no-store' });
     if (!r.ok) return;

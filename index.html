@@ -4348,7 +4348,8 @@ let BM_REMOVED = readIdList(BM_REMOVED_KEY);
 let BM_ROLE = 'owner';
 let SHARED_BM = new Set();
 function saveBookmarks() {
-  try { localStorage.setItem(BOOKMARK_KEY, JSON.stringify(BOOKMARKS)); } catch (e) {}
+  // Public site: only the visitor's own stars are stored; the owner's come from curated.json each load.
+  try { localStorage.setItem(BOOKMARK_KEY, JSON.stringify(PUBLIC_MODE ? BOOKMARKS.filter(id => !SHARED_BM.has(id)) : BOOKMARKS)); } catch (e) {}
   try { localStorage.setItem(BM_REMOVED_KEY, JSON.stringify(BM_REMOVED)); } catch (e) {}
   pushUIState();
 }
@@ -4399,7 +4400,27 @@ function pushUIState() {
 }
 
 async function syncUIState() {
-  if (PUBLIC_MODE) return;   // static hosting: each visitor's state stays in their browser
+  if (PUBLIC_MODE) {
+    // Static hosting has no API, but publish.py bakes the owner's bookmarks
+    // into curated.json. Visitors see them the way a signed-in member does:
+    // shared stars that cannot be removed, with their own stars on top (kept
+    // in this browser only).
+    try {
+      const r = await fetch('curated.json', { cache: 'no-store' });
+      if (!r.ok) return;
+      const c = await r.json();
+      const shared = (Array.isArray(c.bookmarks) ? c.bookmarks : []).filter(id => ARTICLES.some(a => a.id === id));
+      BM_ROLE = 'member';
+      SHARED_BM = new Set(shared);
+      const seen = new Set();
+      BOOKMARKS = [...shared, ...BOOKMARKS].filter(id => !seen.has(id) && seen.add(id));
+      BM_REMOVED = BM_REMOVED.filter(id => !SHARED_BM.has(id));
+      updateBookmarkCount();
+      const bm = document.getElementById('bm-backdrop');
+      if (bm && bm.classList.contains('open')) renderBookmarks();
+    } catch (e) { /* no curated list: visitor stars only */ }
+    return;
+  }
   let s;
   try {
     const r = await fetch('/api/ui-state', { cache: 'no-store' });

@@ -425,7 +425,7 @@
     "exclude": {},
     "pos_events": 7,
     "neg_events": 4,
-    "updatedAt": "2026-10-29"
+    "updatedAt": "2026-11-18"
    },
    "lastFetched": "2026-11-12"
   },
@@ -501,9 +501,9 @@
      }
     },
     "exclude": {},
-    "pos_events": 14,
+    "pos_events": 15,
     "neg_events": 1,
-    "updatedAt": "2026-10-08"
+    "updatedAt": "2026-11-18"
    },
    "lastFetched": "2026-11-12"
   }

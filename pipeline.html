@@ -404,6 +404,7 @@ const readIdList = k => {
   catch (e) { return []; }
 };
 const BM = {}, RM = {};
+const SHARED = { trials: new Set(), patents: new Set() };   // public site: the owner's lists from curated.json
 for (const lane of ['trials', 'patents']) {
   BM[lane] = readIdList(KEYS[lane].bm);
   RM[lane] = readIdList(KEYS[lane].rm);
@@ -415,7 +416,7 @@ const isBookmarked = id => BM[LANE].includes(id);
 
 function persistBookmarks() {
   for (const lane of ['trials', 'patents']) {
-    try { localStorage.setItem(KEYS[lane].bm, JSON.stringify(BM[lane])); } catch (e) {}
+    try { localStorage.setItem(KEYS[lane].bm, JSON.stringify(BM[lane].filter(id => !SHARED[lane].has(id)))); } catch (e) {}
     try { localStorage.setItem(KEYS[lane].rm, JSON.stringify(RM[lane])); } catch (e) {}
   }
   pushUIState();
@@ -441,7 +442,24 @@ function pushUIState() {
 }
 
 async function syncUIState() {
-  if (PUBLIC) return;
+  if (PUBLIC) {
+    // Static site: no API, but publish.py bakes the owner's saved lists into
+    // curated.json — those show as saved here, on top of the visitor's own.
+    try {
+      const r = await fetch('curated.json', { cache: 'no-store' });
+      if (r.ok) {
+        const c = await r.json();
+        for (const lane of ['trials', 'patents']) {
+          SHARED[lane] = new Set(Array.isArray(c[KEYS[lane].api]) ? c[KEYS[lane].api] : []);
+          const seen = new Set();
+          BM[lane] = [...SHARED[lane], ...BM[lane]].filter(id => !seen.has(id) && seen.add(id));
+        }
+        updateSavedBtn();
+        renderList();
+      }
+    } catch (e) { /* no curated list: visitor stars only */ }
+    return;
+  }
   let s;
   try {
     const r = await fetch('/api/ui-state', { cache: 'no-store' });

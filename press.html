@@ -427,13 +427,15 @@ const readIdList = k => {
 };
 let BOOKMARKS = readIdList(BM_KEY);
 let BM_REMOVED = readIdList(BM_REMOVED_KEY);
+let SHARED = new Set();   // public site: the owner's saved list from curated.json
 let UISTATE_READY = false;   // gate pushes until the first pull, so a slow load can't clobber the server
 let PUSH_INFLIGHT = false, PUSH_QUEUED = false;   // serialized pushes — last write carries newest state
 
 const isBookmarked = id => BOOKMARKS.includes(id);
 
 function persistBookmarks() {
-  try { localStorage.setItem(BM_KEY, JSON.stringify(BOOKMARKS)); } catch (e) {}
+  // Only the visitor's own stars are stored; the owner's come from curated.json each load.
+  try { localStorage.setItem(BM_KEY, JSON.stringify(BOOKMARKS.filter(id => !SHARED.has(id)))); } catch (e) {}
   try { localStorage.setItem(BM_REMOVED_KEY, JSON.stringify(BM_REMOVED)); } catch (e) {}
   pushUIState();
 }
@@ -455,7 +457,22 @@ function pushUIState() {
 }
 
 async function syncUIState() {
-  if (PUBLIC) return;
+  if (PUBLIC) {
+    // Static site: no API, but publish.py bakes the owner's saved list into
+    // curated.json — those show as saved here, on top of the visitor's own.
+    try {
+      const r = await fetch('curated.json', { cache: 'no-store' });
+      if (r.ok) {
+        const c = await r.json();
+        SHARED = new Set(Array.isArray(c.pressBookmarks) ? c.pressBookmarks : []);
+        const seen = new Set();
+        BOOKMARKS = [...SHARED, ...BOOKMARKS].filter(id => !seen.has(id) && seen.add(id));
+        updateSavedBtn();
+        renderList(DATA.releases || []);
+      }
+    } catch (e) { /* no curated list: visitor stars only */ }
+    return;
+  }
   let s;
   try {
     const r = await fetch('/api/ui-state', { cache: 'no-store' });
