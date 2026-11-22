@@ -1748,5 +1748,77 @@
   "worksCount": 50216,
   "hIndex": 333,
   "citedness2y": 3.04
+ },
+ "bulletin of experimental biology and medicine": {
+  "name": "Bulletin of experimental biology and medicine",
+  "fetched": "2026-11-22",
+  "openalexId": "S141734485",
+  "openalexName": "Bulletin of Experimental Biology and Medicine",
+  "type": "journal",
+  "worksCount": 32497,
+  "hIndex": 53,
+  "citedness2y": 0.55
+ },
+ "european journal of pediatrics": {
+  "name": "European journal of pediatrics",
+  "fetched": "2026-11-22",
+  "openalexId": "S48201647",
+  "openalexName": "European Journal of Pediatrics",
+  "type": "journal",
+  "worksCount": 19308,
+  "hIndex": 171,
+  "citedness2y": 4.07
+ },
+ "general hospital psychiatry": {
+  "name": "General hospital psychiatry",
+  "fetched": "2026-11-22",
+  "openalexId": "S45708651",
+  "openalexName": "General Hospital Psychiatry",
+  "type": "journal",
+  "worksCount": 5282,
+  "hIndex": 177,
+  "citedness2y": 3.61
+ },
+ "pharmacology": {
+  "name": "Pharmacology",
+  "fetched": "2026-11-22"
+ },
+ "plastic and reconstructive surgery": {
+  "name": "Plastic and reconstructive surgery",
+  "fetched": "2026-11-22"
+ },
+ "probiotics and antimicrobial proteins": {
+  "name": "Probiotics and antimicrobial proteins",
+  "fetched": "2026-11-22",
+  "openalexId": "S163406742",
+  "openalexName": "Probiotics and Antimicrobial Proteins",
+  "type": "journal",
+  "worksCount": 2298,
+  "hIndex": 91,
+  "citedness2y": 6.56
+ },
+ "psychiatry": {
+  "name": "Psychiatry",
+  "fetched": "2026-11-22"
+ },
+ "the neuroscientist : a review journal bringing neurobiology, neurology and psychiatry": {
+  "name": "The Neuroscientist : a review journal bringing neurobiology, neurology and psychiatry",
+  "fetched": "2026-11-22",
+  "openalexId": "S103928886",
+  "openalexName": "The Neuroscientist",
+  "type": "journal",
+  "worksCount": 2160,
+  "hIndex": 189,
+  "citedness2y": 3.19
+ },
+ "tissue & cell": {
+  "name": "Tissue & cell",
+  "fetched": "2026-11-22",
+  "openalexId": "S165572755",
+  "openalexName": "Tissue and Cell",
+  "type": "journal",
+  "worksCount": 6053,
+  "hIndex": 107,
+  "citedness2y": 3.5
  }
 }
