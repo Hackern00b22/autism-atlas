@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>US Map · ASD EurekaAlert Database</title>
+<title>World Map · ASD EurekaAlert Database</title>
 <meta name="theme-color" content="#05060a">
 <script>
 /* Blocking on purpose: the stylesheet defaults to dark, so setting the saved
@@ -238,6 +238,33 @@
   /* ---- the map ---- */
   .mappanel { position: relative; padding: 10px 10px 6px; }
   .mappanel svg { width: 100%; height: auto; display: block; }
+  .mappanel svg[hidden], #globewrap[hidden], #cmapwrap[hidden] { display: none; }
+  #cmapwrap { position: relative; }
+  #cmap { cursor: grab; touch-action: none; }
+  #cmap.dragging { cursor: grabbing; }
+  #globewrap { position: relative; }
+  #globe { width: 100%; display: block; cursor: grab; touch-action: pan-y; outline: none; border-radius: 4px; }
+  #globe.dragging { cursor: grabbing; }
+  #globe.pick { cursor: pointer; }
+  #globe:focus-visible { box-shadow: 0 0 0 2px var(--accent); }
+  .gctl { position: absolute; right: 8px; top: 8px; display: flex; flex-direction: column; gap: 6px; }
+  .gctl button {
+    width: 30px; height: 30px; border-radius: 4px; border: 1px solid var(--line); background: var(--surface-1);
+    color: var(--ink-1); font: inherit; font-size: 16px; line-height: 1; cursor: pointer;
+  }
+  .gctl button:hover { color: var(--ink-0); border-color: var(--ink-1); }
+  .ghint { position: absolute; left: 10px; top: 10px; font-family: 'JetBrains Mono', monospace; font-size: 10.5px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink-2); pointer-events: none; }
+  #cmap path.nb { fill: rgba(var(--line-rgb), 0.07); stroke: var(--map-stroke); stroke-width: 0.6; vector-effect: non-scaling-stroke; }
+  #cmap path.me { fill: rgba(var(--line-rgb), 0.2); stroke: var(--ink-1); stroke-width: 1.1; vector-effect: non-scaling-stroke; }
+  #cmap circle.city { stroke: var(--bg-0); stroke-width: 1; vector-effect: non-scaling-stroke; cursor: pointer; fill-opacity: 0.78; transition: fill-opacity 0.15s; }
+  #cmap circle.city:hover, #cmap circle.city:focus-visible { fill-opacity: 1; stroke: var(--ink-0); outline: none; }
+  #cmap circle.city.sel { stroke: var(--accent); stroke-width: 2.4; fill-opacity: 1; }
+  #cmap text.clab { font-family: 'JetBrains Mono', monospace; fill: var(--ink-0); pointer-events: none; paint-order: stroke; stroke: var(--bg-0); }
+  #cmap text.cwait { font-family: 'JetBrains Mono', monospace; font-size: 12px; fill: var(--ink-2); text-anchor: middle; letter-spacing: 0.14em; }
+  .yr.wide { grid-template-columns: 104px 1fr 44px; }
+  .yr.wide .fyl { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-family: inherit; font-size: 12.5px; }
+  .legend .go { color: var(--ink-1); cursor: pointer; background: none; border: 1px solid var(--line); border-radius: 4px; padding: 2px 8px; font: inherit; letter-spacing: 0.1em; text-transform: uppercase; }
+  .legend .go:hover { color: var(--ink-0); border-color: var(--ink-1); }
   .mappanel path.st { stroke: var(--map-stroke); stroke-width: 0.8; cursor: pointer; transition: fill 0.25s; vector-effect: non-scaling-stroke; }
   .mappanel path.st:hover, .mappanel path.st:focus-visible { stroke: var(--ink-0); stroke-width: 1.4; outline: none; }
   .mappanel path.st.sel { stroke: var(--accent); stroke-width: 2.2; }
@@ -256,7 +283,8 @@
   .legend { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; padding: 6px 6px 2px; font-family: 'JetBrains Mono', monospace; font-size: 10.5px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-2); }
   .legend .ramp { width: 150px; height: 9px; border-radius: 2px; border: 1px solid var(--line); }
   .legend .sw { width: 9px; height: 9px; border-radius: 2px; display: inline-block; margin-right: 5px; vertical-align: -1px; }
-  .legend .sel { margin-left: auto; color: var(--accent); cursor: pointer; background: none; border: 1px solid color-mix(in srgb, var(--accent) 40%, transparent); border-radius: 4px; padding: 2px 8px; font: inherit; letter-spacing: 0.1em; text-transform: uppercase; }
+  .legend .sp { margin-left: auto; }
+  .legend .sel { color: var(--accent); cursor: pointer; background: none; border: 1px solid color-mix(in srgb, var(--accent) 40%, transparent); border-radius: 4px; padding: 2px 8px; font: inherit; letter-spacing: 0.1em; text-transform: uppercase; }
   .legend .sel:hover { background: var(--accent); color: var(--on-accent); }
 
   .listhead { display: flex; align-items: baseline; gap: 10px; margin: 16px 0 10px; flex-wrap: wrap; }
@@ -302,14 +330,14 @@
   <div class="hud">
     <div class="brand">
       TMF MALONE / ASD EUREKA ALERT v5.0
-      <span class="title">US <em>Map</em></span>
+      <span class="title"><span id="page-title">World</span> <em>Map</em></span>
     </div>
     <div class="tiles">
       <div class="tile" style="--tile-color: rgb(var(--lane-pubs-rgb))"><div class="tlabel">Publications</div><div class="tval" id="m-pubs">—</div></div>
       <div class="tile" style="--tile-color: rgb(var(--lane-nih-rgb))"><div class="tlabel">NIH grants</div><div class="tval" id="m-nih">—</div></div>
       <div class="tile" style="--tile-color: rgb(var(--lane-trials-rgb))"><div class="tlabel">Trials</div><div class="tval" id="m-trials">—</div></div>
       <div class="tile" style="--tile-color: rgb(var(--lane-patents-rgb))"><div class="tlabel">Patents</div><div class="tval" id="m-patents">—</div></div>
-      <div class="tile"><div class="tlabel">States</div><div class="tval" id="m-states">—</div></div>
+      <div class="tile"><div class="tlabel" id="m-reg-label">Countries</div><div class="tval" id="m-states">—</div></div>
     </div>
   </div>
 
@@ -332,7 +360,7 @@
         <div class="note" style="margin-top:10px" id="lane-note"></div>
       </div>
       <div class="panel">
-        <h3>// Top states</h3>
+        <h3 id="top-title">// Top countries</h3>
         <div id="topstates"></div>
       </div>
       <div class="panel">
@@ -353,15 +381,37 @@
     <div>
       <div class="toolbar">
         <input type="search" id="q" aria-label="Filter" spellcheck="false" placeholder="Filter — title, city, organization, sponsor, author…" autocomplete="off">
+        <div class="seg" id="viewseg" role="group" aria-label="Map view">
+          <button data-view="world" class="on" title="The whole world on a globe you can turn">◉ World</button>
+          <button data-view="usa" title="United States only, state by state">USA</button>
+        </div>
         <div class="seg" id="scaleseg" role="group" aria-label="Colour scale">
-          <button data-scale="sqrt" class="on" title="Square-root scale — keeps small states visible next to California and New York">√ scale</button>
+          <button data-scale="sqrt" class="on" title="Square-root scale — keeps small places visible next to the biggest ones">√ scale</button>
           <button data-scale="linear" title="Linear scale">Linear</button>
         </div>
       </div>
       <div class="modchips" id="modchips" role="group" aria-label="Filter by therapeutic modality"></div>
 
       <div class="panel mappanel">
-        <svg id="map" viewBox="0 0 960 600" role="img" aria-label="Choropleth map of the United States"></svg>
+        <div id="globewrap">
+          <canvas id="globe" tabindex="0" role="img" aria-label="Globe shaded by the number of records per country. Drag to turn it; the Top countries list is the keyboard route."></canvas>
+          <div class="gctl" role="group" aria-label="Globe controls">
+            <button type="button" id="g-in" title="Zoom in" aria-label="Zoom in">+</button>
+            <button type="button" id="g-out" title="Zoom out" aria-label="Zoom out">−</button>
+            <button type="button" id="g-spin" title="Reset the view and resume turning" aria-label="Reset the view and resume turning">⟲</button>
+          </div>
+          <div class="ghint" id="ghint">Drag to turn · click a country</div>
+        </div>
+        <div id="cmapwrap" hidden>
+          <svg id="cmap" viewBox="0 0 960 600" role="img" aria-label="Flat map of the selected country with a dot for each city"></svg>
+          <div class="gctl" role="group" aria-label="Map zoom">
+            <button type="button" id="c-in" title="Zoom in" aria-label="Zoom in">+</button>
+            <button type="button" id="c-out" title="Zoom out" aria-label="Zoom out">−</button>
+            <button type="button" id="c-fit" title="Fit the whole country" aria-label="Fit the whole country">⟲</button>
+          </div>
+          <div class="ghint" id="chint">+ − or pinch to zoom · drag to move · double-click to zoom in</div>
+        </div>
+        <svg id="map" viewBox="0 0 960 600" role="img" aria-label="Choropleth map of the United States" hidden></svg>
         <div class="tip" id="tip"></div>
         <div class="legend" id="legend"></div>
       </div>
@@ -415,15 +465,41 @@ const NO_LABEL = new Set(['CT', 'DE', 'DC', 'MA', 'MD', 'NH', 'NJ', 'RI', 'VT'])
 
 let D = null;            // /api/geo payload
 let GEO = null;          // geo-us.json
+let WORLD = null;        // geo-world.json — country outlines for the globe
+let VIEW = 'world';      // 'world' (globe, by country) | 'usa' (state map)
+const VIEW_KEY = 'geo-view-v1';
 let PUBLIC = false;
 let LANE = 'all';
 let SCALE = 'sqrt';
 let MOD_ON = new Set();
-let SEL = '';            // selected state code
+let SEL = '';            // selected region: a country name (world) or a state code (usa)
 let Y_FROM = null, Y_TO = null;
 let SHOWN = PAGE_SIZE;
 let YEARS = [];          // all years seen, ascending
 try { LANE = localStorage.getItem(LANE_KEY) || 'all'; } catch (e) {}
+try { VIEW = localStorage.getItem(VIEW_KEY) === 'usa' ? 'usa' : 'world'; } catch (e) {}
+
+// One page, two geographies. Everything below asks these instead of assuming states.
+const isUSA = () => VIEW === 'usa';
+const US_NAME = 'United States';
+const regions = () => isUSA() ? GEO.states : WORLD.countries;
+const regName = id => isUSA() ? (D.states[id] || id) : id;
+const inView = r => !isUSA() || !!(r.state || (r.states && r.states.length));
+// Clicking a country on the globe opens a flat map of it with a dot per city.
+// (The United States opens the state map instead.)
+let CITY = '';           // selected city inside the open country
+let DETAIL = null;       // geo-world-detail.json, fetched the first time a country opens
+const isFlat = () => !isUSA() && !!SEL;
+const ckey = s => String(s || '').normalize('NFKD').replace(/[\u0300-\u036f]/g, '').toLowerCase().trim();
+// a row's cities inside one country: [name, lat|null, lon|null]
+function rowCities(r, country) {
+  if (r.pts && r.pts.length) {
+    const out = r.pts.filter(p => p[0] === country).map(p => [p[1], p[2], p[3]]);
+    if (out.length) return out;
+  }
+  if (r.country === country && r.city) return [[r.city, r.pt ? r.pt[0] : null, r.pt ? r.pt[1] : null]];
+  return [];
+}
 
 function cssRGB(name) {
   const v = getComputedStyle(document.documentElement).getPropertyValue(name).trim();
@@ -453,11 +529,14 @@ async function loadOne(apiPath, staticPath) {
 }
 
 async function load() {
-  const [d, g] = await Promise.all([
+  const [d, g, w] = await Promise.all([
     loadOne('/api/geo', 'geo-data.json'),
     fetch('geo-us.json', { cache: 'no-store' }).then(r => r.json()),
+    fetch('geo-world.json').then(r => r.json()),
   ]);
-  D = d; GEO = g;
+  D = d; GEO = g; WORLD = w;
+  for (const k of LANE_ORDER) for (const r of D[k] || []) if (!r.country && r.state) r.country = US_NAME;   // older payloads
+  prepWorld();
   for (const k of LANE_ORDER) for (const r of D[k] || []) r._lane = k;
   if (!D.patents.length && LANE === 'patents') LANE = 'all';
   const yrs = new Set();
@@ -466,12 +545,21 @@ async function load() {
   Y_FROM = YEARS[0]; Y_TO = YEARS[YEARS.length - 1];
   // deep links: ?state=MA&lane=nih&q=…
   const p = new URLSearchParams(location.search);
-  if (p.get('state') && D.states[p.get('state').toUpperCase()]) SEL = p.get('state').toUpperCase();
+  if (p.get('view') === 'usa' || p.get('view') === 'world') VIEW = p.get('view');
+  if (p.get('state') && D.states[p.get('state').toUpperCase()]) { VIEW = 'usa'; SEL = p.get('state').toUpperCase(); }
+  else if (p.get('country') && WORLD.countries.some(c => c.id === p.get('country'))) { VIEW = 'world'; SEL = p.get('country'); }
   if (p.get('lane') && (p.get('lane') === 'all' || LANES[p.get('lane')])) LANE = p.get('lane');
   if (p.get('q')) $('q').value = p.get('q');
   buildMap();
   buildYearSelects();
+  wireGlobe();
+  wireCountryMap();
+  applyView();
+  if (SEL === US_NAME && !isUSA()) { SEL = ''; VIEW = 'usa'; }
+  if (SEL && !isUSA()) { G.spin = false; lookAt(SEL, false); }
+  applyView();
   render();
+  startSpin();
 }
 
 // ---------- filtering ----------
@@ -481,7 +569,7 @@ function yearOK(r) {
 }
 function textOK(r, q) {
   if (!q) return true;
-  return [r.title, r.city, r.org, r.sponsor, r.authors, r.pi, r.journal, r.assignee, r.state, D.states[r.state]]
+  return [r.title, r.city, r.org, r.sponsor, r.authors, r.pi, r.journal, r.assignee, r.state, D.states[r.state], r.country]
     .some(v => v && String(v).toLowerCase().includes(q));
 }
 function modOK(r) {
@@ -492,11 +580,14 @@ function filtered() {
   const q = ($('q').value || '').trim().toLowerCase();
   const out = {};
   const lanes = LANE === 'all' ? LANE_ORDER : [LANE];
-  for (const k of lanes) out[k] = (D[k] || []).filter(r => yearOK(r) && modOK(r) && textOK(r, q));
+  for (const k of lanes) out[k] = (D[k] || []).filter(r => inView(r) && yearOK(r) && modOK(r) && textOK(r, q));
   return out;
 }
-// a row's states: trials count once per US site state, everything else once
-const rowStates = r => r.states && r.states.length ? r.states : [r.state];
+// a row's regions: a trial counts once per site state (USA) or site country
+// (world); everything else counts once
+const rowStates = r => isUSA()
+  ? (r.states && r.states.length ? r.states : (r.state ? [r.state] : []))
+  : (r.countries && r.countries.length ? r.countries : (r.country ? [r.country] : []));
 
 function counts(f) {
   const per = {};            // state -> {lane: n}
@@ -525,12 +616,45 @@ function buildMap() {
 }
 
 function selectState(id) {
+  if (!isUSA() && id === US_NAME) { setView('usa'); return; }
   SEL = SEL === id ? '' : id;
+  CITY = '';
   SHOWN = PAGE_SIZE;
-  const p = new URLSearchParams(location.search);
-  if (SEL) p.set('state', SEL); else p.delete('state');
-  history.replaceState(null, '', location.pathname + (p.toString() ? '?' + p : ''));
+  syncURL();
+  if (SEL && !isUSA()) { stopSpin(); lookAt(SEL, false); }     // so the globe faces it on the way back
+  hideTip();
+  applyView();
   render();
+}
+function syncURL() {
+  const p = new URLSearchParams(location.search);
+  p.delete('state'); p.delete('country');
+  if (isUSA()) p.set('view', 'usa'); else p.delete('view');
+  if (SEL) p.set(isUSA() ? 'state' : 'country', SEL);
+  history.replaceState(null, '', location.pathname + (p.toString() ? '?' + p : ''));
+}
+function applyView() {
+  $('map').toggleAttribute('hidden', !isUSA());   // SVG elements have no .hidden property
+  $('globewrap').hidden = isUSA() || isFlat();
+  $('cmapwrap').hidden = !isFlat();
+  document.querySelectorAll('#viewseg button').forEach(b => b.classList.toggle('on', b.dataset.view === VIEW));
+  $('page-title').textContent = isUSA() ? 'US' : 'World';
+  $('m-reg-label').textContent = isUSA() ? 'States' : 'Countries';
+  $('top-title').textContent = isUSA() ? '// Top states' : isFlat() ? '// Cities in ' + SEL : '// Top countries';
+  document.title = (isUSA() ? 'US' : 'World') + ' Map · ASD EurekaAlert Database';
+}
+function setView(v, keepSel) {
+  if (v === VIEW) return;
+  VIEW = v;
+  try { localStorage.setItem(VIEW_KEY, VIEW); } catch (e) {}
+  if (!keepSel) SEL = '';
+  CITY = '';
+  SHOWN = PAGE_SIZE;
+  hideTip();
+  applyView();
+  syncURL();
+  render();
+  if (!isUSA()) startSpin();
 }
 
 let CUR = null;   // last computed {f, per, tot, max}
@@ -540,9 +664,22 @@ function paint() {
   const base = cssRGB('--map-base-rgb');
   const hues = {}; for (const k of LANE_ORDER) hues[k] = cssRGB(LANES[k].var);
   const val = s => LANE === 'all' ? (tot[s] || 0) : ((per[s] || {})[LANE] || 0);
-  const max = Math.max(1, ...GEO.states.map(s => val(s.id)));
+  const max = Math.max(1, ...regions().map(s => val(s.id)));
   CUR = { f, per, tot, max };
-  for (const s of GEO.states) {
+  if (isFlat()) {
+    CUR.cities = cityAgg();
+    drawCountry();
+  } else if (!isUSA()) {
+    G.fills = {}; G.vals = {};
+    for (const c of WORLD.countries) {
+      const v = val(c.id);
+      if (!v) continue;
+      const t = 0.22 + 0.78 * (SCALE === 'sqrt' ? Math.sqrt(v / max) : v / max);
+      G.vals[c.id] = v;
+      G.fills[c.id] = mix(base, hues[LANE === 'all' ? dominant(per[c.id]) : LANE], t);
+    }
+    drawGlobe();
+  } else for (const s of GEO.states) {
     const v = val(s.id);
     const t = v ? 0.18 + 0.82 * (SCALE === 'sqrt' ? Math.sqrt(v / max) : v / max) : 0;
     let hue = hues[LANE === 'all' ? dominant(per[s.id]) : LANE];
@@ -557,9 +694,20 @@ function paint() {
   $('legend').innerHTML = (LANE === 'all'
     ? LANE_ORDER.filter(k => (D[k] || []).length).map(k => `<span><span class="sw" style="background:rgb(var(${LANES[k].var}))"></span>${LANES[k].label}</span>`).join('')
       + `<span>· shade = total records (${SCALE === 'sqrt' ? '√' : 'linear'})</span>`
-    : `<span>${LANES[LANE].label}</span><span class="ramp" style="${ramp}"></span><span>1 → ${fmt(max)} per state</span>`)
-    + (SEL ? `<button class="sel" id="clear-sel" type="button">✕ ${esc(D.states[SEL])}</button>` : '');
+    : `<span>${LANES[LANE].label}</span><span class="ramp" style="${ramp}"></span><span>1 → ${fmt(max)} per ${isUSA() ? 'state' : 'country'}</span>`)
+    + '<span class="sp"></span>'
+    + (isFlat() && CITY ? `<button class="sel" id="clear-city" type="button">✕ ${esc(CITY)}</button>` : '')
+    + (isUSA() ? `<button class="go" id="go-world" type="button">← World</button>` : '')
+    + (isFlat() ? `<button class="go" id="clear-sel" type="button">← Globe</button>`
+       : SEL ? `<button class="sel" id="clear-sel" type="button">✕ ${esc(regName(SEL))}</button>` : '');
+  if (isFlat()) {
+    const lg = $('legend'), a = CUR.cities || { list: [], unplaced: 0 };
+    lg.firstElementChild && lg.insertAdjacentHTML('afterbegin',
+      `<span>${esc(SEL)} · ${fmt(a.list.filter(c => c.lat != null).length)} cities${a.unplaced ? ` · ${fmt(a.unplaced)} records with no mappable city` : ''} · dot size = records · </span>`);
+  }
+  const cc = $('clear-city'); if (cc) cc.onclick = () => selectCity(CITY);
   const cs = $('clear-sel'); if (cs) cs.onclick = () => selectState(SEL);
+  const gw = $('go-world'); if (gw) gw.onclick = () => setView('world');
 }
 function dominant(p) {
   if (!p) return 'pubs';
@@ -574,7 +722,7 @@ function showTip(id, e) {
   const rows = LANE_ORDER.filter(k => (D[k] || []).length).map(k =>
     `<div class="trow"><span class="sw" style="background:rgb(var(${LANES[k].var}))"></span>${LANES[k].label}<span class="n">${fmt(p[k] || 0)}</span></div>`).join('');
   const tip = $('tip');
-  tip.innerHTML = `<div class="tname">${esc(D.states[id] || id)}</div>${rows}` +
+  tip.innerHTML = `<div class="tname">${esc(regName(id))}</div>${rows}` +
     `<div class="trow" style="margin-top:4px;color:var(--ink-2)">click to list${SEL === id ? ' · selected' : ''}</div>`;
   tip.style.display = 'block';
   const panel = tip.parentElement.getBoundingClientRect();
@@ -594,7 +742,8 @@ function renderLanes() {
   const all = { label: 'All lanes', var: null };
   const items = [['all', all], ...LANE_ORDER.map(k => [k, LANES[k]])];
   $('lanes').innerHTML = items.map(([k, l]) => {
-    const n = k === 'all' ? LANE_ORDER.reduce((a, x) => a + (D[x] || []).length, 0) : (D[k] || []).length;
+    const cnt = x => (D[x] || []).filter(inView).length;
+    const n = k === 'all' ? LANE_ORDER.reduce((a, x) => a + cnt(x), 0) : cnt(k);
     const dis = k !== 'all' && !n;
     const sw = k === 'all' ? 'linear-gradient(90deg, rgb(var(--lane-pubs-rgb)), rgb(var(--lane-nih-rgb)), rgb(var(--lane-trials-rgb)), rgb(var(--lane-patents-rgb)))' : `rgb(var(${l.var}))`;
     return `<button type="button" class="frow ${LANE === k ? 'on' : ''}" data-lane="${k}" ${dis ? 'disabled' : ''}
@@ -609,30 +758,72 @@ function renderLanes() {
     render();
   });
   const c = D.coverage;
+  const W = !isUSA();
   $('lane-note').innerHTML = LANE === 'pubs'
-    ? `Where the <b>first author</b> works, parsed from the PubMed affiliation (last author when the first has none). ${fmt(c.pubsLocated)} of ${fmt(c.pubsTotal)} library articles resolve to a US state; the rest are outside the US or carry no affiliation.`
+    ? (W ? `Where the <b>first author</b> works, parsed from the PubMed affiliation (last author when the first has none). ${fmt(c.pubsLocated)} of ${fmt(c.pubsTotal)} library articles resolve to a country.`
+         : `Where the <b>first author</b> works, parsed from the PubMed affiliation. ${fmt(c.pubsUS != null ? c.pubsUS : c.pubsLocated)} of ${fmt(c.pubsTotal)} library articles resolve to a US state; the rest are on the World view.`)
     : LANE === 'nih'
-    ? `The awardee organization's state, from NIH RePORTER — the ${fmt(c.nihLocated)} browsable projects of the three latest fiscal years.`
+    ? `The awardee organization, from NIH RePORTER — the browsable projects of the three latest fiscal years. NIH grants go overwhelmingly to US institutions${W ? ', so this lane sits on the United States' : ''}.`
     : LANE === 'trials'
-    ? `US study sites from ClinicalTrials.gov. A multi-site trial counts once in <em>each</em> state it recruits in, so state totals exceed the ${fmt(c.trialsLocated)} located studies.`
+    ? (W ? `Study sites from ClinicalTrials.gov. A multi-country trial counts once in <em>each</em> country it recruits in, so country totals exceed the ${fmt(c.trialsLocated)} located studies.`
+         : `US study sites from ClinicalTrials.gov. A multi-site trial counts once in <em>each</em> state it recruits in, so state totals exceed the ${fmt(c.trialsUS != null ? c.trialsUS : c.trialsLocated)} located studies.`)
     : LANE === 'patents'
-    ? (D.patentsNeedKey ? `Dormant — the patent lane needs a USPTO Open Data Portal API key (see Trials &amp; Patents).` : `First US correspondence address (inventor or applicant) for US patents and applications.`)
-    : `Every lane together. Each state takes the hue of the lane that dominates it and is shaded by its total. Hover for the breakdown; click a state to list its records.`;
+    ? (D.patentsNeedKey ? `Dormant — the patent lane needs a USPTO Open Data Portal API key (see Trials &amp; Patents).` : `First US correspondence address (inventor or applicant) for US patents and applications${W ? ' — a US-only lane' : ''}.`)
+    : (W ? `Every lane together. Each country takes the hue of the lane that dominates it and is shaded by its total. Drag the globe to turn it, hover for the breakdown, click a country to list its records. <b>USA</b> switches to the state map.`
+         : `Every lane together. Each state takes the hue of the lane that dominates it and is shaded by its total. Hover for the breakdown; click a state to list its records.`);
+  if (isFlat()) $('lane-note').innerHTML = `Each dot is a city in <b>${esc(SEL)}</b>, sized by how many records it holds: trial sites from ClinicalTrials.gov and the first author's city for publications. Hover a dot for the breakdown, click it to list that city's records. <b>← Globe</b> goes back.`;
+}
+
+function selectCity(name) {
+  CITY = ckey(CITY) === ckey(name) ? '' : name;
+  SHOWN = PAGE_SIZE;
+  render();
+}
+// cities of the open country, from the rows that pass the filters
+function cityAgg() {
+  const by = {}; let unplaced = 0;
+  for (const k in CUR.f) for (const r of CUR.f[k]) {
+    if (!rowStates(r).includes(SEL)) continue;
+    const cs = rowCities(r, SEL);
+    if (!cs.some(c => c[1] != null)) unplaced++;
+    for (const [name, lat, lon] of cs) {
+      const key = ckey(name);
+      const c = by[key] || (by[key] = { name, lat: null, lon: null, n: 0, per: {} });
+      if (lat != null && c.lat == null) { c.lat = lat; c.lon = lon; }
+      c.n++; c.per[k] = (c.per[k] || 0) + 1;
+    }
+  }
+  return { list: Object.values(by).sort((a, b) => b.n - a.n), unplaced };
+}
+function renderTopCities() {
+  const a = CUR.cities || cityAgg();
+  const ranked = a.list.slice(0, 12), max = ranked.length ? ranked[0].n : 1;
+  const color = LANE === 'all' ? 'var(--accent)' : `rgb(var(${LANES[LANE].var}))`;
+  $('topstates').innerHTML = ranked.map(c => `
+    <button type="button" class="yr wide ${ckey(CITY) === ckey(c.name) ? 'on' : ''}" data-city="${esc(c.name)}" style="--row-color:${color}" aria-pressed="${ckey(CITY) === ckey(c.name)}" title="${esc(c.name)}">
+      <span class="fyl">${esc(c.name)}</span>
+      <span class="barwrap"><span class="bar" style="width:${Math.round(c.n / max * 100)}%"></span></span>
+      <span class="amt">${fmt(c.n)}</span></button>`).join('') || '<div class="note">No city on record for these filters.</div>';
+  document.querySelectorAll('[data-city]').forEach(el => el.onclick = () => selectCity(el.dataset.city));
+  $('m-states').textContent = a.list.length || '—';
+  $('m-reg-label').textContent = 'Cities';
 }
 
 function renderTop() {
   if (!CUR) return;
+  if (isFlat()) { renderTopCities(); return; }
+  $('m-reg-label').textContent = isUSA() ? 'States' : 'Countries';
   const val = s => LANE === 'all' ? (CUR.tot[s] || 0) : ((CUR.per[s] || {})[LANE] || 0);
-  const ranked = GEO.states.map(s => [s, val(s.id)]).filter(x => x[1]).sort((a, b) => b[1] - a[1]).slice(0, 12);
+  const ranked = regions().map(s => [s, val(s.id)]).filter(x => x[1]).sort((a, b) => b[1] - a[1]).slice(0, 12);
   const max = ranked.length ? ranked[0][1] : 1;
   const color = LANE === 'all' ? 'var(--accent)' : `rgb(var(${LANES[LANE].var}))`;
   $('topstates').innerHTML = ranked.map(([s, n]) => `
-    <button type="button" class="yr ${SEL === s.id ? 'on' : ''}" data-st="${s.id}" style="--row-color:${color}" aria-pressed="${SEL === s.id}" title="${esc(s.name)}">
-      <span class="fyl">${s.id}</span>
+    <button type="button" class="yr ${isUSA() ? '' : 'wide'} ${SEL === s.id ? 'on' : ''}" data-st="${esc(s.id)}" style="--row-color:${color}" aria-pressed="${SEL === s.id}" title="${esc(s.name || s.id)}">
+      <span class="fyl">${esc(s.id)}</span>
       <span class="barwrap"><span class="bar" style="width:${Math.round(n / max * 100)}%"></span></span>
       <span class="amt">${fmt(n)}</span></button>`).join('') || '<div class="note">Nothing matches the current filters.</div>';
   document.querySelectorAll('[data-st]').forEach(el => el.onclick = () => selectState(el.dataset.st));
-  $('m-states').textContent = GEO.states.filter(s => val(s.id)).length || '—';
+  $('m-states').textContent = regions().filter(s => val(s.id)).length || '—';
 }
 
 function buildYearSelects() {
@@ -686,18 +877,21 @@ function renderCoverage() {
   const line = (lane, loc, tot) => `<div style="display:flex;gap:8px;align-items:center;margin:3px 0"><span class="swatch" style="width:9px;height:9px;border-radius:2px;background:rgb(var(${LANES[lane].var}))"></span>${LANES[lane].label}<span style="margin-left:auto;font-family:'JetBrains Mono',monospace;font-size:11px">${fmt(loc)} / ${fmt(tot)}</span></div>`;
   $('coverage').innerHTML = line('pubs', c.pubsLocated, c.pubsTotal) + line('nih', c.nihLocated, c.nihTotal)
     + line('trials', c.trialsLocated, c.trialsTotal) + line('patents', c.patentsLocated, c.patentsTotal)
-    + `<div style="margin-top:8px">Located / total. Records with no US location are not on the map${c.pubsUnparsed ? `; ${fmt(c.pubsUnparsed)} articles still await affiliation parsing (weekly job)` : ''}.</div>`;
+    + `<div style="margin-top:8px">Located / total. Records with no usable location are not on the map${c.pubsUnparsed ? `; ${fmt(c.pubsUnparsed)} articles still await affiliation parsing (weekly job)` : ''}.</div>`;
 }
 
 // ---------- record list ----------
 function card(r) {
   const L = LANES[r._lane];
   const color = `rgb(var(${L.var}))`;
-  const where = [r.city, r.state].filter(Boolean).join(', ');
+  // In the world view a multi-country trial is listed under the country that is selected.
+  const here = !isUSA() && SEL && (r.countries || []).includes(SEL) && (r.pts || []).length;
+  const mine = here ? rowCities(r, SEL).map(c => c[0]) : [];
+  const where = here ? (mine.length > 2 ? `${mine.slice(0, 2).join(', ')} +${mine.length - 2}` : mine.join(', ') || SEL) + ', ' + SEL : [r.city, r.state || (r.country === US_NAME ? 'USA' : r.country)].filter(Boolean).join(', ');
   let meta = '';
   if (r._lane === 'pubs') meta = `${esc(r.authors)}${r.journal ? `<span class="sep">·</span>${esc(r.journal)}` : ''}${r.branch ? `<span class="sep">·</span>${esc(r.branch)}` : ''}`;
   else if (r._lane === 'nih') meta = `${esc(r.org)}${r.pi ? `<span class="sep">·</span>PI ${esc(r.pi)}` : ''}${r.ic ? `<span class="sep">·</span>${esc(r.ic)}` : ''}${r.award ? `<span class="sep">·</span>${money(r.award)}` : ''}`;
-  else if (r._lane === 'trials') meta = `${esc(r.sponsor)}${r.status ? `<span class="sep">·</span>${esc(r.status.replace(/_/g, ' ').toLowerCase())}` : ''}${r.states && r.states.length > 1 ? `<span class="sep">·</span>${r.states.length} states` : ''}${r.enroll ? `<span class="sep">·</span>n=${fmt(r.enroll)}` : ''}`;
+  else if (r._lane === 'trials') meta = `${esc(r.sponsor)}${r.status ? `<span class="sep">·</span>${esc(r.status.replace(/_/g, ' ').toLowerCase())}` : ''}${isUSA() ? (r.states && r.states.length > 1 ? `<span class="sep">·</span>${r.states.length} states` : '') : (r.countries && r.countries.length > 1 ? `<span class="sep">·</span>${r.countries.length} countries` : '')}${r.enroll ? `<span class="sep">·</span>n=${fmt(r.enroll)}` : ''}`;
   else meta = esc(r.assignee || '');
   return `<div class="card" style="--st-color:${color}">
     <div class="head">
@@ -713,12 +907,17 @@ function card(r) {
 function renderList() {
   if (!CUR) return;
   let view = [];
-  for (const k in CUR.f) for (const r of CUR.f[k]) if (!SEL || rowStates(r).includes(SEL)) view.push(r);
+  const ck = ckey(CITY);
+  for (const k in CUR.f) for (const r of CUR.f[k]) {
+    if (SEL && !rowStates(r).includes(SEL)) continue;
+    if (isFlat() && ck && !rowCities(r, SEL).some(c => ckey(c[0]) === ck)) continue;
+    view.push(r);
+  }
   view.sort((a, b) => (b.year || 0) - (a.year || 0) || LANE_ORDER.indexOf(a._lane) - LANE_ORDER.indexOf(b._lane));
-  $('list-title').textContent = (SEL ? D.states[SEL] : 'All states') + (LANE === 'all' ? '' : ' · ' + LANES[LANE].label);
+  $('list-title').textContent = (isFlat() && CITY ? CITY + ', ' : '') + (SEL ? regName(SEL) : isUSA() ? 'All states' : 'All countries') + (LANE === 'all' ? '' : ' · ' + LANES[LANE].label);
   $('list-count').textContent = `${fmt(view.length)} record${view.length === 1 ? '' : 's'}`;
   if (!view.length) {
-    $('list').innerHTML = `<div class="empty">// NOTHING MATCHES${SEL ? ' IN ' + esc(D.states[SEL]).toUpperCase() : ''}</div>`;
+    $('list').innerHTML = `<div class="empty">// NOTHING MATCHES${SEL ? ' IN ' + esc(regName(SEL)).toUpperCase() : ''}</div>`;
     $('more-btn').style.display = 'none';
     return;
   }
@@ -728,10 +927,11 @@ function renderList() {
 }
 
 function render() {
-  $('m-pubs').textContent = fmt(D.pubs.length) || '—';
-  $('m-nih').textContent = fmt(D.nih.length) || '—';
-  $('m-trials').textContent = fmt(D.trials.length) || '—';
-  $('m-patents').textContent = D.patentsNeedKey ? '—' : fmt(D.patents.length);
+  const nIn = k => (D[k] || []).filter(inView).length;
+  $('m-pubs').textContent = fmt(nIn('pubs')) || '—';
+  $('m-nih').textContent = fmt(nIn('nih')) || '—';
+  $('m-trials').textContent = fmt(nIn('trials')) || '—';
+  $('m-patents').textContent = D.patentsNeedKey ? '—' : fmt(nIn('patents'));
   renderLanes();
   paint();
   renderTop();
@@ -749,6 +949,443 @@ document.querySelectorAll('#scaleseg button').forEach(b => b.onclick = () => {
   paint();
 });
 $('more-btn').onclick = () => { SHOWN += PAGE_SIZE; renderList(); };
+document.querySelectorAll('#viewseg button').forEach(b => b.onclick = () => setView(b.dataset.view));
+
+// ---------- the globe ----------
+// An orthographic globe on a 2D canvas: no library, same shading rules as the
+// state map. Country rings are unit vectors computed once; each frame rotates
+// them with three dot products, clips at the horizon and fills a Path2D per
+// country, which is also what hover and click hit-test against.
+const G = { lon: -35, lat: 28, zoom: 1, spin: true, fills: {}, vals: {}, hover: '', raf: 0, anim: 0, w: 0, h: 0, R: 0, drag: null };
+const RAD = Math.PI / 180;
+const REDUCED = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
+function vec(lon, lat) {
+  const l = lon * RAD, p = lat * RAD, c = Math.cos(p);
+  return [c * Math.cos(l), c * Math.sin(l), Math.sin(p)];
+}
+function prepWorld() {
+  for (const c of WORLD.countries) {
+    c.name = c.id;
+    c.v = c.rings.map(r => {
+      const n = r.length / 2, a = new Float32Array(n * 3);
+      for (let i = 0; i < n; i++) { const q = vec(r[2 * i], r[2 * i + 1]); a[3 * i] = q[0]; a[3 * i + 1] = q[1]; a[3 * i + 2] = q[2]; }
+      return a;
+    });
+    c.cv = vec(c.c[0], c.c[1]);
+    c.small = !c.rings.length || c.a < 2.5;     // too small to hit on a globe: gets a dot
+  }
+}
+function basis() {
+  const l = G.lon * RAD, p = G.lat * RAD, cp = Math.cos(p), sp = Math.sin(p), cl = Math.cos(l), sl = Math.sin(l);
+  return { f: [cp * cl, cp * sl, sp], e: [-sl, cl, 0], n: [-sp * cl, -sp * sl, cp] };
+}
+function limbArc(out, a0, a1, cx, cy, R) {
+  let d = a1 - a0;
+  while (d > Math.PI) d -= 2 * Math.PI;
+  while (d < -Math.PI) d += 2 * Math.PI;
+  const k = Math.max(1, Math.ceil(Math.abs(d) / 0.08));
+  for (let i = 1; i < k; i++) { const t = a0 + d * i / k; out.push(cx + R * Math.cos(t), cy + R * Math.sin(t)); }
+}
+// One ring -> flat [x, y, …] of its visible part, closed along the limb.
+function clipRing(a, B, cx, cy, R) {
+  const n = a.length / 3, f = B.f, e = B.e, nn = B.n;
+  const X = new Float32Array(n), Y = new Float32Array(n), Z = new Float32Array(n);
+  let vis = 0;
+  for (let i = 0; i < n; i++) {
+    const x = a[3 * i], y = a[3 * i + 1], z = a[3 * i + 2];
+    Z[i] = x * f[0] + y * f[1] + z * f[2];
+    X[i] = cx + R * (x * e[0] + y * e[1] + z * e[2]);
+    Y[i] = cy - R * (x * nn[0] + y * nn[1] + z * nn[2]);
+    if (Z[i] > 0) vis++;
+  }
+  if (!vis) return null;
+  const out = [];
+  if (vis === n) { for (let i = 0; i < n; i++) out.push(X[i], Y[i]); return out; }
+  let s = 0;
+  while (!(Z[s] <= 0 && Z[(s + 1) % n] > 0)) s++;
+  const cross = (i, j) => {            // limb point between a hidden and a visible vertex
+    const t = Z[i] / (Z[i] - Z[j]);
+    const ang = Math.atan2(Y[i] + (Y[j] - Y[i]) * t - cy, X[i] + (X[j] - X[i]) * t - cx);
+    return ang;
+  };
+  let exit = null, first = null;
+  for (let k = 0; k < n; k++) {
+    const i = (s + k) % n, j = (i + 1) % n;
+    if (Z[i] <= 0 && Z[j] > 0) {
+      const ang = cross(i, j);
+      if (exit !== null) limbArc(out, exit, ang, cx, cy, R);
+      if (first === null) first = ang;
+      out.push(cx + R * Math.cos(ang), cy + R * Math.sin(ang), X[j], Y[j]);
+    } else if (Z[i] > 0 && Z[j] > 0) out.push(X[j], Y[j]);
+    else if (Z[i] > 0 && Z[j] <= 0) {
+      exit = cross(j, i);
+      out.push(cx + R * Math.cos(exit), cy + R * Math.sin(exit));
+    }
+  }
+  if (exit !== null && first !== null) limbArc(out, exit, first, cx, cy, R);
+  return out;
+}
+function sizeGlobe() {
+  const cv = $('globe'), w = cv.clientWidth || 800;
+  const h = Math.round(Math.max(300, Math.min(w * 0.625, 620)));
+  const dpr = Math.min(window.devicePixelRatio || 1, 2);
+  if (cv.width !== Math.round(w * dpr) || cv.height !== Math.round(h * dpr)) {
+    cv.width = Math.round(w * dpr); cv.height = Math.round(h * dpr); cv.style.height = h + 'px';
+  }
+  G.w = w; G.h = h; G.dpr = dpr; G.R = (Math.min(w, h) / 2 - 16) * G.zoom;
+}
+function drawGlobe() {
+  if (isUSA() || !WORLD) return;
+  sizeGlobe();
+  const cv = $('globe'), ctx = cv.getContext('2d');
+  const w = G.w, h = G.h, R = G.R, cx = w / 2, cy = h / 2, B = basis();
+  const light = document.documentElement.getAttribute('data-theme') === 'light';
+  const base = cssRGB('--map-base-rgb'), line = cssRGB('--line-rgb');
+  const css = getComputedStyle(document.documentElement);
+  const stroke = css.getPropertyValue('--map-stroke').trim(), ink0 = css.getPropertyValue('--ink-0').trim();
+  const ink1 = css.getPropertyValue('--ink-1').trim(), accent = css.getPropertyValue('--accent').trim();
+  ctx.setTransform(G.dpr, 0, 0, G.dpr, 0, 0);
+  ctx.clearRect(0, 0, w, h);
+  // atmosphere
+  const halo = ctx.createRadialGradient(cx, cy, R * 0.96, cx, cy, R * 1.09);
+  halo.addColorStop(0, `rgba(${cssRGB('--lane-pubs-rgb').join(',')},${light ? 0.22 : 0.3})`);
+  halo.addColorStop(1, `rgba(${cssRGB('--lane-pubs-rgb').join(',')},0)`);
+  ctx.fillStyle = halo; ctx.beginPath(); ctx.arc(cx, cy, R * 1.09, 0, 7); ctx.fill();
+  // ocean
+  const sea = ctx.createRadialGradient(cx - R * 0.35, cy - R * 0.4, R * 0.1, cx, cy, R);
+  if (light) { sea.addColorStop(0, '#EAF2FB'); sea.addColorStop(1, '#C3D3E8'); }
+  else { sea.addColorStop(0, '#12233B'); sea.addColorStop(0.65, '#0A1424'); sea.addColorStop(1, '#05080F'); }
+  ctx.fillStyle = sea; ctx.beginPath(); ctx.arc(cx, cy, R, 0, 7); ctx.fill();
+  ctx.save(); ctx.beginPath(); ctx.arc(cx, cy, R, 0, 7); ctx.clip();
+  // graticule
+  ctx.strokeStyle = `rgba(${line.join(',')},${light ? 0.16 : 0.14})`; ctx.lineWidth = 1; ctx.beginPath();
+  const seg = pts => { let pen = false; for (const q of pts) { const z = q[0] * B.f[0] + q[1] * B.f[1] + q[2] * B.f[2];
+    if (z <= 0) { pen = false; continue; }
+    const x = cx + R * (q[0] * B.e[0] + q[1] * B.e[1] + q[2] * B.e[2]), y = cy - R * (q[0] * B.n[0] + q[1] * B.n[1] + q[2] * B.n[2]);
+    if (pen) ctx.lineTo(x, y); else { ctx.moveTo(x, y); pen = true; } } };
+  if (!G.grat) { G.grat = [];
+    for (let lo = -180; lo < 180; lo += 20) { const a = []; for (let la = -90; la <= 90; la += 4) a.push(vec(lo, la)); G.grat.push(a); }
+    for (let la = -60; la <= 60; la += 20) { const a = []; for (let lo = -180; lo <= 180; lo += 4) a.push(vec(lo, la)); G.grat.push(a); } }
+  for (const g of G.grat) seg(g);
+  ctx.stroke();
+  // land
+  const landBase = light ? mix(base, [150, 165, 190], 0.45) : mix(base, [70, 90, 130], 0.35);
+  ctx.lineJoin = 'round';
+  const dots = [];
+  for (const c of WORLD.countries) {
+    const path = new Path2D(); let any = false;
+    for (const ring of c.v) {
+      const pts = clipRing(ring, B, cx, cy, R);
+      if (!pts || pts.length < 6) continue;
+      any = true;
+      path.moveTo(pts[0], pts[1]);
+      for (let i = 2; i < pts.length; i += 2) path.lineTo(pts[i], pts[i + 1]);
+      path.closePath();
+    }
+    const v = G.vals[c.id] || 0;
+    const z = c.cv[0] * B.f[0] + c.cv[1] * B.f[1] + c.cv[2] * B.f[2];
+    c._x = cx + R * (c.cv[0] * B.e[0] + c.cv[1] * B.e[1] + c.cv[2] * B.e[2]);
+    c._y = cy - R * (c.cv[0] * B.n[0] + c.cv[1] * B.n[1] + c.cv[2] * B.n[2]);
+    c._z = z;
+    if (v && c.small && z > 0.05) {
+      const r = 4.5;
+      path.moveTo(c._x + r, c._y); path.arc(c._x, c._y, r, 0, 7);
+      dots.push(c); any = true;
+    }
+    c._path = any ? path : null;
+    if (!any) continue;
+    ctx.fillStyle = G.fills[c.id] || landBase;
+    ctx.fill(path);
+    ctx.strokeStyle = stroke; ctx.lineWidth = 0.7; ctx.stroke(path);
+  }
+  for (const c of dots) {             // small places: a ringed dot on top so it can be seen and hit
+    ctx.beginPath(); ctx.arc(c._x, c._y, 4.5, 0, 7);
+    ctx.fillStyle = G.fills[c.id]; ctx.fill();
+    ctx.strokeStyle = ink0; ctx.lineWidth = 1; ctx.stroke();
+  }
+  for (const id of [G.hover, SEL]) {
+    const c = id && WORLD.byId[id];
+    if (!c || !c._path) continue;
+    ctx.strokeStyle = id === SEL ? accent : ink0; ctx.lineWidth = id === SEL ? 2.2 : 1.4; ctx.stroke(c._path);
+  }
+  // sphere shading: lit top-left, dark limb
+  const shade = ctx.createRadialGradient(cx - R * 0.4, cy - R * 0.45, R * 0.05, cx, cy, R);
+  shade.addColorStop(0, `rgba(255,255,255,${light ? 0.28 : 0.10})`);
+  shade.addColorStop(0.55, 'rgba(255,255,255,0)');
+  shade.addColorStop(1, `rgba(0,0,0,${light ? 0.22 : 0.5})`);
+  ctx.fillStyle = shade; ctx.fillRect(cx - R, cy - R, 2 * R, 2 * R);
+  ctx.restore();
+  ctx.strokeStyle = `rgba(${cssRGB('--lane-pubs-rgb').join(',')},0.55)`; ctx.lineWidth = 1.2;
+  ctx.beginPath(); ctx.arc(cx, cy, R, 0, 7); ctx.stroke();
+  // labels: the biggest few countries facing the viewer
+  const top = Object.keys(G.vals).sort((a, b) => G.vals[b] - G.vals[a]).slice(0, 9)
+    .map(id => WORLD.byId[id]).filter(c => c && c._z > 0.35);
+  ctx.font = "500 10.5px 'JetBrains Mono', monospace"; ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+  const placed = [];
+  for (const c of top) {
+    if (placed.some(p => Math.abs(p[0] - c._x) < 70 && Math.abs(p[1] - c._y) < 13)) continue;
+    placed.push([c._x, c._y]);
+    const t = `${c.id === US_NAME ? 'USA' : c.id} ${fmt(G.vals[c.id])}`;
+    ctx.lineWidth = 3; ctx.strokeStyle = light ? 'rgba(255,255,255,0.85)' : 'rgba(5,6,10,0.8)'; ctx.strokeText(t, c._x, c._y);
+    ctx.fillStyle = ink0; ctx.fillText(t, c._x, c._y);
+  }
+}
+// ---------- flat country map ----------
+// Equirectangular, squeezed by cos(latitude) at the country's middle — plenty
+// for one country. Far-flung territories (French Guiana, the Dutch Caribbean)
+// are left out of the frame: only rings near the main landmass set the bounds.
+async function drawCountry() {
+  const svg = $('cmap'), want = SEL;
+  if (!DETAIL) {
+    svg.innerHTML = '<text class="cwait" x="480" y="300">// LOADING ' + esc(SEL.toUpperCase()) + '</text>';
+    try { DETAIL = await fetch('geo-world-detail.json').then(r => r.json()); }
+    catch (e) { DETAIL = {}; }
+    if (want === SEL && isFlat()) render();      // redraw now that the outlines are here
+    return;
+  }
+  const meta = WORLD.byId[SEL];
+  const rings = DETAIL[SEL] || (meta ? meta.rings : []);
+  const lon0 = meta ? meta.c[0] : 0;
+  const wrap = l => { let d = l - lon0; while (d > 180) d -= 360; while (d < -180) d += 360; return d; };
+  const boxes = rings.map(r => { let x0 = 1e9, x1 = -1e9, y0 = 1e9, y1 = -1e9, n = r.length / 2;
+    for (let i = 0; i < n; i++) { const x = wrap(r[2 * i]), y = r[2 * i + 1]; if (x < x0) x0 = x; if (x > x1) x1 = x; if (y < y0) y0 = y; if (y > y1) y1 = y; }
+    return { x0, x1, y0, y1, a: (x1 - x0) * (y1 - y0) }; });
+  let bb = boxes.length ? { ...boxes.reduce((a, b) => b.a > a.a ? b : a) } : { x0: -5, x1: 5, y0: -5, y1: 5 };
+  for (let pass = 0; pass < 6; pass++) {          // pull in nearby islands, a few rounds
+    const pad = Math.max(6, 0.5 * Math.max(bb.x1 - bb.x0, bb.y1 - bb.y0)); let grew = false;
+    for (const b of boxes) {
+      if (b.x0 >= bb.x0 && b.x1 <= bb.x1 && b.y0 >= bb.y0 && b.y1 <= bb.y1) continue;
+      if (b.x1 < bb.x0 - pad || b.x0 > bb.x1 + pad || b.y1 < bb.y0 - pad || b.y0 > bb.y1 + pad) continue;
+      bb = { x0: Math.min(bb.x0, b.x0), x1: Math.max(bb.x1, b.x1), y0: Math.min(bb.y0, b.y0), y1: Math.max(bb.y1, b.y1) }; grew = true;
+    }
+    if (!grew) break;
+  }
+  const agg = CUR.cities || cityAgg();
+  const latm = (bb.y0 + bb.y1) / 2, kx = Math.cos(latm * RAD);
+  const W = 960, H = 600, P = 46;
+  const spanX = Math.max(0.6, (bb.x1 - bb.x0) * kx), spanY = Math.max(0.6, bb.y1 - bb.y0);
+  const sc = Math.min((W - 2 * P) / spanX, (H - 2 * P) / spanY);
+  const ox = W / 2 - ((bb.x0 + bb.x1) / 2) * kx * sc, oy = H / 2 + latm * sc;
+  const X = l => ox + wrap(l) * kx * sc, Y = t => oy - t * sc;
+  const path = rs => rs.map(r => { let d = ''; const n = r.length / 2;
+    for (let i = 0; i < n; i++) d += (i ? 'L' : 'M') + X(r[2 * i]).toFixed(1) + ',' + Y(r[2 * i + 1]).toFixed(1);
+    return d + 'Z'; }).join('');
+  // neighbours for context: any country whose globe outline comes near the frame
+  let nb = '';
+  for (const c of WORLD.countries) {
+    if (c.id === SEL || !DETAIL[c.id]) continue;
+    const dx = wrap(c.c[0]), dy = c.c[1];
+    const reach = Math.sqrt(c.a) + 6;
+    if (dx < bb.x0 - reach || dx > bb.x1 + reach || dy < bb.y0 - reach || dy > bb.y1 + reach) continue;
+    nb += `<path class="nb" d="${path(DETAIL[c.id])}"><title>${esc(c.id)}</title></path>`;
+  }
+  const placed = agg.list.filter(c => c.lat != null && X(c.lon) > 0 && X(c.lon) < W && Y(c.lat) > 0 && Y(c.lat) < H)
+    .map(c => ({ c, x: X(c.lon), y: Y(c.lat) }));
+  svg.innerHTML = `<g>${nb}<path class="me" d="${path(rings)}"></path></g><g id="cm-dots"></g>`
+    + (placed.length ? '' : `<text class="cwait" x="480" y="560">// NO MAPPABLE CITY FOR THESE FILTERS</text>`);
+  svg.setAttribute('aria-label', `Flat map of ${SEL} with ${placed.length} cities`);
+  if (CM.country !== SEL) { CM.k = 1; CM.vx = 0; CM.vy = 0; }      // a new country starts fitted; filters keep the zoom
+  CM.country = SEL; CM.placed = placed;
+  applyZoom();
+}
+// Zoom works on the SVG viewBox, and the dots and labels are re-laid at every
+// step so they keep their size on screen: zooming in pulls a crowded cluster
+// (Paris, the Randstad) apart instead of just enlarging it.
+const CM = { k: 1, vx: 0, vy: 0, country: '', placed: [], drag: null, W: 960, H: 600 };
+function applyZoom() {
+  const svg = $('cmap'), w = CM.W / CM.k, h = CM.H / CM.k;
+  CM.vx = Math.max(0, Math.min(CM.W - w, CM.vx)); CM.vy = Math.max(0, Math.min(CM.H - h, CM.vy));
+  svg.setAttribute('viewBox', `${CM.vx.toFixed(2)} ${CM.vy.toFixed(2)} ${w.toFixed(2)} ${h.toFixed(2)}`);
+  layoutDots();
+}
+function layoutDots() {
+  const g = document.getElementById('cm-dots');
+  if (!g) return;
+  const k = CM.k, hues = {}; for (const l of LANE_ORDER) hues[l] = `rgb(var(${LANES[l].var}))`;
+  const max = Math.max(1, ...CM.placed.map(p => p.c.n));
+  const rad = n => (3 + 9 * Math.sqrt(n / max)) / k;
+  const x0 = CM.vx, y0 = CM.vy, x1 = x0 + CM.W / k, y1 = y0 + CM.H / k;
+  const vis = CM.placed.filter(p => p.x >= x0 && p.x <= x1 && p.y >= y0 && p.y <= y1);
+  let out = vis.slice().sort((a, b) => b.c.n - a.c.n).map(p => {
+    const c = p.c, lane = LANE === 'all' ? dominant(c.per) : LANE;
+    return `<circle class="city ${ckey(CITY) === ckey(c.name) ? 'sel' : ''}" cx="${p.x.toFixed(2)}" cy="${p.y.toFixed(2)}" r="${rad(c.n).toFixed(3)}"
+      fill="${hues[lane]}" data-c="${esc(c.name)}" tabindex="0" role="button" aria-label="${esc(c.name)}: ${fmt(c.n)} records"></circle>`;
+  }).join('');
+  const labs = [], fs = 11 / k;
+  for (const p of vis.slice(0, k > 1.5 ? 40 : 12)) {
+    const x = p.x + rad(p.c.n) + 4 / k, y = p.y + 4 / k, wd = (p.c.name.length + 4) * 6.8 / k;
+    if (x + wd > x1) continue;
+    if (labs.some(q => x < q[0] + q[2] && q[0] < x + wd && Math.abs(q[1] - y) < 13 / k)) continue;
+    labs.push([x, y, wd]);
+    out += `<text class="clab" x="${x.toFixed(2)}" y="${y.toFixed(2)}" style="font-size:${fs.toFixed(3)}px;stroke-width:${(3 / k).toFixed(3)}px">${esc(p.c.name)} ${fmt(p.c.n)}</text>`;
+  }
+  g.innerHTML = out;
+  const byName = {}; for (const p of CM.placed) byName[p.c.name] = p.c;
+  g.querySelectorAll('circle.city').forEach(el => {
+    const c = byName[el.dataset.c];
+    el.addEventListener('mousemove', e => { if (!CM.drag) showCityTip(c, e); });
+    el.addEventListener('mouseleave', hideTip);
+    el.addEventListener('focus', () => showCityTip(c, null));
+    el.addEventListener('blur', hideTip);
+    el.addEventListener('click', () => { if (!CM.moved) selectCity(c.name); });
+    el.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); selectCity(c.name); } });
+  });
+}
+function zoomCountry(f, cx, cy) {            // cx, cy: the viewBox point to hold still
+  const k0 = CM.k, k1 = Math.max(1, Math.min(60, k0 * f));
+  if (k1 === k0) return;
+  if (cx == null) { cx = CM.vx + CM.W / k0 / 2; cy = CM.vy + CM.H / k0 / 2; }
+  CM.vx = cx - (cx - CM.vx) * k0 / k1; CM.vy = cy - (cy - CM.vy) * k0 / k1; CM.k = k1;
+  $('chint').style.display = 'none';
+  hideTip();
+  applyZoom();
+}
+function wireCountryMap() {
+  const svg = $('cmap');
+  const at = e => { const b = svg.getBoundingClientRect();
+    return [CM.vx + (e.clientX - b.left) / b.width * CM.W / CM.k, CM.vy + (e.clientY - b.top) / b.height * CM.H / CM.k, b]; };
+  $('c-in').onclick = () => zoomCountry(1.6);
+  $('c-out').onclick = () => zoomCountry(1 / 1.6);
+  $('c-fit').onclick = () => { CM.k = 1; CM.vx = 0; CM.vy = 0; hideTip(); applyZoom(); };
+  svg.addEventListener('dblclick', e => { e.preventDefault(); const [x, y] = at(e); zoomCountry(2, x, y); });
+  // Pinch on a trackpad arrives as a ctrl+wheel; a plain wheel is left alone so the page still scrolls.
+  svg.addEventListener('wheel', e => {
+    if (!e.ctrlKey && !e.metaKey) return;
+    e.preventDefault();
+    const [x, y] = at(e);
+    zoomCountry(Math.exp(-e.deltaY * 0.012), x, y);
+  }, { passive: false });
+  const pts = new Map(); let pinch = 0;
+  svg.addEventListener('pointerdown', e => {
+    pts.set(e.pointerId, [e.clientX, e.clientY]);
+    CM.moved = false;
+    if (pts.size === 1) CM.drag = { x: e.clientX, y: e.clientY, vx: CM.vx, vy: CM.vy };
+    if (pts.size === 2) { const [a, b] = [...pts.values()]; pinch = Math.hypot(a[0] - b[0], a[1] - b[1]); CM.drag = null; }
+  });
+  svg.addEventListener('pointermove', e => {
+    if (!pts.has(e.pointerId)) return;
+    pts.set(e.pointerId, [e.clientX, e.clientY]);
+    if (pts.size === 2 && pinch) {
+      const [a, b] = [...pts.values()], d = Math.hypot(a[0] - b[0], a[1] - b[1]);
+      const r = svg.getBoundingClientRect(), mx = (a[0] + b[0]) / 2, my = (a[1] + b[1]) / 2;
+      zoomCountry(d / pinch, CM.vx + (mx - r.left) / r.width * CM.W / CM.k, CM.vy + (my - r.top) / r.height * CM.H / CM.k);
+      pinch = d; CM.moved = true;
+      return;
+    }
+    if (!CM.drag) return;
+    const dx = e.clientX - CM.drag.x, dy = e.clientY - CM.drag.y;
+    if (Math.abs(dx) + Math.abs(dy) < 4 && !CM.moved) return;
+    if (!CM.moved) { CM.moved = true; svg.classList.add('dragging'); svg.setPointerCapture(e.pointerId); hideTip(); }
+    const r = svg.getBoundingClientRect();
+    CM.vx = CM.drag.vx - dx / r.width * CM.W / CM.k; CM.vy = CM.drag.vy - dy / r.height * CM.H / CM.k;
+    applyZoom();
+  });
+  const up = e => { pts.delete(e.pointerId); if (pts.size < 2) pinch = 0; if (!pts.size) { CM.drag = null; svg.classList.remove('dragging'); setTimeout(() => { CM.moved = false; }, 0); } };
+  svg.addEventListener('pointerup', up);
+  svg.addEventListener('pointercancel', up);
+  svg.addEventListener('keydown', e => {
+    if (e.key === '+' || e.key === '=') zoomCountry(1.6);
+    else if (e.key === '-') zoomCountry(1 / 1.6);
+  });
+}
+function showCityTip(c, e) {
+  const rows = LANE_ORDER.filter(k => c.per[k]).map(k =>
+    `<div class="trow"><span class="sw" style="background:rgb(var(${LANES[k].var}))"></span>${LANES[k].label}<span class="n">${fmt(c.per[k])}</span></div>`).join('');
+  const tip = $('tip');
+  tip.innerHTML = `<div class="tname">${esc(c.name)}</div>${rows}<div class="trow" style="margin-top:4px;color:var(--ink-2)">click to list${ckey(CITY) === ckey(c.name) ? ' · selected' : ''}</div>`;
+  tip.style.display = 'block';
+  const panel = tip.parentElement.getBoundingClientRect();
+  if (e) {
+    let x = e.clientX - panel.left + 14, y = e.clientY - panel.top + 14;
+    if (x + tip.offsetWidth > panel.width - 10) x = e.clientX - panel.left - tip.offsetWidth - 14;
+    if (y + tip.offsetHeight > panel.height - 10) y = e.clientY - panel.top - tip.offsetHeight - 14;
+    tip.style.left = x + 'px'; tip.style.top = y + 'px';
+  } else { tip.style.left = '14px'; tip.style.top = '14px'; }
+}
+
+function pickAt(px, py) {
+  const cv = $('globe'), ctx = cv.getContext('2d');
+  const x = px * G.dpr, y = py * G.dpr;
+  let hit = '';
+  for (const c of WORLD.countries) {            // small dots are drawn last, so they win
+    if (!c._path) continue;
+    if (ctx.isPointInPath(c._path, x, y)) { hit = c.id; if (c.small) break; }
+  }
+  return hit;
+}
+function lookAt(id, animate) {
+  const c = WORLD.byId[id];
+  if (!c) return;
+  const to = { lon: c.c[0], lat: Math.max(-70, Math.min(70, c.c[1])) };
+  if (!animate || REDUCED) { G.lon = to.lon; G.lat = to.lat; drawGlobe(); return; }
+  const from = { lon: G.lon, lat: G.lat };
+  let d = to.lon - from.lon; while (d > 180) d -= 360; while (d < -180) d += 360;
+  const t0 = performance.now(), id0 = ++G.anim;
+  const step = now => {
+    if (id0 !== G.anim) return;
+    const t = Math.min(1, (now - t0) / 550), k = t * t * (3 - 2 * t);
+    G.lon = from.lon + d * k; G.lat = from.lat + (to.lat - from.lat) * k;
+    drawGlobe();
+    if (t < 1) requestAnimationFrame(step);
+  };
+  requestAnimationFrame(step);
+}
+function startSpin() {
+  if (REDUCED || G.raf || isUSA()) return;
+  const tick = () => {
+    G.raf = 0;
+    if (!G.spin || isUSA() || G.drag) return;
+    if (!document.hidden) { G.lon += 0.1; if (G.lon > 180) G.lon -= 360; drawGlobe(); }
+    G.raf = requestAnimationFrame(tick);
+  };
+  G.raf = requestAnimationFrame(tick);
+}
+function stopSpin() { G.spin = false; G.anim++; $('ghint').style.display = 'none'; }
+function wireGlobe() {
+  WORLD.byId = {}; for (const c of WORLD.countries) WORLD.byId[c.id] = c;
+  const cv = $('globe');
+  const pos = e => { const b = cv.getBoundingClientRect(); return [e.clientX - b.left, e.clientY - b.top]; };
+  cv.addEventListener('pointerdown', e => {
+    stopSpin();
+    const [x, y] = pos(e);
+    G.drag = { x, y, lon: G.lon, lat: G.lat, moved: false };
+    cv.setPointerCapture(e.pointerId); cv.classList.add('dragging'); hideTip();
+  });
+  cv.addEventListener('pointermove', e => {
+    const [x, y] = pos(e);
+    if (G.drag) {
+      const dx = x - G.drag.x, dy = y - G.drag.y;
+      if (Math.abs(dx) + Math.abs(dy) > 4) G.drag.moved = true;
+      const k = 57.3 / G.R;
+      G.lon = G.drag.lon - dx * k; G.lat = Math.max(-80, Math.min(80, G.drag.lat + dy * k));
+      drawGlobe();
+      return;
+    }
+    const hit = pickAt(x, y);
+    cv.classList.toggle('pick', !!hit);
+    if (hit !== G.hover) { G.hover = hit; drawGlobe(); }
+    if (hit) showTip(hit, e); else hideTip();
+  });
+  const end = e => {
+    if (!G.drag) return;
+    const moved = G.drag.moved; G.drag = null; cv.classList.remove('dragging');
+    if (!moved && e.type === 'pointerup') { const [x, y] = pos(e); const hit = pickAt(x, y); if (hit) selectState(hit); }
+  };
+  cv.addEventListener('pointerup', end);
+  cv.addEventListener('pointercancel', end);
+  cv.addEventListener('pointerleave', () => { if (!G.drag) { hideTip(); if (G.hover) { G.hover = ''; drawGlobe(); } } });
+  cv.addEventListener('keydown', e => {
+    const step = { ArrowLeft: [-12, 0], ArrowRight: [12, 0], ArrowUp: [0, 8], ArrowDown: [0, -8] }[e.key];
+    if (step) { e.preventDefault(); stopSpin(); G.lon += step[0]; G.lat = Math.max(-80, Math.min(80, G.lat + step[1])); drawGlobe(); }
+    else if (e.key === '+' || e.key === '=') zoomGlobe(1.3);
+    else if (e.key === '-') zoomGlobe(1 / 1.3);
+  });
+  $('g-in').onclick = () => zoomGlobe(1.3);
+  $('g-out').onclick = () => zoomGlobe(1 / 1.3);
+  $('g-spin').onclick = () => { G.zoom = 1; G.lat = 28; G.anim++; G.spin = true; drawGlobe(); startSpin(); };
+  window.addEventListener('resize', () => { if (!isUSA()) drawGlobe(); });
+}
+function zoomGlobe(k) { stopSpin(); G.zoom = Math.max(1, Math.min(5, G.zoom * k)); drawGlobe(); }
 $('theme-toggle').onclick = () => {
   applyTheme(document.documentElement.getAttribute('data-theme') === 'light' ? 'dark' : 'light');
   if (D) paint();
